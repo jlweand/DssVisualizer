@@ -1,1 +1,1 @@
-The python, core stuff will live in here.
+The core stuff will live in here.
