@@ -13,8 +13,7 @@ class DataImport:
         data = importJson(self.keypressFile, name, computer)
 
         # add the new values to it and format dates
-        eventData = addExtraData(data["events"], name, computer, false)
-        data["events"] = eventData
+        data = addExtraData(data, name, computer, false)
 
         # todo get the datasource plugin.
 
@@ -28,7 +27,8 @@ class DataImport:
         data = importJson(self.clickFile, name, computer)
 
         # add the new values to it and format dates
-        data = addExtraData(data, name, computer, true)
+        eventData = addExtraData(data["events"], name, computer, true)
+        data["events"] = eventData
 
         # todo get the datasource plugin.
 
@@ -42,7 +42,8 @@ class DataImport:
         data = importJson(self.timedFile, name, computer)
 
         # add the new values to it and format dates
-        data = addExtraData(data, name, computer, true)
+        eventData = addExtraData(data["events"], name, computer, true)
+        data["events"] = eventData
 
         # todo get the datasource plugin.
 
