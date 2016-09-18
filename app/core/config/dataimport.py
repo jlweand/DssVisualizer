@@ -1,7 +1,5 @@
 import ujson
 from datetime import datetime
-import os.path as path
-from pprint import pprint
 
 class DataImport:
 

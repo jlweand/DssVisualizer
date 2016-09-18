@@ -1,4 +1,3 @@
-import ujson
 from pymongo import MongoClient
 
 class PyKeyLogger:

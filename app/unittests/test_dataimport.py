@@ -1,7 +1,6 @@
 import unittest
 from core.config.dataimport import DataImport
 
-
 class DataImportTest(unittest.TestCase):
 
     def test_insertKeypressData(self):
