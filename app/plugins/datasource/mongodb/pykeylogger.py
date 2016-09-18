@@ -3,21 +3,21 @@ from pymongo import MongoClient
 
 class PyKeyLogger:
 
-    def __init__(self):
+    def getDatabase(self):
         client = MongoClient()
-        db = client.jensTest
+        return client.jensTest
 
-    def importKeypressData(json):
-        collection = db.keypressData
+    def importKeypressData(self, json):
+        collection = self.getDatabase().keypressData
         result = collection.insert_many(json)
         return len(result.inserted_ids)
 
-    def importClick(json):
-        collection = db.click
+    def importClick(self, json):
+        collection = self.getDatabase().click
         result = collection.insert_one(json)
         return result.inserted_id
 
-    def importTimed(json):
-        collection = db.timed
+    def importTimed(self, json):
+        collection = self.getDatabase().timed
         result = collection.insert_one(json)
         return result.inserted_id
