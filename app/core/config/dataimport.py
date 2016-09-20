@@ -1,5 +1,6 @@
 import ujson
 from datetime import datetime
+from pprint import pprint
 
 class DataImport:
 
@@ -8,10 +9,16 @@ class DataImport:
         self.clickFile = "json/click.json"
         self.timedFile = "json/timed.json"
 
-    def addExtraData(self, json, name, computer, hasEndDate):
+    def addExtraData(self, json, techName, eventName, comments, importDate, hasEndDate):
         for data in json:
-            data["importName"] = name
-            data["computerName"] = computer
+            #create the metadata
+            metadata = {}
+            metadata["techName"] = techName
+            metadata["eventName"] = eventName
+            metadata["comments"] = comments
+            metadata["importDate"] = importDate
+            data["metadata"] = metadata
+
             # todo get the date parsing working
             #data["start"] = datetime.strptime(data["start"], '%a %b %d %H:%M:%S %Z %Y')
 
@@ -38,12 +45,12 @@ class DataImport:
         obj = getattr(module, classname )()
         return obj
 
-    def importKeypressData(self, name, computer):
+    def importKeypressData(self, techName, eventName, comments, importDate):
         # get the JSON data
         data = self.importJson(self.keypressFile)
 
         # add the new values to it and format dates
-        data = self.addExtraData(data, name, computer, False)
+        data = self.addExtraData(data, techName, eventName, comments, importDate, False)
 
         # get the datasource plugin.
         pyKeyLogger = self.getInstacneOfPlugin()
@@ -52,24 +59,16 @@ class DataImport:
         insertedCount = pyKeyLogger.importKeypressData(data)
         return insertedCount
 
-    def importClick(self, name, computer):
+    def importClick(self, techName, eventName, comments, importDate):
         data = self.importJson(self.clickFile)
-
-        eventData = self.addExtraData( data["events"], name, computer, True)
-        data["events"] = eventData
-
+        eventData = self.addExtraData(data["events"], techName, eventName, comments, importDate, True)
         pyKeyLogger = self.getInstacneOfPlugin()
+        insertedCount = pyKeyLogger.importClick(eventData)
+        return insertedCount
 
-        insertedId = pyKeyLogger.importClick(data)
-        return insertedId
-
-    def importTimed(self, name, computer):
+    def importTimed(self, techName, eventName, comments, importDate):
         data = self.importJson(self.timedFile)
-
-        eventData = self.addExtraData(data["events"], name, computer, True)
-        data["events"] = eventData
-
+        eventData = self.addExtraData(data["events"], techName, eventName, comments, importDate, True)
         pyKeyLogger = self.getInstacneOfPlugin()
-
-        insertedId = pyKeyLogger.importTimed(data)
-        return insertedId
+        insertedCount = pyKeyLogger.importTimed(eventData)
+        return insertedCount

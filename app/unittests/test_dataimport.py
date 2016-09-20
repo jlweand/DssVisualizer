@@ -1,19 +1,20 @@
 import unittest
+import datetime
 from core.config.dataimport import DataImport
 
 class DataImportTest(unittest.TestCase):
 
     def test_insertKeypressData(self):
-        size = DataImport().importKeypressData("name", "computer")
+        size = DataImport().importKeypressData("Alex", "Super summer Event", "here are some comments", datetime.datetime.now())
         self.assertEqual(size, 24)
 
     def test_importClick(self):
-        _id = DataImport().importClick("name", "computer")
-        self.assertIsNotNone(_id)
+        size = DataImport().importClick("Alex", "Super summer Event", "here are some comments", datetime.datetime.now())
+        self.assertEqual(size, 8)
 
     def test_importTimed(self):
-        _id = DataImport().importTimed("name", "computer")
-        self.assertIsNotNone(_id)
+        size = DataImport().importTimed("Alex", "Super summer Event", "here are some comments", datetime.datetime.now())
+        self.assertEqual(size, 21)
 
 if __name__ == '__main__':
     unittest.main()
