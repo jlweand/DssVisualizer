@@ -1,0 +1,24 @@
+{
+  "activeDatasourcePlugin": "MongoDB",
+  "activeRendererPlugin": "vis.js",
+  "datasourcePlugins": [
+    {
+      "location": "plugins.datasource.mongodb",
+      "name": "MongoDB"
+    },
+    {
+      "location": "plugins.datasource.elasticsearch",
+      "name": "Elasticsearch"
+    }
+  ],
+  "rendererPlugins": [
+    {
+      "location": "plugins.renderer.visjs",
+      "name": "vis.js"
+    },
+    {
+      "location": "plugins.renderer.d3",
+      "name": "d3.js"
+    }
+  ]
+}

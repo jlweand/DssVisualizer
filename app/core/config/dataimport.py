@@ -1,6 +1,7 @@
 import ujson
 from datetime import datetime
 from pprint import pprint
+from .configReader import ConfigReader
 
 class DataImport:
 
@@ -33,17 +34,6 @@ class DataImport:
             data = ujson.loads(jsonStr)
         return data
 
-    def getInstacneOfPlugin(self):
-        # todo get this information from the config.json
-        module = "plugins.datasource.mongodb.pykeylogger"
-        classname = "PyKeyLogger"
-
-        #import the module by saying 'from myApp.models import Blog'
-        module = __import__(module, {}, {}, classname)
-
-        #now you can instantiate the class
-        obj = getattr(module, classname )()
-        return obj
 
     def importKeypressData(self, techName, eventName, comments, importDate):
         # get the JSON data
@@ -53,7 +43,7 @@ class DataImport:
         data = self.addExtraData(data, techName, eventName, comments, importDate, False)
 
         # get the datasource plugin.
-        pyKeyLogger = self.getInstacneOfPlugin()
+        pyKeyLogger = ConfigReader().getInstanceOfDatasourcePlugin("PyKeyLogger")
 
         # call the insert method.
         insertedCount = pyKeyLogger.importKeypressData(data)
@@ -62,13 +52,13 @@ class DataImport:
     def importClick(self, techName, eventName, comments, importDate):
         data = self.importJson(self.clickFile)
         eventData = self.addExtraData(data["events"], techName, eventName, comments, importDate, True)
-        pyKeyLogger = self.getInstacneOfPlugin()
+        pyKeyLogger = ConfigReader().getInstanceOfDatasourcePlugin("PyKeyLogger")
         insertedCount = pyKeyLogger.importClick(eventData)
         return insertedCount
 
     def importTimed(self, techName, eventName, comments, importDate):
         data = self.importJson(self.timedFile)
         eventData = self.addExtraData(data["events"], techName, eventName, comments, importDate, True)
-        pyKeyLogger = self.getInstacneOfPlugin()
+        pyKeyLogger = ConfigReader().getInstanceOfDatasourcePlugin("PyKeyLogger")
         insertedCount = pyKeyLogger.importTimed(eventData)
         return insertedCount
