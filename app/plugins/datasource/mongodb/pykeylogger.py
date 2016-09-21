@@ -4,7 +4,7 @@ class PyKeyLogger:
 
     def getDatabase(self):
         client = MongoClient()
-        return client.jensTest
+        return client.dssvisualizer
 
     def importKeypressData(self, json):
         collection = self.getDatabase().keypressData
