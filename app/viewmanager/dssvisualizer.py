@@ -25,7 +25,7 @@ def handle(web_view,web_frame,web_resource,request,response):
 		print(queryDict['annotation'])
 		print("\n")
 		print(queryDict['dataID'])
-		Annotations().addAnnotation(queryDict['dataID'], queryDict['annotation'])
+		Annotations().addAnnotation(queryDict['dataID'][0], queryDict['annotation'][0])
 	return
 
 def handle_btn1():
