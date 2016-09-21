@@ -11,12 +11,15 @@ class Annotations:
         return db.annotations
 
     # get all annotations for the dataObjectId
-    def getAnnotation(self, findJson):
+    def getAnnotation(self, dataId):
         #connect2DB
         collection = self.getCollection()
+        findJson = {"dataObjectId":dataId}
 
         #SQL Equivalent: Select * from t_annotations where dataObjectId = dataObjectId
         annotation = collection.find(findJson)
+
+        # dump it into a JSON string from a MongoDB cursor
         return dumps(annotation)
 
     # add an annotation for the dataObjectId

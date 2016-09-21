@@ -16,18 +16,12 @@ class Annotations:
         return obj
 
     # return all annotations for the dataObjectId
-    def getAnnotations(self, dataObjectId):
-        #build json
-        findJson = {"dataObjectId":dataObjectId}
-
-        # the javascript needs the annotationId back
-        #findJson2 = {"_id":0, "dataObjectId":1, "annotationText":1}
-
+    def getAnnotations(self, dataId):
         # get the datasource plugin.
         annotationPlugin = self.getInstanceOfPlugin()
 
         # call the select method.
-        annotations = annotationPlugin.getAnnotation(findJson)
+        annotations = annotationPlugin.getAnnotation(dataId)
         return annotations
 
     # add an annotation for the dataObjectId
@@ -39,7 +33,7 @@ class Annotations:
         annotationPlugin = self.getInstanceOfPlugin()
 
         # call the insert method.
-        annotationId = annotationPlugin.addAnnotation("dataObjectId", insertJson)
+        annotationId = annotationPlugin.addAnnotation(dataObjectId, insertJson)
         return annotationId
 
     # # edit an annotation for the annotationObjectId
