@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Timeline | External data</title>
+
+	<style type="text/css">
+	body, html {
+		font-family: sans-serif;
+	}
+	</style>
+
+	<script src="http://t4t5.github.io/sweetalert/dist/sweetalert.min.js"></script>
+	<link href="http://t4t5.github.io/sweetalert/dist/sweetalert.css" rel="stylesheet" type="text/css"/>
+
+	<!-- Load jquery for ajax support -->
+	<script src="../plugins/renderer/visjs/js/jquery-3.1.0.min.js"></script>
+
+	<script src="../plugins/renderer/visjs/vis.js"></script>
+	<link href="../plugins/renderer/visjs/vis.css" rel="stylesheet" type="text/css" />
+	<script src="../plugins/renderer/visjs/js/loadDataAjax.js"></script>
+	<script src="../plugins/renderer/visjs/js/annotation.js"></script>
+
+	<script>
+	</script>
+
+</head>
+<body>
+	<p>
+		This demo shows how to load external data via an ajax call.
+	</p>
+	<div id="visualization"></div>
+	<div id="loading">loading...</div>
+	<div id="currentItem"></div>
+	<form id="annotationsForm">
+		<div>
+			<label id="annotationLabel" for="annotation">Please select an object first</label>
+		</div>
+		<div>
+			<textarea id="annotation" name="annotation" rows="5" columns="1000" disabled></textarea>
+		</div>
+		<input type="hidden" id="objID" name="objID" val=""/>
+		<input type="submit" id="submitAnnotation" name="Submit" disabled/>
+	</form>
+</body>
+</html>
