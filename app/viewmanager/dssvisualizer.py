@@ -17,6 +17,11 @@ def handle(web_view,web_frame,web_resource,request,response):
 
 	if not query:
 		return
+	elif query == "keypressData":
+		jsonFile = getJson("json/keypressData.json")
+		jsonData = ujson.dumps(jsonFile)
+		js = 'visData(%s);' % jsonData
+		v.execute_script(js)
 	else:
 		queryDict = parse_qs(query)
 		############################################################
@@ -27,6 +32,11 @@ def handle(web_view,web_frame,web_resource,request,response):
 		print(queryDict['dataID'])
 		Annotations().addAnnotation(queryDict['dataID'][0], queryDict['annotation'][0])
 	return
+
+def getJson(file):
+	with open(file) as json_data:
+	    d = ujson.load(json_data)
+	    return(d)
 
 def handle_btn1():
 	print ("button 1 pressed")
