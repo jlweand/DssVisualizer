@@ -26,36 +26,49 @@ class Annotations:
 
     # add an annotation for the dataObjectId
     def addAnnotation(self, dataObjectId, annotationText):
-        #build json
-        insertJson = {"annotationText":annotationText}
-
         # get the datasource plugin.
         annotationPlugin = self.getInstanceOfPlugin()
 
         # call the insert method.
-        annotationId = annotationPlugin.addAnnotation(dataObjectId, insertJson)
+        annotationId = annotationPlugin.addAnnotation(dataObjectId, annotationText)
         return annotationId
 
-    # # edit an annotation for the annotationObjectId
-    # def editAnnotation(self, dataObjectId, annotationObjectId):
-    #     return 0;
+    # edit an annotation for the annotationObjectId
+    def editAnnotation(self, annotationObjectId, annotationText):
+        # get the datasource plugin.
+        annotationPlugin = self.getInstanceOfPlugin()
 
-    # # delete an annotation for the annotationObjectId
-    # def deleteAnnotation(self, annotationObjectId):
-    #     return 0;
+        # call the update method.
+        updatedAnnotationId = annotationPlugin.editAnnotation(annotationObjectId, annotationText)
+        return updatedAnnotationId
 
-    # # deletes all annotations for the dataObjectId
-    # def deleteAllAnnotationsForData(self, dataObjectId):
-    #     return 0;
+    # delete an annotation for the annotationObjectId
+    def deleteAnnotation(self, annotationObjectId):
+        # get the datasource plugin.
+        annotationPlugin = self.getInstanceOfPlugin()
 
-#HardCoded String Variables
-# dataObjectId = "19900412"
-# annotationText = "This is a test for Practicum Class"
+        #call deleteAnnotation method
+        delByAnnObjId = annotationPlugin.deleteAnnotation(annotationObjectId)
+        return delByAnnObjId
 
-#instance of Plugin
+    # deletes all annotations for the dataObjectId
+    def deleteAllAnnotationsForData(self, dataObjectId):
+        # get the datasource plugin.
+        annotationPlugin = self.getInstanceOfPlugin()
+
+        #call deleteAnnotation method
+        delByDataIdCount = annotationPlugin.deleteAllAnnotationsForData(dataObjectId)
+        return delByDataIdCount
+
+#BELOW IS FOR TESGING
+# #HardCoded String Variables
+# dataObjectId = "TODAY"
+# annotationText = "TEST from API"
+
+# #instance of Plugin
 # annObj = Annotations()
-#print(annObj.getInstanceOfPlugin())
+# print(annObj.getInstanceOfPlugin())
 
-#Calling Class methods
+# #Calling Class methods
 # print (annObj.addAnnotation(dataObjectId, annotationText))
 # print (annObj.getAnnotation(dataObjectId))
