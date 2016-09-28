@@ -1,0 +1,50 @@
+<html>
+	<head>
+		<title>DSS Admin</title>
+		<link rel="stylesheet" type="text/css" href="css/admin.css"/>
+	</head>
+	<body>
+		<h1>DSS Admin</h1>
+		<div class="mainContainer">
+			<div class="outerTitle">
+				<h2>Plug-in Options</h2>
+			</div>
+			<div class="formContainer">
+				<form>
+					<div class="visOption">
+						<div class="title">
+							<h3>Visualization Options</h3>
+						</div>
+						<label for="visFiles">Please select visualization files:</label>
+						<select id="visFiles" name="visFiles">
+							<option>VisJS</option>
+						</select>
+					</div>
+					<div class="dbOption">
+						<div class="title">
+							<h3>Database Options</h3>
+						</div>
+						<label for="dbFiles">Please select database files:</label>
+						<select id="dbFiles" name="dbFiles">
+							<option>MongoDB</option>
+						</select>
+					</div>
+
+					<div class="submitContainer">
+						<button type="cancel" onclick="window.location='./index.html';return false;">Cancel</button>
+						<input type="submit" value="Submit Changes"/>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="mainContainer">
+			<div class="outerTitle">
+				<h2>Upload New Plug-In</h2>
+			</div>
+			<div class="formContainer">
+				<form>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

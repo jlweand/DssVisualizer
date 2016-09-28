@@ -1,0 +1,61 @@
+html, body{
+	font-family: sans-serif;
+}
+h1, h2, h3{
+	padding-top: 0px;
+	margin-top: 0px;
+}
+.mainContainer{
+	padding-bottom: 30px;
+	position: relative;
+}
+.formContainer{
+	border: 1px solid #777;
+	border-radius: 5px;
+	padding: 30px 5px 5px;
+	position: relative;
+}
+.outerTitle{
+	position: absolute;
+	top: -15;
+	left: 20;
+	z-index: 1;
+	background-color: #fff;
+}
+
+.outerTitle h2{
+	margin: 0px 5px;
+}
+.title{
+	position: absolute;
+	top: -12;
+	left: 10;
+	z-index: 1;
+	background-color: #fff;
+}
+
+.title h3{
+	margin: 0px 5px;
+}
+
+.visOption, .dbOption{
+	border: 1px solid #bbb;
+	border-radius: 5px;
+	padding: 20px 5px 5px;
+	position: relative;
+}
+
+.dbOption{
+	margin: 20px 0px;
+}
+
+select{
+	min-width: 100px;
+}
+label{
+	display: block;
+}
+
+.submitContainer{
+	text-align: center;
+}
