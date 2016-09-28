@@ -21,10 +21,10 @@ class DataImport:
             data["metadata"] = metadata
 
             # todo get the date parsing working
-            #data["start"] = datetime.strptime(data["start"], '%a %b %d %H:%M:%S %Z %Y')
+            data["start"] = datetime.strptime(data["start"], '%Y-%m-%d %H:%M:%S')
 
-            #if(hasEndDate):
-            #    data["end"] = datetime.strptime(data["end"], '%a %b %d %H:%M:%S %Z %Y')
+            if(hasEndDate):
+                data["end"] = datetime.strptime(data["end"], '%Y-%m-%d %H:%M:%S')
 
         return json
 
@@ -51,14 +51,14 @@ class DataImport:
 
     def importClick(self, techName, eventName, comments, importDate):
         data = self.importJson(self.clickFile)
-        eventData = self.addExtraData(data["events"], techName, eventName, comments, importDate, True)
+        eventData = self.addExtraData(data, techName, eventName, comments, importDate, True)
         pyKeyLogger = ConfigReader().getInstanceOfDatasourcePlugin("PyKeyLogger")
         insertedCount = pyKeyLogger.importClick(eventData)
         return insertedCount
 
     def importTimed(self, techName, eventName, comments, importDate):
         data = self.importJson(self.timedFile)
-        eventData = self.addExtraData(data["events"], techName, eventName, comments, importDate, True)
+        eventData = self.addExtraData(data, techName, eventName, comments, importDate, True)
         pyKeyLogger = ConfigReader().getInstanceOfDatasourcePlugin("PyKeyLogger")
         insertedCount = pyKeyLogger.importTimed(eventData)
         return insertedCount
