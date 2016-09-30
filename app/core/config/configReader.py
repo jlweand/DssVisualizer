@@ -3,6 +3,14 @@ from pprint import pprint
 
 class ConfigReader:
 
+    def getListOfDatasources(self):
+        config = self.importConfigJson()
+        return config["datasourcePlugins"]
+
+    def getListOfRenderers(self):
+        config = self.importConfigJson()
+        return config["rendererPlugins"]
+
     def importConfigJson(self):
         with open('core/config/config.json', 'r') as configFile:
             jsonStr = configFile.read()

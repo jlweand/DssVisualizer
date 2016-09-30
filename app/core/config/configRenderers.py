@@ -49,10 +49,6 @@ class ConfigRenderers:
 
         return "Failed to find renderer plugin named " + name
 
-    def getListOfRenderers(self):
-        config = self.importConfigJson()
-        return config["rendererPlugins"]
-
     def setDefaultRenderer(self, name):
         config = self.importConfigJson()
         rendererPlugins = config["rendererPlugins"]

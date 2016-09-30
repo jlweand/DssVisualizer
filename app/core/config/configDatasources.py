@@ -49,10 +49,6 @@ class ConfigDatasources:
 
         return "Failed to find datasource plugin named " + name
 
-    def getListOfDatasources(self):
-        config = self.importConfigJson()
-        return config["datasourcePlugins"]
-
     def setDefaultDatasource(self, name):
         config = self.importConfigJson()
         datasourcePlugins = config["datasourcePlugins"]
