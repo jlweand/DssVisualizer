@@ -14,25 +14,13 @@ class PyKeyLogger:
         return jsonData
 
     def insertFixedKeyPressData(self, oldDataId, content, className, start):
-        newData = {}
-        newData["content"] = content
-        newData["className"] = className
-        newData["start"] = start
-        newData["addedDate"] = datetime.datetime.now().time()
-
         pyKeyLogger = getPlugin()
-        result = pyKeyLogger.insertFixedKeyPressData(oldDataId, newData)
+        result = pyKeyLogger.insertFixedKeyPressData(oldDataId, content, className, start)
         return result.inserted_id
 
     def updateFixedKeyPressData(self, dataId, content, className, start):
-        data = {}
-        data["content"] = content
-        data["className"] = className
-        data["start"] = start
-        data["updatedDate"] = datetime.datetime.now().time()
-
         pyKeyLogger = getPlugin()
-        result = pyKeyLogger.updateFixedKeyPressData(dataId, data)
+        result = pyKeyLogger.updateFixedKeyPressData(dataId, content, className, start)
         return result.updated_id
 
     def deleteFixedKeyPressData(self, dataId):
@@ -47,31 +35,13 @@ class PyKeyLogger:
         return jsonData
 
     def insertFixedClickData(self, oldDataId, content, _type, classname, title, start, end):
-        newData = {}
-        newData["content"] = content
-        newData["type"] = _type
-        newData["classname"] = classname
-        newData["title"] = title
-        newData["start"] = start
-        newData["end"] = end
-        newData["addedDate"] = datetime.datetime.now().time()
-
         pyKeyLogger = getPlugin()
-        result = pyKeyLogger.insertFixedClickData(oldDataId, newData)
+        result = pyKeyLogger.insertFixedClickData(oldDataId, content, _type, classname, title, start, end)
         return result.inserted_id
 
-    def updateFixedClickData(self, dataId, content, type, classname, title, start, end):
-        data = {}
-        data["content"] = content
-        data["type"] = _type
-        data["classname"] = classname
-        data["title"] = title
-        data["start"] = start
-        data["end"] = end
-        data["updatedDate"] = datetime.datetime.now().time()
-
+    def updateFixedClickData(self, dataId, content, _type, classname, title, start, end):
         pyKeyLogger = getPlugin()
-        result = pyKeyLogger.updateFixedClickData(dataId, data)
+        result = pyKeyLogger.updateFixedClickData(dataId, content, _type, classname, title, start, end)
         return result.updated_id
 
     def deleteFixedClickData(self, dataId):
@@ -85,32 +55,14 @@ class PyKeyLogger:
         jsonData = pyKeyLogger.selectTimedData(startDate, endDate)
         return jsonData
 
-    def insertFixedTimedData(self, oldDataId, content, type, classname, title, start, end):
-        newData = {}
-        newData["content"] = content
-        newData["type"] = _type
-        newData["classname"] = classname
-        newData["title"] = title
-        newData["start"] = start
-        newData["end"] = end
-        newData["addedDate"] = datetime.datetime.now().time()
-
+    def insertFixedTimedData(self, oldDataId, content, _type, classname, title, start, end):
         pyKeyLogger = getPlugin()
-        result = pyKeyLogger.insertFixedTimedData(oldDataId, newData)
+        result = pyKeyLogger.insertFixedTimedData(oldDataId, content, _type, classname, title, start, end)
         return result.inserted_id
 
-    def updateFixedTimedData(self, dataId, content, type, classname, title, start, end):
-        data = {}
-        data["content"] = content
-        data["type"] = _type
-        data["classname"] = classname
-        data["title"] = title
-        data["start"] = start
-        data["end"] = end
-        data["updatedDate"] = datetime.datetime.now().time()
-
+    def updateFixedTimedData(self, dataId, content, _type, classname, title, start, end):
         pyKeyLogger = getPlugin()
-        result = pyKeyLogger.updateFixedTimedData(dataId, data)
+        result = pyKeyLogger.updateFixedTimedData(dataId, content, _type, classname, title, start, end)
         return result.updated_id
 
     def deleteFixedTimedData(self, dataId):

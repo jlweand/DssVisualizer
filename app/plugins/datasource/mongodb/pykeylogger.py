@@ -30,12 +30,12 @@ class PyKeyLogger:
 
     # insert a new record.  This record must be tied to the original record.
     # the oldDataId will be a new 'column' called sourceId. it is of type ObjectId
-    def insertFixedKeyPressData(self, oldDataId, json):
+    def insertFixedKeyPressData(self, oldDataId, content, className, start):
         return 0
 
     # update a previously 'fixed' record. Make sure that this record has a value in the sourceId.
     # ORIGINAL DATA SHOULD NEVER BE UPDATED OR DELETED.
-    def updateFixedKeyPressData(self, dataId, json):
+    def updateFixedKeyPressData(self, dataId, content, className, start):
         return 0
 
     # delete a record.  Make sure that this record has a value in the sourceId.
@@ -50,12 +50,12 @@ class PyKeyLogger:
 
     # insert a new record.  This record must be tied to the original record.
     # the oldDataId will be a new 'column' called sourceId. it is of type ObjectId
-    def insertFixedClickData(self, oldDataId, json):
+    def insertFixedClickData(self, oldDataId, content, _type, classname, title, start, end):
         return 0
 
     # update a previously 'fixed' record. Make sure that this record has a value in the sourceId.
     # ORIGINAL DATA SHOULD NEVER BE UPDATED OR DELETED.
-    def updateFixedClickData(self, dataId, json):
+    def updateFixedClickData(self, dataId, content, _type, classname, title, start, end):
         return 0
 
     # delete a record.  Make sure that this record has a value in the sourceId.
@@ -70,12 +70,12 @@ class PyKeyLogger:
 
     # insert a new record.  This record must be tied to the original record.
     # the oldDataId will be a new 'column' called sourceId. it is of type ObjectId
-    def insertFixedTimedData(self, oldDataId, json):
+    def insertFixedTimedData(self, oldDataId, content, _type, classname, title, start, end):
         return 0
 
     # update a previously 'fixed' record. Make sure that this record has a value in the sourceId.
     # ORIGINAL DATA SHOULD NEVER BE UPDATED OR DELETED.
-    def updateFixedTimedData(self, dataId, json):
+    def updateFixedTimedData(self, dataId, content, _type, classname, title, start, end):
         return 0
 
     # delete a record.  Make sure that this record has a value in the sourceId.
