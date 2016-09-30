@@ -18,7 +18,7 @@ class Annotations:
 
         #SQL Equivalent: Select * from t_annotations where dataObjectId = dataObjectId
         annotations = collection.find(findJson)
-        
+
         # dump it into a JSON string from a MongoDB cursor
         return dumps(annotations)
 
@@ -34,7 +34,7 @@ class Annotations:
         #SQL Equivalent: Insert into t_annotations ("annotationText") values (annotationText) where dataObjectId = dataObjectId
         result = collection.insert_one(insertJson)
         # return new annotationObjectId
-        return str(result.inserted_id)
+        return result.inserted_id
 
     # edit an annotation for the annotationObjectId
     def editAnnotation(self, annotationObjectId, annotationText):
