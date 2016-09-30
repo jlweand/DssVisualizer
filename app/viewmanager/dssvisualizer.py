@@ -4,11 +4,13 @@ import os
 import ujson
 from urllib.parse import parse_qs
 from core.apis.renderer.annotations import Annotations
+from core.apis.renderer.generateHtml import GenerateHtml
 
 gi.require_version("Gtk", "3.0")
 gi.require_version("WebKit", "3.0")
 from gi.repository import Gtk
 from gi.repository import WebKit
+
 
 
 def handle(web_view,web_frame,web_resource,request,response):
@@ -21,7 +23,7 @@ def handle(web_view,web_frame,web_resource,request,response):
 		jsonFile = getJson("json/keypressData.json")
 		jsonData = ujson.dumps(jsonFile)
 		js = 'visData(%s);' % jsonData
-		v.execute_script(js)
+		webKitWebView.execute_script(js)
 	else:
 		queryDict = parse_qs(query)
 		############################################################
@@ -49,21 +51,21 @@ def handle_btn2():
 # def handle_url(request):
 # 	print(request.get('annotation'))
 
-w = Gtk.Window()
-v = WebKit.WebView()
-sw = Gtk.ScrolledWindow()
-sw.add(v)
-w.add(sw)
+gtkWindow = Gtk.Window()
+webKitWebView = WebKit.WebView()
+gtkScrolledWindow = Gtk.ScrolledWindow()
+gtkScrolledWindow.add(webKitWebView)
+gtkWindow.add(gtkScrolledWindow)
+gtkWindow.connect("delete-event", Gtk.main_quit)
 
-#w.set_size_request(100,100)
+#gtkWindow.set_size_request(100,100)
 
-w.connect("delete-event", Gtk.main_quit)
-
+# generate the index.html page based on the renderer plugin
+GenerateHtml().generatHtml()
 uri = "file:///" + os.getcwd() + "/viewmanager/index.html"
-v.load_uri(uri)
-v.connect("resource-request-starting", handle)
 
+webKitWebView.load_uri(uri)
+webKitWebView.connect("resource-request-starting", handle)
 
-
-w.show_all()
+gtkWindow.show_all()
 Gtk.main()

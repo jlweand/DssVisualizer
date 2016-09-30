@@ -1,0 +1,8 @@
+<script src="http://t4t5.github.io/sweetalert/dist/sweetalert.min.js"></script>
+<link href="http://t4t5.github.io/sweetalert/dist/sweetalert.css" rel="stylesheet" type="text/css"/>
+<!-- Load jquery for ajax support -->
+<script src="../plugins/renderer/visjs/js/jquery-3.1.0.min.js"></script>
+<script src="../plugins/renderer/visjs/vis.js"></script>
+<link href="../plugins/renderer/visjs/vis.css" rel="stylesheet" type="text/css" />
+<script src="../plugins/renderer/visjs/js/loadData.js"></script>
+<script src="../plugins/renderer/visjs/js/annotation.js"></script>

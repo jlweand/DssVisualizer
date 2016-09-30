@@ -20,7 +20,7 @@ class ConfigReader:
     def getDatasourcePluginLocation(self):
         config = self.importConfigJson();
         activePlugin = config["activeDatasourcePlugin"]
-        for plugin in config["datasourcePlugins"]:
+        for plugin in self.getListOfDatasources():
             if plugin["name"] == activePlugin:
                 return plugin["location"] + "."
         return "No Datasource found";
@@ -28,7 +28,7 @@ class ConfigReader:
     def getRendererPluginLocation(self):
         config = self.importConfigJson();
         activePlugin = config["activeRendererPlugin"]
-        for plugin in config["activeRendererPlugin"]:
+        for plugin in self.getListOfRenderers():
             if plugin["name"] == activePlugin:
                 return plugin["location"] + "."
         return "No Renderer found";
