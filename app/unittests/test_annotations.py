@@ -1,8 +1,7 @@
 import unittest
 from core.apis.datasource.annotations import Annotations
 from pymongo import MongoClient
-#import ujson
-import json
+import ujson
 
 class AnnotationsTest(unittest.TestCase):
 
@@ -18,19 +17,19 @@ class AnnotationsTest(unittest.TestCase):
         #annotations = Annotations().getAnnotations("dataObjectId")
         annotations = Annotations().getAnnotations("19871011")
         #jsonObject = ujson.loads(annotations)
-        jsonObject = json.loads(annotations)
+        jsonObject = ujson.loads(annotations)
         self.assertEqual(len(jsonObject), 2)
 
     def test_editAnnotation(self):
         #annotationId = Annotations().editAnnotation("annotationObjectId", "annotationText")
         annotationId = Annotations().editAnnotation("57eb1d50231bad1f1c990d8c", "Updated annotation text")
         self.assertIsNotNone(annotationId)
-    
+
     def test_deleteAnnotation(self):
         #delByAnnObjId = Annotations().deleteAnnotation("annotationObjectId")
         delByAnnObjId = Annotations().deleteAnnotation("57eb2622231bad117ced4ff8")
         self.assertEqual(delByAnnObjId, 1)#<---Since we are deleting by annotation object id, it needs to be one and only one
-    
+
     def test_deleteAllAnnotationsForData(self):
         #delByDataIdCount = Annotations().deleteAllAnnotationsForData("ObjectId")
         delByDataIdCount = Annotations().deleteAllAnnotationsForData(" ")

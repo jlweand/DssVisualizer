@@ -21,7 +21,7 @@ class Annotations:
         annotationPlugin = self.getInstanceOfPlugin()
 
         # call the select method.
-        annotations = annotationPlugin.getAnnotation(dataId)
+        annotations = annotationPlugin.getAnnotations(dataId)
         return annotations
 
     # add an annotation for the dataObjectId
