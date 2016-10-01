@@ -1,6 +1,7 @@
 from pymongo import MongoClient
 from core.apis.datasource.annotations import Annotations
-import ujson
+from bson.json_util import dumps
+from datetime import datetime
 
 class PyKeyLogger:
 
@@ -26,7 +27,9 @@ class PyKeyLogger:
 # Keypress #
     # select data by date range of the 'start' column
     def selectKeyPressData(self, startDate, endDate):
-        return 0;
+        collection = self.getDatabase().keypressData
+        result = collection.find({ "start": {"$gte" : datetime.strptime(startDate, '%Y-%m-%d %H:%M:%S'), "$lt": datetime.strptime(endDate, '%Y-%m-%d %H:%M:%S')}})
+        return dumps(result)
 
     # insert a new record.  This record must be tied to the original record.
     # the oldDataId will be a new 'column' called sourceId. it is of type ObjectId
@@ -46,7 +49,7 @@ class PyKeyLogger:
 # Click #
     # select data by date range of the 'start' column
     def selectClickData(self, startDate, endDate):
-        return 0;
+        return 0
 
     # insert a new record.  This record must be tied to the original record.
     # the oldDataId will be a new 'column' called sourceId. it is of type ObjectId
@@ -66,7 +69,7 @@ class PyKeyLogger:
 # Timed #
     # select data by date range of the 'start' column
     def selectTimedData(self, startDate, endDate):
-        return 0;
+        return 0
 
     # insert a new record.  This record must be tied to the original record.
     # the oldDataId will be a new 'column' called sourceId. it is of type ObjectId
