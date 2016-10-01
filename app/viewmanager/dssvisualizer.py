@@ -5,6 +5,7 @@ import ujson
 from urllib.parse import parse_qs
 from core.apis.renderer.annotations import Annotations
 from core.apis.renderer.generateHtml import GenerateHtml
+from core.apis.datasource.pyKeyLogger import PyKeyLogger
 
 gi.require_version("Gtk", "3.0")
 gi.require_version("WebKit", "3.0")
@@ -20,8 +21,9 @@ def handle(web_view,web_frame,web_resource,request,response):
 	if not query:
 		return
 	elif query == "keypressData":
-		jsonFile = getJson("json/keypressData.json")
-		jsonData = ujson.dumps(jsonFile)
+		jsonData = PyKeyLogger().selectKeyPressData('2016-08-01 00:00:00', '2016-08-20 00:00:00')
+		# jsonData = ujson.dumps(jsonFile)
+		print(jsonData)
 		js = 'visData(%s);' % jsonData
 		webKitWebView.execute_script(js)
 	else:

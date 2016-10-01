@@ -2,6 +2,9 @@ $(document).ready(function(){
 	$.get("http://localhost?keypressData");
 });
 function visData(data){
+	for(smallData in data){
+		$("#currentItem").append(smallData);
+	}
 	var parsedJson = data;
 	if(typeof data == 'string'){
 		parsedJson = JSON.parse(data);

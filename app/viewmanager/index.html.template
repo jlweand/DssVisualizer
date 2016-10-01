@@ -8,6 +8,9 @@
 		font-family: sans-serif;
 	}
 	</style>
+	<!-- Load jquery for ajax support -->
+	<script src="js/jquery-3.1.0.min.js"></script>
+	<script src="js/annotation.js"></script>
 <SCRIPTS GO HERE>
 </head>
 <body>
