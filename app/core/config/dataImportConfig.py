@@ -1,9 +1,8 @@
 import ujson
 from datetime import datetime
-from pprint import pprint
-from .configReader import ConfigReader
+from core.apis.datasource.dataimport import DataImport
 
-class DataImport:
+class DataImportConfig:
 
     def __init__(self):
         self.keypressFile = "json/keypressData.json"
@@ -34,31 +33,17 @@ class DataImport:
             data = ujson.loads(jsonStr)
         return data
 
-
     def importKeypressData(self, techName, eventName, comments, importDate):
-        # get the JSON data
         data = self.importJson(self.keypressFile)
-
-        # add the new values to it and format dates
         data = self.addExtraData(data, techName, eventName, comments, importDate, False)
-
-        # get the datasource plugin.
-        pyKeyLogger = ConfigReader().getInstanceOfDatasourcePlugin("PyKeyLogger")
-
-        # call the insert method.
-        insertedCount = pyKeyLogger.importKeypressData(data)
-        return insertedCount
+        return DataImport().importKeypressData(data)
 
     def importClick(self, techName, eventName, comments, importDate):
         data = self.importJson(self.clickFile)
         eventData = self.addExtraData(data, techName, eventName, comments, importDate, True)
-        pyKeyLogger = ConfigReader().getInstanceOfDatasourcePlugin("PyKeyLogger")
-        insertedCount = pyKeyLogger.importClick(eventData)
-        return insertedCount
+        return DataImport().importClick(eventData)
 
     def importTimed(self, techName, eventName, comments, importDate):
         data = self.importJson(self.timedFile)
         eventData = self.addExtraData(data, techName, eventName, comments, importDate, True)
-        pyKeyLogger = ConfigReader().getInstanceOfDatasourcePlugin("PyKeyLogger")
-        insertedCount = pyKeyLogger.importTimed(eventData)
-        return insertedCount
+        return DataImport().importTimed(eventData)

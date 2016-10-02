@@ -3,18 +3,20 @@ from core.config.configReader import ConfigReader
 class GenerateHtml:
 
     def getPluginFile(self, fileName):
+        """Get the file where the scripts for the current active renderer plugin live."""
         location = ConfigReader().getRendererPluginLocation()
-        thefile = location.replace('.', '/') + fileName
+        thefile = location.replace('.', '/') + 'scripts.txt'
         return thefile
 
     def generatHtml(self):
+        """This method generates the index.html page based on the current active renderer plugin."""
         # read html file
         html = '';
         with open('viewmanager/index.html.template', 'r') as htmlFile:
             html = htmlFile.read()
 
         # get the scripts file
-        scriptPlugin = self.getPluginFile('scripts.txt')
+        scriptPlugin = self.getPluginFile()
         with open(scriptPlugin, 'r') as scriptFile:
             scripts = scriptFile.read()
 

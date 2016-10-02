@@ -76,8 +76,58 @@ class PyKeyLogger:
         :returns: The deleted count.
         """
         pyKeyLogger = self.getPlugin()
-        result = pyKeyLogger.deleteFixedKeyPressData(dataId)
-        return result
+        return pyKeyLogger.deleteFixedKeyPressData(dataId)
+
+    def addAnnotationKeyPress(self, dataId, annotationText):
+        """Override: Add an annotation to the key press object.
+
+        :param dataId: The ID of the data to add the annotation to.
+        :type content: str
+        :param annotationText: The annotation text
+        :type content: str
+        :returns: The modified count.
+        """
+        pyKeyLogger = self.getPlugin()
+        return pyKeyLogger.addAnnotationKeyPress(dataId, annotationText)
+
+    # edit an annotation for the dataId
+    def editAnnotationKeyPress(self, dataId, oldAnnotationText, newAnnotationText):
+        """Override: Edit an annotation on the key press object.
+
+        :param dataId: The ID of the data to edit the annotation of.
+        :type content: str
+        :param annotationText: The old annotation text
+        :type content: str
+        :param annotationText: The new annotation text
+        :type content: str
+        :returns: The modified count.
+        """
+        pyKeyLogger = self.getPlugin()
+        return pyKeyLogger.editAnnotationKeyPress(dataId, oldAnnotationText, newAnnotationText)
+
+    #delete an annotation for the dataId
+    def deleteAnnotationKeyPress(self, dataId, annotationText):
+        """Override: Delete one annotation from the key press object.
+
+        :param dataId: The ID of the data to remove the annotation from.
+        :type content: str
+        :param annotationText: The annotation text to remove.
+        :type content: str
+        :returns: The modified count.
+        """
+        pyKeyLogger = self.getPlugin()
+        return pyKeyLogger.deleteAnnotationKeyPress(dataId, annotationText)
+
+    # deletes all annotations for the dataId
+    def deleteAllAnnotationsForKeyPress(self, dataId):
+        """Override: Delete all annotations from the key press object.
+
+        :param dataId: The ID of the data to remove all annotations from.
+        :type content: str
+        :returns: The modified count.
+        """
+        pyKeyLogger = self.getPlugin()
+        return pyKeyLogger.deleteAllAnnotationsForKeyPress(dataId)
 
 #Click#
     def selectClickData(self, startDate, endDate):
@@ -91,6 +141,17 @@ class PyKeyLogger:
         """
         pyKeyLogger = self.getPlugin()
         jsonData = pyKeyLogger.selectClickData(startDate, endDate)
+        return jsonData
+
+    def selectClickDataById(self, dataId):
+        """Override: Select the Click data by its ID
+
+        :param dataId: The ID of the Data point
+        :type startDate: str
+        :returns: JSON object
+        """
+        pyKeyLogger = self.getPlugin()
+        jsonData = pyKeyLogger.selectClickDataById(dataId)
         return jsonData
 
     def insertFixedClickData(self, oldDataId, content, _type, classname, title, start, end):
@@ -150,6 +211,57 @@ class PyKeyLogger:
         result = pyKeyLogger.deleteFixedClickData(dataId)
         return result
 
+    def addAnnotationClick(self, dataId, annotationText):
+        """Override: Add an annotation to the Click object.
+
+        :param dataId: The ID of the data to add the annotation to.
+        :type content: str
+        :param annotationText: The annotation text
+        :type content: str
+        :returns: The modified count.
+        """
+        pyKeyLogger = self.getPlugin()
+        return pyKeyLogger.addAnnotationClick(dataId, annotationText)
+
+    # edit an annotation for the dataId
+    def editAnnotationClick(self, dataId, oldAnnotationText, newAnnotationText):
+        """Override: Edit an annotation on the Click object.
+
+        :param dataId: The ID of the data to edit the annotation of.
+        :type content: str
+        :param annotationText: The old annotation text
+        :type content: str
+        :param annotationText: The new annotation text
+        :type content: str
+        :returns: The modified count.
+        """
+        pyKeyLogger = self.getPlugin()
+        return pyKeyLogger.editAnnotationClick(dataId, oldAnnotationText, newAnnotationText)
+
+    #delete an annotation for the dataId
+    def deleteAnnotationClick(self, dataId, annotationText):
+        """Override: Delete one annotation from the Click object.
+
+        :param dataId: The ID of the data to remove the annotation from.
+        :type content: str
+        :param annotationText: The annotation text to remove.
+        :type content: str
+        :returns: The modified count.
+        """
+        pyKeyLogger = self.getPlugin()
+        return pyKeyLogger.deleteAnnotationClick(dataId, annotationText)
+
+    # deletes all annotations for the dataId
+    def deleteAllAnnotationsForClick(self, dataId):
+        """Override: Delete all annotations from the Click object.
+
+        :param dataId: The ID of the data to remove all annotations from.
+        :type content: str
+        :returns: The modified count.
+        """
+        pyKeyLogger = self.getPlugin()
+        return pyKeyLogger.deleteAllAnnotationsForClick(dataId)
+
 #Timed#
     def selectTimedData(self, startDate, endDate):
         """Override: Select the timed data by start and end date.
@@ -162,6 +274,17 @@ class PyKeyLogger:
         """
         pyKeyLogger = self.getPlugin()
         jsonData = pyKeyLogger.selectTimedData(startDate, endDate)
+        return jsonData
+
+    def selectTimedDataById(self, dataId):
+        """Override: Select the Timed data by its ID
+
+        :param dataId: The ID of the Data point
+        :type startDate: str
+        :returns: JSON object
+        """
+        pyKeyLogger = self.getPlugin()
+        jsonData = pyKeyLogger.selectTimedDataById(dataId)
         return jsonData
 
     def insertFixedTimedData(self, oldDataId, content, _type, classname, title, start, end):
@@ -220,3 +343,54 @@ class PyKeyLogger:
         pyKeyLogger = self.getPlugin()
         result = pyKeyLogger.deleteFixedTimedData(dataId)
         return result
+
+    def addAnnotationTimed(self, dataId, annotationText):
+        """Override: Add an annotation to the Timed object.
+
+        :param dataId: The ID of the data to add the annotation to.
+        :type content: str
+        :param annotationText: The annotation text
+        :type content: str
+        :returns: The modified count.
+        """
+        pyKeyLogger = self.getPlugin()
+        return pyKeyLogger.addAnnotationTimed(dataId, annotationText)
+
+    # edit an annotation for the dataId
+    def editAnnotationTimed(self, dataId, oldAnnotationText, newAnnotationText):
+        """Override: Edit an annotation on the Timed object.
+
+        :param dataId: The ID of the data to edit the annotation of.
+        :type content: str
+        :param annotationText: The old annotation text
+        :type content: str
+        :param annotationText: The new annotation text
+        :type content: str
+        :returns: The modified count.
+        """
+        pyKeyLogger = self.getPlugin()
+        return pyKeyLogger.editAnnotationTimed(dataId, oldAnnotationText, newAnnotationText)
+
+    #delete an annotation for the dataId
+    def deleteAnnotationTimed(self, dataId, annotationText):
+        """Override: Delete one annotation from the Timed object.
+
+        :param dataId: The ID of the data to remove the annotation from.
+        :type content: str
+        :param annotationText: The annotation text to remove.
+        :type content: str
+        :returns: The modified count.
+        """
+        pyKeyLogger = self.getPlugin()
+        return pyKeyLogger.deleteAnnotationTimed(dataId, annotationText)
+
+    # deletes all annotations for the dataId
+    def deleteAllAnnotationsForTimed(self, dataId):
+        """Override: Delete all annotations from the Timed object.
+
+        :param dataId: The ID of the data to remove all annotations from.
+        :type content: str
+        :returns: The modified count.
+        """
+        pyKeyLogger = self.getPlugin()
+        return pyKeyLogger.deleteAllAnnotationsForTimed(dataId)
