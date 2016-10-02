@@ -23,6 +23,17 @@ class PyKeyLogger:
         jsonData = pyKeyLogger.selectKeyPressData(startDate, endDate)
         return jsonData
 
+    def selectKeyPressDataById(self, dataId):
+        """Override: Select the key press data by its ID
+
+        :param dataId: The ID of the Data point
+        :type startDate: str
+        :returns: JSON object
+        """
+        pyKeyLogger = self.getPlugin()
+        jsonData = pyKeyLogger.selectKeyPressDataById(dataId)
+        return jsonData
+
     def insertFixedKeyPressData(self, oldDataId, content, className, start):
         """Override: Inserts a new record of the data. Does not overrite the original key press.
 

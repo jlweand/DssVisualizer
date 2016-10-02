@@ -1,7 +1,9 @@
 from pymongo import MongoClient
 from core.apis.datasource.annotations import Annotations
+from bson import ObjectId
 from bson.json_util import dumps
 from datetime import datetime
+import ujson
 
 class PyKeyLogger:
 
@@ -28,8 +30,14 @@ class PyKeyLogger:
     # select data by date range of the 'start' column
     def selectKeyPressData(self, startDate, endDate):
         collection = self.getDatabase().keypressData
-        result = collection.find({ "start": {"$gte" : datetime.strptime(startDate, '%Y-%m-%d %H:%M:%S'), "$lt": datetime.strptime(endDate, '%Y-%m-%d %H:%M:%S')}})
-        return dumps(result)
+        findJson = { "start": {"$gte" : datetime.strptime(startDate, '%Y-%m-%d %H:%M:%S'), "$lt": datetime.strptime(endDate, '%Y-%m-%d %H:%M:%S')}}
+        cursor = collection.find(findJson)
+        return self.formatOutput(cursor, False)
+
+    def selectKeyPressDataById(self, dataId):
+        collection = self.getDatabase().keypressData
+        cursor = collection.find({"_id": ObjectId(dataId)})
+        return self.formatOutput(cursor, False)
 
     # insert a new record.  This record must be tied to the original record.
     # the oldDataId will be a new 'column' called sourceId. it is of type ObjectId
@@ -85,3 +93,24 @@ class PyKeyLogger:
     # ORIGINAL DATA SHOULD NEVER BE UPDATED OR DELETED.
     def deleteFixedTimedData(self, dataId):
         return 0
+
+
+    def formatOutput(self, cursor, hasEndDate):
+        bsonResult = dumps(cursor)
+        objects = ujson.loads(bsonResult)
+        for obj in objects:
+            obj = self.fixTheDates(obj, hasEndDate)
+
+        return objects
+
+    def fixTheDates(self, obj, hasEndDate):
+        obj["start"] = self.formatDatetime(obj["start"]["$date"])
+        obj["metadata"]["importDate"] = self.formatDatetime(obj["metadata"]["importDate"]["$date"])
+
+        if(hasEndDate):
+            obj["end"] = self.formatDatetime(obj["end"]["$date"])
+
+        return obj
+
+    def formatDatetime(self, epoch):
+        return datetime.fromtimestamp(epoch / 1e3).isoformat()

@@ -1,18 +1,18 @@
 import unittest
 from core.apis.datasource.pyKeyLogger import PyKeyLogger
-from pymongo import MongoClient
 import ujson
-from pprint import pprint
-from core.config.dataimport import DataImport
-from datetime import datetime
+import pprint
 
 class PyKeyLoggerTest(unittest.TestCase):
 
     def test_selectKeyPressData(self):
         jsonData = PyKeyLogger().selectKeyPressData('2016-08-01 00:00:00', '2016-08-20 00:00:00')
-        print(jsonData)
-        # self.assertEqual(9, len(jsonData))
-    #
+        self.assertEqual(9, len(jsonData))
+
+    def test_selectKeyPressDataById(self):
+        jsonData = PyKeyLogger().selectKeyPressDataById('57f02238578ad872fdeabd58')
+        self.assertEqual(1, len(jsonData))
+
     # def test_selectClickData(self):
     #     jsonData = PyKeyLogger().selectClickData()
     #     # pprint(jsonData)
@@ -22,7 +22,6 @@ class PyKeyLoggerTest(unittest.TestCase):
     #     jsonData = PyKeyLogger().selectTimedData()
     #     # pprint(jsonData)
     #     self.assertIsNotNone(jsonData)
-
 
 if __name__ == '__main__':
     unittest.main()
