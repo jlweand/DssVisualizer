@@ -2,7 +2,7 @@ from core.config.configReader import ConfigReader
 
 class GenerateHtml:
 
-    def getPluginFile(self, fileName):
+    def getPluginFile(self):
         """Get the file where the scripts for the current active renderer plugin live."""
         location = ConfigReader().getRendererPluginLocation()
         thefile = location.replace('.', '/') + 'scripts.txt'

@@ -1,23 +1,28 @@
 $(document).ready(function(){
-	$.get("http://localhost?keypressData");
+	var startDate = '2016-08-01 09:00:00';
+	var endDate = '2016-09-16 10:00:00';
+	var keypressDataUrl = "http://localhost?request=keypressData&startDate="+startDate+"&endDate="+endDate;
+	// var clickDataUrl = "http://localhost?request=clickData&startDate="+startDate+"&endDate="+endDate;
+	// var timedDataUrl = "http://localhost?request=timedData&startDate="+startDate+"&endDate="+endDate;
+	$.get(keypressDataUrl);
 });
-function visData(data){
-	for(smallData in data){
-		$("#currentItem").append(smallData);
-	}
-	var parsedJson = data;
-	if(typeof data == 'string'){
-		parsedJson = JSON.parse(data);
+function visData(keyData, clickData, timedData){
+	var parsedJson = $.extend({}, keyData, clickData, timedData);
+	if(typeof parsedJson == 'string'){
+		parsedJson = JSON.parse(parsedJson);
 	}
 
 	// hide the "loading..." message
 	document.getElementById('loading').style.display = 'none';
 
 	// DOM element where the Timeline will be attached
-	var container = document.getElementById('visualization');
+	var container = document.getElementById("keypressData");
+	// var container = $("#keypressData");
 
 	// Create a DataSet (allows two way data-binding)
-	var items = new vis.DataSet(parsedJson);
+	var items = new vis.DataSet(keyData);
+	items.add(clickData);
+	items.add(timedData);
 
 	// Configuration for the Timeline
 	var options = {
@@ -80,7 +85,16 @@ function visData(data){
 				}
 			});
 		},
-		dataAttributes: 'all'
+		dataAttributes: 'all',
+		template: function (item) {
+			var display = item.content;
+			if(display == " "){
+				return '<img src="' + item.title + '" alt="time: '+ item.start +'"/>';
+			}
+			else{
+		    	return '<p>' + item.content + '</p>';
+			}
+		  }
 	};
 
 	// Create a Timeline
@@ -90,7 +104,7 @@ function visData(data){
 		var currItem = properties.items;
 		if(currItem != ""){
 			var currItemContent = $('[data-id="'+currItem+'"]').attr('data-content');
-			$("#annotationLabel").html("Please enter the annotation for: '"+currItemContent+"' ["+currItem+"]");
+			$("#annotationLabel").html("Please enter the annotation for: '"+currItemContent);
 			$("#objID").val(currItem);
 			$("#annotation").attr("disabled", false);
 			$("#submitAnnotation").attr("disabled", false);

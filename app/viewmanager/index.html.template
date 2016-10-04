@@ -17,7 +17,7 @@
 	<p>
 		<a href="admin.html">Edit Plug-Ins</a>
 	</p>
-	<div id="visualization"></div>
+	<div id="keypressData"></div>
 	<div id="loading">loading...</div>
 	<div id="currentItem"></div>
 	<form id="annotationsForm">
