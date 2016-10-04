@@ -2,7 +2,7 @@ from core.config.configReader import ConfigReader
 
 class PyKeyLogger:
     """PyKeyLogger API.  Most of these methods must be overwritten in your plugin.
-        Datasource plugin must have a filenamed pyKeyLogger.py with a class name of PyKeyLogger
+    Datasource plugin must have a filenamed pyKeyLogger.py with a class name of PyKeyLogger
     """
 
     def getPlugin(self):

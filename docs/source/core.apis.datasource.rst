@@ -4,10 +4,10 @@ core.apis.datasource package
 Submodules
 ----------
 
-core.apis.datasource.annotations module
----------------------------------------
+core.apis.datasource.dataImport module
+--------------------------------------
 
-.. automodule:: core.apis.datasource.annotations
+.. automodule:: core.apis.datasource.dataImport
     :members:
     :undoc-members:
     :show-inheritance:

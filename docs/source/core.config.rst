@@ -28,10 +28,18 @@ core.config.configRenderers module
     :undoc-members:
     :show-inheritance:
 
-core.config.dataimport module
------------------------------
+core.config.dataExportConfig module
+-----------------------------------
 
-.. automodule:: core.config.dataimport
+.. automodule:: core.config.dataExportConfig
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+core.config.dataImportConfig module
+-----------------------------------
+
+.. automodule:: core.config.dataImportConfig
     :members:
     :undoc-members:
     :show-inheritance:
