@@ -49,17 +49,27 @@ class PyKeyLogger:
     # insert a new record.  This record must be tied to the original record.
     # the oldDataId will be a new 'column' called sourceId. it is of type ObjectId
     def insertFixedKeyPressData(self, oldDataId, content, className, start):
-        return 0
+        collection = self.getDatabase().keypressData
+        insertJson = {"oldDataId": oldDataId, "content": content, "className": className,"start": start}
+        result = collection.insert_one(insertJson)
+        return result.inserted_id
 
     # update a previously 'fixed' record. Make sure that this record has a value in the sourceId.
     # ORIGINAL DATA SHOULD NEVER BE UPDATED OR DELETED.
-    def updateFixedKeyPressData(self, dataId, content, className, start):
-        return 0
+    def updateFixedKeyPressData(self, dataId, oldDataId, content, start):
+        collection = self.getDatabase().keypressData
+        updateId = {"$and":[{ "_id" : ObjectId(dataId)}, { "oldDataId" : oldDataId}]}
+        updateText = {"$set": {"content": content ,"start": start}}
+        result = collection.update_one(updateId, updateText)
+        return result.modified_count
 
     # delete a record.  Make sure that this record has a value in the sourceId.
     # ORIGINAL DATA SHOULD NEVER BE UPDATED OR DELETED.
-    def deleteFixedKeyPressData(self, dataId):
-        return 0
+    def deleteFixedKeyPressData(self, dataId, oldDataId):
+        collection = self.getDatabase().keypressData
+        deleteJson = {"$and":[{ "_id" : ObjectId(dataId)}, { "oldDataId" : oldDataId}]}
+        result = collection.delete_one(deleteJson)
+        return result.deleted_count
 
     # add an annotation for the dataId
     def addAnnotationKeyPress(self, dataId, annotationText):
@@ -97,18 +107,28 @@ class PyKeyLogger:
 
     # insert a new record.  This record must be tied to the original record.
     # the oldDataId will be a new 'column' called sourceId. it is of type ObjectId
-    def insertFixedClickData(self, oldDataId, content, _type, classname, title, start, end):
-        return 0
+    def insertFixedClickData(self, oldDataId, content, className, start, end, title, typeClick):
+        collection = self.getDatabase().click
+        insertJson = {"oldDataId": oldDataId, "content": content, "className": className,"start": start, "end": end, "title": title, "type": typeClick}
+        result = collection.insert_one(insertJson)
+        return result.inserted_id
 
     # update a previously 'fixed' record. Make sure that this record has a value in the sourceId.
     # ORIGINAL DATA SHOULD NEVER BE UPDATED OR DELETED.
-    def updateFixedClickData(self, dataId, content, _type, classname, title, start, end):
-        return 0
+    def updateFixedClickData(self, dataId, oldDataId, content, start, end, title, typeClick):
+        collection = self.getDatabase().click
+        updateId = {"$and":[{ "_id" : ObjectId(dataId)}, { "oldDataId" : oldDataId}]}
+        updateText = {"$set": {"content": content ,"start": start, "end": end, "title": title, "type": typeClick}}
+        result = collection.update_one(updateId, updateText)
+        return result.modified_count
 
     # delete a record.  Make sure that this record has a value in the sourceId.
     # ORIGINAL DATA SHOULD NEVER BE UPDATED OR DELETED.
-    def deleteFixedClickData(self, dataId):
-        return 0
+    def deleteFixedClickData(self, dataId, oldDataId):
+        collection = self.getDatabase().click
+        deleteJson = {"$and":[{ "_id" : ObjectId(dataId)}, { "oldDataId" : oldDataId}]}
+        result = collection.delete_one(deleteJson)
+        return result.deleted_count
 
     # add an annotation for the dataId
     def addAnnotationClick(self, dataId, annotationText):
@@ -146,18 +166,28 @@ class PyKeyLogger:
 
     # insert a new record.  This record must be tied to the original record.
     # the oldDataId will be a new 'column' called sourceId. it is of type ObjectId
-    def insertFixedTimedData(self, oldDataId, content, _type, classname, title, start, end):
-        return 0
+    def insertFixedTimedData(self, oldDataId, content, className, start, end, title, typeTimed):
+        collection = self.getDatabase().timed
+        insertJson = {"oldDataId": oldDataId, "content": content, "className": className,"start": start, "end": end, "title": title, "type": typeTimed}
+        result = collection.insert_one(insertJson)
+        return result.inserted_id
 
     # update a previously 'fixed' record. Make sure that this record has a value in the sourceId.
     # ORIGINAL DATA SHOULD NEVER BE UPDATED OR DELETED.
-    def updateFixedTimedData(self, dataId, content, _type, classname, title, start, end):
-        return 0
+    def updateFixedTimedData(self, dataId, oldDataId, content, start, end, title, typeTimed):
+        collection = self.getDatabase().timed
+        updateId = {"$and":[{ "_id" : ObjectId(dataId)}, { "oldDataId" : oldDataId}]}
+        updateText = {"$set": {"content": content ,"start": start, "end": end, "title": title, "type": typeTimed}}
+        result = collection.update_one(updateId, updateText)
+        return result.modified_count
 
     # delete a record.  Make sure that this record has a value in the sourceId.
     # ORIGINAL DATA SHOULD NEVER BE UPDATED OR DELETED.
-    def deleteFixedTimedData(self, dataId):
-        return 0
+    def deleteFixedTimedData(self, dataId, oldDataId):
+        collection = self.getDatabase().timed
+        deleteJson = {"$and":[{ "_id" : ObjectId(dataId)}, { "oldDataId" : oldDataId}]}
+        result = collection.delete_one(deleteJson)
+        return result.deleted_count
 
     # add an annotation for the dataId
     def addAnnotationTimed(self, dataId, annotationText):
