@@ -2,6 +2,7 @@
 	<head>
 		<title>DSS Admin</title>
 		<link rel="stylesheet" type="text/css" href="css/admin.css"/>
+		<script src="js/jquery-3.1.0.min.js"></script>
 	</head>
 	<body>
 		<h1>DSS Admin</h1>
@@ -44,6 +45,19 @@
 			<div class="formContainer">
 				<form>
 				</form>
+				<h3>Uninstalled Renderers</h3>
+				<select id='installRends' name="uninstalls">
+					<!--dssvisualizer will add uninstalled rendererPlugins here -->
+				</select>
+				<button id='rendInstall' >Install</button>
+				<script>
+					$(document).ready(function(){
+							$.get("http//dssvisualizer.py/adminset");
+							$("#rendInstall").click(function(){
+								$.get("http://dssvisualizer.py/installRends", $( "#installRends" ).val());
+							});
+						});
+				</script>
 			</div>
 		</div>
 	</body>

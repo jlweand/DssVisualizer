@@ -22,7 +22,7 @@ class RendererChecker:
 
 
     def readPluginFolder(self):
-        folderReader = PluginReader(self.path)
+        folderReader = RendererReader(self.path)
         self.pluginList = folderReader.getPlugins()
 
 

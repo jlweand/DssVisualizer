@@ -6,6 +6,7 @@ from urllib.parse import parse_qs
 # from core.apis.renderer.annotations import Annotations
 from core.apis.renderer.generateHtml import GenerateHtml
 from core.apis.datasource.pyKeyLogger import PyKeyLogger
+from core.apis.renderer.importRenderer import ImportRenderer
 
 gi.require_version("Gtk", "3.0")
 gi.require_version("WebKit", "3.0")
@@ -16,11 +17,16 @@ from gi.repository import WebKit
 
 def handle(web_view,web_frame,web_resource,request,response):
 	##'query' contains the data sent from the jquery.get method
-	query = request.get_message().get_uri().get_query()
 
+	query = request.get_message().get_uri().get_query()
+	uri = request.get_uri()
+
+	if('installRends' in uri or 'adminset' in uri):
+		load_uninstalled_renderers(query)
 	if not query:
 		return
 	else:
+
 		queryDict = parse_qs(query)
 		if('request' in queryDict):
 			if(queryDict['request'][0] == 'keypressData'):
@@ -33,6 +39,7 @@ def handle(web_view,web_frame,web_resource,request,response):
 				timedData = PyKeyLogger().selectTimedData(startDate, endDate)
 				js = "visData(%s, %s, %s);" % (keyData, clickData, timedData)
 				webKitWebView.execute_script(js)
+
 	# elif query == "keypressData":
 	# 	jsonData = PyKeyLogger().selectKeyPressData('2016-08-01 00:00:00', '2016-08-20 00:00:00')
 	# 	# jsonData = ujson.dumps(jsonFile)
@@ -55,13 +62,32 @@ def getJson(file):
 	    d = ujson.load(json_data)
 	    return(d)
 
-def handle_btn1():
-	print ("button 1 pressed")
-	return
 
-def handle_btn2():
-	print ("button 2 pressed")
-	return
+def load_uninstalled_renderers(query):
+
+	importer = ImportRenderer()
+	newPlugins = importer.getUninstalledPlugins()
+	if not query:
+		for plugin in newPlugins:
+			modify_uninstalled_renderers(plugin)
+	else:
+		importer.importPlugin(query)
+		script = 'document.getElementById("installRends").innerHTML = "";'
+		webKitWebView.execute_script(script)
+		load_uninstalled_renderers(None)
+
+	print (importer.getUninstalledPlugins())
+
+def modify_uninstalled_renderers(plugin):
+	if plugin:
+		script = 'var element = document.createElement("option");'
+		script = script + 'element.innerHTML = "' + plugin + '";'
+		script = script + 'document.getElementById("installRends").appendChild(element);'
+	else:
+		script = 'document.getElementById("installRends").innerHTML = "";'
+	webKitWebView.execute_script(script)
+
+
 
 # def handle_url(request):
 # 	print(request.get('annotation'))
@@ -81,6 +107,7 @@ uri = "file:///" + os.getcwd() + "/viewmanager/index.html"
 
 webKitWebView.load_uri(uri)
 webKitWebView.connect("resource-request-starting", handle)
+
 
 gtkWindow.show_all()
 Gtk.main()

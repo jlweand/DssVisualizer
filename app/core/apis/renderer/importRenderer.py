@@ -4,7 +4,7 @@ from core.config.configRenderers import ConfigRenderers
 class ImportRenderer:
 
     def __init__(self):
-        self.notInstalled = PluginChecker("plugins/renderer/").getUninstalledPlugins()
+        self.notInstalled = RendererChecker("plugins/renderer/").getUninstalledPlugins()
 
     #the parent directory and the plugin(.js) must have the same name
     #  ..ie viz/viz.js
