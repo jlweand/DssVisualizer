@@ -1,7 +1,7 @@
 from core.config.configReader import ConfigReader
-from core.apis.renderer.PluginReader import PluginReader
+from core.apis.renderer.rendererReader import RendererReader
 
-class PluginChecker:
+class RendererChecker:
 
 
     def __init__(self, path):

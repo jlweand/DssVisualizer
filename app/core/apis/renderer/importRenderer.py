@@ -1,7 +1,7 @@
-from core.apis.renderer.pluginChecker import PluginChecker
+from core.apis.renderer.rendererChecker import RendererChecker
 from core.config.configRenderers import ConfigRenderers
 
-class ImportPlugin:
+class ImportRenderer:
 
     def __init__(self):
         self.notInstalled = PluginChecker("plugins/renderer/").getUninstalledPlugins()
