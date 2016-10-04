@@ -6,7 +6,7 @@ import ujson
 class Common:
 
     def formatDatetime(self, epoch):
-        return datetime.fromtimestamp(epoch / 1e3).isoformat()
+        return datetime.utcfromtimestamp(epoch / 1e3).isoformat()
 
     def getDatabase(self):
         client = MongoClient()
