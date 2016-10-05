@@ -5,7 +5,7 @@ import ujson
 from urllib.parse import parse_qs
 # from core.apis.renderer.annotations import Annotations
 from core.apis.renderer.generateHtml import GenerateHtml
-from core.apis.datasource.pyKeyLogger import PyKeyLogger
+from plugins.datasource.mongodb.pyKeyLogger import PyKeyLogger
 from core.apis.renderer.importRenderer import ImportRenderer
 
 gi.require_version("Gtk", "3.0")
@@ -39,6 +39,17 @@ def handle(web_view,web_frame,web_resource,request,response):
 				timedData = PyKeyLogger().selectTimedData(startDate, endDate)
 				js = "visData(%s, %s, %s);" % (keyData, clickData, timedData)
 				webKitWebView.execute_script(js)
+		elif('submission' in queryDict):
+			if(queryDict['submission'][0] == 'annotation'):
+				itemID = queryDict['itemID'][0]
+				itemType = queryDict['type'][0]
+				annotation = queryDict['annotation'][0]
+				if(itemType == 'keypress'):
+					PyKeyLogger().addAnnotationKeyPress(itemID, annotation)
+				elif(itemType == 'click'):
+					PyKeyLogger().addAnnotationClick(itemID, annotation)
+				elif(itemType == 'timed'):
+					PyKeyLogger().addAnnotationTimed(itemID, annotation)
 
 	# elif query == "keypressData":
 	# 	jsonData = PyKeyLogger().selectKeyPressData('2016-08-01 00:00:00', '2016-08-20 00:00:00')

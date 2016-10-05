@@ -1,34 +1,39 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<title>Timeline | External data</title>
+	<title>DSS Visualizer</title>
+	
+	<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
+	<link rel="stylesheet" type="text/css" href="css/jquery-ui.structure.min.css">
+	<link rel="stylesheet" type="text/css" href="css/jquery-ui.theme.min.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
 
-	<style type="text/css">
-	body, html {
-		font-family: sans-serif;
-	}
-	</style>
 	<!-- Load jquery for ajax support -->
 	<script src="js/jquery-3.1.0.min.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
 	<script src="js/annotation.js"></script>
 <SCRIPTS GO HERE>
 </head>
 <body>
-	<p>
+	<div id="admin">
 		<a href="admin.html">Edit Plug-Ins</a>
-	</p>
+	</div>
+	<h3>Keypress Data</h3>
+	<div id="dateSelect"></div>
 	<div id="keypressData"></div>
 	<div id="loading">loading...</div>
 	<div id="currentItem"></div>
-	<form id="annotationsForm">
-		<div>
-			<label id="annotationLabel" for="annotation">Please select an object first</label>
-		</div>
-		<div>
-			<textarea id="annotation" name="annotation" rows="5" columns="1000" disabled></textarea>
-		</div>
-		<input type="hidden" id="objID" name="objID" val=""/>
-		<input type="submit" id="submitAnnotation" name="Submit" disabled/>
-	</form>
+	<div id="oldAnnotations"></div>
+	<div id="dialog-form">
+		<form id="annotationsForm">
+			<div>
+				<label id="annotationLabel" for="annotation">Please select an object first</label>
+			</div>
+			<div>
+				<textarea id="annotation" name="annotation" rows="5"></textarea>
+			</div>
+			<input type="hidden" id="objID" name="objID" val=""/>
+		</form>
+	</div>
 </body>
 </html>
