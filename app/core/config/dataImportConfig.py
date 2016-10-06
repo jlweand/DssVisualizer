@@ -1,6 +1,6 @@
 import ujson
 from datetime import datetime
-from core.apis.datasource.dataimport import DataImport
+from core.apis.datasource.dataImport import DataImport
 
 class DataImportConfig:
 
