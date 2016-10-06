@@ -7,6 +7,7 @@ from urllib.parse import parse_qs
 from core.apis.renderer.generateHtml import GenerateHtml
 from plugins.datasource.mongodb.pyKeyLogger import PyKeyLogger
 from core.apis.renderer.importRenderer import ImportRenderer
+from core.apis.renderer.importDataSource import ImportDataSource
 
 gi.require_version("Gtk", "3.0")
 gi.require_version("WebKit", "3.0")
@@ -21,8 +22,12 @@ def handle(web_view,web_frame,web_resource,request,response):
 	query = request.get_message().get_uri().get_query()
 	uri = request.get_uri()
 
+	if('installDatasources' in uri or 'adminset' in uri):
+		load_uninstalled_datasources(query)
+
 	if('installRends' in uri or 'adminset' in uri):
 		load_uninstalled_renderers(query)
+
 	if not query:
 		return
 	else:
@@ -98,7 +103,28 @@ def modify_uninstalled_renderers(plugin):
 		script = 'document.getElementById("installRends").innerHTML = "";'
 	webKitWebView.execute_script(script)
 
+def load_uninstalled_datasources(query):
+	dsImporter = ImportDataSource()
+	newDsPlugins = dsImporter.getUninstalledPlugins()
+	if not query:
+		for plugin in newDsPlugins:
+			modify_uninstalled_datasources(plugin)
+	else:
+		dsImporter.importPlugin(query)
+		js_script = 'document.getElementById("installDatasources").innerHTML = "";'
+		webKitWebView.execute_script(js_script)
+		load_uninstalled_datasources(None)
 
+	print (dsImporter.getUninstalledPlugins())
+
+def modify_uninstalled_datasources(plugin):
+	if plugin:
+		js_script = 'var element = document.createElement("option");'
+		js_script = js_script + 'element.innerHTML = "' + plugin + '";'
+		js_script = js_script + 'document.getElementById("installDatasources").appendChild(element);'
+	else:
+		js_script = 'document.getElementById("installDatasources").innerHTML = "";'
+	webKitWebView.execute_script(js_script)
 
 # def handle_url(request):
 # 	print(request.get('annotation'))
@@ -110,7 +136,7 @@ gtkScrolledWindow.add(webKitWebView)
 gtkWindow.add(gtkScrolledWindow)
 gtkWindow.connect("delete-event", Gtk.main_quit)
 
-#gtkWindow.set_size_request(100,100)
+gtkWindow.set_size_request(1000,800)
 
 # generate the index.html page based on the renderer plugin
 GenerateHtml().generatHtml()

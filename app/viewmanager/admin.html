@@ -58,6 +58,18 @@
 							});
 						});
 				</script>
+				<h3>Uninstalled Datasources</h3>
+				<select id='installDatasources' name="uninstalls">
+				</select>
+				<button id='dsInstall'>Install</button>
+				<script>
+					$(document).ready(function(){
+							$.get("http//dssvisualizer.py/adminset");
+							$("#dsInstall").click(function(){
+								$.get("http://dssvisualizer.py/installDatasources", $( "#installDatasources" ).val());
+							});
+						});
+				</script>
 			</div>
 		</div>
 	</body>

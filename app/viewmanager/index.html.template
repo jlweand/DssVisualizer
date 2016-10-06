@@ -2,16 +2,18 @@
 <html>
 <head>
 	<title>DSS Visualizer</title>
-	
+
 	<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
 	<link rel="stylesheet" type="text/css" href="css/jquery-ui.structure.min.css">
 	<link rel="stylesheet" type="text/css" href="css/jquery-ui.theme.min.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="css/ripple.css">
 
 	<!-- Load jquery for ajax support -->
 	<script src="js/jquery-3.1.0.min.js"></script>
 	<script src="js/jquery-ui.min.js"></script>
 	<script src="js/annotation.js"></script>
+	<script src="js/datepicker.js"></script>
 <SCRIPTS GO HERE>
 </head>
 <body>
@@ -19,11 +21,28 @@
 		<a href="admin.html">Edit Plug-Ins</a>
 	</div>
 	<h3>Keypress Data</h3>
-	<div id="dateSelect"></div>
+	<div id="dateSelect">
+		<div id="start-container">
+			<label for="start">Select start date:</label>
+			<input type="text" id="datepickerStart" name="start" size="30" />
+		</div>
+
+		<div id="end-container">
+			<label for="end">Select end date:</label>
+			<input type="text" id="datepickerEnd" name="end" size="30" />
+		</div>
+		<div id="end-container">
+			<button id="dateInput" name="dateInput">Go</button>
+		</div>
+	</div>
+	<div class="clear"></div>
 	<div id="keypressData"></div>
-	<div id="loading">loading...</div>
+	<div id="loading">
+		<img src="img/ripple.gif" />
+	</div>
 	<div id="currentItem"></div>
 	<div id="oldAnnotations"></div>
+	<!--
 	<div id="dialog-form">
 		<form id="annotationsForm">
 			<div>
@@ -35,5 +54,6 @@
 			<input type="hidden" id="objID" name="objID" val=""/>
 		</form>
 	</div>
+	-->
 </body>
 </html>
