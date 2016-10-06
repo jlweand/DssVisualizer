@@ -64,7 +64,7 @@
 				<button id='dsInstall'>Install</button>
 				<script>
 					$(document).ready(function(){
-							$.get("http:://dssvisualizer.py/adminset");
+							$.get("http://dssvisualizer.py/adminset");
 							$("#dsInstall").click(function(){
 								$.get("http://dssvisualizer.py/installDatasources", $( "#installDatasources" ).val());
 							});
