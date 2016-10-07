@@ -92,7 +92,7 @@ def load_uninstalled_renderers(query):
 		webKitWebView.execute_script(script)
 		load_uninstalled_renderers(None)
 
-	print (importer.getUninstalledPlugins())
+	#print (importer.getUninstalledPlugins())
 
 def modify_uninstalled_renderers(plugin):
 	if plugin:
@@ -115,7 +115,7 @@ def load_uninstalled_datasources(query):
 		webKitWebView.execute_script(js_script)
 		load_uninstalled_datasources(None)
 
-	print (dsImporter.getUninstalledPlugins())
+	#print (dsImporter.getUninstalledPlugins())
 
 def modify_uninstalled_datasources(plugin):
 	if plugin:

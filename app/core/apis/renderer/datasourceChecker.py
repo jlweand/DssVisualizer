@@ -10,7 +10,7 @@ class DatasourceChecker:
         self.readPluginFolder()
         self.checkInstalls()
 
-    
+
     def readConfigPlugins(self):
         configList = ConfigReader().getListOfDatasources()
         self.installedList = list()
@@ -19,8 +19,6 @@ class DatasourceChecker:
             directory = plugin[19:]
 
             self.installedList.append(directory)
-        print (self.installedList)
-
 
 
     def readPluginFolder(self):
