@@ -1,17 +1,18 @@
 .. highlight:: rst
 
 Installation and setup for MongoDB and Python libraries
-=========================================
+=======================================================
 
 Follow the below instructions to get started with MongoDB
 
 Windows Instructions
-==================
+--------------------
 
 Installing MongoDB, pymongo, ujson (for Windows. Mac OS and Linux may vary)
 
-MongoDBo installation
----------------------
+MongoDB Installation
+#####################
+
 * Download the version of MongoDB Community Server you need: https://www.mongodb.com/download-center#community
 
 * Choose Custom Install and change the install path to C:\mongodb. Accept all other defaults.  The rest of these instructions assume that’s where you’ve installed it.
@@ -37,7 +38,8 @@ Ctrl+C to close connection.
 * If you want to walk through their tutorial for python, you can check it out here: https://docs.mongodb.com/getting-started/python/  I’ll leave that up to the reader.
 
 pymongo installation
---------------------
+####################
+
 * Open a cmd window and install it::
 
 	python -m pip install pymongo
@@ -45,7 +47,8 @@ pymongo installation
 * That’s it.
 
 ujson installation
-------------------
+##################
+
 * Open a cmd window and try to install it::
 
 	python -m pip install ujson

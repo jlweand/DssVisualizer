@@ -1,12 +1,12 @@
 .. highlight:: rst
 
 Installation and setup for PYGObject
-=========================================
+====================================
 
 Follow the below instructions to get started with PYGObject which works with the Webkit and GTK stuff.
 
 Windows Instructions
-==================
+--------------------
 
 * Dependencies:
 

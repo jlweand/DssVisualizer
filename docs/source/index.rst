@@ -11,20 +11,28 @@ But to not keep you hanging here are some things to get you started!
 
 * GitHub repo can be found at https://github.com/jlweand/DssVisualizer
 
-* Installing :doc:`PYGObject <pygobjectinstall>` instructions
+.. toctree::
+   :maxdepth: 1
 
-* Installing :doc:`MongoDB and python libraries <mongodbinstall>` instructions
+   pygobjectinstall
+   mongodbinstall
+   Datasource API <datasourceapi>
+   Renderer API <rendererapi>
+   Install a Plugin <plugininstall>
+
 
 How to run the DssVisualizer
------------------------------------------
-* In a `cmd` line, from within the `app` folder run::
+----------------------------
+* Copy your .json files (right now only keypress.json, click.json, and timed.json will work) into the dssvisualizer/app/json folder
 
-    C:\dssVisualizer\docs> python -m viewmanager.dssvisualizer
+* Until the UI is complete, in a `cmd` line, from within the `app` folder run the test_dataimport.py file::
 
+    C:\dssVisualizer\app> python -m unittests.test_dataimport
 
+* To start the app: in a `cmd` line, from within the `app` folder run::
 
-.. toctree::
-   :maxdepth: 2
+    C:\dssVisualizer\app> python -m viewmanager.dssvisualizer
+
 
 
 
