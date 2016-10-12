@@ -4,8 +4,10 @@ import os
 import ujson
 from urllib.parse import parse_qs
 # from core.apis.renderer.annotations import Annotations
+
+# Only use files from core.  DO NOT use files from plugins.
 from core.apis.renderer.generateHtml import GenerateHtml
-from plugins.datasource.mongodb.pyKeyLogger import PyKeyLogger
+from core.apis.datasource.pyKeyLogger import PyKeyLogger
 from core.apis.renderer.importRenderer import ImportRenderer
 from core.apis.renderer.importDataSource import ImportDataSource
 
