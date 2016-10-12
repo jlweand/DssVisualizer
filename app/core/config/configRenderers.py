@@ -33,11 +33,12 @@ class ConfigRenderers:
 
     def removeRenderer(self, name):
         config = self.importConfigJson()
-        defaultPlugin = config["activeRendererPlugin"]
+        defaultPlugins = config["activeRendererPlugins"]
 
         # can't delete if it is the default plugin
-        if(name.lower() == defaultPlugin.lower()):
-            return "Sorry, this plugin cannot be deleted. It is currently in use. Please choose another default plugin before deleting this one."
+        for rend in defaultPlugins:
+            if(defaultPlugins[rend]["plugin"].lower() == name.lower()):
+                return "Sorry, this plugin cannot be deleted. It is currently in use. Please choose another default plugin before deleting this one."
 
         # now try to find the renderer and delete it
         rendererPlugins = config["rendererPlugins"]
@@ -49,15 +50,20 @@ class ConfigRenderers:
 
         return "Failed to find renderer plugin named " + name
 
-    def setDefaultRenderer(self, name):
+    def setDefaultRenderer(self, pluginDataType, defaultPluginName, scriptFile):
         config = self.importConfigJson()
         rendererPlugins = config["rendererPlugins"]
 
         # check to make sure we have this plugin
-        for ds in rendererPlugins:
-            if ds["name"].lower() == name.lower():
-                config["activeRendererPlugin"] = name
-                self.writeToConfigJson(config)
-                return name
+        for rend in rendererPlugins:
+            if rend["name"].lower() == defaultPluginName.lower():
+                activePlugins = config["activeRendererPlugins"]
+                activePlugin = activePlugins[pluginDataType]
 
-        return "No renderer plugin has been imported for " + name
+                activePlugin["location"] = rend["location"]
+                activePlugin["plugin"] = defaultPluginName
+                activePlugin["scripts"] = scriptFile
+                self.writeToConfigJson(config)
+                return defaultPluginName
+
+        return "No renderer plugin has been imported for " + defaultPluginName

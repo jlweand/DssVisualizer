@@ -25,12 +25,26 @@ class ConfigReader:
                 return plugin["location"] + "."
         return "No Datasource found";
 
-    def getRendererPluginLocation(self):
+
+    def getRedererPluginForPyKeyLogger(self):
+        return self.getRendererPlugin("pyKeyLogger")
+
+    def getRedererPluginForPcapThroughput(self):
+        return self.getRendererPlugin("pcapThroughput")
+
+    def getRedererPluginForPcapDataProcol(self):
+        return self.getRendererPlugin("pcapDataProcol")
+
+    def getRedererPluginForScreenshots(self):
+        return self.getRendererPlugin("screenshots")
+
+    def getRendererPlugin(self, datatype):
         config = self.importConfigJson();
-        activePlugin = config["activeRendererPlugin"]
+        activePlugins = config["activeRendererPlugins"]
+        activePlugin = activePlugins[datatype]
         for plugin in self.getListOfRenderers():
-            if plugin["name"] == activePlugin:
-                return plugin["location"] + "."
+            if plugin["name"] == activePlugin["plugin"]:
+                return activePlugin
         return "No Renderer found";
 
     def getInstanceOfDatasourcePlugin(self, classname):
