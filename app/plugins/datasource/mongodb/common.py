@@ -6,7 +6,7 @@ import ujson
 class Common:
     """Here lies some common functions so they don't have to continue to be written over and over again."""
 
-    def formatDatetime(self, epoch):
+    def formatEpochDatetime(self, epoch):
         """Formats an epoch in UTC ISO_8601 format
 
         :param epoch: The epoch from MongoDB (date in milliseconds)
@@ -14,6 +14,13 @@ class Common:
         :returns: UTC ISO_8601 formatted date
         """
         return datetime.utcfromtimestamp(epoch / 1e3).isoformat()
+
+    def getDatetimeFormatString(self):
+        """Returns the string of how we want to format dates
+
+        :returns: format string
+        """
+        return '%Y-%m-%d %H:%M:%S'
 
     def getDatabase(self):
         """Keep the database named in only one location. It helps keep typos down and
