@@ -5,34 +5,47 @@ from pprint import pprint
 
 class PyKeyLoggerTest(unittest.TestCase):
 
+    # Get an objectID of each type of data and update the variables in the main method at the end of this class
+
     def test_selectKeyPressData(self):
         jsonData = PyKeyLogger().selectKeyPressData('2016-08-01 00:00:00', '2016-08-20 00:00:00')
         self.assertEqual(9, len(jsonData))
 
     def test_selectKeyPressDataById(self):
-        jsonData = PyKeyLogger().selectKeyPressDataById('57f19062578ad8ca217b212d')
+        jsonData = PyKeyLogger().selectKeyPressDataById(keyPressDataId)
         self.assertEqual(1, len(jsonData))
 
     def test_keyPressAnnotations(self):
-        dataId = '57f19062578ad8ca217b212d'
-        PyKeyLogger().addAnnotationKeyPress(dataId, 'test')
-        PyKeyLogger().addAnnotationKeyPress(dataId, 'test test')
-        PyKeyLogger().addAnnotationKeyPress(dataId, 'test test test')
-        PyKeyLogger().addAnnotationKeyPress(dataId, 'test test test')
-        addedAnns = PyKeyLogger().selectKeyPressDataById(dataId)
+        PyKeyLogger().addAnnotationKeyPress(keyPressDataId, 'test')
+        PyKeyLogger().addAnnotationKeyPress(keyPressDataId, 'test test')
+        PyKeyLogger().addAnnotationKeyPress(keyPressDataId, 'test test test')
+        PyKeyLogger().addAnnotationKeyPress(keyPressDataId, 'test test test')
+        addedAnns = PyKeyLogger().selectKeyPressDataById(keyPressDataId)
 
-        PyKeyLogger().editAnnotationKeyPress(dataId, 'test test', 'updated annotation!!')
-        changedAnn = PyKeyLogger().selectKeyPressDataById(dataId)
+        PyKeyLogger().editAnnotationKeyPress(keyPressDataId, 'test test', 'updated annotation!!')
+        changedAnn = PyKeyLogger().selectKeyPressDataById(keyPressDataId)
 
-        PyKeyLogger().deleteAnnotationKeyPress(dataId, 'updated annotation!!')
-        deletedChanged = PyKeyLogger().selectKeyPressDataById(dataId)
+        PyKeyLogger().deleteAnnotationKeyPress(keyPressDataId, 'updated annotation!!')
+        deletedChanged = PyKeyLogger().selectKeyPressDataById(keyPressDataId)
 
-        PyKeyLogger().deleteAllAnnotationsForKeyPress(dataId)
-        deletedAll = PyKeyLogger().selectKeyPressDataById(dataId)
+        PyKeyLogger().deleteAllAnnotationsForKeyPress(keyPressDataId)
+        deletedAll = PyKeyLogger().selectKeyPressDataById(keyPressDataId)
 
         self.assertEqual(3, len(addedAnns[0]["annotations"]))
         self.assertEqual(2, len(deletedChanged[0]["annotations"]))
         self.assertEqual(0, len(deletedAll[0]["annotations"]))
+
+    def test_insertFixedKeyPressData(self):
+        jsonData = PyKeyLogger().insertFixedKeyPressData(keyPressDataId, '[New Content Added]', 'Keypresses', '2016-10-02 17:15:00')
+        self.assertIsNotNone(jsonData)
+
+    def test_updateFixedKeyPressData(self):
+        jsonData = PyKeyLogger().updateFixedKeyPressData(keyPressDataId, '[Edited Content Added]', '2016-10-02 18:28:00')
+        self.assertIsNotNone(jsonData)
+
+    def test_deleteFixedKeyPressData(self):
+        jsonData = PyKeyLogger().deleteFixedKeyPressData(keyPressDataId)
+        self.assertIsNotNone(jsonData)
 
 #Click#
     def test_selectClickData(self):
@@ -40,29 +53,40 @@ class PyKeyLoggerTest(unittest.TestCase):
         self.assertEqual(8, len(jsonData))
 
     def test_selectClickDataById(self):
-        jsonData = PyKeyLogger().selectClickDataById('57f19062578ad8ca217b210d')
+        jsonData = PyKeyLogger().selectClickDataById(clickDataId)
         self.assertEqual(1, len(jsonData))
 
     def test_clickAnnotations(self):
-        dataId = '57f19062578ad8ca217b210d'
-        PyKeyLogger().addAnnotationClick(dataId, 'test')
-        PyKeyLogger().addAnnotationClick(dataId, 'test test')
-        PyKeyLogger().addAnnotationClick(dataId, 'test test test')
-        PyKeyLogger().addAnnotationClick(dataId, 'test test test')
-        addedAnns = PyKeyLogger().selectClickDataById(dataId)
+        PyKeyLogger().addAnnotationClick(clickDataId, 'test')
+        PyKeyLogger().addAnnotationClick(clickDataId, 'test test')
+        PyKeyLogger().addAnnotationClick(clickDataId, 'test test test')
+        PyKeyLogger().addAnnotationClick(clickDataId, 'test test test')
+        addedAnns = PyKeyLogger().selectClickDataById(clickDataId)
 
-        PyKeyLogger().editAnnotationClick(dataId, 'test test', 'updated annotation!!')
-        changedAnn = PyKeyLogger().selectClickDataById(dataId)
+        PyKeyLogger().editAnnotationClick(clickDataId, 'test test', 'updated annotation!!')
+        changedAnn = PyKeyLogger().selectClickDataById(clickDataId)
 
-        PyKeyLogger().deleteAnnotationClick(dataId, 'updated annotation!!')
-        deletedChanged = PyKeyLogger().selectClickDataById(dataId)
+        PyKeyLogger().deleteAnnotationClick(clickDataId, 'updated annotation!!')
+        deletedChanged = PyKeyLogger().selectClickDataById(clickDataId)
 
-        PyKeyLogger().deleteAllAnnotationsForClick(dataId)
-        deletedAll = PyKeyLogger().selectClickDataById(dataId)
+        PyKeyLogger().deleteAllAnnotationsForClick(clickDataId)
+        deletedAll = PyKeyLogger().selectClickDataById(clickDataId)
 
         self.assertEqual(3, len(addedAnns[0]["annotations"]))
         self.assertEqual(2, len(deletedChanged[0]["annotations"]))
         self.assertEqual(0, len(deletedAll[0]["annotations"]))
+
+    def test_insertFixedKeyPressData(self):
+        jsonData = PyKeyLogger().insertFixedClickData(clickDataId, '[New Content Added]', 'imgPoint', '2016-10-02 17:35:51', '2016-10-02 17:35:51', '/usr/logger/v2/dss-logger-pluggable/plugins/collectors/pykeylogger/raw/click_images/1474038815.78_TESTING.png', 'point')
+        self.assertIsNotNone(jsonData)
+
+    def test_updateFixedClickData(self):
+        jsonData = PyKeyLogger().updateFixedClickData(clickDataId, '[EDITED UNITTEST Content Added]', '2016-10-02 19:35:51','2016-10-02 19:35:51', '/usr/logger/v2/dss-logger-pluggable/plugins/collectors/pykeylogger/raw/click_images/1474038815.78_TESTING_UPDATE.png', 'point')
+        self.assertIsNotNone(jsonData)
+
+    def test_deleteFixedKeyPressData(self):
+        jsonData = PyKeyLogger().deleteFixedClickData(clickDataId)
+        self.assertIsNotNone(jsonData)
 
 #Timed#
     def test_selectTimedData(self):
@@ -70,31 +94,46 @@ class PyKeyLoggerTest(unittest.TestCase):
         self.assertEqual(21, len(jsonData))
 
     def test_selectTimedDataById(self):
-        jsonData = PyKeyLogger().selectTimedDataById('57f19062578ad8ca217b2123')
+        jsonData = PyKeyLogger().selectTimedDataById(timedDataId)
         self.assertEqual(1, len(jsonData))
 
     def test_timedAnnotations(self):
-        dataId = '57f19062578ad8ca217b2123'
-        PyKeyLogger().addAnnotationTimed(dataId, 'test')
-        PyKeyLogger().addAnnotationTimed(dataId, 'test test')
-        PyKeyLogger().addAnnotationTimed(dataId, 'test test test')
-        PyKeyLogger().addAnnotationTimed(dataId, 'test test test')
-        addedAnns = PyKeyLogger().selectTimedDataById(dataId)
+        PyKeyLogger().addAnnotationTimed(timedDataId, 'test')
+        PyKeyLogger().addAnnotationTimed(timedDataId, 'test test')
+        PyKeyLogger().addAnnotationTimed(timedDataId, 'test test test')
+        PyKeyLogger().addAnnotationTimed(timedDataId, 'test test test')
+        addedAnns = PyKeyLogger().selectTimedDataById(timedDataId)
 
-        PyKeyLogger().editAnnotationTimed(dataId, 'test test', 'updated annotation!!')
-        changedAnn = PyKeyLogger().selectTimedDataById(dataId)
+        PyKeyLogger().editAnnotationTimed(timedDataId, 'test test', 'updated annotation!!')
+        changedAnn = PyKeyLogger().selectTimedDataById(timedDataId)
 
-        PyKeyLogger().deleteAnnotationTimed(dataId, 'updated annotation!!')
-        deletedChanged = PyKeyLogger().selectTimedDataById(dataId)
+        PyKeyLogger().deleteAnnotationTimed(timedDataId, 'updated annotation!!')
+        deletedChanged = PyKeyLogger().selectTimedDataById(timedDataId)
 
-        PyKeyLogger().deleteAllAnnotationsForTimed(dataId)
-        deletedAll = PyKeyLogger().selectTimedDataById(dataId)
+        PyKeyLogger().deleteAllAnnotationsForTimed(timedDataId)
+        deletedAll = PyKeyLogger().selectTimedDataById(timedDataId)
 
         self.assertEqual(3, len(addedAnns[0]["annotations"]))
         self.assertEqual(2, len(deletedChanged[0]["annotations"]))
         self.assertEqual(0, len(deletedAll[0]["annotations"]))
 
+    def test_insertFixedTimedData(self):
+        jsonData = PyKeyLogger().insertFixedTimedData(timedDataId, '[New Content Added]', 'imgPoint', '2016-09-09 18:38:48', '2016-09-09 18:38:48', 'http://localhost/dssserver/logs/timed_screenshots/1465515528.8_screenshotTIMED_TESTING.png', 'point')
+        self.assertIsNotNone(jsonData)
+
+    def test_updateFixedTimedData(self):
+        jsonData = PyKeyLogger().updateFixedTimedData(timedDataId, '[EDITED UNITTEST Content Added]', '2016-10-03 18:38:48', '2016-10-03 18:38:48', '/usr/logger/v2/dss-logger-pluggable/plugins/collectors/pykeylogger/raw/click_images/1474038815.78_TESTING_UPDATE.png', 'point')
+        self.assertIsNotNone(jsonData)
+
+    def test_deleteFixedTimedData(self):
+        jsonData = PyKeyLogger().deleteFixedTimedData(timedDataId)
+        self.assertIsNotNone(jsonData)
+
+
 if __name__ == '__main__':
+    keyPressDataId = '57f19062578ad8ca217b212d'
+    clickDataId = '57f19062578ad8ca217b210d'
+    timedDataId = '57f19062578ad8ca217b2123'
     unittest.main()
 
 #python -m unittests.test_pyKeyLogger
