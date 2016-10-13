@@ -1,5 +1,5 @@
 from bson import ObjectId
-from plugins.datasource.mongodb.common import Common
+from pprint import pprint
 
 class Annotations:
     """This class holds the logic to adding an annotation to any data point.
@@ -75,3 +75,19 @@ class Annotations:
         deleteText = {"$set" : {"annotations": [] } }
         result = collection.update_one(deleteId, deleteText)
         return result.modified_count
+
+    # add an annotation to the timeline, not a datapoint
+    def addAnnotationToTimeline(self, collection, jsonObject, annotationText):
+        """Adds an annotation to the collection as a new 'data point'.  This is not tied to any imported data.
+
+        :param collection: The collection in which the data lives.
+        :type collection: MongoDb collection
+        :param jsonObject: The jsonObject to add the annotation to.
+        :type jsonObject: JSON string
+        :param annotationText: The text of the annotation.
+        :type annotationText: str
+        :returns: inserted_id
+        """
+        jsonObject["annotations"] = {"annotation": annotationText}
+        result = collection.insert_one(jsonObject)
+        return result.inserted_id

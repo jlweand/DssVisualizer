@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from pymongo import MongoClient
 from bson.json_util import dumps
 import ujson
@@ -35,3 +35,17 @@ class Common:
         bsonResult = dumps(cursor)
         objects = ujson.loads(bsonResult)
         return objects
+
+
+    def createMetadataForTimelineAnnotations(self):
+        """Creates the generic metadata for the object when adding an annotation to just the timeline
+
+        :returns: a metadata object.
+        """
+        metadata = {}
+        metadata["techName"] = "Manual Entry"
+        metadata["eventName"] = ""
+        metadata["comments"] = ""
+        metadata["importDate"] = datetime.now(timezone.utc)
+
+        return metadata

@@ -47,6 +47,11 @@ class PyKeyLoggerTest(unittest.TestCase):
         jsonData = PyKeyLogger().deleteFixedKeyPressData(keyPressDataId)
         self.assertIsNotNone(jsonData)
 
+    def test_addAnnotationToKeyPressTimeline(self):
+        objectId = PyKeyLogger().addAnnotationToKeyPressTimeline('2016-08-01 10:00:00', "here's a Keypress timeline annotation")
+        changedAnn = PyKeyLogger().selectKeyPressDataById(objectId)
+        self.assertIsNotNone(changedAnn)
+
 #Click#
     def test_selectClickData(self):
         jsonData = PyKeyLogger().selectClickData('2016-09-01 00:00:00', '2016-09-20 00:00:00')
@@ -88,6 +93,11 @@ class PyKeyLoggerTest(unittest.TestCase):
         jsonData = PyKeyLogger().deleteFixedClickData(clickDataId)
         self.assertIsNotNone(jsonData)
 
+    def test_addAnnotationToClickTimeline(self):
+        objectId = PyKeyLogger().addAnnotationToClickTimeline('2016-08-01 10:00:00', "here's a Click timeline annotation")
+        changedAnn = PyKeyLogger().selectClickDataById(objectId)
+        self.assertIsNotNone(changedAnn)
+
 #Timed#
     def test_selectTimedData(self):
         jsonData = PyKeyLogger().selectTimedData('2016-09-01 00:00:00', '2016-09-20 00:00:00')
@@ -128,6 +138,11 @@ class PyKeyLoggerTest(unittest.TestCase):
     def test_deleteFixedTimedData(self):
         jsonData = PyKeyLogger().deleteFixedTimedData(timedDataId)
         self.assertIsNotNone(jsonData)
+
+    def test_addAnnotationToTimedTimeline(self):
+        objectId = PyKeyLogger().addAnnotationToTimedTimeline('2016-08-01 10:00:00', "here's a Timed timeline annotation")
+        changedAnn = PyKeyLogger().selectTimedDataById(objectId)
+        self.assertIsNotNone(changedAnn)
 
 
 if __name__ == '__main__':

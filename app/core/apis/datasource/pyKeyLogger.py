@@ -27,7 +27,7 @@ class PyKeyLogger:
         """Override: Select the key press data by its ID
 
         :param dataId: The ID of the Data point
-        :type startDate: str
+        :type dataId: str
         :returns: JSON object
         """
         pyKeyLogger = self.getPlugin()
@@ -38,13 +38,13 @@ class PyKeyLogger:
         """Override: Inserts a new record of the data. Does not overrite the original key press.
 
         :param oldDataId: The key of the original key press data
-        :type name: str
+        :type oldDataId: str
         :param content: The updated content
         :type content: str
         :param className: The updtaed class name
-        :type content: str
+        :type className: str
         :param start: The updated datetime of the event.
-        :type content: datetime
+        :type start: datetime
         :returns: newly created id.
         """
         pyKeyLogger = self.getPlugin()
@@ -55,13 +55,13 @@ class PyKeyLogger:
         """Override: Updates the record of the 'fixed' key press data.
 
         :param dataId: The ID of the 'fixed' key press data to edit.
-        :type name: str
+        :type dataId: str
         :param content: The updated content
         :type content: str
         :param className: The updtaed class name
-        :type content: str
+        :type className: str
         :param start: The updated datetime of the event.
-        :type content: datetime
+        :type start: datetime
         :returns: The modified count.
         """
         pyKeyLogger = self.getPlugin()
@@ -72,7 +72,7 @@ class PyKeyLogger:
         """Override: Delete a 'fixed' key press data.
 
         :param dataId: The ID of the 'fixed' data to delete
-        :type content: str
+        :type dataId: str
         :returns: The deleted count.
         """
         pyKeyLogger = self.getPlugin()
@@ -82,9 +82,9 @@ class PyKeyLogger:
         """Override: Add an annotation to the key press object.
 
         :param dataId: The ID of the data to add the annotation to.
-        :type content: str
+        :type dataId: str
         :param annotationText: The annotation text
-        :type content: str
+        :type annotationText: str
         :returns: The modified count.
         """
         pyKeyLogger = self.getPlugin()
@@ -95,11 +95,11 @@ class PyKeyLogger:
         """Override: Edit an annotation on the key press object.
 
         :param dataId: The ID of the data to edit the annotation of.
-        :type content: str
-        :param annotationText: The old annotation text
-        :type content: str
-        :param annotationText: The new annotation text
-        :type content: str
+        :type dataId: str
+        :param oldAnnotationText: The old annotation text
+        :type oldAnnotationText: str
+        :param newAnnotationText: The new annotation text
+        :type newAnnotationText: str
         :returns: The modified count.
         """
         pyKeyLogger = self.getPlugin()
@@ -110,9 +110,9 @@ class PyKeyLogger:
         """Override: Delete one annotation from the key press object.
 
         :param dataId: The ID of the data to remove the annotation from.
-        :type content: str
+        :type dataId: str
         :param annotationText: The annotation text to remove.
-        :type content: str
+        :type annotationText: str
         :returns: The modified count.
         """
         pyKeyLogger = self.getPlugin()
@@ -123,11 +123,25 @@ class PyKeyLogger:
         """Override: Delete all annotations from the key press object.
 
         :param dataId: The ID of the data to remove all annotations from.
-        :type content: str
+        :type dataId: str
         :returns: The modified count.
         """
         pyKeyLogger = self.getPlugin()
         return pyKeyLogger.deleteAllAnnotationsForKeyPress(dataId)
+
+    # add an annotation to the timeline, not a datapoint
+    def addAnnotationToKeyPressTimeline(self, startTime, annotationText):
+        """Override: Ands an annotation to the timeline (not a data point)
+
+        :param startTime: The datetime to add the annotation to
+        :type startTime: datetime
+        :param annotationText: The annotation text to add.
+        :type annotationText: str
+        :returns: The modified count.
+         """
+
+        pyKeyLogger = self.getPlugin()
+        return pyKeyLogger.addAnnotationToKeyPressTimeline(startTime, annotationText)
 
 #Click#
     def selectClickData(self, startDate, endDate):
@@ -147,7 +161,7 @@ class PyKeyLogger:
         """Override: Select the Click data by its ID
 
         :param dataId: The ID of the Data point
-        :type startDate: str
+        :type dataId: str
         :returns: JSON object
         """
         pyKeyLogger = self.getPlugin()
@@ -158,19 +172,19 @@ class PyKeyLogger:
         """Override: Inserts a new record of the data. Does not overrite the original key press.
 
         :param oldDataId: The key of the original click data
-        :type name: str
+        :type oldDataId: str
         :param content: The updated content
         :type content: str
         :param _type: The updtaed type
-        :type content: str
+        :type _type: str
         :param className: The updtaed class name
-        :type content: str
+        :type className: str
         :param title: The updtaed title
-        :type content: str
+        :type title: str
         :param start: The updated start datetime of the event.
-        :type content: datetime
+        :type start: datetime
         :param end: The updated end datetime of the event.
-        :type content: datetime
+        :type end: datetime
         :returns: newly created id.
         """
         pyKeyLogger = self.getPlugin()
@@ -181,19 +195,19 @@ class PyKeyLogger:
         """Override: Updates the record of the 'fixed' click data.
 
         :param dataId: The ID of the 'fixed' click data to edit.
-        :type name: str
+        :type dataId: str
         :param content: The updated content
         :type content: str
         :param _type: The updtaed type
-        :type content: str
+        :type _type: str
         :param className: The updtaed class name
-        :type content: str
+        :type className: str
         :param title: The updtaed title
-        :type content: str
+        :type title: str
         :param start: The updated start datetime of the event.
-        :type content: datetime
+        :type start: datetime
         :param end: The updated end datetime of the event.
-        :type content: datetime
+        :type end: datetime
         :returns: The modified count.
         """
         pyKeyLogger = self.getPlugin()
@@ -204,7 +218,7 @@ class PyKeyLogger:
         """Override: Delete a 'fixed' click data.
 
         :param dataId: The ID of the 'fixed' data to delete
-        :type content: str
+        :type dataId: str
         :returns: The deleted count.
         """
         pyKeyLogger = self.getPlugin()
@@ -215,9 +229,9 @@ class PyKeyLogger:
         """Override: Add an annotation to the Click object.
 
         :param dataId: The ID of the data to add the annotation to.
-        :type content: str
+        :type dataId: str
         :param annotationText: The annotation text
-        :type content: str
+        :type annotationText: str
         :returns: The modified count.
         """
         pyKeyLogger = self.getPlugin()
@@ -228,11 +242,11 @@ class PyKeyLogger:
         """Override: Edit an annotation on the Click object.
 
         :param dataId: The ID of the data to edit the annotation of.
-        :type content: str
-        :param annotationText: The old annotation text
-        :type content: str
-        :param annotationText: The new annotation text
-        :type content: str
+        :type dataId: str
+        :param oldAnnotationText: The old annotation text
+        :type oldAnnotationText: str
+        :param newAnnotationText: The new annotation text
+        :type newAnnotationText: str
         :returns: The modified count.
         """
         pyKeyLogger = self.getPlugin()
@@ -243,9 +257,9 @@ class PyKeyLogger:
         """Override: Delete one annotation from the Click object.
 
         :param dataId: The ID of the data to remove the annotation from.
-        :type content: str
+        :type dataId: str
         :param annotationText: The annotation text to remove.
-        :type content: str
+        :type annotationText: str
         :returns: The modified count.
         """
         pyKeyLogger = self.getPlugin()
@@ -256,11 +270,25 @@ class PyKeyLogger:
         """Override: Delete all annotations from the Click object.
 
         :param dataId: The ID of the data to remove all annotations from.
-        :type content: str
+        :type dataId: str
         :returns: The modified count.
         """
         pyKeyLogger = self.getPlugin()
         return pyKeyLogger.deleteAllAnnotationsForClick(dataId)
+
+    # add an annotation to the timeline, not a datapoint
+    def addAnnotationToClickTimeline(self, startTime, annotationText):
+        """Override: Ands an annotation to the timeline (not a data point)
+
+        :param startTime: The datetime to add the annotation to
+        :type startTime: datetime
+        :param annotationText: The annotation text to add.
+        :type annotationText: str
+        :returns: The modified count.
+         """
+
+        pyKeyLogger = self.getPlugin()
+        return pyKeyLogger.addAnnotationToClickTimeline(startTime, annotationText)
 
 #Timed#
     def selectTimedData(self, startDate, endDate):
@@ -280,7 +308,7 @@ class PyKeyLogger:
         """Override: Select the Timed data by its ID
 
         :param dataId: The ID of the Data point
-        :type startDate: str
+        :type dataId: str
         :returns: JSON object
         """
         pyKeyLogger = self.getPlugin()
@@ -291,19 +319,19 @@ class PyKeyLogger:
         """Override: Inserts a new record of the data. Does not overrite the original key press.
 
         :param oldDataId: The key of the original timmed data
-        :type name: str
+        :type oldDataId: str
         :param content: The updated content
         :type content: str
         :param _type: The updtaed type
-        :type content: str
-        :param className: The updtaed class name
-        :type content: str
+        :type _type: str
+        :param classname: The updtaed class name
+        :type classname: str
         :param title: The updtaed title
-        :type content: str
+        :type title: str
         :param start: The updated start datetime of the event.
-        :type content: datetime
+        :type start: datetime
         :param end: The updated end datetime of the event.
-        :type content: datetime
+        :type end: datetime
         :returns: newly created id.
         """
         pyKeyLogger = self.getPlugin()
@@ -311,22 +339,22 @@ class PyKeyLogger:
         return result
 
     def updateFixedTimedData(self, dataId, content, _type, classname, title, start, end):
-        """Override: Updates the record of the 'fixed' timmed data.
+        """Override: Updates the record of the 'fixed' timed data.
 
-        :param dataId: The ID of the 'fixed' timmed data to edit.
-        :type name: str
+        :param dataId: The ID of the 'fixed' timed data to edit.
+        :type dataId: str
         :param content: The updated content
         :type content: str
         :param _type: The updtaed type
-        :type content: str
-        :param className: The updtaed class name
-        :type content: str
+        :type _type: str
+        :param classname: The updtaed class name
+        :type classname: str
         :param title: The updtaed title
-        :type content: str
+        :type title: str
         :param start: The updated start datetime of the event.
-        :type content: datetime
+        :type start: datetime
         :param end: The updated end datetime of the event.
-        :type content: datetime
+        :type end: datetime
         :returns: The modified count.
         """
         pyKeyLogger = self.getPlugin()
@@ -334,10 +362,10 @@ class PyKeyLogger:
         return result
 
     def deleteFixedTimedData(self, dataId):
-        """Override: Delete a 'fixed' timmed data.
+        """Override: Delete a 'fixed' timed data.
 
         :param dataId: The ID of the 'fixed' data to delete
-        :type content: str
+        :type dataId: str
         :returns: The deleted count.
         """
         pyKeyLogger = self.getPlugin()
@@ -348,9 +376,9 @@ class PyKeyLogger:
         """Override: Add an annotation to the Timed object.
 
         :param dataId: The ID of the data to add the annotation to.
-        :type content: str
+        :type dataId: str
         :param annotationText: The annotation text
-        :type content: str
+        :type annotationText: str
         :returns: The modified count.
         """
         pyKeyLogger = self.getPlugin()
@@ -361,11 +389,11 @@ class PyKeyLogger:
         """Override: Edit an annotation on the Timed object.
 
         :param dataId: The ID of the data to edit the annotation of.
-        :type content: str
-        :param annotationText: The old annotation text
-        :type content: str
-        :param annotationText: The new annotation text
-        :type content: str
+        :type dataId: str
+        :param oldAnnotationText: The old annotation text
+        :type oldAnnotationText: str
+        :param newAnnotationText: The new annotation text
+        :type newAnnotationText: str
         :returns: The modified count.
         """
         pyKeyLogger = self.getPlugin()
@@ -376,9 +404,9 @@ class PyKeyLogger:
         """Override: Delete one annotation from the Timed object.
 
         :param dataId: The ID of the data to remove the annotation from.
-        :type content: str
+        :type dataId: str
         :param annotationText: The annotation text to remove.
-        :type content: str
+        :type annotationText: str
         :returns: The modified count.
         """
         pyKeyLogger = self.getPlugin()
@@ -389,8 +417,22 @@ class PyKeyLogger:
         """Override: Delete all annotations from the Timed object.
 
         :param dataId: The ID of the data to remove all annotations from.
-        :type content: str
+        :type dataId: str
         :returns: The modified count.
         """
         pyKeyLogger = self.getPlugin()
         return pyKeyLogger.deleteAllAnnotationsForTimed(dataId)
+
+    # add an annotation to the timeline, not a datapoint
+    def addAnnotationToTimedTimeline(self, startTime, annotationText):
+        """Override: Ands an annotation to the timeline (not a data point)
+
+        :param startTime: The datetime to add the annotation to
+        :type startTime: datetime
+        :param annotationText: The annotation text to add.
+        :type annotationText: str
+        :returns: The modified count.
+         """
+
+        pyKeyLogger = self.getPlugin()
+        return pyKeyLogger.addAnnotationToTimedTimeline(startTime, annotationText)

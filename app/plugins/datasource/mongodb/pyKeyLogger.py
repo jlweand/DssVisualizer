@@ -2,6 +2,7 @@ from bson import ObjectId
 from datetime import datetime
 from plugins.datasource.mongodb.annotations import Annotations
 from plugins.datasource.mongodb.common import Common
+from pprint import pprint
 
 class PyKeyLogger:
 
@@ -91,6 +92,19 @@ class PyKeyLogger:
         collection = self.getKeyPressCollection()
         return Annotations().deleteAllAnnotationsForData(collection, dataId)
 
+    # add an annotation to the timeline, not a datapoint
+    def addAnnotationToKeyPressTimeline(self, startTime, annotationText):
+        collection = self.getKeyPressCollection()
+        metadata = Common().createMetadataForTimelineAnnotations()
+
+        keyPress = {}
+        keyPress["className"] = ""
+        keyPress["content"] = ""
+        keyPress["start"] = datetime.strptime(startTime, '%Y-%m-%d %H:%M:%S')
+        keyPress["metadata"] = metadata
+
+        return Annotations().addAnnotationToTimeline(collection, keyPress, annotationText)
+
 # Click #
     # select data by date range of the 'start' column
     def selectClickData(self, startDate, endDate):
@@ -103,7 +117,7 @@ class PyKeyLogger:
     def selectClickDataById(self, dataId):
         collection = self.getClickCollection()
         cursor = collection.find({"_id": ObjectId(dataId)})
-        return self.fixTheDates(cursor, False)
+        return self.fixTheDates(cursor, True)
 
     # insert a new record.  This record must be tied to the original record.
     # the oldDataId will be a new 'column' called sourceId. it is of type ObjectId
@@ -150,6 +164,22 @@ class PyKeyLogger:
         collection = self.getClickCollection()
         return Annotations().deleteAllAnnotationsForData(collection, dataId)
 
+    # add an annotation to the timeline, not a datapoint
+    def addAnnotationToClickTimeline(self, startTime, annotationText):
+        collection = self.getClickCollection()
+        metadata = Common().createMetadataForTimelineAnnotations()
+
+        click = {}
+        click["className"] = ""
+        click["content"] = ""
+        click["type"] = ""
+        click["title"] = ""
+        click["start"] = datetime.strptime(startTime, '%Y-%m-%d %H:%M:%S')
+        click["end"] = datetime.strptime(startTime, '%Y-%m-%d %H:%M:%S')
+        click["metadata"] = metadata
+
+        return Annotations().addAnnotationToTimeline(collection, click, annotationText)
+
 # Timed #
     # select data by date range of the 'start' column
     def selectTimedData(self, startDate, endDate):
@@ -162,7 +192,7 @@ class PyKeyLogger:
     def selectTimedDataById(self, dataId):
         collection = self.getTimedCollection()
         cursor = collection.find({"_id": ObjectId(dataId)})
-        return self.fixTheDates(cursor, False)
+        return self.fixTheDates(cursor, True)
 
     # insert a new record.  This record must be tied to the original record.
     # the oldDataId will be a new 'column' called sourceId. it is of type ObjectId
@@ -199,7 +229,7 @@ class PyKeyLogger:
         collection = self.getTimedCollection()
         return Annotations().editAnnotation(collection, dataId, oldAnnotationText, newAnnotationText)
 
-    #delete an annotation for the dataId
+    # delete an annotation for the dataId
     def deleteAnnotationTimed(self, dataId, annotationText):
         collection = self.getTimedCollection()
         return Annotations().deleteAnnotation(collection, dataId, annotationText)
@@ -209,10 +239,27 @@ class PyKeyLogger:
         collection = self.getTimedCollection()
         return Annotations().deleteAllAnnotationsForData(collection, dataId)
 
+    # add an annotation to the timeline, not a datapoint
+    def addAnnotationToTimedTimeline(self, startTime, annotationText):
+        collection = self.getTimedCollection()
+        metadata = Common().createMetadataForTimelineAnnotations()
+
+        timed = {}
+        timed["className"] = ""
+        timed["content"] = ""
+        timed["type"] = ""
+        timed["title"] = ""
+        timed["start"] = datetime.strptime(startTime, '%Y-%m-%d %H:%M:%S')
+        timed["end"] = datetime.strptime(startTime, '%Y-%m-%d %H:%M:%S')
+        timed["metadata"] = metadata
+
+        return Annotations().addAnnotationToTimeline(collection, timed, annotationText)
+
 
     def fixTheDates(self, cursor, hasEndDate):
         objects = Common().formatOutput(cursor)
         for obj in objects:
+            obj["_id"] = obj["_id"]["$oid"]
             obj["start"] = Common().formatDatetime(obj["start"]["$date"])
             obj["metadata"]["importDate"] = Common().formatDatetime(obj["metadata"]["importDate"]["$date"])
 
