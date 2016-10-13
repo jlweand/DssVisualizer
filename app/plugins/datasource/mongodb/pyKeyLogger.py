@@ -17,19 +17,16 @@ class PyKeyLogger:
 
     def importKeypressData(self, json):
         collection = self.getKeyPressCollection()
-        collection.delete_many({})
         result = collection.insert_many(json)
         return len(result.inserted_ids)
 
     def importClick(self, json):
         collection = self.getClickCollection()
-        collection.delete_many({})
         result = collection.insert_many(json)
         return len(result.inserted_ids)
 
     def importTimed(self, json):
         collection = self.getTimedCollection()
-        collection.delete_many({})
         result = collection.insert_many(json)
         return len(result.inserted_ids)
 
