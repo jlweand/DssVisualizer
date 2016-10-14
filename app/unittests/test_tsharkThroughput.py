@@ -1,5 +1,4 @@
 import unittest
-from pprint import pprint
 from core.apis.datasource.tsharkThroughput import TsharkThroughput
 
 
@@ -12,7 +11,6 @@ class TsharkThroughputTest(unittest.TestCase):
 
     def test_selectTsharkDataById(self):
         jsonData = TsharkThroughput().selectTsharkDataById(dataId)
-        pprint(jsonData)
         self.assertEqual(1, len(jsonData))
 
     def test_tsharkAnnotations(self):
@@ -45,14 +43,11 @@ class TsharkThroughputTest(unittest.TestCase):
 
     def test_deleteFixedTsharkData(self):
         modifiedCount = TsharkThroughput().deleteFixedTsharkData(dataId)
-        jsonData2 = TsharkThroughput().selectTsharkDataById(dataId)
-        pprint(jsonData2)
         self.assertEqual(1, modifiedCount)
 
     def test_addAnnotationToTsharkTimeline(self):
         objectId = TsharkThroughput().addAnnotationToTsharkTimeline('2016-08-01 10:00:00', "here's a timeline annotation")
         changedAnn = TsharkThroughput().selectTsharkDataById(objectId)
-        pprint(changedAnn)
         self.assertIsNotNone(changedAnn)
 
 
