@@ -19,3 +19,8 @@ class DataImport:
         pyKeyLogger = ConfigReader().getInstanceOfDatasourcePlugin("PyKeyLogger")
         insertedCount = pyKeyLogger.importTimed(jsonData)
         return insertedCount
+
+    def importTsharkThroughput(self, jsonData):
+        tsharkThroughput = ConfigReader().getInstanceOfDatasourcePlugin("TsharkThroughput")
+        insertedCount = tsharkThroughput.importTsharkData(jsonData)
+        return insertedCount

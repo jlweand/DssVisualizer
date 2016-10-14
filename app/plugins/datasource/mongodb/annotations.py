@@ -72,7 +72,7 @@ class Annotations:
         :returns: modified_count
         """
         deleteId = {"_id" : ObjectId(dataId)}
-        deleteText = {"$set" : {"annotations": [] } }
+        deleteText = {"$unset" : {"annotations": "" } }
         result = collection.update_one(deleteId, deleteText)
         return result.modified_count
 
