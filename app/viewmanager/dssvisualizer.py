@@ -46,6 +46,16 @@ def handle(web_view,web_frame,web_resource,request,response):
 				timedData = PyKeyLogger().selectTimedData(startDate, endDate)
 				js = "visData(%s, %s, %s);" % (keyData, clickData, timedData)
 				webKitWebView.execute_script(js)
+			elif(queryDict['request'][0] == 'pcapData'):
+				startDate = queryDict['startDate'][0]
+				endDate = queryDict['endDate'][0]
+				#actual mongodb stuff here
+				xyFile = getJson("json/multiExclude/networkDataXY.JSON")
+				xyData = ujson.dumps(xyFile)
+				allFile = getJson("json/multiExclude/networkDataAll.JSON")
+				allData = ujson.dumps(allFile)
+				js = "visPCAPData(%s, %s);" % (xyData, allData)
+				webKitWebView.execute_script(js)
 		elif('submission' in queryDict):
 			if(queryDict['submission'][0] == 'annotation'):
 				itemID = queryDict['itemID'][0]

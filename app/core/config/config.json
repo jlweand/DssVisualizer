@@ -2,14 +2,14 @@
   "activeDatasourcePlugin": "MongoDB",
   "activeRendererPlugins": {
     "pcapDataProcol": {
-      "location": "plugins.renderer.d3",
-      "plugin": "d3.js",
-      "scripts": "tom.txt"
+      "location": "plugins.renderer.visjs",
+      "plugin": "vis.js",
+      "scripts": "scripts.txt"
     },
     "pcapThroughput": {
-      "location": "plugins.renderer.d3",
-      "plugin": "d3.js",
-      "scripts": "tom.txt"
+      "location": "plugins.renderer.visjs",
+      "plugin": "vis.js",
+      "scripts": "scripts.txt"
     },
     "pyKeyLogger": {
       "location": "plugins.renderer.visjs",

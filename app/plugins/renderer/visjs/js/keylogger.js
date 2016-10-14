@@ -1,12 +1,15 @@
 $(document).ready(function(){
-	var startDate = '2016-09-01 09:00:00';
-	var endDate = '2016-09-16 10:00:00';
-	var keypressDataUrl = "http://localhost?request=keypressData&startDate="+startDate+"&endDate="+endDate;
-	$.get(keypressDataUrl);
+	// var startDate = '2016-09-01 09:00:00';
+	// var endDate = '2016-09-16 10:00:00';
+	// var keypressDataUrl = "http://localhost?request=keypressData&startDate="+startDate+"&endDate="+endDate;
+	// $.get(keypressDataUrl);
 });
-$("#dateInput").click(function(){
+$(document).on("click", "#dateInput", function(){
+	$("#loading").removeClass("hidden");
+	$("#keypressData").addClass("hidden");
+	$("#keypressData").html("");
 	var start = $("#datepickerStart").val();
-	var end = $("#datepickerStart").val();
+	var end = $("#datepickerEnd").val();
 	if(start == ""){
 		start = '2000-01-01 00:00:00';
 	}
@@ -14,21 +17,16 @@ $("#dateInput").click(function(){
 		start = start + " 00:00:00";
 	}
 	if(end == ""){
-		end = '3000-01-01 00:00:00';
+		end = '3000-01-01 23:59:59';
 	}
 	else{
-		end = end + " 00:00:00";
+		end = end + " 23:59:59";
 	}
 	var keypressDataUrl = "http://localhost?request=keypressData&startDate="+start+"&endDate="+end;
 	$.get(keypressDataUrl);
 });
 function visData(keyData, clickData, timedData){
-	var parsedJson = $.extend({}, keyData, clickData, timedData);
-	if(typeof parsedJson == 'string'){
-		parsedJson = JSON.parse(parsedJson);
-	}
-
-	keyData.forEach(function(obj){ obj['group'] = '0'; });
+	keyData.forEach(function(obj){ obj['group'] = '0';});
 	clickData.forEach(function(obj){ obj['group'] = '1'; });
 	timedData.forEach(function(obj){ obj['group'] = '2'; });
 
@@ -71,6 +69,9 @@ function visData(keyData, clickData, timedData){
 
 	// Create a Timeline
 	var timeline = new vis.Timeline(container, items, groups, options);
+
+	$("#loading").addClass("hidden");
+	$("#keypressData").removeClass("hidden");
 
 	timeline.on('doubleClick', function(properties){
 		var currItem = properties.items;

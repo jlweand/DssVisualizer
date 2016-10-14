@@ -20,7 +20,6 @@
 	<div id="admin">
 		<a href="admin.html">Edit Plug-Ins</a>
 	</div>
-	<h3>Keypress Data</h3>
 	<div id="dateSelect">
 		<div id="start-container">
 			<label for="start">Select start date:</label>
@@ -36,8 +35,11 @@
 		</div>
 	</div>
 	<div class="clear"></div>
+	<h3>Keypress Data</h3>
 	<div id="keypressData"></div>
-	<div id="loading">
+	<h3>PCAP Data</h3>
+	<div id="pcapData"></div>
+	<div id="loading" class="hidden">
 		<img src="img/ripple.gif" />
 	</div>
 	<div id="currentItem"></div>
