@@ -5,49 +5,46 @@ from core.apis.datasource.tsharkThroughput import TsharkThroughput
 class TsharkThroughputTest(unittest.TestCase):
 
 
-    def test_selectTsharkData(self):
-        jsonData = TsharkThroughput().selectTsharkData('2016-10-13 00:00:00', '2016-10-13 23:00:00')
+    def test_selectTsharkThroughputData(self):
+        jsonData = TsharkThroughput().selectTsharkThroughputData('2016-10-13 00:00:00', '2016-10-13 23:00:00')
         self.assertEqual(22, len(jsonData))
 
-    def test_selectTsharkDataById(self):
-        jsonData = TsharkThroughput().selectTsharkDataById(dataId)
+    def test_selectTsharkThroughputDataById(self):
+        jsonData = TsharkThroughput().selectTsharkThroughputDataById(dataId)
         self.assertEqual(1, len(jsonData))
 
     def test_tsharkAnnotations(self):
-        TsharkThroughput().addAnnotationTshark(dataId, 'test')
-        TsharkThroughput().addAnnotationTshark(dataId, 'test test')
-        TsharkThroughput().addAnnotationTshark(dataId, 'test test test')
-        TsharkThroughput().addAnnotationTshark(dataId, 'test test test')
-        addedAnns = TsharkThroughput().selectTsharkDataById(dataId)
+        TsharkThroughput().addAnnotationTsharkThroughput(dataId, 'test')
+        TsharkThroughput().addAnnotationTsharkThroughput(dataId, 'test test')
+        TsharkThroughput().addAnnotationTsharkThroughput(dataId, 'test test test')
+        TsharkThroughput().addAnnotationTsharkThroughput(dataId, 'test test test')
+        addedAnns = TsharkThroughput().selectTsharkThroughputDataById(dataId)
 
-        TsharkThroughput().editAnnotationTshark(dataId, 'test test', 'updated annotation!!')
-        changedAnn = TsharkThroughput().selectTsharkDataById(dataId)
+        TsharkThroughput().editAnnotationTsharkThroughput(dataId, 'test test', 'updated annotation!!')
+        changedAnn = TsharkThroughput().selectTsharkThroughputDataById(dataId)
 
-        TsharkThroughput().deleteAnnotationTshark(dataId, 'updated annotation!!')
-        deletedChanged = TsharkThroughput().selectTsharkDataById(dataId)
+        TsharkThroughput().deleteAnnotationTsharkThroughput(dataId, 'updated annotation!!')
+        deletedChanged = TsharkThroughput().selectTsharkThroughputDataById(dataId)
 
-        TsharkThroughput().deleteAllAnnotationsForTshark(dataId)
-        deletedAll = TsharkThroughput().selectTsharkDataById(dataId)
+        TsharkThroughput().deleteAllAnnotationsForTsharkThroughput(dataId)
+        deletedAll = TsharkThroughput().selectTsharkThroughputDataById(dataId)
 
         self.assertEqual(3, len(addedAnns[0]["annotations"]))
         self.assertEqual(2, len(deletedChanged[0]["annotations"]))
         self.assertRaises(KeyError, lambda: deletedAll[0]["annotations"])
     
-    def test_insertFixedTsharkData(self):
-        modifiedCount = TsharkThroughput().insertFixedTsharkData(dataId, '2016-10-02 18:28:00', 1111)
-        self.assertEqual(1, modifiedCount)
+    def test_fixedTsharkThroughputData(self):
+        insertCount = TsharkThroughput().insertFixedTsharkThroughputData(dataId, '2016-10-02 18:28:00', 1111)
+        modifiedCount = TsharkThroughput().updateFixedTsharkThroughputData(dataId, '2017-01-02 18:28:00', 99999)
+        deletedCount = TsharkThroughput().deleteFixedTsharkThroughputData(dataId)
 
-    def test_updateFixedTsharkData(self):
-        modifiedCount = TsharkThroughput().updateFixedTsharkData(dataId, '2017-01-02 18:28:00', 99999)
+        self.assertEqual(1, insertCount)
         self.assertEqual(1, modifiedCount)
+        self.assertEqual(1, deletedCount)
 
-    def test_deleteFixedTsharkData(self):
-        modifiedCount = TsharkThroughput().deleteFixedTsharkData(dataId)
-        self.assertEqual(1, modifiedCount)
-
-    def test_addAnnotationToTsharkTimeline(self):
-        objectId = TsharkThroughput().addAnnotationToTsharkTimeline('2016-08-01 10:00:00', "here's a timeline annotation")
-        changedAnn = TsharkThroughput().selectTsharkDataById(objectId)
+    def test_addAnnotationToTsharkThroughputTimeline(self):
+        objectId = TsharkThroughput().addAnnotationToTsharkThroughputTimeline('2016-08-01 10:00:00', "here's a timeline annotation")
+        changedAnn = TsharkThroughput().selectTsharkThroughputDataById(objectId)
         self.assertIsNotNone(changedAnn)
 
 

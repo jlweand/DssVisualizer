@@ -6,39 +6,38 @@ from pprint import pprint
 
 class TsharkThroughput:
 
-    def getTsharkCollection(self):
+    def getTsharkThroughputCollection(self):
         return Common().getDatabase().tsharkThroughput
 
-    def importTsharkData(self, json):
-        collection = self.getTsharkCollection()
+    def importTsharkThroughputData(self, json):
+        collection = self.getTsharkThroughputCollection()
         result = collection.insert_many(json)
         return len(result.inserted_ids)
 
-# Tshark #
     # select data by date range of the 'start' column
-    def selectTsharkData(self, startDate, endDate):
-        collection = self.getTsharkCollection()
+    def selectTsharkThroughputData(self, startDate, endDate):
+        collection = self.getTsharkThroughputCollection()
         findJson = { "x": {"$gte" : datetime.strptime(startDate, Common().getDatetimeFormatString()), "$lt": datetime.strptime(endDate, Common().getDatetimeFormatString())}}
         cursor = collection.find(findJson)
         return self.fixTheData(cursor)
 
     # select single data point
-    def selectTsharkDataById(self, dataId):
-        collection = self.getTsharkCollection()
+    def selectTsharkThroughputDataById(self, dataId):
+        collection = self.getTsharkThroughputCollection()
         cursor = collection.find({"_id": ObjectId(dataId)})
         return self.fixTheData(cursor)
 
     # add a fixedData record to this data point
-    def insertFixedTsharkData(self, dataId, x, y):
-        collection = self.getTsharkCollection()
+    def insertFixedTsharkThroughputData(self, dataId, x, y):
+        collection = self.getTsharkThroughputCollection()
         updateId = {"_id": ObjectId(dataId)}
         fixedData = {"$set": {"fixedData": {"x": x, "y": y}}}
         result = collection.update_one(updateId, fixedData)
         return result.modified_count
 
     # update a previously 'fixed' record.
-    def updateFixedTsharkData(self, dataId, x, y):
-        collection = self.getTsharkCollection()
+    def updateFixedTsharkThroughputData(self, dataId, x, y):
+        collection = self.getTsharkThroughputCollection()
         updateId = {"_id" : ObjectId(dataId)}
         fixedData = {"$set": {"fixedData": {"x": x, "y": y}}}
 
@@ -46,36 +45,36 @@ class TsharkThroughput:
         return result.modified_count;
 
     # delete the fixedData
-    def deleteFixedTsharkData(self, dataId):
-        collection = self.getTsharkCollection()
+    def deleteFixedTsharkThroughputData(self, dataId):
+        collection = self.getTsharkThroughputCollection()
         updateId = {"_id" : ObjectId(dataId)}
         fixedData = {"$unset": {"fixedData": "" }}
         result = collection.update_one(updateId, fixedData)
         return result.modified_count
 
     # add an annotation for the dataId
-    def addAnnotationTshark(self, dataId, annotationText):
-        collection = self.getTsharkCollection()
+    def addAnnotationTsharkThroughput(self, dataId, annotationText):
+        collection = self.getTsharkThroughputCollection()
         return Annotations().addAnnotation(collection, dataId, annotationText)
 
     # edit an annotation for the dataId
-    def editAnnotationTshark(self, dataId, oldAnnotationText, newAnnotationText):
-        collection = self.getTsharkCollection()
+    def editAnnotationTsharkThroughput(self, dataId, oldAnnotationText, newAnnotationText):
+        collection = self.getTsharkThroughputCollection()
         return Annotations().editAnnotation(collection, dataId, oldAnnotationText, newAnnotationText)
 
     #delete an annotation for the dataId
-    def deleteAnnotationTshark(self, dataId, annotationText):
-        collection = self.getTsharkCollection()
+    def deleteAnnotationTsharkThroughput(self, dataId, annotationText):
+        collection = self.getTsharkThroughputCollection()
         return Annotations().deleteAnnotation(collection, dataId, annotationText)
 
     # deletes all annotations for the dataId
-    def deleteAllAnnotationsForTshark(self, dataId):
-        collection = self.getTsharkCollection()
+    def deleteAllAnnotationsForTsharkThroughput(self, dataId):
+        collection = self.getTsharkThroughputCollection()
         return Annotations().deleteAllAnnotationsForData(collection, dataId)
 
     # add an annotation to the timeline, not a datapoint
-    def addAnnotationToTsharkTimeline(self, startTime, annotationText):
-        collection = self.getTsharkCollection()
+    def addAnnotationToTsharkThroughputTimeline(self, startTime, annotationText):
+        collection = self.getTsharkThroughputCollection()
         metadata = Common().createMetadataForTimelineAnnotations()
 
         tshark = {}
