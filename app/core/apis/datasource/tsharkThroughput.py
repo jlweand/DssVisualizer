@@ -39,7 +39,7 @@ class TsharkThroughput:
 
 
     def insertFixedTsharkData(self, dataId, x, y):
-        """Override: Inserts a new record of the data. Does not overrite the original key press.
+        """Override: Inserts a fixedData attribute.
 
         :param dataId: The key of the original data
         :type dataId: str
@@ -55,7 +55,7 @@ class TsharkThroughput:
 
 
     def updateFixedTsharkData(self, dataId, x, y):
-        """Override: Updates the record of the 'fixed' timed data.
+        """Override: Updates the fixedData attribute.
 
         :param dataId: The key of the original data
         :type dataId: str
@@ -71,9 +71,9 @@ class TsharkThroughput:
 
 
     def deleteFixedTsharkData(self, dataId):
-        """Override: Delete a 'fixed' timed data.
+        """Override: Deletes the fixedData attribute.
 
-        :param dataId: The ID of the 'fixed' data to delete
+        :param dataId: The key of the original data
         :type dataId: str
         :returns: The modified count.
         """
