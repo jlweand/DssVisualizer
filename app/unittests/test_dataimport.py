@@ -17,9 +17,17 @@ class DataImportTest(unittest.TestCase):
         size = DataImportConfig().importTimed("Alex", "Super summer Event", "here are some comments", datetime.datetime.now())
         self.assertEqual(size, 21)
 
-    def test_importTimed(self):
+    def test_importTsharkThroughput(self):
         size = DataImportConfig().importTsharkThroughput("Alex", "Super summer Event", "here are some comments", datetime.datetime.now())
         self.assertEqual(size, 67)
+
+    def test_importMultiIncludeThroughput(self):
+        size = DataImportConfig().importMultiIncludeThroughput("Alex", "Super summer Event", "here are some comments", datetime.datetime.now())
+        self.assertEqual(size, 77)
+
+    def test_importMultiExcludeThroughput(self):
+        size = DataImportConfig().importMultiExcludeThroughput("Alex", "Super summer Event", "here are some comments", datetime.datetime.now())
+        self.assertEqual(size, 77)
 
 
 if __name__ == '__main__':

@@ -22,5 +22,15 @@ class DataImport:
 
     def importTsharkThroughput(self, jsonData):
         tsharkThroughput = ConfigReader().getInstanceOfDatasourcePlugin("TsharkThroughput")
-        insertedCount = tsharkThroughput.importTsharkData(jsonData)
+        insertedCount = tsharkThroughput.importTsharkThroughputData(jsonData)
+        return insertedCount
+
+    def importMultiExcludeThroughput(self, jsonData):
+        multiExcludeThroughput = ConfigReader().getInstanceOfDatasourcePlugin("MultiExcludeThroughput")
+        insertedCount = multiExcludeThroughput.importMultiExcludeThroughputData(jsonData)
+        return insertedCount
+
+    def importMultiIncludeThroughput(self, jsonData):
+        multiInclude = ConfigReader().getInstanceOfDatasourcePlugin("MultiIncludeThroughput")
+        insertedCount = multiInclude.importMultiIncludeThroughputData(jsonData)
         return insertedCount

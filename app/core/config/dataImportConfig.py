@@ -10,7 +10,8 @@ class DataImportConfig:
         self.clickFile = "json/click.json"
         self.timedFile = "json/timed.json"
         self.tsharkThroughputFile = "json/tshark/networkDataXY.json"
-
+        self.multiIncludeThroughputFile = "json/multiInclude/networkDataXY.json"
+        self.multiExcludeThroughputFile = "json/multiExclude/networkDataXY.json"
 
     def addExtraData(self, json, techName, eventName, comments, importDate, hasStartDate, hasEndDate, hasXdate):
         for data in json:
@@ -58,3 +59,13 @@ class DataImportConfig:
         data = self.importJson(self.tsharkThroughputFile)
         data = self.addExtraData(data, techName, eventName, comments, importDate, False, False, True)
         return DataImport().importTsharkThroughput(data)
+
+    def importMultiIncludeThroughput(self, techName, eventName, comments, importDate):
+        data = self.importJson(self.multiIncludeThroughputFile)
+        data = self.addExtraData(data, techName, eventName, comments, importDate, False, False, True)
+        return DataImport().importMultiIncludeThroughput(data)
+
+    def importMultiExcludeThroughput(self, techName, eventName, comments, importDate):
+        data = self.importJson(self.multiExcludeThroughputFile)
+        data = self.addExtraData(data, techName, eventName, comments, importDate, False, False, True)
+        return DataImport().importMultiExcludeThroughput(data)
