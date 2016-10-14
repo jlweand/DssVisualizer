@@ -15,7 +15,7 @@ class TsharkThroughputTest(unittest.TestCase):
         pprint(jsonData)
         self.assertEqual(1, len(jsonData))
 
-    def test_keyPressAnnotations(self):
+    def test_tsharkAnnotations(self):
         TsharkThroughput().addAnnotationTshark(dataId, 'test')
         TsharkThroughput().addAnnotationTshark(dataId, 'test test')
         TsharkThroughput().addAnnotationTshark(dataId, 'test test test')
