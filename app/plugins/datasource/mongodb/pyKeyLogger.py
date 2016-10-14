@@ -34,7 +34,7 @@ class PyKeyLogger:
     # select data by date range of the 'start' column
     def selectKeyPressData(self, startDate, endDate):
         collection = self.getKeyPressCollection()
-        findJson = { "start": {"$gte" : datetime.strptime(startDate, Common().getDatetimeFormatString), "$lt": datetime.strptime(endDate, Common().getDatetimeFormatString)}}
+        findJson = { "start": {"$gte" : datetime.strptime(startDate, Common().getDatetimeFormatString()), "$lt": datetime.strptime(endDate, Common().getDatetimeFormatString())}}
         cursor = collection.find(findJson)
         return self.fixTheDates(cursor, False)
 
@@ -97,7 +97,7 @@ class PyKeyLogger:
         keyPress = {}
         keyPress["className"] = ""
         keyPress["content"] = ""
-        keyPress["start"] = datetime.strptime(startTime, Common().getDatetimeFormatString)
+        keyPress["start"] = datetime.strptime(startTime, Common().getDatetimeFormatString())
         keyPress["metadata"] = metadata
 
         return Annotations().addAnnotationToTimeline(collection, keyPress, annotationText)
@@ -106,7 +106,7 @@ class PyKeyLogger:
     # select data by date range of the 'start' column
     def selectClickData(self, startDate, endDate):
         collection = self.getClickCollection()
-        findJson = { "start": {"$gte" : datetime.strptime(startDate, Common().getDatetimeFormatString), "$lt": datetime.strptime(endDate, Common().getDatetimeFormatString)}}
+        findJson = { "start": {"$gte" : datetime.strptime(startDate, Common().getDatetimeFormatString()), "$lt": datetime.strptime(endDate, Common().getDatetimeFormatString())}}
         cursor = collection.find(findJson)
         return self.fixTheDates(cursor, True)
 
@@ -171,8 +171,8 @@ class PyKeyLogger:
         click["content"] = ""
         click["type"] = ""
         click["title"] = ""
-        click["start"] = datetime.strptime(startTime, Common().getDatetimeFormatString)
-        click["end"] = datetime.strptime(startTime, Common().getDatetimeFormatString)
+        click["start"] = datetime.strptime(startTime, Common().getDatetimeFormatString())
+        click["end"] = datetime.strptime(startTime, Common().getDatetimeFormatString())
         click["metadata"] = metadata
 
         return Annotations().addAnnotationToTimeline(collection, click, annotationText)
@@ -181,7 +181,7 @@ class PyKeyLogger:
     # select data by date range of the 'start' column
     def selectTimedData(self, startDate, endDate):
         collection = self.getTimedCollection()
-        findJson = { "start": {"$gte" : datetime.strptime(startDate, Common().getDatetimeFormatString), "$lt": datetime.strptime(endDate, Common().getDatetimeFormatString)}}
+        findJson = { "start": {"$gte" : datetime.strptime(startDate, Common().getDatetimeFormatString()), "$lt": datetime.strptime(endDate, Common().getDatetimeFormatString())}}
         cursor = collection.find(findJson)
         return self.fixTheDates(cursor, True)
 
@@ -246,8 +246,8 @@ class PyKeyLogger:
         timed["content"] = ""
         timed["type"] = ""
         timed["title"] = ""
-        timed["start"] = datetime.strptime(startTime, Common().getDatetimeFormatString)
-        timed["end"] = datetime.strptime(startTime, Common().getDatetimeFormatString)
+        timed["start"] = datetime.strptime(startTime, Common().getDatetimeFormatString())
+        timed["end"] = datetime.strptime(startTime, Common().getDatetimeFormatString())
         timed["metadata"] = metadata
 
         return Annotations().addAnnotationToTimeline(collection, timed, annotationText)
@@ -256,7 +256,7 @@ class PyKeyLogger:
     def fixTheDates(self, cursor, hasEndDate):
         objects = Common().formatOutput(cursor)
         for obj in objects:
-            obj["_id"] = obj["_id"]["$oid"]
+            obj["id"] = obj["_id"]["$oid"]
             obj["start"] = Common().formatEpochDatetime(obj["start"]["$date"])
             obj["metadata"]["importDate"] = Common().formatEpochDatetime(obj["metadata"]["importDate"]["$date"])
 
