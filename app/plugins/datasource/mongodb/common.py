@@ -13,7 +13,7 @@ class Common:
         :type epoch: long
         :returns: UTC ISO_8601 formatted date
         """
-        return datetime.utcfromtimestamp(epoch / 1e3).isoformat()
+        return datetime.fromtimestamp(epoch / 1e3).isoformat()
 
     def getDatetimeFormatString(self):
         """Returns the string of how we want to format dates
@@ -53,6 +53,6 @@ class Common:
         metadata["techName"] = "Manual Entry"
         metadata["eventName"] = ""
         metadata["comments"] = ""
-        metadata["importDate"] = datetime.now(timezone.utc)
+        metadata["importDate"] = datetime.now(timezone.utc).isoformat()
 
         return metadata

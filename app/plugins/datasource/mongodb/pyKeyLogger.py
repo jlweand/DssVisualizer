@@ -36,13 +36,13 @@ class PyKeyLogger:
         collection = self.getKeyPressCollection()
         findJson = { "start": {"$gte" : datetime.strptime(startDate, Common().getDatetimeFormatString()), "$lt": datetime.strptime(endDate, Common().getDatetimeFormatString())}}
         cursor = collection.find(findJson)
-        return self.fixTheDates(cursor, False)
+        return self.fixTheDates(cursor)
 
     # select single data point
     def selectKeyPressDataById(self, dataId):
         collection = self.getKeyPressCollection()
         cursor = collection.find({"_id": ObjectId(dataId)})
-        return self.fixTheDates(cursor, False)
+        return self.fixTheDates(cursor)
 
     # insert a new record.  This record must be tied to the original record.
     # the oldDataId will be a new 'column' called sourceId. it is of type ObjectId
@@ -108,28 +108,28 @@ class PyKeyLogger:
         collection = self.getClickCollection()
         findJson = { "start": {"$gte" : datetime.strptime(startDate, Common().getDatetimeFormatString()), "$lt": datetime.strptime(endDate, Common().getDatetimeFormatString())}}
         cursor = collection.find(findJson)
-        return self.fixTheDates(cursor, True)
+        return self.fixTheDates(cursor)
 
     # select single data point
     def selectClickDataById(self, dataId):
         collection = self.getClickCollection()
         cursor = collection.find({"_id": ObjectId(dataId)})
-        return self.fixTheDates(cursor, True)
+        return self.fixTheDates(cursor)
 
     # insert a new record.  This record must be tied to the original record.
     # the oldDataId will be a new 'column' called sourceId. it is of type ObjectId
-    def insertFixedClickData(self, oldDataId, content, className, start, end, title, typeClick):
+    def insertFixedClickData(self, oldDataId, content, className, start, title, typeClick):
         collection = self.getDatabase().click
-        insertJson = {"oldDataId": oldDataId, "content": content, "className": className,"start": start, "end": end, "title": title, "type": typeClick}
+        insertJson = {"oldDataId": oldDataId, "content": content, "className": className,"start": start, "title": title, "type": typeClick}
         result = collection.insert_one(insertJson)
         return result.inserted_id
 
     # update a previously 'fixed' record. Make sure that this record has a value in the sourceId.
     # ORIGINAL DATA SHOULD NEVER BE UPDATED OR DELETED.
-    def updateFixedClickData(self, dataId, oldDataId, content, start, end, title, typeClick):
+    def updateFixedClickData(self, dataId, oldDataId, content, start, title, typeClick):
         collection = self.getDatabase().click
         updateId = {"$and":[{ "_id" : ObjectId(dataId)}, { "oldDataId" : oldDataId}]}
-        updateText = {"$set": {"content": content ,"start": start, "end": end, "title": title, "type": typeClick}}
+        updateText = {"$set": {"content": content ,"start": start, "title": title, "type": typeClick}}
         result = collection.update_one(updateId, updateText)
         return result.modified_count
 
@@ -172,7 +172,6 @@ class PyKeyLogger:
         click["type"] = ""
         click["title"] = ""
         click["start"] = datetime.strptime(startTime, Common().getDatetimeFormatString())
-        click["end"] = datetime.strptime(startTime, Common().getDatetimeFormatString())
         click["metadata"] = metadata
 
         return Annotations().addAnnotationToTimeline(collection, click, annotationText)
@@ -183,28 +182,28 @@ class PyKeyLogger:
         collection = self.getTimedCollection()
         findJson = { "start": {"$gte" : datetime.strptime(startDate, Common().getDatetimeFormatString()), "$lt": datetime.strptime(endDate, Common().getDatetimeFormatString())}}
         cursor = collection.find(findJson)
-        return self.fixTheDates(cursor, True)
+        return self.fixTheDates(cursor)
 
     # select single data point
     def selectTimedDataById(self, dataId):
         collection = self.getTimedCollection()
         cursor = collection.find({"_id": ObjectId(dataId)})
-        return self.fixTheDates(cursor, True)
+        return self.fixTheDates(cursor)
 
     # insert a new record.  This record must be tied to the original record.
     # the oldDataId will be a new 'column' called sourceId. it is of type ObjectId
-    def insertFixedTimedData(self, oldDataId, content, className, start, end, title, typeTimed):
+    def insertFixedTimedData(self, oldDataId, content, className, start, title, typeTimed):
         collection = self.getDatabase().timed
-        insertJson = {"oldDataId": oldDataId, "content": content, "className": className,"start": start, "end": end, "title": title, "type": typeTimed}
+        insertJson = {"oldDataId": oldDataId, "content": content, "className": className,"start": start, "title": title, "type": typeTimed}
         result = collection.insert_one(insertJson)
         return result.inserted_id
 
     # update a previously 'fixed' record. Make sure that this record has a value in the sourceId.
     # ORIGINAL DATA SHOULD NEVER BE UPDATED OR DELETED.
-    def updateFixedTimedData(self, dataId, oldDataId, content, start, end, title, typeTimed):
+    def updateFixedTimedData(self, dataId, oldDataId, content, start, title, typeTimed):
         collection = self.getDatabase().timed
         updateId = {"$and":[{ "_id" : ObjectId(dataId)}, { "oldDataId" : oldDataId}]}
-        updateText = {"$set": {"content": content ,"start": start, "end": end, "title": title, "type": typeTimed}}
+        updateText = {"$set": {"content": content ,"start": start, "title": title, "type": typeTimed}}
         result = collection.update_one(updateId, updateText)
         return result.modified_count
 
@@ -247,20 +246,16 @@ class PyKeyLogger:
         timed["type"] = ""
         timed["title"] = ""
         timed["start"] = datetime.strptime(startTime, Common().getDatetimeFormatString())
-        timed["end"] = datetime.strptime(startTime, Common().getDatetimeFormatString())
         timed["metadata"] = metadata
 
         return Annotations().addAnnotationToTimeline(collection, timed, annotationText)
 
 
-    def fixTheDates(self, cursor, hasEndDate):
+    def fixTheDates(self, cursor):
         objects = Common().formatOutput(cursor)
         for obj in objects:
             obj["id"] = obj["_id"]["$oid"]
             obj["start"] = Common().formatEpochDatetime(obj["start"]["$date"])
-            obj["metadata"]["importDate"] = Common().formatEpochDatetime(obj["metadata"]["importDate"]["$date"])
-
-            if(hasEndDate):
-                obj["end"] = Common().formatEpochDatetime(obj["end"]["$date"])
+            # obj["metadata"]["importDate"] = Common().formatEpochDatetime(obj["metadata"]["importDate"]["$date"])
 
         return objects

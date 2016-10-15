@@ -14,7 +14,7 @@
     "pyKeyLogger": {
       "location": "plugins.renderer.visjs",
       "plugin": "vis.js",
-      "scripts": "scripts.txt"
+      "scripts": "visjsScripts.txt"
     },
     "screenshots": {
       "location": "plugins.renderer.d3",

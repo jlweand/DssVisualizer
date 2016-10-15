@@ -5,15 +5,15 @@ from core.apis.datasource.dataImport import DataImport
 class DataImportConfig:
 
     def __init__(self):
-        self.dateformat = '%Y-%m-%d %H:%M:%S'
-        self.keypressFile = "json/keypressData.json"
-        self.clickFile = "json/click.json"
-        self.timedFile = "json/timed.json"
+        self.dateformat = '%Y-%m-%dT%H:%M:%S'
+        self.keypressFile = "json/pyKeyLogger/keypressData.json"
+        self.clickFile = "json/pyKeyLogger/click.json"
+        self.timedFile = "json/pyKeyLogger/timed.json"
         self.tsharkThroughputFile = "json/tshark/networkDataXY.json"
-        self.multiIncludeThroughputFile = "json/multiInclude/networkDataXY.json"
-        self.multiExcludeThroughputFile = "json/multiExclude/networkDataXY.json"
+        self.multiIncludeThroughputFile = "json/multi_incl_tshark/networkDataXY.json"
+        self.multiExcludeThroughputFile = "json/multi_exec_tshark/networkDataXY.json"
 
-    def addExtraData(self, json, techName, eventName, comments, importDate, hasStartDate, hasEndDate, hasXdate):
+    def addExtraData(self, json, techName, eventName, comments, importDate, hasStartDate, hasXdate):
         for data in json:
             #create the metadata
             metadata = {}
@@ -23,13 +23,10 @@ class DataImportConfig:
             metadata["importDate"] = importDate
             data["metadata"] = metadata
 
-            if (hasStartDate):
+            if hasStartDate:
                 data["start"] = datetime.strptime(data["start"], self.dateformat)
 
-            if (hasEndDate):
-                data["end"] = datetime.strptime(data["end"], self.dateformat)
-
-            if (hasXdate):
+            if hasXdate:
                 data["x"] = datetime.strptime(data["x"], self.dateformat)
 
         return json
@@ -42,30 +39,30 @@ class DataImportConfig:
 
     def importKeypressData(self, techName, eventName, comments, importDate):
         data = self.importJson(self.keypressFile)
-        data = self.addExtraData(data, techName, eventName, comments, importDate, True, False, False)
+        data = self.addExtraData(data, techName, eventName, comments, importDate, True, False)
         return DataImport().importKeypressData(data)
 
     def importClick(self, techName, eventName, comments, importDate):
         data = self.importJson(self.clickFile)
-        data = self.addExtraData(data, techName, eventName, comments, importDate, True, True, False)
+        data = self.addExtraData(data, techName, eventName, comments, importDate, True, False)
         return DataImport().importClick(data)
 
     def importTimed(self, techName, eventName, comments, importDate):
         data = self.importJson(self.timedFile)
-        data = self.addExtraData(data, techName, eventName, comments, importDate, True, True, False)
+        data = self.addExtraData(data, techName, eventName, comments, importDate, True, False)
         return DataImport().importTimed(data)
 
     def importTsharkThroughput(self, techName, eventName, comments, importDate):
         data = self.importJson(self.tsharkThroughputFile)
-        data = self.addExtraData(data, techName, eventName, comments, importDate, False, False, True)
+        data = self.addExtraData(data, techName, eventName, comments, importDate, False, True)
         return DataImport().importTsharkThroughput(data)
 
     def importMultiIncludeThroughput(self, techName, eventName, comments, importDate):
         data = self.importJson(self.multiIncludeThroughputFile)
-        data = self.addExtraData(data, techName, eventName, comments, importDate, False, False, True)
+        data = self.addExtraData(data, techName, eventName, comments, importDate, False, True)
         return DataImport().importMultiIncludeThroughput(data)
 
     def importMultiExcludeThroughput(self, techName, eventName, comments, importDate):
         data = self.importJson(self.multiExcludeThroughputFile)
-        data = self.addExtraData(data, techName, eventName, comments, importDate, False, False, True)
+        data = self.addExtraData(data, techName, eventName, comments, importDate, False, True)
         return DataImport().importMultiExcludeThroughput(data)

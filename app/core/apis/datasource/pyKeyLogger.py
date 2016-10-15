@@ -15,7 +15,7 @@ class PyKeyLogger:
 
         :param startDate: The datetime to return data
         :type startDate: datetime
-        :param endDate: The datatime to return data
+        :param endDate: The datetime to return data
         :type endDate: datetime
         :returns: JSON object
         """
@@ -149,7 +149,7 @@ class PyKeyLogger:
 
         :param startDate: The datetime to return data
         :type startDate: datetime
-        :param endDate: The datatime to return data
+        :param endDate: The datetime to return data
         :type endDate: datetime
         :returns: JSON object
         """
@@ -168,50 +168,46 @@ class PyKeyLogger:
         jsonData = pyKeyLogger.selectClickDataById(dataId)
         return jsonData
 
-    def insertFixedClickData(self, oldDataId, content, _type, classname, title, start, end):
-        """Override: Inserts a new record of the data. Does not overrite the original key press.
+    def insertFixedClickData(self, oldDataId, content, _type, classname, title, start):
+        """Override: Inserts a new record of the data. Does not overwrite the original key press.
 
         :param oldDataId: The key of the original click data
         :type oldDataId: str
         :param content: The updated content
         :type content: str
-        :param _type: The updtaed type
+        :param _type: The updated type
         :type _type: str
-        :param className: The updtaed class name
-        :type className: str
-        :param title: The updtaed title
+        :param classname: The updated class name
+        :type classname: str
+        :param title: The updated title
         :type title: str
         :param start: The updated start datetime of the event.
         :type start: datetime
-        :param end: The updated end datetime of the event.
-        :type end: datetime
         :returns: newly created id.
         """
         pyKeyLogger = self.getPlugin()
-        result = pyKeyLogger.insertFixedClickData(oldDataId, content, _type, classname, title, start, end)
+        result = pyKeyLogger.insertFixedClickData(oldDataId, content, _type, classname, title, start)
         return result
 
-    def updateFixedClickData(self, dataId, content, _type, classname, title, start, end):
+    def updateFixedClickData(self, dataId, content, _type, classname, title, start):
         """Override: Updates the record of the 'fixed' click data.
 
         :param dataId: The ID of the 'fixed' click data to edit.
         :type dataId: str
         :param content: The updated content
         :type content: str
-        :param _type: The updtaed type
+        :param _type: The updated type
         :type _type: str
-        :param className: The updtaed class name
-        :type className: str
-        :param title: The updtaed title
+        :param classname: The updated class name
+        :type classname: str
+        :param title: The updated title
         :type title: str
         :param start: The updated start datetime of the event.
         :type start: datetime
-        :param end: The updated end datetime of the event.
-        :type end: datetime
         :returns: The modified count.
         """
         pyKeyLogger = self.getPlugin()
-        result = pyKeyLogger.updateFixedClickData(dataId, content, _type, classname, title, start, end)
+        result = pyKeyLogger.updateFixedClickData(dataId, content, _type, classname, title, start)
         return result
 
     def deleteFixedClickData(self, dataId):
@@ -296,7 +292,7 @@ class PyKeyLogger:
 
         :param startDate: The datetime to return data
         :type startDate: datetime
-        :param endDate: The datatime to return data
+        :param endDate: The datetime to return data
         :type endDate: datetime
         :returns: JSON object
         """
@@ -315,50 +311,46 @@ class PyKeyLogger:
         jsonData = pyKeyLogger.selectTimedDataById(dataId)
         return jsonData
 
-    def insertFixedTimedData(self, oldDataId, content, _type, classname, title, start, end):
-        """Override: Inserts a new record of the data. Does not overrite the original key press.
+    def insertFixedTimedData(self, oldDataId, content, _type, classname, title, start):
+        """Override: Inserts a new record of the data. Does not overwrite the original key press.
 
-        :param oldDataId: The key of the original timmed data
+        :param oldDataId: The key of the original timed data
         :type oldDataId: str
         :param content: The updated content
         :type content: str
-        :param _type: The updtaed type
+        :param _type: The updated type
         :type _type: str
-        :param classname: The updtaed class name
+        :param classname: The updated class name
         :type classname: str
-        :param title: The updtaed title
+        :param title: The updated title
         :type title: str
         :param start: The updated start datetime of the event.
         :type start: datetime
-        :param end: The updated end datetime of the event.
-        :type end: datetime
         :returns: newly created id.
         """
         pyKeyLogger = self.getPlugin()
-        result = pyKeyLogger.insertFixedTimedData(oldDataId, content, _type, classname, title, start, end)
+        result = pyKeyLogger.insertFixedTimedData(oldDataId, content, _type, classname, title, start)
         return result
 
-    def updateFixedTimedData(self, dataId, content, _type, classname, title, start, end):
+    def updateFixedTimedData(self, dataId, content, _type, classname, title, start):
         """Override: Updates the record of the 'fixed' timed data.
 
         :param dataId: The ID of the 'fixed' timed data to edit.
         :type dataId: str
         :param content: The updated content
         :type content: str
-        :param _type: The updtaed type
+        :param _type: The updated type
         :type _type: str
-        :param classname: The updtaed class name
+        :param classname: The updated class name
         :type classname: str
-        :param title: The updtaed title
+        :param title: The updated title
         :type title: str
         :param start: The updated start datetime of the event.
         :type start: datetime
-        :param end: The updated end datetime of the event.
-        :type end: datetime
         :returns: The modified count.
         """
         pyKeyLogger = self.getPlugin()
-        result = pyKeyLogger.updateFixedTimedData(dataId, content, _type, classname, title, start, end)
+        result = pyKeyLogger.updateFixedTimedData(dataId, content, _type, classname, title, start)
         return result
 
     def deleteFixedTimedData(self, dataId):
