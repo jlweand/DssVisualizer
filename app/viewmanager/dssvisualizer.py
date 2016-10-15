@@ -8,8 +8,8 @@ from urllib.parse import parse_qs
 # Only use files from core.  DO NOT use files from plugins.
 from core.apis.renderer.generateHtml import GenerateHtml
 from core.apis.datasource.pyKeyLogger import PyKeyLogger
-from core.apis.renderer.importRenderer import ImportRenderer
-from core.apis.renderer.importDataSource import ImportDataSource
+from core.apis.renderer.pluginImporter import PluginImporter
+
 
 gi.require_version("Gtk", "3.0")
 gi.require_version("WebKit", "3.0")
@@ -25,10 +25,10 @@ def handle(web_view,web_frame,web_resource,request,response):
 	uri = request.get_uri()
 
 	if('installDatasources' in uri or 'adminset' in uri):
-		load_uninstalled_datasources(query)
+		load_uninstalled_plugins(query,"datasource")
 
 	if('installRends' in uri or 'adminset' in uri):
-		load_uninstalled_renderers(query)
+		load_uninstalled_plugins(query,"renderer")
 
 	if not query:
 		return
@@ -91,52 +91,33 @@ def getJson(file):
 	    return(d)
 
 
-def load_uninstalled_renderers(query):
+def load_uninstalled_plugins(query,type):
+	folder = "plugins/renderer/"
+	tagID = "installRends"
+	if type is "datasource":
+		folder = "plugins/datasource/"
+		tagID = "installDatasources"
 
-	importer = ImportRenderer()
+	importer = PluginImporter(folder) #diff
 	newPlugins = importer.getUninstalledPlugins()
 	if not query:
 		for plugin in newPlugins:
-			modify_uninstalled_renderers(plugin)
+			modify_uninstalled_plugin_html(plugin,tagID)
 	else:
 		importer.importPlugin(query)
-		script = 'document.getElementById("installRends").innerHTML = "";'
+		script = 'document.getElementById("'+tagID+'").innerHTML = "";'#diff
 		webKitWebView.execute_script(script)
-		load_uninstalled_renderers(None)
+		load_uninstalled_plugins(None,type)
 
-	#print (importer.getUninstalledPlugins())
-
-def modify_uninstalled_renderers(plugin):
+def modify_uninstalled_plugin_html(plugin,tagID):
 	if plugin:
 		script = 'var element = document.createElement("option");'
 		script = script + 'element.innerHTML = "' + plugin + '";'
-		script = script + 'document.getElementById("installRends").appendChild(element);'
+		script = script + 'document.getElementById("'+tagID+'").appendChild(element);'
 	else:
-		script = 'document.getElementById("installRends").innerHTML = "";'
+		script = 'document.getElementById("'+tagID+'").innerHTML = "";'
 	webKitWebView.execute_script(script)
 
-def load_uninstalled_datasources(query):
-	dsImporter = ImportDataSource()
-	newDsPlugins = dsImporter.getUninstalledPlugins()
-	if not query:
-		for plugin in newDsPlugins:
-			modify_uninstalled_datasources(plugin)
-	else:
-		dsImporter.importPlugin(query)
-		js_script = 'document.getElementById("installDatasources").innerHTML = "";'
-		webKitWebView.execute_script(js_script)
-		load_uninstalled_datasources(None)
-
-	#print (dsImporter.getUninstalledPlugins())
-
-def modify_uninstalled_datasources(plugin):
-	if plugin:
-		js_script = 'var element = document.createElement("option");'
-		js_script = js_script + 'element.innerHTML = "' + plugin + '";'
-		js_script = js_script + 'document.getElementById("installDatasources").appendChild(element);'
-	else:
-		js_script = 'document.getElementById("installDatasources").innerHTML = "";'
-	webKitWebView.execute_script(js_script)
 
 # def handle_url(request):
 # 	print(request.get('annotation'))
