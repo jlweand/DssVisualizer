@@ -34,3 +34,18 @@ class DataImport:
         multiInclude = ConfigReader().getInstanceOfDatasourcePlugin("MultiIncludeThroughput")
         insertedCount = multiInclude.importMultiIncludeThroughputData(jsonData)
         return insertedCount
+
+    def importMultiExcludeProtocol(self, jsonData):
+        multiExcludeProtocol = ConfigReader().getInstanceOfDatasourcePlugin("MultiExcludeProtocol")
+        insertedCount = multiExcludeProtocol.importMultiExcludeProtocol(jsonData)
+        return insertedCount
+
+    def importMultiIncludeProtocol(self, jsonData):
+        multiIncludeProtocol = ConfigReader().getInstanceOfDatasourcePlugin("MultiIncludeProtocol")
+        insertedCount = multiIncludeProtocol.importMultiIncludeProtocol(jsonData)
+        return insertedCount
+
+    def importTsharkProtocol(self, jsonData):
+        tsharkProtocol = ConfigReader().getInstanceOfDatasourcePlugin("TsharkProtocol")
+        insertedCount = tsharkProtocol.importTsharkProtocol(jsonData)
+        return insertedCount

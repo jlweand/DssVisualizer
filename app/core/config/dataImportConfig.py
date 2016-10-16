@@ -12,6 +12,9 @@ class DataImportConfig:
         self.tsharkThroughputFile = "json/tshark/networkDataXY.json"
         self.multiIncludeThroughputFile = "json/multi_incl_tshark/networkDataXY.json"
         self.multiExcludeThroughputFile = "json/multi_exec_tshark/networkDataXY.json"
+        self.tsharkProtocolFile = "json/tshark/networkDataAll.json"
+        self.multiIncludeProtocolFile = "json/multi_incl_tshark/networkDataAll.json"
+        self.multiExcludeProtocolFile = "json/multi_exec_tshark/networkDataAll.json"
 
     def addExtraData(self, json, techName, eventName, comments, importDate, hasStartDate, hasXdate):
         for data in json:
@@ -66,3 +69,18 @@ class DataImportConfig:
         data = self.importJson(self.multiExcludeThroughputFile)
         data = self.addExtraData(data, techName, eventName, comments, importDate, False, True)
         return DataImport().importMultiExcludeThroughput(data)
+
+    def importMultiExcludeProtocol(self, techName, eventName, comments, importDate):
+        data = self.importJson(self.multiExcludeProtocolFile)
+        multiExcludeProtocol = self.addExtraData(data, techName, eventName, comments, importDate, True, False)
+        return DataImport().importMultiExcludeProtocol(multiExcludeProtocol)
+
+    def importMultiIncludeProtocol(self, techName, eventName, comments, importDate):
+        data = self.importJson(self.multiIncludeProtocolFile)
+        multiIncludeProtocol = self.addExtraData(data, techName, eventName, comments, importDate, True, False)
+        return DataImport().importMultiIncludeProtocol(multiIncludeProtocol)
+
+    def importTsharkProtocol(self, techName, eventName, comments, importDate):
+        data = self.importJson(self.tsharkProtocolFile)
+        tsharkProtocol = self.addExtraData(data, techName, eventName, comments, importDate, True, False)
+        return DataImport().importTsharkProtocol(tsharkProtocol)
