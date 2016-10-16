@@ -51,7 +51,7 @@ class PyKeyLogger:
         result = pyKeyLogger.insertFixedKeyPressData(oldDataId, content, className, start)
         return result
 
-    def updateFixedKeyPressData(self, dataId, content, className, start):
+    def updateFixedKeyPressData(self, dataId, oldDataId, content, className, start):
         """Override: Updates the record of the 'fixed' key press data.
 
         :param dataId: The ID of the 'fixed' key press data to edit.
@@ -65,10 +65,10 @@ class PyKeyLogger:
         :returns: The modified count.
         """
         pyKeyLogger = self.getPlugin()
-        result = pyKeyLogger.updateFixedKeyPressData(dataId, content, className, start)
+        result = pyKeyLogger.updateFixedKeyPressData(dataId, oldDataId, content, className, start)
         return result
 
-    def deleteFixedKeyPressData(self, dataId):
+    def deleteFixedKeyPressData(self, dataId, oldDataId):
         """Override: Delete a 'fixed' key press data.
 
         :param dataId: The ID of the 'fixed' data to delete
@@ -76,7 +76,7 @@ class PyKeyLogger:
         :returns: The deleted count.
         """
         pyKeyLogger = self.getPlugin()
-        return pyKeyLogger.deleteFixedKeyPressData(dataId)
+        return pyKeyLogger.deleteFixedKeyPressData(dataId, oldDataId)
 
     def addAnnotationKeyPress(self, dataId, annotationText):
         """Override: Add an annotation to the key press object.
@@ -168,7 +168,7 @@ class PyKeyLogger:
         jsonData = pyKeyLogger.selectClickDataById(dataId)
         return jsonData
 
-    def insertFixedClickData(self, oldDataId, content, _type, classname, title, start):
+    def insertFixedClickData(self, oldDataId, content, className, start, title, typeClick):
         """Override: Inserts a new record of the data. Does not overwrite the original key press.
 
         :param oldDataId: The key of the original click data
@@ -186,10 +186,10 @@ class PyKeyLogger:
         :returns: newly created id.
         """
         pyKeyLogger = self.getPlugin()
-        result = pyKeyLogger.insertFixedClickData(oldDataId, content, _type, classname, title, start)
+        result = pyKeyLogger.insertFixedClickData(oldDataId, content, className, start, title, typeClick)
         return result
 
-    def updateFixedClickData(self, dataId, content, _type, classname, title, start):
+    def updateFixedClickData(self, dataId, oldDataId, content, start, title, typeClick):
         """Override: Updates the record of the 'fixed' click data.
 
         :param dataId: The ID of the 'fixed' click data to edit.
@@ -207,10 +207,10 @@ class PyKeyLogger:
         :returns: The modified count.
         """
         pyKeyLogger = self.getPlugin()
-        result = pyKeyLogger.updateFixedClickData(dataId, content, _type, classname, title, start)
+        result = pyKeyLogger.updateFixedClickData(dataId, oldDataId, content, start, title, typeClick)
         return result
 
-    def deleteFixedClickData(self, dataId):
+    def deleteFixedClickData(self, dataId, oldDataId):
         """Override: Delete a 'fixed' click data.
 
         :param dataId: The ID of the 'fixed' data to delete
@@ -218,7 +218,7 @@ class PyKeyLogger:
         :returns: The deleted count.
         """
         pyKeyLogger = self.getPlugin()
-        result = pyKeyLogger.deleteFixedClickData(dataId)
+        result = pyKeyLogger.deleteFixedClickData(dataId, oldDataId)
         return result
 
     def addAnnotationClick(self, dataId, annotationText):
@@ -311,7 +311,7 @@ class PyKeyLogger:
         jsonData = pyKeyLogger.selectTimedDataById(dataId)
         return jsonData
 
-    def insertFixedTimedData(self, oldDataId, content, _type, classname, title, start):
+    def insertFixedTimedData(self, oldDataId, content, className, start, title, typeTimed):
         """Override: Inserts a new record of the data. Does not overwrite the original key press.
 
         :param oldDataId: The key of the original timed data
@@ -329,10 +329,10 @@ class PyKeyLogger:
         :returns: newly created id.
         """
         pyKeyLogger = self.getPlugin()
-        result = pyKeyLogger.insertFixedTimedData(oldDataId, content, _type, classname, title, start)
+        result = pyKeyLogger.insertFixedTimedData(oldDataId, content, className, start, title, typeTimed)
         return result
 
-    def updateFixedTimedData(self, dataId, content, _type, classname, title, start):
+    def updateFixedTimedData(self, dataId, oldDataId, content, start, title, typeTimed):
         """Override: Updates the record of the 'fixed' timed data.
 
         :param dataId: The ID of the 'fixed' timed data to edit.
@@ -350,10 +350,10 @@ class PyKeyLogger:
         :returns: The modified count.
         """
         pyKeyLogger = self.getPlugin()
-        result = pyKeyLogger.updateFixedTimedData(dataId, content, _type, classname, title, start)
+        result = pyKeyLogger.updateFixedTimedData(dataId, oldDataId, content, start, title, typeTimed)
         return result
 
-    def deleteFixedTimedData(self, dataId):
+    def deleteFixedTimedData(self, dataId, oldDataId):
         """Override: Delete a 'fixed' timed data.
 
         :param dataId: The ID of the 'fixed' data to delete
@@ -361,7 +361,7 @@ class PyKeyLogger:
         :returns: The deleted count.
         """
         pyKeyLogger = self.getPlugin()
-        result = pyKeyLogger.deleteFixedTimedData(dataId)
+        result = pyKeyLogger.deleteFixedTimedData(dataId, oldDataId)
         return result
 
     def addAnnotationTimed(self, dataId, annotationText):

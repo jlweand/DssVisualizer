@@ -35,17 +35,17 @@ class PyKeyLoggerTest(unittest.TestCase):
         self.assertEqual(2, len(deletedChanged[0]["annotations"]))
         self.assertRaises(KeyError, lambda: deletedAll[0]["annotations"])
 
-    # def test_insertFixedKeyPressData(self):
-    #     jsonData = PyKeyLogger().insertFixedKeyPressData(keyPressDataId, '[New Content Added]', 'Keypresses', '2016-10-02 17:15:00')
-    #     self.assertIsNotNone(jsonData)
-    #
-    # def test_updateFixedKeyPressData(self):
-    #     jsonData = PyKeyLogger().updateFixedKeyPressData(keyPressDataId, '[Edited Content Added]', '2016-10-02 18:28:00')
-    #     self.assertIsNotNone(jsonData)
-    #
-    # def test_deleteFixedKeyPressData(self):
-    #     jsonData = PyKeyLogger().deleteFixedKeyPressData(keyPressDataId)
-    #     self.assertIsNotNone(jsonData)
+    def test_insertFixedKeyPressData(self):
+        jsonData = PyKeyLogger().insertFixedKeyPressData(keyPressDataId, '[New Content Added]', 'Keypresses', '2016-10-02 17:15:00')
+        self.assertIsNotNone(jsonData)
+
+    def test_updateFixedKeyPressData(self):
+        jsonData = PyKeyLogger().updateFixedKeyPressData(keyPressDataId, '57edcee5231bad04bccd2c0a', '[Edited Content Added]', '2016-10-02 18:28:00')
+        self.assertIsNotNone(jsonData)
+
+    def test_deleteFixedKeyPressData(self):
+        jsonData = PyKeyLogger().deleteFixedKeyPressData(keyPressDataId, '57edcee5231bad04bccd2c0a')
+        self.assertIsNotNone(jsonData)
 
     def test_addAnnotationToKeyPressTimeline(self):
         objectId = PyKeyLogger().addAnnotationToKeyPressTimeline('2016-08-01 10:00:00', "here's a Keypress timeline annotation")

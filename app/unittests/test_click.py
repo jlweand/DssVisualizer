@@ -35,17 +35,17 @@ class PyKeyLoggerTest(unittest.TestCase):
         self.assertEqual(2, len(deletedChanged[0]["annotations"]))
         self.assertRaises(KeyError, lambda: deletedAll[0]["annotations"])
 
-    # def test_insertFixedKeyPressData(self):
-    #     jsonData = PyKeyLogger().insertFixedClickData(clickDataId, '[New Content Added]', 'imgPoint', '2016-10-02 17:35:51', '2016-10-02 17:35:51', '/usr/logger/v2/dss-logger-pluggable/plugins/collectors/pykeylogger/raw/click_images/1474038815.78_TESTING.png', 'point')
-    #     self.assertIsNotNone(jsonData)
-    #
-    # def test_updateFixedClickData(self):
-    #     jsonData = PyKeyLogger().updateFixedClickData(clickDataId, '[EDITED UNITTEST Content Added]', '2016-10-02 19:35:51','2016-10-02 19:35:51', '/usr/logger/v2/dss-logger-pluggable/plugins/collectors/pykeylogger/raw/click_images/1474038815.78_TESTING_UPDATE.png', 'point')
-    #     self.assertIsNotNone(jsonData)
-    #
-    # def test_deleteFixedKeyPressData(self):
-    #     jsonData = PyKeyLogger().deleteFixedClickData(clickDataId)
-    #     self.assertIsNotNone(jsonData)
+    def test_insertFixedClickData(self):
+        jsonData = PyKeyLogger().insertFixedClickData(clickDataId, '[New Content Added]', 'imgPoint', '2016-10-02 17:35:51', '2016-10-02 17:35:51', '/usr/logger/v2/dss-logger-pluggable/plugins/collectors/pykeylogger/raw/click_images/1474038815.78_TESTING.png', 'point')
+        self.assertIsNotNone(jsonData)
+
+    def test_updateFixedClickData(self):
+        jsonData = PyKeyLogger().updateFixedClickData(clickDataId, '57f18727231bad12ecba99e4','[EDITED UNITTEST Content Added]', '2016-10-02 19:35:51','2016-10-02 19:35:51', '/usr/logger/v2/dss-logger-pluggable/plugins/collectors/pykeylogger/raw/click_images/1474038815.78_TESTING_UPDATE.png', 'point')
+        self.assertIsNotNone(jsonData)
+
+    def test_deleteFixedClickData(self):
+        jsonData = PyKeyLogger().deleteFixedClickData(clickDataId, '57f18727231bad12ecba99e4')
+        self.assertIsNotNone(jsonData)
 
     def test_addAnnotationToClickTimeline(self):
         objectId = PyKeyLogger().addAnnotationToClickTimeline('2016-08-01 10:00:00', "here's a Click timeline annotation")
