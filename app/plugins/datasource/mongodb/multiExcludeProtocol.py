@@ -19,7 +19,7 @@ class MultiExcludeProtocol:
         collection = self.getMultiExcludeProtocolCollection()
         #findJson = {"start": {"$gte": datetime.strptime(startDate, Common().getDatetimeFormatString()), "$lt": datetime.strptime(endDate, Common().getDatetimeFormatString())}}
         findJson = { "start": {"$gte" : startDate, "$lt": endDate}}
-        cursor = collection.find()
+        cursor = collection.find(findJson)
         return self.fixTheData(cursor)
 
     # select single data point
