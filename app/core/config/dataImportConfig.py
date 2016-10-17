@@ -1,12 +1,10 @@
 import ujson
-from datetime import datetime
 from core.apis.datasource.dataImport import DataImport
 from core.apis.datasource.common import Common
 
 class DataImportConfig:
 
     def __init__(self):
-        self.dateformat = '%Y-%m-%dT%H:%M:%S'
         self.keypressFile = "json/pyKeyLogger/keypressData.json"
         self.clickFile = "json/pyKeyLogger/click.json"
         self.timedFile = "json/pyKeyLogger/timed.json"

@@ -18,12 +18,12 @@ class ConfigReader:
         return config
 
     def getDatasourcePluginLocation(self):
-        config = self.importConfigJson();
+        config = self.importConfigJson()
         activePlugin = config["activeDatasourcePlugin"]
         for plugin in self.getListOfDatasources():
             if plugin["name"] == activePlugin:
                 return plugin["location"] + "."
-        return "No Datasource found";
+        return "No Datasource found"
 
 
     def getRedererPluginForPyKeyLogger(self):
@@ -39,13 +39,13 @@ class ConfigReader:
         return self.getRendererPlugin("screenshots")
 
     def getRendererPlugin(self, datatype):
-        config = self.importConfigJson();
+        config = self.importConfigJson()
         activePlugins = config["activeRendererPlugins"]
         activePlugin = activePlugins[datatype]
         for plugin in self.getListOfRenderers():
             if plugin["name"] == activePlugin["plugin"]:
                 return activePlugin
-        return "No Renderer found";
+        return "No Renderer found"
 
     def getInstanceOfDatasourcePlugin(self, classname):
         return self.getInstanceOfPlugin(classname, True)

@@ -1,5 +1,5 @@
 from core.config.configReader import ConfigReader
-
+from core.apis.datasource.common import Common
 
 class MultiIncludeThroughput:
     """MultiIncludeThroughput API.  Most of these methods must be overwritten in your plugin.
@@ -13,16 +13,16 @@ class MultiIncludeThroughput:
 
 
     def selectMultiIncludeThroughputData(self, startDate, endDate):
-        """Override: Select the timed data by start and end date.
+        """Override: Select the timed data by start and end date. The input here will be strings, datetimes will be passed to the plugin.
 
-        :param startDate: The datetime to return data
-        :type startDate: datetime
-        :param endDate: The datatime to return data
-        :type endDate: datetime
+        :param startDate: The a string value of the local datetime to begin search on
+        :type startDate: str
+        :param endDate: The a string value of the local datetime to end search on
+        :type endDate: str
         :returns: JSON object
         """
         multiIncludePlugin = self.getPlugin()
-        jsonData = multiIncludePlugin.selectMultiIncludeThroughputData(startDate, endDate)
+        jsonData = multiIncludePlugin.selectMultiIncludeThroughputData(Common().formatDateStringToUTC(startDate), Common().formatDateStringToUTC(endDate))
         return jsonData
 
 
@@ -43,14 +43,14 @@ class MultiIncludeThroughput:
 
         :param dataId: The key of the original data
         :type dataId: str
-        :param x: x is the Datetime
-        :type x: datetime
+        :param x: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
+        :type x: str
         :param y: The number of protocols being used
-        :type y: str
+        :type y: int
         :returns: The modified count.
         """
         multiIncludePlugin = self.getPlugin()
-        result = multiIncludePlugin.insertFixedMultiIncludeThroughputData(dataId, x, y)
+        result = multiIncludePlugin.insertFixedMultiIncludeThroughputData(dataId, Common().formatDateStringToUTC(x), y)
         return result
 
 
@@ -59,14 +59,14 @@ class MultiIncludeThroughput:
 
         :param dataId: The key of the original data
         :type dataId: str
-        :param x: x is the Datetime
-        :type x: datetime
+        :param x: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
+        :type x: str
         :param y: The number of protocols being used
-        :type y: str
+        :type y: int
         :returns: The modified count.
         """
         multiIncludePlugin = self.getPlugin()
-        result = multiIncludePlugin.updateFixedMultiIncludeThroughputData(dataId, x, y)
+        result = multiIncludePlugin.updateFixedMultiIncludeThroughputData(dataId, Common().formatDateStringToUTC(x), y)
         return result
 
 
@@ -138,15 +138,15 @@ class MultiIncludeThroughput:
 
 
     # add an annotation to the timeline, not a datapoint
-    def addAnnotationToMultiIncludeThroughputTimeline(self, startTime, annotationText):
+    def addAnnotationToMultiIncludeThroughputTimeline(self, x, annotationText):
         """Override: Ands an annotation to the timeline (not a data point)
 
-        :param startTime: The datetime to add the annotation to
-        :type startTime: datetime
+        :param x: The datetime string in local time to add the annotation to.  Will be converted to UTC before passing on to plugin
+        :type x: str
         :param annotationText: The annotation text to add.
         :type annotationText: str
         :returns: The modified count.
          """
 
         multiIncludePlugin = self.getPlugin()
-        return multiIncludePlugin.addAnnotationToMultiIncludeThroughputTimeline(startTime, annotationText)
+        return multiIncludePlugin.addAnnotationToMultiIncludeThroughputTimeline(Common().formatDateStringToUTC(x), annotationText)

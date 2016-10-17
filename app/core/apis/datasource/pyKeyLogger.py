@@ -1,4 +1,5 @@
 from core.config.configReader import ConfigReader
+from core.apis.datasource.common import Common
 
 class PyKeyLogger:
     """PyKeyLogger API.  Most of these methods must be overwritten in your plugin.
@@ -11,16 +12,16 @@ class PyKeyLogger:
 
 #Keypress#
     def selectKeyPressData(self, startDate, endDate):
-        """Override: Select the key press data by start and end date.
+        """Override: Select the key press data by start and end date. The input here will be strings, datetimes will be passed to the plugin.
 
-        :param startDate: The datetime to return data
-        :type startDate: datetime
-        :param endDate: The datetime to return data
-        :type endDate: datetime
+        :param startDate: The a string value of the local datetime to begin search on
+        :type startDate: str
+        :param endDate: The a string value of the local datetime to end search on
+        :type endDate: str
         :returns: JSON object
         """
         pyKeyLogger = self.getPlugin()
-        jsonData = pyKeyLogger.selectKeyPressData(startDate, endDate)
+        jsonData = pyKeyLogger.selectKeyPressData(Common().formatDateStringToUTC(startDate), Common().formatDateStringToUTC(endDate))
         return jsonData
 
     def selectKeyPressDataById(self, dataId):
@@ -43,12 +44,12 @@ class PyKeyLogger:
         :type content: str
         :param className: The updtaed class name
         :type className: str
-        :param start: The updated datetime of the event.
-        :type start: datetime
+        :param start: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
+        :type start: str
         :returns: newly created id.
         """
         pyKeyLogger = self.getPlugin()
-        result = pyKeyLogger.insertFixedKeyPressData(oldDataId, content, className, start)
+        result = pyKeyLogger.insertFixedKeyPressData(oldDataId, content, className, Common().formatDateStringToUTC(start))
         return result
 
     def updateFixedKeyPressData(self, dataId, oldDataId, content, className, start):
@@ -60,12 +61,12 @@ class PyKeyLogger:
         :type content: str
         :param className: The updtaed class name
         :type className: str
-        :param start: The updated datetime of the event.
-        :type start: datetime
+        :param start: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
+        :type start: str
         :returns: The modified count.
         """
         pyKeyLogger = self.getPlugin()
-        result = pyKeyLogger.updateFixedKeyPressData(dataId, oldDataId, content, className, start)
+        result = pyKeyLogger.updateFixedKeyPressData(dataId, oldDataId, content, className, Common().formatDateStringToUTC(start))
         return result
 
     def deleteFixedKeyPressData(self, dataId, oldDataId):
@@ -133,28 +134,28 @@ class PyKeyLogger:
     def addAnnotationToKeyPressTimeline(self, startTime, annotationText):
         """Override: Ands an annotation to the timeline (not a data point)
 
-        :param startTime: The datetime to add the annotation to
-        :type startTime: datetime
+        :param startTime: The datetime string in local time to add the annotation to.  Will be converted to UTC before passing on to plugin
+        :type startTime: str
         :param annotationText: The annotation text to add.
         :type annotationText: str
         :returns: The modified count.
          """
 
         pyKeyLogger = self.getPlugin()
-        return pyKeyLogger.addAnnotationToKeyPressTimeline(startTime, annotationText)
+        return pyKeyLogger.addAnnotationToKeyPressTimeline(Common().formatDateStringToUTC(startTime), annotationText)
 
 #Click#
     def selectClickData(self, startDate, endDate):
-        """Override: Select the click data by start and end date.
+        """Override: Select the click data by start and end date. The input here will be strings, datetimes will be passed to the plugin.
 
-        :param startDate: The datetime to return data
-        :type startDate: datetime
-        :param endDate: The datetime to return data
-        :type endDate: datetime
+        :param startDate: The a string value of the local datetime to begin search on
+        :type startDate: str
+        :param endDate: The a string value of the local datetime to end search on
+        :type endDate: str
         :returns: JSON object
         """
         pyKeyLogger = self.getPlugin()
-        jsonData = pyKeyLogger.selectClickData(startDate, endDate)
+        jsonData = pyKeyLogger.selectClickData(Common().formatDateStringToUTC(startDate), Common().formatDateStringToUTC(endDate))
         return jsonData
 
     def selectClickDataById(self, dataId):
@@ -181,12 +182,12 @@ class PyKeyLogger:
         :type classname: str
         :param title: The updated title
         :type title: str
-        :param start: The updated start datetime of the event.
-        :type start: datetime
+        :param start: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
+        :type start: str
         :returns: newly created id.
         """
         pyKeyLogger = self.getPlugin()
-        result = pyKeyLogger.insertFixedClickData(oldDataId, content, className, start, title, typeClick)
+        result = pyKeyLogger.insertFixedClickData(oldDataId, content, className, Common().formatDateStringToUTC(start), title, typeClick)
         return result
 
     def updateFixedClickData(self, dataId, oldDataId, content, start, title, typeClick):
@@ -202,12 +203,12 @@ class PyKeyLogger:
         :type classname: str
         :param title: The updated title
         :type title: str
-        :param start: The updated start datetime of the event.
-        :type start: datetime
+        :param start: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
+        :type start: str
         :returns: The modified count.
         """
         pyKeyLogger = self.getPlugin()
-        result = pyKeyLogger.updateFixedClickData(dataId, oldDataId, content, start, title, typeClick)
+        result = pyKeyLogger.updateFixedClickData(dataId, oldDataId, content, Common().formatDateStringToUTC(start), title, typeClick)
         return result
 
     def deleteFixedClickData(self, dataId, oldDataId):
@@ -276,28 +277,28 @@ class PyKeyLogger:
     def addAnnotationToClickTimeline(self, startTime, annotationText):
         """Override: Ands an annotation to the timeline (not a data point)
 
-        :param startTime: The datetime to add the annotation to
-        :type startTime: datetime
+        :param startTime: The datetime string in local time to add the annotation to.  Will be converted to UTC before passing on to plugin
+        :type startTime: str
         :param annotationText: The annotation text to add.
         :type annotationText: str
         :returns: The modified count.
          """
 
         pyKeyLogger = self.getPlugin()
-        return pyKeyLogger.addAnnotationToClickTimeline(startTime, annotationText)
+        return pyKeyLogger.addAnnotationToClickTimeline(Common().formatDateStringToUTC(startTime), annotationText)
 
 #Timed#
     def selectTimedData(self, startDate, endDate):
-        """Override: Select the timed data by start and end date.
+        """Override: Select the timed data by start and end date. The input here will be strings, datetimes will be passed to the plugin.
 
-        :param startDate: The datetime to return data
-        :type startDate: datetime
-        :param endDate: The datetime to return data
-        :type endDate: datetime
+        :param startDate: The a string value of the local datetime to begin search on
+        :type startDate: str
+        :param endDate: The a string value of the local datetime to end search on
+        :type endDate: str
         :returns: JSON object
         """
         pyKeyLogger = self.getPlugin()
-        jsonData = pyKeyLogger.selectTimedData(startDate, endDate)
+        jsonData = pyKeyLogger.selectTimedData(Common().formatDateStringToUTC(startDate), Common().formatDateStringToUTC(endDate))
         return jsonData
 
     def selectTimedDataById(self, dataId):
@@ -324,12 +325,12 @@ class PyKeyLogger:
         :type classname: str
         :param title: The updated title
         :type title: str
-        :param start: The updated start datetime of the event.
-        :type start: datetime
+        :param start: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
+        :type start: str
         :returns: newly created id.
         """
         pyKeyLogger = self.getPlugin()
-        result = pyKeyLogger.insertFixedTimedData(oldDataId, content, className, start, title, typeTimed)
+        result = pyKeyLogger.insertFixedTimedData(oldDataId, content, className, Common().formatDateStringToUTC(start), title, typeTimed)
         return result
 
     def updateFixedTimedData(self, dataId, oldDataId, content, start, title, typeTimed):
@@ -345,12 +346,12 @@ class PyKeyLogger:
         :type classname: str
         :param title: The updated title
         :type title: str
-        :param start: The updated start datetime of the event.
-        :type start: datetime
+        :param start: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
+        :type start: str
         :returns: The modified count.
         """
         pyKeyLogger = self.getPlugin()
-        result = pyKeyLogger.updateFixedTimedData(dataId, oldDataId, content, start, title, typeTimed)
+        result = pyKeyLogger.updateFixedTimedData(dataId, oldDataId, content, Common().formatDateStringToUTC(start), title, typeTimed)
         return result
 
     def deleteFixedTimedData(self, dataId, oldDataId):
@@ -419,12 +420,12 @@ class PyKeyLogger:
     def addAnnotationToTimedTimeline(self, startTime, annotationText):
         """Override: Ands an annotation to the timeline (not a data point)
 
-        :param startTime: The datetime to add the annotation to
-        :type startTime: datetime
+        :param startTime: The datetime string in local time to add the annotation to.  Will be converted to UTC before passing on to plugin
+        :type startTime: str
         :param annotationText: The annotation text to add.
         :type annotationText: str
         :returns: The modified count.
          """
 
         pyKeyLogger = self.getPlugin()
-        return pyKeyLogger.addAnnotationToTimedTimeline(startTime, annotationText)
+        return pyKeyLogger.addAnnotationToTimedTimeline(Common().formatDateStringToUTC(startTime), annotationText)

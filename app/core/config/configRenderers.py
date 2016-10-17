@@ -37,7 +37,7 @@ class ConfigRenderers:
 
         # can't delete if it is the default plugin
         for rend in defaultPlugins:
-            if(defaultPlugins[rend]["plugin"].lower() == name.lower()):
+            if defaultPlugins[rend]["plugin"].lower() == name.lower():
                 return "Sorry, this plugin cannot be deleted. It is currently in use. Please choose another default plugin before deleting this one."
 
         # now try to find the renderer and delete it

@@ -1,6 +1,5 @@
 import ujson
 import json
-from pprint import pprint
 
 class ConfigDatasources:
 
@@ -36,7 +35,7 @@ class ConfigDatasources:
         defaultPlugin = config["activeDatasourcePlugin"]
 
         # can't delete if it is the default plugin
-        if(name.lower() == defaultPlugin.lower()):
+        if name.lower() == defaultPlugin.lower():
             return "Sorry, this plugin cannot be deleted. It is currently in use. Please choose another default plugin before deleting this one."
 
         # now try to find the datasource and delete it

@@ -1,13 +1,15 @@
 import unittest
 from core.apis.datasource.multiIncludeThroughput import MultiIncludeThroughput
+from pprint import pprint
 
 class MultiIncludeThroughputTest(unittest.TestCase):
 
     def test_monolithicTestCase(self):
         # select by date
-        jsonData = MultiIncludeThroughput().selectMultiIncludeThroughputData('2016-10-13 00:00:00', '2016-10-13 23:00:00')
+        jsonData = MultiIncludeThroughput().selectMultiIncludeThroughputData('2016-10-15 11:57:19', '2016-10-15 11:57:19')
+        pprint(jsonData)
         dataId = jsonData[0]["id"]
-        self.assertEqual(23, len(jsonData))
+        self.assertEqual(1, len(jsonData))
 
         # select by Id
         jsonData = MultiIncludeThroughput().selectMultiIncludeThroughputDataById(dataId)
@@ -47,8 +49,9 @@ class MultiIncludeThroughputTest(unittest.TestCase):
 
         # add Annotation To MultiExcludeThroughput Timeline
         objectId = MultiIncludeThroughput().addAnnotationToMultiIncludeThroughputTimeline('2016-08-01 10:00:00', "here's a timeline annotation")
-        changedAnn = MultiIncludeThroughput().selectMultiIncludeThroughputDataById(objectId)
-        self.assertIsNotNone(changedAnn)
+        addtimelineAnnotation = MultiIncludeThroughput().selectMultiIncludeThroughputDataById(objectId)
+        pprint(addtimelineAnnotation)
+        self.assertIsNotNone(addtimelineAnnotation)
 
 
 if __name__ == '__main__':

@@ -43,14 +43,14 @@ class TsharkThroughput:
 
         :param dataId: The key of the original data
         :type dataId: str
-        :param x: x is the Datetime
-        :type x: datetime
+        :param x: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
+        :type x: str
         :param y: The number of protocols being used
-        :type y: str
+        :type y: int
         :returns: The modified count.
         """
         tsharkPlugin = self.getPlugin()
-        result = tsharkPlugin.insertFixedTsharkThroughputData(dataId, x, y)
+        result = tsharkPlugin.insertFixedTsharkThroughputData(dataId, Common().formatDateStringToUTC(x), y)
         return result
 
 
@@ -59,14 +59,14 @@ class TsharkThroughput:
 
         :param dataId: The key of the original data
         :type dataId: str
-        :param x: x is the Datetime
-        :type x: datetime
+        :param x: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
+        :type x: str
         :param y: The number of protocols being used
-        :type y: str
+        :type y: int
         :returns: The modified count.
         """
         tsharkPlugin = self.getPlugin()
-        result = tsharkPlugin.updateFixedTsharkThroughputData(dataId, x, y)
+        result = tsharkPlugin.updateFixedTsharkThroughputData(dataId, Common().formatDateStringToUTC(x), y)
         return result
 
 
@@ -138,15 +138,15 @@ class TsharkThroughput:
 
 
     # add an annotation to the timeline, not a datapoint
-    def addAnnotationToTsharkThroughputTimeline(self, startTime, annotationText):
+    def addAnnotationToTsharkThroughputTimeline(self, x, annotationText):
         """Override: Ands an annotation to the timeline (not a data point)
 
-        :param startTime: The datetime to add the annotation to
-        :type startTime: datetime
+        :param x: The datetime string in local time to add the annotation to.  Will be converted to UTC before passing on to plugin
+        :type x: str
         :param annotationText: The annotation text to add.
         :type annotationText: str
         :returns: The modified count.
          """
 
         tsharkPlugin = self.getPlugin()
-        return tsharkPlugin.addAnnotationToTsharkThroughputTimeline(startTime, annotationText)
+        return tsharkPlugin.addAnnotationToTsharkThroughputTimeline(Common().formatDateStringToUTC(x), annotationText)

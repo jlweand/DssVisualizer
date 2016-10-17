@@ -1,5 +1,6 @@
 import unittest
 from core.apis.datasource.pyKeyLogger import PyKeyLogger
+from pprint import pprint
 
 class PyKeyLoggerTest(unittest.TestCase):
 
@@ -10,45 +11,47 @@ class PyKeyLoggerTest(unittest.TestCase):
         self.assertEqual(24, len(jsonData))
 
         # select by Id
-        jsonData = PyKeyLogger().selectKeyPressDataById(keyPressDataId)
+        jsonData = PyKeyLogger().selectKeyPressDataById(dataId)
+        pprint(jsonData)
         self.assertEqual(1, len(jsonData))
 
         # test Annotations
-        PyKeyLogger().addAnnotationKeyPress(keyPressDataId, 'test')
-        PyKeyLogger().addAnnotationKeyPress(keyPressDataId, 'test test')
-        PyKeyLogger().addAnnotationKeyPress(keyPressDataId, 'test test test')
-        PyKeyLogger().addAnnotationKeyPress(keyPressDataId, 'test test test')
-        addedAnns = PyKeyLogger().selectKeyPressDataById(keyPressDataId)
+        PyKeyLogger().addAnnotationKeyPress(dataId, 'test')
+        PyKeyLogger().addAnnotationKeyPress(dataId, 'test test')
+        PyKeyLogger().addAnnotationKeyPress(dataId, 'test test test')
+        PyKeyLogger().addAnnotationKeyPress(dataId, 'test test test')
+        addedAnns = PyKeyLogger().selectKeyPressDataById(dataId)
 
-        PyKeyLogger().editAnnotationKeyPress(keyPressDataId, 'test test', 'updated annotation!!')
-        changedAnn = PyKeyLogger().selectKeyPressDataById(keyPressDataId)
+        PyKeyLogger().editAnnotationKeyPress(dataId, 'test test', 'updated annotation!!')
+        changedAnn = PyKeyLogger().selectKeyPressDataById(dataId)
 
-        PyKeyLogger().deleteAnnotationKeyPress(keyPressDataId, 'updated annotation!!')
-        deletedChanged = PyKeyLogger().selectKeyPressDataById(keyPressDataId)
+        PyKeyLogger().deleteAnnotationKeyPress(dataId, 'updated annotation!!')
+        deletedChanged = PyKeyLogger().selectKeyPressDataById(dataId)
 
-        PyKeyLogger().deleteAllAnnotationsForKeyPress(keyPressDataId)
-        deletedAll = PyKeyLogger().selectKeyPressDataById(keyPressDataId)
+        PyKeyLogger().deleteAllAnnotationsForKeyPress(dataId)
+        deletedAll = PyKeyLogger().selectKeyPressDataById(dataId)
 
         self.assertEqual(3, len(addedAnns[0]["annotations"]))
         self.assertEqual(2, len(deletedChanged[0]["annotations"]))
         self.assertRaises(KeyError, lambda: deletedAll[0]["annotations"])
 
         # insert Fixed Data
-        jsonData = PyKeyLogger().insertFixedKeyPressData(keyPressDataId, '[New Content Added]', 'Keypresses', '2016-10-02 17:15:00')
+        jsonData = PyKeyLogger().insertFixedKeyPressData(dataId, '[New Content Added]', 'Keypresses', '2016-10-02 17:15:00')
         self.assertIsNotNone(jsonData)
 
         # update Fixed Data
-        jsonData = PyKeyLogger().updateFixedKeyPressData(keyPressDataId, '57edcee5231bad04bccd2c0a', '[Edited Content Added]', '2016-10-02 18:28:00')
+        jsonData = PyKeyLogger().updateFixedKeyPressData(dataId, '57edcee5231bad04bccd2c0a', '[Edited Content Added]', '2016-10-02 18:28:00')
         self.assertIsNotNone(jsonData)
 
         # delete Fixed Data
-        jsonData = PyKeyLogger().deleteFixedKeyPressData(keyPressDataId, '57edcee5231bad04bccd2c0a')
+        jsonData = PyKeyLogger().deleteFixedKeyPressData(dataId, '57edcee5231bad04bccd2c0a')
         self.assertIsNotNone(jsonData)
 
         # add Annotation to Timeline
         objectId = PyKeyLogger().addAnnotationToKeyPressTimeline('2016-08-01 10:00:00', "here's a Keypress timeline annotation")
-        changedAnn = PyKeyLogger().selectKeyPressDataById(objectId)
-        self.assertIsNotNone(changedAnn)
+        addtimelineAnnotation = PyKeyLogger().selectKeyPressDataById(objectId)
+        pprint(addtimelineAnnotation)
+        self.assertIsNotNone(addtimelineAnnotation)
 
 if __name__ == '__main__':
     unittest.main()

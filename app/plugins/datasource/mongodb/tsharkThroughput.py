@@ -1,8 +1,6 @@
 from bson import ObjectId
-from datetime import datetime
 from plugins.datasource.mongodb.annotations import Annotations
 from plugins.datasource.mongodb.common import Common
-from pprint import pprint
 
 class TsharkThroughput:
 
@@ -42,7 +40,7 @@ class TsharkThroughput:
         fixedData = {"$set": {"fixedData": {"x": x, "y": y}}}
 
         result = collection.update_one(updateId, fixedData)
-        return result.modified_count;
+        return result.modified_count
 
     # delete the fixedData
     def deleteFixedTsharkThroughputData(self, dataId):
@@ -78,7 +76,7 @@ class TsharkThroughput:
         metadata = Common().createMetadataForTimelineAnnotations()
 
         tshark = {}
-        tshark["x"] = ""
+        tshark["x"] = startTime
         tshark["y"] = ""
         tshark["metadata"] = metadata
 

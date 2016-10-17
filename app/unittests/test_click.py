@@ -1,5 +1,6 @@
 import unittest
 from core.apis.datasource.pyKeyLogger import PyKeyLogger
+from pprint import pprint
 
 class PyKeyLoggerTest(unittest.TestCase):
 
@@ -11,6 +12,7 @@ class PyKeyLoggerTest(unittest.TestCase):
 
         # select by Id
         jsonData = PyKeyLogger().selectClickDataById(dataId)
+        pprint(jsonData)
         self.assertEqual(1, len(jsonData))
 
         # test Annotations
@@ -47,8 +49,9 @@ class PyKeyLoggerTest(unittest.TestCase):
 
         # add Annotation to Timeline
         objectId = PyKeyLogger().addAnnotationToClickTimeline('2016-08-01 10:00:00', "here's a Click timeline annotation")
-        changedAnn = PyKeyLogger().selectClickDataById(objectId)
-        self.assertIsNotNone(changedAnn)
+        addtimelineAnnotation = PyKeyLogger().selectClickDataById(objectId)
+        pprint(addtimelineAnnotation)
+        self.assertIsNotNone(addtimelineAnnotation)
 
 
 if __name__ == '__main__':

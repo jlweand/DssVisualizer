@@ -6,13 +6,13 @@ class MultiExcludeThroughputTest(unittest.TestCase):
 
     def test_monolithicTestCase(self):
         # select by date
-        jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputData('2016-10-15 11:57:37', '2016-10-15 11:57:37')
+        jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputData('2016-10-15 11:57:19', '2016-10-15 11:57:19')
+        pprint(jsonData)
         dataId = jsonData[0]["id"]
         self.assertEqual(1, len(jsonData))
 
         # select by Id
         jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputDataById(dataId)
-        pprint(jsonData)
         self.assertEqual(1, len(jsonData))
 
         # test Annotations
@@ -49,8 +49,9 @@ class MultiExcludeThroughputTest(unittest.TestCase):
 
         # add Annotation To MultiExcludeThroughput Timeline
         objectId = MultiExcludeThroughput().addAnnotationToMultiExcludeThroughputTimeline('2016-08-01 10:00:00', "here's a timeline annotation")
-        changedAnn = MultiExcludeThroughput().selectMultiExcludeThroughputDataById(objectId)
-        self.assertIsNotNone(changedAnn)
+        addtimelineAnnotation = MultiExcludeThroughput().selectMultiExcludeThroughputDataById(objectId)
+        pprint(addtimelineAnnotation)
+        self.assertIsNotNone(addtimelineAnnotation)
 
 
 if __name__ == '__main__':

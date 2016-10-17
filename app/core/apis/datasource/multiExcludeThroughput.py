@@ -1,5 +1,5 @@
 from core.config.configReader import ConfigReader
-
+from core.apis.datasource.common import Common
 
 class MultiExcludeThroughput:
     """MultiExcludeThroughput API.  Most of these methods must be overwritten in your plugin.
@@ -13,16 +13,16 @@ class MultiExcludeThroughput:
 
 
     def selectMultiExcludeThroughputData(self, startDate, endDate):
-        """Override: Select the timed data by start and end date.
+        """Override: Select the timed data by start and end date. The input here will be strings, datetimes will be passed to the plugin.
 
-        :param startDate: The datetime to return data
-        :type startDate: datetime
-        :param endDate: The datatime to return data
-        :type endDate: datetime
+        :param startDate: The a string value of the local datetime to begin search on
+        :type startDate: str
+        :param endDate: The a string value of the local datetime to end search on
+        :type endDate: str
         :returns: JSON object
         """
         multiExcludePlugin = self.getPlugin()
-        jsonData = multiExcludePlugin.selectMultiExcludeThroughputData(startDate, endDate)
+        jsonData = multiExcludePlugin.selectMultiExcludeThroughputData(Common().formatDateStringToUTC(startDate), Common().formatDateStringToUTC(endDate))
         return jsonData
 
 
@@ -43,14 +43,14 @@ class MultiExcludeThroughput:
 
         :param dataId: The key of the original data
         :type dataId: str
-        :param x: x is the Datetime
-        :type x: datetime
+        :param x: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
+        :type x: str
         :param y: The number of protocols being used
-        :type y: str
+        :type y: int
         :returns: The modified count.
         """
         multiExcludePlugin = self.getPlugin()
-        result = multiExcludePlugin.insertFixedMultiExcludeThroughputData(dataId, x, y)
+        result = multiExcludePlugin.insertFixedMultiExcludeThroughputData(dataId, Common().formatDateStringToUTC(x), y)
         return result
 
 
@@ -59,14 +59,14 @@ class MultiExcludeThroughput:
 
         :param dataId: The key of the original data
         :type dataId: str
-        :param x: x is the Datetime
-        :type x: datetime
+        :param x: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
+        :type x: str
         :param y: The number of protocols being used
-        :type y: str
+        :type y: int
         :returns: The modified count.
         """
         multiExcludePlugin = self.getPlugin()
-        result = multiExcludePlugin.updateFixedMultiExcludeThroughputData(dataId, x, y)
+        result = multiExcludePlugin.updateFixedMultiExcludeThroughputData(dataId, Common().formatDateStringToUTC(x), y)
         return result
 
 
@@ -138,15 +138,15 @@ class MultiExcludeThroughput:
 
 
     # add an annotation to the timeline, not a datapoint
-    def addAnnotationToMultiExcludeThroughputTimeline(self, startTime, annotationText):
+    def addAnnotationToMultiExcludeThroughputTimeline(self, x, annotationText):
         """Override: Ands an annotation to the timeline (not a data point)
 
-        :param startTime: The datetime to add the annotation to
-        :type startTime: datetime
+        :param x: The datetime string in local time to add the annotation to.  Will be converted to UTC before passing on to plugin
+        :type x: str
         :param annotationText: The annotation text to add.
         :type annotationText: str
         :returns: The modified count.
          """
 
         multiExcludePlugin = self.getPlugin()
-        return multiExcludePlugin.addAnnotationToMultiExcludeThroughputTimeline(startTime, annotationText)
+        return multiExcludePlugin.addAnnotationToMultiExcludeThroughputTimeline(Common().formatDateStringToUTC(x), annotationText)

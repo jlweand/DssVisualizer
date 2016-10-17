@@ -1,8 +1,6 @@
 from bson import ObjectId
-from datetime import datetime
 from plugins.datasource.mongodb.annotations import Annotations
 from plugins.datasource.mongodb.common import Common
-from pprint import pprint
 
 class MultiIncludeThroughput:
 
@@ -17,7 +15,7 @@ class MultiIncludeThroughput:
     # select data by date range of the 'start' column
     def selectMultiIncludeThroughputData(self, startDate, endDate):
         collection = self.getMultiIncludeThroughputCollection()
-        findJson = { "x": {"$gte" : datetime.strptime(startDate, Common().getDatetimeFormatString()), "$lt": datetime.strptime(endDate, Common().getDatetimeFormatString())}}
+        findJson = { "x": {"$gte" : startDate, "$lte": endDate}}
         cursor = collection.find(findJson)
         return self.fixTheData(cursor)
 
@@ -42,7 +40,7 @@ class MultiIncludeThroughput:
         fixedData = {"$set": {"fixedData": {"x": x, "y": y}}}
 
         result = collection.update_one(updateId, fixedData)
-        return result.modified_count;
+        return result.modified_count
 
     # delete the fixedData
     def deleteFixedMultiIncludeThroughputData(self, dataId):
@@ -78,7 +76,7 @@ class MultiIncludeThroughput:
         metadata = Common().createMetadataForTimelineAnnotations()
 
         multiInclude = {}
-        multiInclude["x"] = ""
+        multiInclude["x"] = startTime
         multiInclude["y"] = ""
         multiInclude["metadata"] = metadata
 

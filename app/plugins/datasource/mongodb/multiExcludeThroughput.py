@@ -1,8 +1,6 @@
 from bson import ObjectId
-from datetime import datetime
 from plugins.datasource.mongodb.annotations import Annotations
 from plugins.datasource.mongodb.common import Common
-from pprint import pprint
 
 class MultiExcludeThroughput:
 
@@ -17,7 +15,7 @@ class MultiExcludeThroughput:
     # select data by date range of the 'start' column
     def selectMultiExcludeThroughputData(self, startDate, endDate):
         collection = self.getMultiExcludeThroughputCollection()
-        findJson = { "x": {"$gte" : datetime.strptime(startDate, Common().getDatetimeFormatString()), "$lt": datetime.strptime(endDate, Common().getDatetimeFormatString())}}
+        findJson = { "x": {"$gte" : startDate, "$lte": endDate}}
         cursor = collection.find(findJson)
         return self.fixTheData(cursor)
 
@@ -42,7 +40,7 @@ class MultiExcludeThroughput:
         fixedData = {"$set": {"fixedData": {"x": x, "y": y}}}
 
         result = collection.update_one(updateId, fixedData)
-        return result.modified_count;
+        return result.modified_count
 
     # delete the fixedData
     def deleteFixedMultiExcludeThroughputData(self, dataId):
@@ -78,7 +76,7 @@ class MultiExcludeThroughput:
         metadata = Common().createMetadataForTimelineAnnotations()
 
         multiExclude = {}
-        multiExclude["x"] = ""
+        multiExclude["x"] = startTime
         multiExclude["y"] = ""
         multiExclude["metadata"] = metadata
 
