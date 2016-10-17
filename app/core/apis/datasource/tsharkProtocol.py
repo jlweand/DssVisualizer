@@ -80,3 +80,73 @@ class TsharkProtocol:
         tsharkProtocolPlugin = self.getPlugin()
         result = tsharkProtocolPlugin.deleteFixedTsharkProtocolData(dataId)
         return result
+
+    def addAnnotationTsharkProtocol(self, dataId, annotationText):
+        """Override: Add an annotation to the TsharkProtocol object.
+
+        :param dataId: The ID of the data to add the annotation to.
+        :type dataId: str
+        :param annotationText: The annotation text
+        :type annotationText: str
+        :returns: The modified count.
+        """
+        tsharkPlugin = self.getPlugin()
+        return tsharkPlugin.addAnnotationTsharkProtocol(dataId, annotationText)
+
+
+    # edit an annotation for the dataId
+    def editAnnotationTsharkProtocol(self, dataId, oldAnnotationText, newAnnotationText):
+        """Override: Edit an annotation on the TsharkProtocol object.
+
+        :param dataId: The ID of the data to edit the annotation of.
+        :type dataId: str
+        :param oldAnnotationText: The old annotation text
+        :type oldAnnotationText: str
+        :param newAnnotationText: The new annotation text
+        :type newAnnotationText: str
+        :returns: The modified count.
+        """
+        tsharkPlugin = self.getPlugin()
+        return tsharkPlugin.editAnnotationTsharkProtocol(dataId, oldAnnotationText, newAnnotationText)
+
+
+    # delete an annotation for the dataId
+    def deleteAnnotationTsharkProtocol(self, dataId, annotationText):
+        """Override: Delete one annotation from the TsharkProtocol object.
+
+        :param dataId: The ID of the data to remove the annotation from.
+        :type dataId: str
+        :param annotationText: The annotation text to remove.
+        :type annotationText: str
+        :returns: The modified count.
+        """
+        tsharkPlugin = self.getPlugin()
+        return tsharkPlugin.deleteAnnotationTsharkProtocol(dataId, annotationText)
+
+
+    # deletes all annotations for the dataId
+    def deleteAllAnnotationsForTsharkProtocol(self, dataId):
+        """Override: Delete all annotations from the TsharkProtocol object.
+
+        :param dataId: The ID of the data to remove all annotations from.
+        :type dataId: str
+        :returns: The modified count.
+        """
+        tsharkPlugin = self.getPlugin()
+        return tsharkPlugin.deleteAllAnnotationsForTsharkProtocol(dataId)
+
+
+    # add an annotation to the timeline, not a datapoint
+    def addAnnotationToTsharkProtocolTimeline(self, startTime, annotationText):
+        """Override: Ands an annotation to the timeline (not a data point)
+
+        :param startTime: The datetime to add the annotation to
+        :type startTime: datetime
+        :param annotationText: The annotation text to add.
+        :type annotationText: str
+        :returns: The modified count.
+         """
+
+        tsharkPlugin = self.getPlugin()
+        return tsharkPlugin.addAnnotationToTsharkProtocolTimeline(startTime, annotationText)
+

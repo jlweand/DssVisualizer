@@ -80,3 +80,72 @@ class MultiExcludeProtocol:
         multiExcludePlugin = self.getPlugin()
         result = multiExcludePlugin.deleteFixedMultiExcludeProtocolData(dataId)
         return result
+
+    def addAnnotationMultiExcludeProtocol(self, dataId, annotationText):
+        """Override: Add an annotation to the MultiExcludeProtocol object.
+
+        :param dataId: The ID of the data to add the annotation to.
+        :type dataId: str
+        :param annotationText: The annotation text
+        :type annotationText: str
+        :returns: The modified count.
+        """
+        multiExcludePlugin = self.getPlugin()
+        return multiExcludePlugin.addAnnotationMultiExcludeProtocol(dataId, annotationText)
+
+
+    # edit an annotation for the dataId
+    def editAnnotationMultiExcludeProtocol(self, dataId, oldAnnotationText, newAnnotationText):
+        """Override: Edit an annotation on the MultiExcludeProtocol object.
+
+        :param dataId: The ID of the data to edit the annotation of.
+        :type dataId: str
+        :param oldAnnotationText: The old annotation text
+        :type oldAnnotationText: str
+        :param newAnnotationText: The new annotation text
+        :type newAnnotationText: str
+        :returns: The modified count.
+        """
+        multiExcludePlugin = self.getPlugin()
+        return multiExcludePlugin.editAnnotationMultiExcludeProtocol(dataId, oldAnnotationText, newAnnotationText)
+
+
+    # delete an annotation for the dataId
+    def deleteAnnotationMultiExcludeProtocol(self, dataId, annotationText):
+        """Override: Delete one annotation from the MultiExcludeProtocol object.
+
+        :param dataId: The ID of the data to remove the annotation from.
+        :type dataId: str
+        :param annotationText: The annotation text to remove.
+        :type annotationText: str
+        :returns: The modified count.
+        """
+        multiExcludePlugin = self.getPlugin()
+        return multiExcludePlugin.deleteAnnotationMultiExcludeProtocol(dataId, annotationText)
+
+
+    # deletes all annotations for the dataId
+    def deleteAllAnnotationsForMultiExcludeProtocol(self, dataId):
+        """Override: Delete all annotations from the MultiExcludeProtocol object.
+
+        :param dataId: The ID of the data to remove all annotations from.
+        :type dataId: str
+        :returns: The modified count.
+        """
+        multiExcludePlugin = self.getPlugin()
+        return multiExcludePlugin.deleteAllAnnotationsForMultiExcludeProtocol(dataId)
+
+
+    # add an annotation to the timeline, not a datapoint
+    def addAnnotationToMultiExcludeProtocolTimeline(self, startTime, annotationText):
+        """Override: Ands an annotation to the timeline (not a data point)
+
+        :param startTime: The datetime to add the annotation to
+        :type startTime: datetime
+        :param annotationText: The annotation text to add.
+        :type annotationText: str
+        :returns: The modified count.
+         """
+
+        multiExcludePlugin = self.getPlugin()
+        return multiExcludePlugin.addAnnotationToMultiExcludeProtocolTimeline(startTime, annotationText)

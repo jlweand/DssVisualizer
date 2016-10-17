@@ -1,6 +1,3 @@
-import ujson
-from datetime import datetime
-from pprint import pprint
 from core.config.configReader import ConfigReader
 
 class DataImport:
@@ -37,15 +34,15 @@ class DataImport:
 
     def importMultiExcludeProtocol(self, jsonData):
         multiExcludeProtocol = ConfigReader().getInstanceOfDatasourcePlugin("MultiExcludeProtocol")
-        insertedCount = multiExcludeProtocol.importMultiExcludeProtocol(jsonData)
+        insertedCount = multiExcludeProtocol.importMultiExcludeProtocolData(jsonData)
         return insertedCount
 
     def importMultiIncludeProtocol(self, jsonData):
         multiIncludeProtocol = ConfigReader().getInstanceOfDatasourcePlugin("MultiIncludeProtocol")
-        insertedCount = multiIncludeProtocol.importMultiIncludeProtocol(jsonData)
+        insertedCount = multiIncludeProtocol.importMultiIncludeProtocolData(jsonData)
         return insertedCount
 
     def importTsharkProtocol(self, jsonData):
         tsharkProtocol = ConfigReader().getInstanceOfDatasourcePlugin("TsharkProtocol")
-        insertedCount = tsharkProtocol.importTsharkProtocol(jsonData)
+        insertedCount = tsharkProtocol.importTsharkProtocolData(jsonData)
         return insertedCount
