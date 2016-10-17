@@ -23,7 +23,7 @@ class DataImportConfig:
             metadata["techName"] = techName
             metadata["eventName"] = eventName
             metadata["comments"] = comments
-            metadata["importDate"] = importDate
+            metadata["importDate"] = datetime.strptime(importDate, '%Y-%m-%d %H:%M:%S')
             data["metadata"] = metadata
 
             if hasStartDate:
