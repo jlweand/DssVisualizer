@@ -1,5 +1,5 @@
 from core.config.configReader import ConfigReader
-
+from core.apis.datasource.common import Common
 
 class TsharkThroughput:
     """TsharkThroughput API.  Most of these methods must be overwritten in your plugin.
@@ -13,16 +13,16 @@ class TsharkThroughput:
 
 
     def selectTsharkThroughputData(self, startDate, endDate):
-        """Override: Select the timed data by start and end date.
+        """Override: Select the timed data by start and end date. The input here will be strings, datetimes will be passed to the plugin.
 
-        :param startDate: The datetime to return data
-        :type startDate: datetime
-        :param endDate: The datatime to return data
-        :type endDate: datetime
+        :param startDate: The a string value of the local datetime to begin search on
+        :type startDate: str
+        :param endDate: The a string value of the local datetime to end search on
+        :type endDate: str
         :returns: JSON object
         """
         tsharkPlugin = self.getPlugin()
-        jsonData = tsharkPlugin.selectTsharkThroughputData(startDate, endDate)
+        jsonData = tsharkPlugin.selectTsharkThroughputData(Common().formatDateStringToUTC(startDate), Common().formatDateStringToUTC(endDate))
         return jsonData
 
 

@@ -17,7 +17,7 @@ class TsharkThroughput:
     # select data by date range of the 'start' column
     def selectTsharkThroughputData(self, startDate, endDate):
         collection = self.getTsharkThroughputCollection()
-        findJson = { "x": {"$gte" : datetime.strptime(startDate, Common().getDatetimeFormatString()), "$lt": datetime.strptime(endDate, Common().getDatetimeFormatString())}}
+        findJson = { "x": {"$gte" : startDate, "$lte": endDate}}
         cursor = collection.find(findJson)
         return self.fixTheData(cursor)
 
@@ -87,7 +87,7 @@ class TsharkThroughput:
     def fixTheData(self, cursor):
         objects = Common().formatOutput(cursor)
         for obj in objects:
-            obj["_id"] = obj["_id"]["$oid"]
+            obj["id"] = obj["_id"]["$oid"]
             obj["metadata"]["importDate"] = Common().formatEpochDatetime(obj["metadata"]["importDate"]["$date"])
 
             if obj["x"] != "":

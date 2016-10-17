@@ -1,6 +1,7 @@
 import ujson
 from datetime import datetime
 from core.apis.datasource.dataImport import DataImport
+from core.apis.datasource.common import Common
 
 class DataImportConfig:
 
@@ -18,19 +19,20 @@ class DataImportConfig:
 
     def addExtraData(self, json, techName, eventName, comments, importDate, hasStartDate, hasXdate):
         for data in json:
+
             #create the metadata
             metadata = {}
             metadata["techName"] = techName
             metadata["eventName"] = eventName
             metadata["comments"] = comments
-            metadata["importDate"] = datetime.strptime(importDate, '%Y-%m-%d %H:%M:%S')
+            metadata["importDate"] = Common().formatDateStringToUTC(importDate)
             data["metadata"] = metadata
 
             if hasStartDate:
-                data["start"] = datetime.strptime(data["start"], self.dateformat)
+                data["start"] = Common().addUTCToDate(data["start"])
 
             if hasXdate:
-                data["x"] = datetime.strptime(data["x"], self.dateformat)
+                data["x"] = Common().addUTCToDate(data["x"])
 
         return json
 

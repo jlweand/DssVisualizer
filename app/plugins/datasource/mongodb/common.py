@@ -2,6 +2,8 @@ from datetime import datetime, timezone
 from pymongo import MongoClient
 from bson.json_util import dumps
 import ujson
+import pytz
+from tzlocal import get_localzone
 
 class Common:
     """Here lies some common functions so they don't have to continue to be written over and over again."""
@@ -53,6 +55,11 @@ class Common:
         metadata["techName"] = "Manual Entry"
         metadata["eventName"] = ""
         metadata["comments"] = ""
-        metadata["importDate"] = datetime.now(timezone.utc).isoformat()
+
+        _date = datetime.now()
+        local_tz = get_localzone()
+        local_dt = local_tz.localize(_date)
+        datimeNow = local_dt.astimezone(pytz.utc)
+        metadata["importDate"] = datimeNow
 
         return metadata

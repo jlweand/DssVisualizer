@@ -87,7 +87,7 @@ class MultiIncludeThroughput:
     def fixTheData(self, cursor):
         objects = Common().formatOutput(cursor)
         for obj in objects:
-            obj["_id"] = obj["_id"]["$oid"]
+            obj["id"] = obj["_id"]["$oid"]
             obj["metadata"]["importDate"] = Common().formatEpochDatetime(obj["metadata"]["importDate"]["$date"])
 
             if obj["x"] != "":
