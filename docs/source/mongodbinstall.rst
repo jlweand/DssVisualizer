@@ -5,10 +5,47 @@ Installation and setup for MongoDB and Python libraries
 
 Follow the below instructions to get started with MongoDB
 
-Windows Instructions
---------------------
+Linux Instructions
+====================
 
-Installing MongoDB, pymongo, ujson (for Windows. Mac OS and Linux may vary)
+Installing MongoDB, pymongo, ujson and other python dependencies
+
+MongoDB Installation
+#####################
+
+* Open a new terminal.
+
+* In the new terminal, remove any old “db” and “log” folders::
+
+	rm –r /data/db/
+	rm –r /data/log/
+
+* Now create folders MongoDB need:  (These are the default in MongoDB.  You can customize them if you want, but I did not look too close into it.  The customer will be managing their own install.)::
+
+	mkdir /data/db
+	mkdir /data/log
+
+* Start MongoDB up by entering the following command in the terminal::
+
+	mongod –storageEngine=mmapv1
+
+Other python installations
+##########################
+* Open a new terminal and install::
+
+	apt-get install python3-pip
+	pip3 install pymongo
+	pip3 install ujson
+	pip3 install pytz
+	pip3 install tzlocal
+
+* That’s it.
+
+
+Windows Instructions
+====================
+
+Installing MongoDB, pymongo, ujson and other python dependencies
 
 MongoDB Installation
 #####################
@@ -37,14 +74,17 @@ Ctrl+C to close connection.
 
 * If you want to walk through their tutorial for python, you can check it out here: https://docs.mongodb.com/getting-started/python/  I’ll leave that up to the reader.
 
-pymongo installation
-####################
+Other python installations
+##########################
 
-* Open a cmd window and install it::
+* Open a cmd window and install::
 
 	python -m pip install pymongo
+	python -m pip install pytz
+	python -m pip install tzlocal
 
 * That’s it.
+
 
 ujson installation
 ##################

@@ -5,8 +5,13 @@ Installation and setup for PYGObject
 
 Follow the below instructions to get started with PYGObject which works with the Webkit and GTK stuff.
 
+Linux Instructions
+==================
+
+* The Python webkit should already be installed.
+
 Windows Instructions
---------------------
+====================
 
 * Dependencies:
 

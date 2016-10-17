@@ -20,34 +20,26 @@ core.apis.renderer.generateHtml module
     :undoc-members:
     :show-inheritance:
 
-core.apis.renderer.importDataSource module
-------------------------------------------
+core.apis.renderer.pluginChecker module
+---------------------------------------
 
-.. automodule:: core.apis.renderer.importDataSource
+.. automodule:: core.apis.renderer.pluginChecker
     :members:
     :undoc-members:
     :show-inheritance:
 
-core.apis.renderer.importRenderer module
+core.apis.renderer.pluginImporter module
 ----------------------------------------
 
-.. automodule:: core.apis.renderer.importRenderer
+.. automodule:: core.apis.renderer.pluginImporter
     :members:
     :undoc-members:
     :show-inheritance:
 
-core.apis.renderer.rendererChecker module
------------------------------------------
+core.apis.renderer.pluginReader module
+--------------------------------------
 
-.. automodule:: core.apis.renderer.rendererChecker
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-core.apis.renderer.rendererReader module
-----------------------------------------
-
-.. automodule:: core.apis.renderer.rendererReader
+.. automodule:: core.apis.renderer.pluginReader
     :members:
     :undoc-members:
     :show-inheritance:
