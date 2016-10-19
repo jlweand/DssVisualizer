@@ -1,7 +1,7 @@
 {
   "activeDatasourcePlugin": "MongoDB",
   "activeRendererPlugins": {
-    "pcapDataProcol": {
+    "pcapDataProtocol": {
       "location": "plugins.renderer.visjs",
       "plugin": "vis.js",
       "scripts": "scripts.txt"

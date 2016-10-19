@@ -68,8 +68,8 @@ def handle(web_view,web_frame,web_resource,request,response):
 				tshark = TsharkThroughput().selectTsharkThroughputData(startDate, endDate)
 				multiExProt = MultiExcludeProtocol().selectMultiExcludeProtocolData(startDate, endDate)
 				multiIncProt = MultiIncludeProtocol().selectMultiIncludeProtocolData(startDate, endDate)
-				tsharkProtProt = TsharkProtocol().selectTsharkProtocolData(startDate, endDate)
-				js = "visPCAPData(%s, %s, %s, %s, %s, %s);" % (multiEx, multiInc, tshark, mutliExProt, multiIncProt, tsharkProt)
+				tsharkProt = TsharkProtocol().selectTsharkProtocolData(startDate, endDate)
+				js = "visPCAPData(%s, %s, %s, %s, %s, %s);" % (multiEx, multiInc, tshark, multiExProt, multiIncProt, tsharkProt)
 				webKitWebView.execute_script(js)
 			# elif(queryDict['request'][0] == 'include'):
 
