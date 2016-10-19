@@ -18,7 +18,7 @@ class TsharkProtocol:
     def selectTsharkProtocolData(self, startDate, endDate):
         collection = self.getTsharkProtocolCollection()
         #findJson = {"start": {"$gte": datetime.strptime(startDate, Common().getDatetimeFormatString()), "$lt": datetime.strptime(endDate, Common().getDatetimeFormatString())}}
-        findJson = { "start": {"$gte" : startDate, "$lt": endDate}}
+        findJson = { "start": {"$gte" : startDate, "$lte": endDate}}
         cursor = collection.find(findJson)
         return self.fixTheData(cursor)
 
@@ -29,18 +29,18 @@ class TsharkProtocol:
         return self.fixTheData(cursor)
 
     # add a fixedData record to this data point
-    def insertFixedTsharkProtocolData(self, dataId, oldDataId, content, className, title, start):
+    def insertFixedTsharkProtocolData(self, dataId, oldDataId, content, className, title, startDate):
         collection = self.getTsharkProtocolCollection()
         insertId = {"_id": ObjectId(dataId)}
-        insertText = {"$set": {"id": oldDataId, "content": content , "className": className, "title": title, "start": start}}
+        insertText = {"$set": {"id": oldDataId, "content": content , "className": className, "title": title, "start": startDate}}
         result = collection.update_one(insertId, insertText)
         return result.modified_count
 
     # update a previously 'fixed' record.
-    def updateFixedTsharkProtocolData(self, dataId, oldDataId, content, className, title, start):
+    def updateFixedTsharkProtocolData(self, dataId, oldDataId, content, className, title, startDate):
         collection = self.getTsharkProtocolCollection()
         updateId = {"_id" : ObjectId(dataId)}
-        updateText = {"$set": {"id": oldDataId, "content": content , "className": className, "title": title, "start": start}}
+        updateText = {"$set": {"id": oldDataId, "content": content , "className": className, "title": title, "start": startDate}}
         result = collection.update_one(updateId, updateText)
         return result.modified_count
 
@@ -91,7 +91,7 @@ class TsharkProtocol:
         objects = Common().formatOutput(cursor)
         for obj in objects:
             obj["id"] = obj["_id"]["$oid"]
-            #obj["start"] = Common().formatEpochDatetime(obj["start"]["$date"])
-            #obj["metadata"]["importDate"] = Common().formatEpochDatetime(obj["metadata"]["importDate"]["$date"])
+            obj["start"] = Common().formatEpochDatetime(obj["start"]["$date"])
+            obj["metadata"]["importDate"] = Common().formatEpochDatetime(obj["metadata"]["importDate"]["$date"])
 
         return objects

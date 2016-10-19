@@ -6,7 +6,7 @@ class MultiExcludeProtocolTest(unittest.TestCase):
 
     def test_monolithicTestCase(self):
         # select by date
-        jsonData = MultiExcludeProtocol().selectMultiExcludeProtocolData('2016-10-12 17:36:14', '2016-10-12 17:36:16')
+        jsonData = MultiExcludeProtocol().selectMultiExcludeProtocolData('2016-10-18 18:27:20', '2016-10-18 18:27:25')
         dataId = jsonData[0]["id"]
         self.assertEqual(1, len(jsonData))
 

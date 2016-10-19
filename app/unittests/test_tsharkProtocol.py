@@ -6,16 +6,17 @@ from core.apis.datasource.tsharkProtocol import TsharkProtocol
 class TsharkProtocolTest(unittest.TestCase):
 
 
-    def test_selectTsharkProtocolData(self):
-        jsonData = TsharkProtocol().selectTsharkProtocolData('2016-10-12 17:36:14', '2016-10-12 17:36:20')
-        # pprint(jsonData)
+    def test_monolithicTestCase(self):
+        # select by date
+        jsonData = TsharkProtocol().selectTsharkProtocolData('2016-10-15 11:57:25', '2016-10-15 11:57:30')
+        dataId = jsonData[0]["id"]
         self.assertEqual(1, len(jsonData))
 
-    def test_selectTsharkProtocolDataById(self):
+        # select by Id
         jsonData = TsharkProtocol().selectTsharkProtocolDataById(dataId)
         self.assertEqual(1, len(jsonData))
 
-    def test_tsharkAnnotations(self):
+        # test Annotations
         TsharkProtocol().addAnnotationTsharkProtocol(dataId, 'test')
         TsharkProtocol().addAnnotationTsharkProtocol(dataId, 'test test')
         TsharkProtocol().addAnnotationTsharkProtocol(dataId, 'test test test')
@@ -35,26 +36,25 @@ class TsharkProtocolTest(unittest.TestCase):
         self.assertEqual(2, len(deletedChanged[0]["annotations"]))
         self.assertRaises(KeyError, lambda: deletedAll[0]["annotations"])
 
-    def test_insertFixedTsharkProtocolData(self):
+        # insert Fixed MultiExcludeProtocol Data
         insertCount = TsharkProtocol().insertFixedTsharkProtocolData(dataId, '57f18727231bad12ecba99e4', '29 p/s', 'traffic', 'eth:ethertype:arp\neth:ethertype:ip:udp:dns\n', '2016-17-02 18:28:00')
         self.assertEqual(1, insertCount)
 
-    def test_UpdateFixedTsharkProtocolData(self):
+        # update Fixed MultiExcludeProtocol Data
         modifiedCount = TsharkProtocol().updateFixedTsharkProtocolData(dataId, '57f18727231bad12ecba99e4', '1 p/s', 'traffic', 'eth:ethertype:arp\neth:ethertype:ip:udp:dns\n', '2016-10-02 18:28:00')
         self.assertEqual(1, modifiedCount)
 
-    def test_deleteFixedTsharkProtocolData(self):
+        # delete Fixed MultiExcludeProtocol Data
         deletedCount = TsharkProtocol().deleteFixedTsharkProtocolData(dataId)
         self.assertEqual(1, deletedCount)
 
-    def test_addAnnotationToTsharkProtocolTimeline(self):
+        # add Annotation To MultiExcludeProtocol Timeline
         objectId = TsharkProtocol().addAnnotationToTsharkProtocolTimeline('2016-08-01 10:00:00', "here's a timeline annotation")
         changedAnn = TsharkProtocol().selectTsharkProtocolDataById(objectId)
         self.assertIsNotNone(changedAnn)
 
 
 if __name__ == '__main__':
-    dataId = '58050233578ad8fa1837d737'
     unittest.main()
 
 #python -m unittests.test_tsharkProtocol

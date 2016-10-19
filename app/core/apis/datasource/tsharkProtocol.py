@@ -1,5 +1,6 @@
 from core.config.configReader import ConfigReader
-
+#from plugins.datasource.mongodb.common import Common
+from core.apis.datasource.common import Common
 
 class TsharkProtocol:
     """TsharkProtocol API.  Most of these methods must be overwritten in your plugin.
@@ -22,7 +23,7 @@ class TsharkProtocol:
         :returns: JSON object
         """
         tsharkProtocolPlugin = self.getPlugin()
-        jsonData = tsharkProtocolPlugin.selectTsharkProtocolData(startDate, endDate)
+        jsonData = tsharkProtocolPlugin.selectTsharkProtocolData(Common().formatDateStringToUTC(startDate), Common().formatDateStringToUTC(endDate))
         return jsonData
 
 
@@ -38,7 +39,7 @@ class TsharkProtocol:
         return jsonData
 
 
-    def insertFixedTsharkProtocolData(self, dataId, oldDataId, content, className, title, start):
+    def insertFixedTsharkProtocolData(self, dataId, oldDataId, content, className, title, startDate):
         """Override: Inserts a fixedData attribute.
 
         :param dataId: The key of the original data
@@ -50,11 +51,11 @@ class TsharkProtocol:
         :returns: The modified count.
         """
         tsharkProtocolPlugin = self.getPlugin()
-        result = tsharkProtocolPlugin.insertFixedTsharkProtocolData(dataId, oldDataId, content, className, title, start)
+        result = tsharkProtocolPlugin.insertFixedTsharkProtocolData(dataId, oldDataId, content, className, title, Common().formatDateStringToUTC(startDate))
         return result
 
 
-    def updateFixedTsharkProtocolData(self, dataId, oldDataId, content, className, title, start):
+    def updateFixedTsharkProtocolData(self, dataId, oldDataId, content, className, title, startDate):
         """Override: Updates the fixedData attribute.
 
         :param dataId: The key of the original data
@@ -66,7 +67,7 @@ class TsharkProtocol:
         :returns: The modified count.
         """
         tsharkProtocolPlugin = self.getPlugin()
-        result = tsharkProtocolPlugin.updateFixedTsharkProtocolData(dataId, oldDataId, content, className, title, start)
+        result = tsharkProtocolPlugin.updateFixedTsharkProtocolData(dataId, oldDataId, content, className, title, Common().formatDateStringToUTC(startDate))
         return result
 
 
@@ -148,5 +149,5 @@ class TsharkProtocol:
          """
 
         tsharkPlugin = self.getPlugin()
-        return tsharkPlugin.addAnnotationToTsharkProtocolTimeline(startTime, annotationText)
+        return tsharkPlugin.addAnnotationToTsharkProtocolTimeline(Common().formatDateStringToUTC(startTime), annotationText)
 

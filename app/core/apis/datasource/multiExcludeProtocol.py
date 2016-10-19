@@ -1,5 +1,6 @@
 from core.config.configReader import ConfigReader
-
+#from plugins.datasource.mongodb.common import Common
+from core.apis.datasource.common import Common
 
 class MultiExcludeProtocol:
     """MultiExcludeProtocol API.  Most of these methods must be overwritten in your plugin.
@@ -22,7 +23,7 @@ class MultiExcludeProtocol:
         :returns: JSON object
         """
         multiExcludePlugin = self.getPlugin()
-        jsonData = multiExcludePlugin.selectMultiExcludeProtocolData(startDate, endDate)
+        jsonData = multiExcludePlugin.selectMultiExcludeProtocolData(Common().formatDateStringToUTC(startDate), Common().formatDateStringToUTC(endDate))
         return jsonData
 
 
@@ -50,7 +51,7 @@ class MultiExcludeProtocol:
         :returns: The modified count.
         """
         multiExcludePlugin = self.getPlugin()
-        result = multiExcludePlugin.insertFixedMultiExcludeProtocolData(dataId, oldDataId, content, className, title, start)
+        result = multiExcludePlugin.insertFixedMultiExcludeProtocolData(dataId, oldDataId, content, className, title, Common().formatDateStringToUTC(startDate))
         return result
 
 
@@ -66,7 +67,7 @@ class MultiExcludeProtocol:
         :returns: The modified count.
         """
         multiExcludePlugin = self.getPlugin()
-        result = multiExcludePlugin.updateFixedMultiExcludeProtocolData(dataId, oldDataId, content, className, title, start)
+        result = multiExcludePlugin.updateFixedMultiExcludeProtocolData(dataId, oldDataId, content, className, title, Common().formatDateStringToUTC(startDate))
         return result
 
 
@@ -148,4 +149,4 @@ class MultiExcludeProtocol:
          """
 
         multiExcludePlugin = self.getPlugin()
-        return multiExcludePlugin.addAnnotationToMultiExcludeProtocolTimeline(startTime, annotationText)
+        return multiExcludePlugin.addAnnotationToMultiExcludeProtocolTimeline(Common().formatDateStringToUTC(startDate), annotationText)

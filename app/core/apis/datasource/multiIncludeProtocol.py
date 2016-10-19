@@ -1,5 +1,6 @@
 from core.config.configReader import ConfigReader
-
+#from plugins.datasource.mongodb.common import Common
+from core.apis.datasource.common import Common
 
 class MultiIncludeProtocol:
     """MultiIncludeProtocol API.  Most of these methods must be overwritten in your plugin.
@@ -22,7 +23,7 @@ class MultiIncludeProtocol:
         :returns: JSON object
         """
         multiIncludePlugin = self.getPlugin()
-        jsonData = multiIncludePlugin.selectMultiIncludeProtocolData(startDate, endDate)
+        jsonData = multiIncludePlugin.selectMultiIncludeProtocolData(Common().formatDateStringToUTC(startDate), Common().formatDateStringToUTC(endDate))
         return jsonData
 
 
@@ -38,7 +39,7 @@ class MultiIncludeProtocol:
         return jsonData
 
 
-    def insertFixedMultiIncludeProtocolData(self, dataId, oldDataId, content, className, title, start):
+    def insertFixedMultiIncludeProtocolData(self, dataId, oldDataId, content, className, title, startDate):
         """Override: Inserts a fixedData attribute.
 
         :param dataId: The key of the original data
@@ -50,11 +51,11 @@ class MultiIncludeProtocol:
         :returns: The modified count.
         """
         multiIncludePlugin = self.getPlugin()
-        result = multiIncludePlugin.insertFixedMultiIncludeProtocolData(dataId, oldDataId, content, className, title, start)
+        result = multiIncludePlugin.insertFixedMultiIncludeProtocolData(dataId, oldDataId, content, className, title, Common().formatDateStringToUTC(startDate))
         return result
 
 
-    def updateFixedMultiIncludeProtocolData(self, dataId, oldDataId, content, className, title, start):
+    def updateFixedMultiIncludeProtocolData(self, dataId, oldDataId, content, className, title, startDate):
         """Override: Updates the fixedData attribute.
 
         :param dataId: The key of the original data
@@ -66,7 +67,7 @@ class MultiIncludeProtocol:
         :returns: The modified count.
         """
         multiIncludePlugin = self.getPlugin()
-        result = multiIncludePlugin.updateFixedMultiIncludeProtocolData(dataId, oldDataId, content, className, title, start)
+        result = multiIncludePlugin.updateFixedMultiIncludeProtocolData(dataId, oldDataId, content, className, title, Common().formatDateStringToUTC(startDate))
         return result
 
 
@@ -148,4 +149,4 @@ class MultiIncludeProtocol:
          """
 
         multiIncludePlugin = self.getPlugin()
-        return multiIncludePlugin.addAnnotationToMultiIncludeProtocolTimeline(startTime, annotationText)
+        return multiIncludePlugin.addAnnotationToMultiIncludeProtocolTimeline(Common().formatDateStringToUTC(startTime), annotationText)
