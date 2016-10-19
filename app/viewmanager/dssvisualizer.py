@@ -8,8 +8,7 @@ from urllib.parse import parse_qs
 # Only use files from core.  DO NOT use files from plugins.
 from core.apis.renderer.generateHtml import GenerateHtml
 from core.apis.datasource.pyKeyLogger import PyKeyLogger
-from core.apis.renderer.importRenderer import ImportRenderer
-from core.apis.renderer.importDataSource import ImportDataSource
+from core.apis.renderer.pluginImporter import PluginImporter
 from core.config.configDatasources import ConfigDatasources
 from core.config.configRenderers import ConfigRenderers
 from core.apis.datasource.multiExcludeThroughput import MultiExcludeThroughput
@@ -69,7 +68,7 @@ def handle(web_view,web_frame,web_resource,request,response):
 				multiExProt = MultiExcludeProtocol().selectMultiExcludeProtocolData(startDate, endDate)
 				multiIncProt = MultiIncludeProtocol().selectMultiIncludeProtocolData(startDate, endDate)
 				tsharkProt = TsharkProtocol().selectTsharkProtocolData(startDate, endDate)
-				js = "visPCAPData(%s, %s, %s, %s, %s, %s);" % (multiEx, multiInc, tshark, multiExProt, multiIncProt, tsharkProt)
+				js = "visPCAPData(%s, %s, %s, %s, %s, %s);" % (multiEx, multiExProt, multiInc, multiIncProt, tshark, tsharkProt)
 				webKitWebView.execute_script(js)
 			# elif(queryDict['request'][0] == 'include'):
 

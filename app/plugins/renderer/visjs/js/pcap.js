@@ -20,19 +20,122 @@ $(document).on("click", "#dateInput", function(){
 	$.get(pcapDataUrl);
 });
 
-function visPCAPData(xyData, allData){
-	// alert("PCAP DATA:---------->"+data);
-	var container = document.getElementById('pcapData');
-	var dataset = new vis.DataSet(xyData);
+function visPCAPData(meXY, meAll, miXY, miAll, tsXY, tsAll){
+	visMEData(meXY, meAll);
+	visMIData(miXY, miAll);
+	visTSData(tsXY, tsAll);
+}
+
+function visMEData(xyData, allData){
+	xyData.forEach(function(xyObj){
+		var xyTime = xyObj['x'];
+		allData.forEach(function(allObj){
+			var allTime = allObj['start'];
+			if(allTime == xyTime){
+				xyObj['label'] = {"content": allObj['content']};
+			}
+		});
+	});
+	var container = document.getElementById("multiExcludeData");
+	var datasetME = new vis.DataSet(xyData);
 	var options = {
-		style: 'points',
-		drawPoints: {
-			enabled: true,
-			size: 6,
-			style: 'circle' // square, circle
-		}
+		drawPoints: true,
+		interpolation: false,
+		height: "150px"
 	};
-	var graph2d = new vis.Graph2d(container, dataset, options);
+	var graph2dME = new vis.Graph2d(container, datasetME, options);
 	$("#loading").addClass("hidden");
-	$("#pcapData").removeClass("hidden");
+	$("#multiExcludeData").removeClass("hidden");
+
+	// alert("before select");
+	graph2dME.on('click', function(properties){
+		var currTime = new Date(properties.time);
+		allData.forEach(function(allObj){
+			var allTime = new Date(allObj['start'].replace(/-/g, "/").replace(/T/, " "));
+			// var allTime = new Date(allObj['start']);
+			var diff = Math.abs(currTime - allTime);
+			var buffer = 100;
+			// console.log(allObj['start']);
+			console.log(currTime+" - "+allTime+" = "+diff);
+			if( diff < buffer){
+				prettyPrompt(allObj['start'], allObj['title']);
+			}
+		});
+	});
+}
+
+function visMIData(xyData, allData){
+	xyData.forEach(function(xyObj){
+		var xyTime = xyObj['x'];
+		allData.forEach(function(allObj){
+			var allTime = allObj['start'];
+			if(allTime == xyTime){
+				xyObj['label'] = {"content": allObj['content']};
+			}
+		});
+	});
+	var container = document.getElementById("multiIncludeData");
+	var datasetMI = new vis.DataSet(xyData);
+	var options = {
+		drawPoints: true,
+		interpolation: false,
+		height: "150px"
+	};
+	var graph2dMI = new vis.Graph2d(container, datasetMI, options);
+	$("#loading").addClass("hidden");
+	$("#multiIncludeData").removeClass("hidden");
+
+	// alert("before select");
+	graph2dMI.on('click', function(properties){
+		var currTime = new Date(properties.time);
+		allData.forEach(function(allObj){
+			var allTime = new Date(allObj['start'].replace(/-/g, "/").replace(/T/, " "));
+			var diff = Math.abs(currTime - allTime);
+			var buffer = 100;
+			// alert(currTime+" - "+allTime+" = "+diff);
+			if( diff < buffer){
+				prettyPrompt(allObj['start'], allObj['title']);
+			}
+		});
+	});
+}
+
+function visTSData(xyData, allData){
+	xyData.forEach(function(xyObj){
+		var xyTime = xyObj['x'];
+		allData.forEach(function(allObj){
+			var allTime = allObj['start'];
+			if(allTime == xyTime){
+				xyObj['label'] = {"content": allObj['content']};
+			}
+		});
+	});
+	var container = document.getElementById("tsharkData");
+	var datasetTS = new vis.DataSet(xyData);
+	var options = {
+		drawPoints: true,
+		interpolation: false,
+		height: "150px"
+	};
+	var graph2dTS = new vis.Graph2d(container, datasetTS, options);
+	$("#loading").addClass("hidden");
+	$("#tsharkData").removeClass("hidden");
+
+	// alert("before select");
+	graph2dTS.on('click', function(properties){
+		var currTime = new Date(properties.time);
+		allData.forEach(function(allObj){
+			var allTime = new Date(allObj['start'].replace(/-/g, "/").replace(/T/, " "));
+			var diff = Math.abs(currTime - allTime);
+			var buffer = 100;
+			// alert(currTime+" - "+allTime+" = "+diff);
+			if( diff < buffer){
+				prettyPrompt(allObj['start'], allObj['title']);
+			}
+		});
+	});
+}
+
+function prettyPrompt(title, text) {
+	swal(title, text);
 }

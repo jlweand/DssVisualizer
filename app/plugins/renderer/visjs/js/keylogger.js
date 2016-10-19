@@ -27,8 +27,8 @@ $(document).on("click", "#dateInput", function(){
 });
 function visData(keyData, clickData, timedData){
 	keyData.forEach(function(obj){ obj['group'] = '0';});
-	clickData.forEach(function(obj){ obj['group'] = '1'; });
-	timedData.forEach(function(obj){ obj['group'] = '2'; });
+	clickData.forEach(function(obj){ obj['group'] = '1';});
+	timedData.forEach(function(obj){ obj['group'] = '2';});
 
 	// var startDate = '2016-09-01 09:00:00';
 	// var endDate = '2016-09-16 10:00:00';

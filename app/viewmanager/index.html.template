@@ -37,8 +37,12 @@
 	<div class="clear"></div>
 	<h3>Keypress Data</h3>
 	<div id="keypressData"></div>
-	<h3>PCAP Data</h3>
-	<div id="pcapData"></div>
+	<h3>Multi Exclude Data</h3>
+	<div id="multiExcludeData"></div>
+	<h3>Multi Include Data</h3>
+	<div id="multiIncludeData"></div>
+	<h3>TShark Data</h3>
+	<div id="tsharkData"></div>
 	<div id="loading" class="hidden">
 		<img src="img/ripple.gif" />
 	</div>
