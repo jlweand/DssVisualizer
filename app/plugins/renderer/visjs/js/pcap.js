@@ -1,7 +1,9 @@
 $(document).on("click", "#dateInput", function(){
 	$("#loading").removeClass("hidden");
 	$("#pcapData").addClass("hidden");
-	$("#pcapData").html("");
+	$("#multiExcludeData").html("");
+	$("#multiIncludeData").html("");
+	$("#tsharkData").html("");
 	var start = $("#datepickerStart").val();
 	var end = $("#datepickerEnd").val();
 	if(start == ""){
@@ -56,7 +58,7 @@ function visMEData(xyData, allData){
 			var diff = Math.abs(currTime - allTime);
 			var buffer = 100;
 			// console.log(allObj['start']);
-			console.log(currTime+" - "+allTime+" = "+diff);
+			// console.log(currTime+" - "+allTime+" = "+diff);
 			if( diff < buffer){
 				prettyPrompt(allObj['start'], allObj['title']);
 			}
@@ -131,11 +133,12 @@ function visTSData(xyData, allData){
 			// alert(currTime+" - "+allTime+" = "+diff);
 			if( diff < buffer){
 				prettyPrompt(allObj['start'], allObj['title']);
+				$(".sweet-alert").scrollTop(0);
 			}
 		});
 	});
 }
 
 function prettyPrompt(title, text) {
-	swal(title, text);
+	swal({title: title, text: text, html: true, allowOutsideClick: true});
 }

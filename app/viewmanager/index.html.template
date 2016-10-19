@@ -14,6 +14,11 @@
 	<script src="js/jquery-ui.min.js"></script>
 	<script src="js/annotation.js"></script>
 	<script src="js/datepicker.js"></script>
+	<script>
+		$(window).resize(function(){
+			$(".sweet-alert").css("margin-top",-$(".sweet-alert").outerHeight()/2);
+		});
+	</script>
 <SCRIPTS GO HERE>
 </head>
 <body>
