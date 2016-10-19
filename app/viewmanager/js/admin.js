@@ -1,6 +1,7 @@
 $(document).ready(function(){
 	var pluginsUrl = "http://localhost?adminRequest=availablePlugins";
 	$.get(pluginsUrl);
+	// alert(pluginsUrl);
 	// createRadioButtons("hello");
 });
 
@@ -15,13 +16,13 @@ function createRadioButtons(plugins){
 			// alert(parsedJson);
 			var activeDB = plugins['activeDatasourcePlugin'];
 			var activeRend = plugins['activeRendererPlugins'];
-			var activePcapDataProtocol = activeRend['pcapDataProcol']['plugin'];
+			var activePcapDataProtocol = activeRend['pcapDataProtocol']['plugin'];
 			var activePcapThroughput = activeRend['pcapThroughput']['plugin'];
 			var activePyKeyLogger = activeRend['pyKeyLogger']['plugin'];
 			var activeScreenshots = activeRend['screenshots']['plugin'];
 
-			var datasourcePlugins = parsedJson['datasourcePlugins'];
-			var rendererPlugins = parsedJson['rendererPlugins'];
+			var datasourcePlugins = plugins['datasourcePlugins'];
+			var rendererPlugins = plugins['rendererPlugins'];
 			// alert(rendererPlugins);
 
 			rendererPlugins.forEach(function(plugin){
@@ -42,13 +43,13 @@ function createRadioButtons(plugins){
 					$("#pyKeyLogger").append('<input type="radio" name="pyKeyLogger" value="'+pluginName+'" checked>'+pluginName+'</input><br>');
 				}
 				else {
-					$("#pyKeyLogger").append('<input type="radio" name="pcapThroughput" value="'+pluginName+'">'+pluginName+'</input><br>');
+					$("#pyKeyLogger").append('<input type="radio" name="pyKeyLogger" value="'+pluginName+'">'+pluginName+'</input><br>');
 				}
 				if(pluginName == activeScreenshots){
 					$("#screenshots").append('<input type="radio" name="screenshots" value="'+pluginName+'" checked>'+pluginName+'</input><br>');
 				}
 				else {
-					$("#screenshots").append('<input type="radio" name="pcapThroughput" value="'+pluginName+'">'+pluginName+'</input><br>');
+					$("#screenshots").append('<input type="radio" name="screenshots" value="'+pluginName+'">'+pluginName+'</input><br>');
 				}
 			});
 
@@ -63,4 +64,21 @@ function createRadioButtons(plugins){
 			});
 	// 	}
 	// });
+}
+
+$(document).on("click", "#submit", function(){
+	updateJson();
+});
+
+function updateJson(){
+	var database = $("input[name='database']:checked").val();
+	var pcapDataProtocol= $("input[name='pcapDataProtocol']:checked").val();
+	var pcapThroughput= $("input[name='pcapThroughput']:checked").val();
+	var pyKeyLogger= $("input[name='pyKeyLogger']:checked").val();
+	var screenshots= $("input[name='screenshots']:checked").val();
+	var scriptFile= "";
+	var newActive = "";
+
+	var updateRendJson = "http://localhost?adminSubmission=pluginChanges&database="+database+"&pcapDataProtocol="+pcapDataProtocol+"&pcapThroughput="+pcapThroughput+"&pyKeyLogger="+pyKeyLogger+"&screenshots="+screenshots;
+	$.get(updateRendJson);
 }
