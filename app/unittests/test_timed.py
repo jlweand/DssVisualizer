@@ -36,16 +36,16 @@ class PyKeyLoggerTest(unittest.TestCase):
         self.assertRaises(KeyError, lambda: deletedAll[0]["annotations"])
 
         # insert Fixed Data
-        jsonData = PyKeyLogger().insertFixedTimedData(dataId, '57f18796231bad0be406afde', '[New Content Added]', 'imgPoint', '2016-09-16 15:16:35', 'http://localhost/dssserver/logs/timed_screenshots/1465515528.8_screenshotTIMED_TESTING.png', 'point')
-        self.assertIsNotNone(jsonData)
+        modifiedCount = PyKeyLogger().insertFixedTimedData(dataId, '11111', '[New Content Added]', 'imgPoint', '2016-09-16 15:16:35', 'http://localhost/dssserver/logs/timed_screenshots/1465515528.8_screenshotTIMED_TESTING.png', 'point')
+        self.assertEqual(1, modifiedCount)
 
         # update Fixed Data
-        jsonData = PyKeyLogger().updateFixedTimedData(dataId, '57f18796231bad0be406afde','[EDITED UNITTEST Content Added]', 'imgPoint', '2016-10-03 18:38:48', '/usr/logger/v2/dss-logger-pluggable/plugins/collectors/pykeylogger/raw/click_images/1474038815.78_TESTING_UPDATE.png', 'point')
-        self.assertIsNotNone(jsonData)
+        modifiedCount = PyKeyLogger().updateFixedTimedData(dataId, '22222','[EDITED UNITTEST Content Added]', 'imgPoint', '2016-10-03 18:38:48', '/usr/logger/v2/dss-logger-pluggable/plugins/collectors/pykeylogger/raw/click_images/1474038815.78_TESTING_UPDATE.png', 'point')
+        self.assertEqual(1, modifiedCount)
 
         # delete Fixed Data
-        jsonData = PyKeyLogger().deleteFixedTimedData(dataId, '57f18796231bad0be406afde')
-        self.assertIsNotNone(jsonData)
+        modifiedCount = PyKeyLogger().deleteFixedTimedData(dataId)
+        self.assertEqual(1, modifiedCount)
 
         # add Annotation to Timeline
         objectId = PyKeyLogger().addAnnotationToTimedTimeline('2016-09-16 15:16:34', "here's a Timed timeline annotation")

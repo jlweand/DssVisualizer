@@ -70,7 +70,7 @@ class PyKeyLogger:
         result = pyKeyLogger.updateFixedKeyPressData(dataId, keypress_id, content, className, Common().formatDateStringToUTC(start))
         return result
 
-    def deleteFixedKeyPressData(self, dataId, keypress_id):
+    def deleteFixedKeyPressData(self, dataId):
         """Override: Delete a 'fixed' key press data.
 
         :param dataId: The ID of the 'fixed' data to delete
@@ -78,7 +78,7 @@ class PyKeyLogger:
         :returns: The deleted count.
         """
         pyKeyLogger = self.getPlugin()
-        return pyKeyLogger.deleteFixedKeyPressData(dataId, keypress_id)
+        return pyKeyLogger.deleteFixedKeyPressData(dataId)
 
     def addAnnotationKeyPress(self, dataId, annotationText):
         """Override: Add an annotation to the key press object.
@@ -212,7 +212,7 @@ class PyKeyLogger:
         result = pyKeyLogger.updateFixedClickData(dataId, clicks_id, content, className, Common().formatDateStringToUTC(start), title, typeClick)
         return result
 
-    def deleteFixedClickData(self, dataId, clicks_id):
+    def deleteFixedClickData(self, dataId):
         """Override: Delete a 'fixed' click data.
 
         :param dataId: The ID of the 'fixed' data to delete
@@ -220,7 +220,7 @@ class PyKeyLogger:
         :returns: The deleted count.
         """
         pyKeyLogger = self.getPlugin()
-        result = pyKeyLogger.deleteFixedClickData(dataId, clicks_id)
+        result = pyKeyLogger.deleteFixedClickData(dataId)
         return result
 
     def addAnnotationClick(self, dataId, annotationText):
@@ -355,7 +355,7 @@ class PyKeyLogger:
         result = pyKeyLogger.updateFixedTimedData(dataId, timed_id, content, className, Common().formatDateStringToUTC(startDate), title, typeTimed)
         return result
 
-    def deleteFixedTimedData(self, dataId, timed_id):
+    def deleteFixedTimedData(self, dataId):
         """Override: Delete a 'fixed' timed data.
 
         :param dataId: The ID of the 'fixed' data to delete
@@ -363,7 +363,7 @@ class PyKeyLogger:
         :returns: The deleted count.
         """
         pyKeyLogger = self.getPlugin()
-        result = pyKeyLogger.deleteFixedTimedData(dataId, timed_id)
+        result = pyKeyLogger.deleteFixedTimedData(dataId)
         return result
 
     def addAnnotationTimed(self, dataId, annotationText):

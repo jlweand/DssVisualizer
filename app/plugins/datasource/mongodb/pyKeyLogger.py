@@ -57,16 +57,16 @@ class PyKeyLogger:
     # ORIGINAL DATA SHOULD NEVER BE UPDATED OR DELETED.
     def updateFixedKeyPressData(self, dataId, keypress_id, content, className, start):
         collection = self.getKeyPressCollection()
-        updateId = {"$and":[{ "_id" : ObjectId(dataId)}, { "keypress_id" : keypress_id}]}
+        updateId = {"_id" : ObjectId(dataId)}
         push = { "$set": {"fixedData": {"keypress_id": keypress_id, "content": content, "className": className,"start": start}}}
         result = collection.update_one(updateId, push)
         return result.modified_count
 
     # delete a record.  Make sure that this record has a value in the sourceId.
     # ORIGINAL DATA SHOULD NEVER BE UPDATED OR DELETED.
-    def deleteFixedKeyPressData(self, dataId, keypress_id):
+    def deleteFixedKeyPressData(self, dataId):
         collection = self.getKeyPressCollection()
-        deleteId = {"$and":[{ "_id" : ObjectId(dataId)}, { "keypress_id" : keypress_id}]}
+        deleteId = {"_id" : ObjectId(dataId)}
         push = {"$unset": {"fixedData": ""}}
         result = collection.update_one(deleteId, push)
         return result.modified_count
@@ -99,7 +99,6 @@ class PyKeyLogger:
         keyPress = {}
         keyPress["className"] = ""
         keyPress["content"] = ""
-        # keyPress["start"] = datetime.strptime(startTime, Common().getDatetimeFormatString())
         keyPress["start"] = startTime
         keyPress["metadata"] = metadata
 
@@ -132,16 +131,16 @@ class PyKeyLogger:
     # ORIGINAL DATA SHOULD NEVER BE UPDATED OR DELETED.
     def updateFixedClickData(self, dataId, clicks_id, content, className, start, title, typeClick):
         collection = self.getClickCollection()
-        updateId = {"$and":[{ "_id" : ObjectId(dataId)}, { "clicks_id" : clicks_id}]}
+        updateId = {"_id" : ObjectId(dataId)}
         push = { "$set": {"fixedData": {"clicks_id": clicks_id, "content": content, "className": className,"start": start, "title": title, "type": typeClick}}}
         result = collection.update_one(updateId, push)
         return result.modified_count
 
     # delete a record.  Make sure that this record has a value in the sourceId.
     # ORIGINAL DATA SHOULD NEVER BE UPDATED OR DELETED.
-    def deleteFixedClickData(self, dataId, clicks_id):
+    def deleteFixedClickData(self, dataId):
         collection = self.getClickCollection()
-        deleteId = {"$and":[{ "_id" : ObjectId(dataId)}, { "clicks_id" : clicks_id}]}
+        deleteId = {"_id" : ObjectId(dataId)}
         push = {"$unset": {"fixedData": ""}}
         result = collection.update_one(deleteId, push)
         return result.modified_count
@@ -209,16 +208,16 @@ class PyKeyLogger:
     # ORIGINAL DATA SHOULD NEVER BE UPDATED OR DELETED.
     def updateFixedTimedData(self, dataId, timed_id, content, className, start, title, typeTimed):
         collection = self.getTimedCollection()
-        updateId = {"$and":[{ "_id" : ObjectId(dataId)}, { "timed_id" : timed_id}]}
+        updateId = {"_id" : ObjectId(dataId)}
         push = { "$set": {"fixedData": {"timed_id": timed_id, "content": content, "className": className,"start": start, "title": title, "type": typeTimed}}}
         result = collection.update_one(updateId, push)
         return result.modified_count
 
     # delete a record.  Make sure that this record has a value in the sourceId.
     # ORIGINAL DATA SHOULD NEVER BE UPDATED OR DELETED.
-    def deleteFixedTimedData(self, dataId, timed_id):
+    def deleteFixedTimedData(self, dataId):
         collection = self.getTimedCollection()
-        deleteId = {"$and":[{ "_id" : ObjectId(dataId)}, { "timed_id" : timed_id}]}
+        deleteId = {"_id" : ObjectId(dataId)}
         push = {"$unset": {"fixedData": ""}}
         result = collection.update_one(deleteId, push)
         return result.modified_count
