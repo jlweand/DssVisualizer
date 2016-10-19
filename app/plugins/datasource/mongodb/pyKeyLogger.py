@@ -34,7 +34,7 @@ class PyKeyLogger:
     # select data by date range of the 'start' column
     def selectKeyPressData(self, startDate, endDate):
         collection = self.getKeyPressCollection()
-        findJson = { "start": {"$gte" : datetime.strptime(startDate, Common().getDatetimeFormatString()), "$lte": datetime.strptime(endDate, Common().getDatetimeFormatString())}}
+        findJson = { "start": {"$gte" : startDate, "$lte": endDate}}
         cursor = collection.find(findJson)
         return self.fixTheDates(cursor)
 
@@ -105,7 +105,7 @@ class PyKeyLogger:
     # select data by date range of the 'start' column
     def selectClickData(self, startDate, endDate):
         collection = self.getClickCollection()
-        findJson = { "start": {"$gte" : datetime.strptime(startDate, Common().getDatetimeFormatString()), "$lte": datetime.strptime(endDate, Common().getDatetimeFormatString())}}
+        findJson = { "start": {"$gte" : startDate, "$lte": endDate}}
         cursor = collection.find(findJson)
         return self.fixTheDates(cursor)
 
@@ -178,7 +178,7 @@ class PyKeyLogger:
     # select data by date range of the 'start' column
     def selectTimedData(self, startDate, endDate):
         collection = self.getTimedCollection()
-        findJson = { "start": {"$gte" : datetime.strptime(startDate, Common().getDatetimeFormatString()), "$lte": datetime.strptime(endDate, Common().getDatetimeFormatString())}}
+        findJson = { "start": {"$gte" : startDate, "$lte": endDate}}
         cursor = collection.find(findJson)
         return self.fixTheDates(cursor)
 
