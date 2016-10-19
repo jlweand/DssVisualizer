@@ -29,6 +29,22 @@ body, html {
 	float: left;
 }
 
+#keypressData {
+    width : 95%
+}
+
+#multiExcludeData {
+    width : 95%
+}
+
+#multiIncludeData {
+    width : 95%
+}
+
+#tsharkData {
+    width : 95%
+}
+
 .clear{
 	clear: both;
 }
