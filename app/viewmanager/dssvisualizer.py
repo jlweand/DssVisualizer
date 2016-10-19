@@ -32,10 +32,10 @@ def handle(web_view,web_frame,web_resource,request,response):
 	uri = request.get_uri()
 
 	if('installDatasources' in uri or 'adminset' in uri):
-		load_uninstalled_datasources(query)
+		load_uninstalled_plugins(query,"datasource")
 
 	if('installRends' in uri or 'adminset' in uri):
-		load_uninstalled_renderers(query)
+		load_uninstalled_plugins(query,"renderer")
 
 	if not query:
 		return
@@ -44,8 +44,6 @@ def handle(web_view,web_frame,web_resource,request,response):
 		queryDict = parse_qs(query)
 		if('request' in queryDict):
 			if(queryDict['request'][0] == 'keypressData'):
-				# jsonFile = getJson("json/keypressData.json")
-				# jsonData = ujson.dumps(jsonFile)
 				startDate = queryDict['startDate'][0]
 				endDate = queryDict['endDate'][0]
 				keyData = PyKeyLogger().selectKeyPressData(startDate, endDate)
@@ -54,14 +52,8 @@ def handle(web_view,web_frame,web_resource,request,response):
 				js = "visData(%s, %s, %s);" % (keyData, clickData, timedData)
 				webKitWebView.execute_script(js)
 			elif(queryDict['request'][0] == 'pcapData'):
-				print("hello")
 				startDate = queryDict['startDate'][0]
 				endDate = queryDict['endDate'][0]
-				#actual mongodb stuff here
-				# xyFile = getJson("json/multiExclude/networkDataXY.JSON")
-				# xyData = ujson.dumps(xyFile)
-				# allFile = getJson("json/multiExclude/networkDataAll.JSON")
-				# allData = ujson.dumps(allFile)
 				multiEx = MultiExcludeThroughput().selectMultiExcludeThroughputData(startDate, endDate)
 				multiInc = MultiIncludeThroughput().selectMultiIncludeThroughputData(startDate, endDate)
 				tshark = TsharkThroughput().selectTsharkThroughputData(startDate, endDate)
@@ -70,7 +62,6 @@ def handle(web_view,web_frame,web_resource,request,response):
 				tsharkProt = TsharkProtocol().selectTsharkProtocolData(startDate, endDate)
 				js = "visPCAPData(%s, %s, %s, %s, %s, %s);" % (multiEx, multiExProt, multiInc, multiIncProt, tshark, tsharkProt)
 				webKitWebView.execute_script(js)
-			# elif(queryDict['request'][0] == 'include'):
 
 		elif('submission' in queryDict):
 			if(queryDict['submission'][0] == 'annotation'):
@@ -87,7 +78,6 @@ def handle(web_view,web_frame,web_resource,request,response):
 			if(queryDict['adminRequest'][0] == 'availablePlugins'):
 				load_available_renderers()
 		elif('adminSubmission' in queryDict):
-			print("hello")
 			if(queryDict['adminSubmission'][0] == 'pluginChanges'):
 
 				database = queryDict['database'][0]
@@ -103,51 +93,12 @@ def handle(web_view,web_frame,web_resource,request,response):
 				ConfigRenderers().setDefaultRenderer("screenshots",screenshots,scriptFile)
 
 				print ("updating plugin")
-		# elif('adminSubmit' in queryDict):
-		# 	if(queryDict['adminSubmit'])
-
-
-	# elif query == "keypressData":
-	# 	jsonData = PyKeyLogger().selectKeyPressData('2016-08-01 00:00:00', '2016-08-20 00:00:00')
-	# 	# jsonData = ujson.dumps(jsonFile)
-	# 	print(jsonData)
-	# 	js = 'visData(%s);' % jsonData
-	# 	webKitWebView.execute_script(js)
-	# else:
-	# 	queryDict = parse_qs(query)
-	# 	############################################################
-	# 	############## the annotation and data ID's ################
-	# 	############################################################
-	# 	print(queryDict['annotation'])
-	# 	print("\n")
-	# 	print(queryDict['dataID'])
-	# 	# Annotations().addAnnotation(queryDict['dataID'][0], queryDict['annotation'][0])
 	return
 
 def getJson(file):
 	with open(file) as json_data:
-	    d = ujson.load(json_data)
-	    return(d)
-
-# def load_available_datasources():
-# 	importer = DatasourceChecker("plugins/datasource/")
-# 	availableDatasources = importer.readConfigPlugins()
-# 	# for datasource in availableDatasources:
-# 	# 	print (datasource)
-# 	for datasource in availableDatasources:
-# 		createRadioElements(datasource)
-# 			#webKitWebView.execute_script(script)
-#
-# def createRadioElements(plugin):
-#
-# 	if plugin:
-# 		radio = '<input type="radio" name="plugin" id='+plugin+'value='+plugin+'>'+' '+plugin
-# 		script = "$('#dbOptions').append('"+radio+"');"
-# 	else:
-# 		script = 'document.getElementById("options").append('+datasource+') = "";'
-# 	webKitWebView.execute_script(script)
-
-
+		d = ujson.load(json_data)
+		return(d)
 
 def load_available_renderers():
 
@@ -156,65 +107,32 @@ def load_available_renderers():
 	js= "createRadioButtons(%s)" % (allFile)
 	webKitWebView.execute_script(js)
 
+def load_uninstalled_plugins(query,type):
+	folder = "plugins/renderer/"
+	tagID = "installRends"
+	if type is "datasource":
+		folder = "plugins/datasource/"
+		tagID = "installDatasources"
 
-
-def createRendRadioElements(plugin):
-
-	if plugin:
-		radio = '<input type="radio" name="plugin" id='+plugin+'value='+plugin+'>'+' '+plugin
-		script = "$('#rendOptions').append('"+radio+"');"
-	else:
-		script = 'document.getElementById("options").append('+renderer+') = "";'
-
-	webKitWebView.execute_script(script)
-
-
-def load_uninstalled_renderers(query):
-
-	importer = ImportRenderer()
+	importer = PluginImporter(folder) #diff
 	newPlugins = importer.getUninstalledPlugins()
 	if not query:
 		for plugin in newPlugins:
-			modify_uninstalled_renderers(plugin)
+			modify_uninstalled_plugin_html(plugin,tagID)
 	else:
 		importer.importPlugin(query)
-		script = 'document.getElementById("installRends").innerHTML = "";'
+		script = 'document.getElementById("'+tagID+'").innerHTML = "";'#diff
 		webKitWebView.execute_script(script)
-		load_uninstalled_renderers(None)
+		load_uninstalled_plugins(None,type)
 
-	#print (importer.getUninstalledPlugins())
-
-def modify_uninstalled_renderers(plugin):
+def modify_uninstalled_plugin_html(plugin,tagID):
 	if plugin:
 		script = 'var element = document.createElement("option");'
 		script = script + 'element.innerHTML = "' + plugin + '";'
-		script = script + 'document.getElementById("installRends").appendChild(element);'
+		script = script + 'document.getElementById("'+tagID+'").appendChild(element);'
 	else:
-		script = 'document.getElementById("installRends").innerHTML = "";'
+		script = 'document.getElementById("'+tagID+'").innerHTML = "";'
 	webKitWebView.execute_script(script)
-
-def load_uninstalled_datasources(query):
-	dsImporter = ImportDataSource()
-	newDsPlugins = dsImporter.getUninstalledPlugins()
-	if not query:
-		for plugin in newDsPlugins:
-			modify_uninstalled_datasources(plugin)
-	else:
-		dsImporter.importPlugin(query)
-		js_script = 'document.getElementById("installDatasources").innerHTML = "";'
-		webKitWebView.execute_script(js_script)
-		load_uninstalled_datasources(None)
-
-	#print (dsImporter.getUninstalledPlugins())
-
-def modify_uninstalled_datasources(plugin):
-	if plugin:
-		js_script = 'var element = document.createElement("option");'
-		js_script = js_script + 'element.innerHTML = "' + plugin + '";'
-		js_script = js_script + 'document.getElementById("installDatasources").appendChild(element);'
-	else:
-		js_script = 'document.getElementById("installDatasources").innerHTML = "";'
-	webKitWebView.execute_script(js_script)
 
 # def handle_url(request):
 # 	print(request.get('annotation'))

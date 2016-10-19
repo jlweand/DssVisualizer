@@ -5,7 +5,6 @@ class GenerateHtml:
     def getPluginFile(self):
         """Get the file where the scripts for the current active renderer plugin live."""
         plugin = ConfigReader().getRedererPluginForPyKeyLogger()
-        print(plugin)
         location = plugin["location"].replace('.', '/') + "/"
         thefile = location + plugin["scripts"]
         return thefile
