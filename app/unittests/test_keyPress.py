@@ -6,9 +6,9 @@ class PyKeyLoggerTest(unittest.TestCase):
 
     def test_monolithicTestCase(self):
         # select by date
-        jsonData = PyKeyLogger().selectKeyPressData('2016-09-01 00:00:00', '2016-09-20 00:00:00')
+        jsonData = PyKeyLogger().selectKeyPressData('2016-10-15 11:58:35', '2016-10-15 11:58:40')
         dataId = jsonData[0]["id"]
-        self.assertEqual(24, len(jsonData))
+        self.assertEqual(2, len(jsonData))
 
         # select by Id
         jsonData = PyKeyLogger().selectKeyPressDataById(dataId)
@@ -36,11 +36,11 @@ class PyKeyLoggerTest(unittest.TestCase):
         self.assertRaises(KeyError, lambda: deletedAll[0]["annotations"])
 
         # insert Fixed Data
-        jsonData = PyKeyLogger().insertFixedKeyPressData(dataId, '[New Content Added]', 'Keypresses', '2016-10-02 17:15:00')
+        jsonData = PyKeyLogger().insertFixedKeyPressData(dataId, '57edcee5231bad04bccd2c0a', '[New Content Added]', 'Keypresses', '2016-10-15 17:58:31')
         self.assertIsNotNone(jsonData)
 
         # update Fixed Data
-        jsonData = PyKeyLogger().updateFixedKeyPressData(dataId, '57edcee5231bad04bccd2c0a', '[Edited Content Added]', '2016-10-02 18:28:00')
+        jsonData = PyKeyLogger().updateFixedKeyPressData(dataId, '57edcee5231bad04bccd2c0a', '[Edited Content Added]', 'Keypresses', '2016-10-02 18:28:00')
         self.assertIsNotNone(jsonData)
 
         # delete Fixed Data
@@ -48,7 +48,7 @@ class PyKeyLoggerTest(unittest.TestCase):
         self.assertIsNotNone(jsonData)
 
         # add Annotation to Timeline
-        objectId = PyKeyLogger().addAnnotationToKeyPressTimeline('2016-08-01 10:00:00', "here's a Keypress timeline annotation")
+        objectId = PyKeyLogger().addAnnotationToKeyPressTimeline('2016-09-16 09:13:57', "here's a Keypress timeline annotation")
         addtimelineAnnotation = PyKeyLogger().selectKeyPressDataById(objectId)
         pprint(addtimelineAnnotation)
         self.assertIsNotNone(addtimelineAnnotation)

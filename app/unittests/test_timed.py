@@ -6,9 +6,9 @@ class PyKeyLoggerTest(unittest.TestCase):
 
     def test_monolithicTestCase(self):
         # select by date
-        jsonData = PyKeyLogger().selectTimedData('2016-09-01 00:00:00', '2016-09-20 00:00:00')
+        jsonData = PyKeyLogger().selectTimedData('2016-09-16 09:16:34', '2016-09-16 09:16:40')
         dataId = jsonData[0]["id"]
-        self.assertEqual(21, len(jsonData))
+        self.assertEqual(1, len(jsonData))
 
         # select by Id
         jsonData = PyKeyLogger().selectTimedDataById(dataId)
@@ -36,11 +36,11 @@ class PyKeyLoggerTest(unittest.TestCase):
         self.assertRaises(KeyError, lambda: deletedAll[0]["annotations"])
 
         # insert Fixed Data
-        jsonData = PyKeyLogger().insertFixedTimedData(dataId, '[New Content Added]', 'imgPoint', '2016-09-09 18:38:48', '2016-09-09 18:38:48', 'http://localhost/dssserver/logs/timed_screenshots/1465515528.8_screenshotTIMED_TESTING.png', 'point')
+        jsonData = PyKeyLogger().insertFixedTimedData(dataId, '57f18796231bad0be406afde', '[New Content Added]', 'imgPoint', '2016-09-16 15:16:35', 'http://localhost/dssserver/logs/timed_screenshots/1465515528.8_screenshotTIMED_TESTING.png', 'point')
         self.assertIsNotNone(jsonData)
 
         # update Fixed Data
-        jsonData = PyKeyLogger().updateFixedTimedData(dataId, '57f18796231bad0be406afde','[EDITED UNITTEST Content Added]', '2016-10-03 18:38:48','2016-10-03 18:38:48', '/usr/logger/v2/dss-logger-pluggable/plugins/collectors/pykeylogger/raw/click_images/1474038815.78_TESTING_UPDATE.png', 'point')
+        jsonData = PyKeyLogger().updateFixedTimedData(dataId, '57f18796231bad0be406afde','[EDITED UNITTEST Content Added]', 'imgPoint', '2016-10-03 18:38:48', '/usr/logger/v2/dss-logger-pluggable/plugins/collectors/pykeylogger/raw/click_images/1474038815.78_TESTING_UPDATE.png', 'point')
         self.assertIsNotNone(jsonData)
 
         # delete Fixed Data
@@ -48,7 +48,7 @@ class PyKeyLoggerTest(unittest.TestCase):
         self.assertIsNotNone(jsonData)
 
         # add Annotation to Timeline
-        objectId = PyKeyLogger().addAnnotationToTimedTimeline('2016-08-01 10:00:00', "here's a Timed timeline annotation")
+        objectId = PyKeyLogger().addAnnotationToTimedTimeline('2016-09-16 15:16:34', "here's a Timed timeline annotation")
         addtimelineAnnotation = PyKeyLogger().selectTimedDataById(objectId)
         pprint(addtimelineAnnotation)
         self.assertIsNotNone(addtimelineAnnotation)

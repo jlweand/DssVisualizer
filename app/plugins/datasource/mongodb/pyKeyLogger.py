@@ -46,25 +46,28 @@ class PyKeyLogger:
 
     # insert a new record.  This record must be tied to the original record.
     # the oldDataId will be a new 'column' called sourceId. it is of type ObjectId
-    def insertFixedKeyPressData(self, oldDataId, content, className, start):
+    def insertFixedKeyPressData(self, dataId, keypress_id, content, className, start):
+        collection = self.getKeyPressCollection()
         insertId = {"_id" : ObjectId(dataId)}
-        push = { "$addToSet": {"oldDataId": oldDataId, "content": content, "className": className,"start": start} }
+        push = { "$set": {"fixedData": {"keypress_id": keypress_id, "content": content, "className": className,"start": start}}}
         result = collection.update_one(insertId, push)
         return result.modified_count
 
     # update a previously 'fixed' record. Make sure that this record has a value in the sourceId.
     # ORIGINAL DATA SHOULD NEVER BE UPDATED OR DELETED.
-    def updateFixedKeyPressData(self, dataId, oldDataId, content, className, start):
-        updateId = {"$and":[{ "_id" : ObjectId(dataId)}, { "oldDataId" : oldDataId}]}
-        push = { "$set": {"oldDataId": oldDataId, "content": content, "className": className,"start": start} }
+    def updateFixedKeyPressData(self, dataId, keypress_id, content, className, start):
+        collection = self.getKeyPressCollection()
+        updateId = {"$and":[{ "_id" : ObjectId(dataId)}, { "keypress_id" : keypress_id}]}
+        push = { "$set": {"fixedData": {"keypress_id": keypress_id, "content": content, "className": className,"start": start}}}
         result = collection.update_one(updateId, push)
         return result.modified_count
 
     # delete a record.  Make sure that this record has a value in the sourceId.
     # ORIGINAL DATA SHOULD NEVER BE UPDATED OR DELETED.
-    def deleteFixedKeyPressData(self, dataId, oldDataId):
-        deleteId = {"$and":[{ "_id" : ObjectId(dataId)}, { "oldDataId" : oldDataId}]}
-        push = { "$set": {"oldDataId": "", "content": "", "className": "","start": ""} }
+    def deleteFixedKeyPressData(self, dataId, keypress_id):
+        collection = self.getKeyPressCollection()
+        deleteId = {"$and":[{ "_id" : ObjectId(dataId)}, { "keypress_id" : keypress_id}]}
+        push = {"$unset": {"fixedData": ""}}
         result = collection.update_one(deleteId, push)
         return result.modified_count
 
@@ -96,7 +99,8 @@ class PyKeyLogger:
         keyPress = {}
         keyPress["className"] = ""
         keyPress["content"] = ""
-        keyPress["start"] = datetime.strptime(startTime, Common().getDatetimeFormatString())
+        # keyPress["start"] = datetime.strptime(startTime, Common().getDatetimeFormatString())
+        keyPress["start"] = startTime
         keyPress["metadata"] = metadata
 
         return Annotations().addAnnotationToTimeline(collection, keyPress, annotationText)
@@ -117,25 +121,28 @@ class PyKeyLogger:
 
     # insert a new record.  This record must be tied to the original record.
     # the oldDataId will be a new 'column' called sourceId. it is of type ObjectId
-    def insertFixedClickData(self, oldDataId, content, className, start, title, typeClick):
+    def insertFixedClickData(self, dataId, clicks_id, content, className, start, title, typeClick):
+        collection = self.getClickCollection()
         insertId = {"_id" : ObjectId(dataId)}
-        push = { "$addToSet": {"oldDataId": oldDataId, "content": content, "className": className,"start": start, "title": title, "type": typeClick} }
+        push = { "$set": {"fixedData": {"clicks_id": clicks_id, "content": content, "className": className,"start": start, "title": title, "type": typeClick}}}
         result = collection.update_one(insertId, push)
         return result.modified_count
 
     # update a previously 'fixed' record. Make sure that this record has a value in the sourceId.
     # ORIGINAL DATA SHOULD NEVER BE UPDATED OR DELETED.
-    def updateFixedClickData(self, dataId, oldDataId, content, start, title, typeClick):
-        updateId = {"$and":[{ "_id" : ObjectId(dataId)}, { "oldDataId" : oldDataId}]}
-        push = {"$set": {"content": content ,"start": start, "title": title, "type": typeClick}}
-        result = collection.update_one(insertId, push)
+    def updateFixedClickData(self, dataId, clicks_id, content, className, start, title, typeClick):
+        collection = self.getClickCollection()
+        updateId = {"$and":[{ "_id" : ObjectId(dataId)}, { "clicks_id" : clicks_id}]}
+        push = { "$set": {"fixedData": {"clicks_id": clicks_id, "content": content, "className": className,"start": start, "title": title, "type": typeClick}}}
+        result = collection.update_one(updateId, push)
         return result.modified_count
 
     # delete a record.  Make sure that this record has a value in the sourceId.
     # ORIGINAL DATA SHOULD NEVER BE UPDATED OR DELETED.
-    def deleteFixedClickData(self, dataId, oldDataId):
-        deleteId = {"$and":[{ "_id" : ObjectId(dataId)}, { "oldDataId" : oldDataId}]}
-        push = { "$addToSet": {"oldDataId": "", "content": "", "className": "","start": "", "title": "", "type": ""} }
+    def deleteFixedClickData(self, dataId, clicks_id):
+        collection = self.getClickCollection()
+        deleteId = {"$and":[{ "_id" : ObjectId(dataId)}, { "clicks_id" : clicks_id}]}
+        push = {"$unset": {"fixedData": ""}}
         result = collection.update_one(deleteId, push)
         return result.modified_count
 
@@ -169,7 +176,8 @@ class PyKeyLogger:
         click["content"] = ""
         click["type"] = ""
         click["title"] = ""
-        click["start"] = datetime.strptime(startTime, Common().getDatetimeFormatString())
+        # click["start"] = datetime.strptime(startTime, Common().getDatetimeFormatString())
+        click["start"] = startTime
         click["metadata"] = metadata
 
         return Annotations().addAnnotationToTimeline(collection, click, annotationText)
@@ -190,25 +198,28 @@ class PyKeyLogger:
 
     # insert a new record.  This record must be tied to the original record.
     # the oldDataId will be a new 'column' called sourceId. it is of type ObjectId
-    def insertFixedTimedData(self, oldDataId, content, className, start, title, typeTimed):
+    def insertFixedTimedData(self, dataId, timed_id, content, className, start, title, typeTimed):
+        collection = self.getTimedCollection()
         insertId = {"_id" : ObjectId(dataId)}
-        push = { "$addToSet": {"oldDataId": oldDataId, "content": content, "className": className,"start": start, "title": title, "type": typeClick} }
+        push = { "$set": {"fixedData": {"timed_id": timed_id, "content": content, "className": className,"start": start, "title": title, "type": typeTimed}}}
         result = collection.update_one(insertId, push)
         return result.modified_count
 
     # update a previously 'fixed' record. Make sure that this record has a value in the sourceId.
     # ORIGINAL DATA SHOULD NEVER BE UPDATED OR DELETED.
-    def updateFixedTimedData(self, dataId, oldDataId, content, start, title, typeTimed):
-        updateId = {"$and":[{ "_id" : ObjectId(dataId)}, { "oldDataId" : oldDataId}]}
-        push = {"$set": {"content": content ,"start": start, "title": title, "type": typeClick}}
-        result = collection.update_one(insertId, push)
+    def updateFixedTimedData(self, dataId, timed_id, content, className, start, title, typeTimed):
+        collection = self.getTimedCollection()
+        updateId = {"$and":[{ "_id" : ObjectId(dataId)}, { "timed_id" : timed_id}]}
+        push = { "$set": {"fixedData": {"timed_id": timed_id, "content": content, "className": className,"start": start, "title": title, "type": typeTimed}}}
+        result = collection.update_one(updateId, push)
         return result.modified_count
 
     # delete a record.  Make sure that this record has a value in the sourceId.
     # ORIGINAL DATA SHOULD NEVER BE UPDATED OR DELETED.
-    def deleteFixedTimedData(self, dataId, oldDataId):
-        deleteId = {"$and":[{ "_id" : ObjectId(dataId)}, { "oldDataId" : oldDataId}]}
-        push = { "$addToSet": {"oldDataId": "", "content": "", "className": "","start": "", "title": "", "type": ""} }
+    def deleteFixedTimedData(self, dataId, timed_id):
+        collection = self.getTimedCollection()
+        deleteId = {"$and":[{ "_id" : ObjectId(dataId)}, { "timed_id" : timed_id}]}
+        push = {"$unset": {"fixedData": ""}}
         result = collection.update_one(deleteId, push)
         return result.modified_count
 
@@ -242,7 +253,8 @@ class PyKeyLogger:
         timed["content"] = ""
         timed["type"] = ""
         timed["title"] = ""
-        timed["start"] = datetime.strptime(startTime, Common().getDatetimeFormatString())
+        # timed["start"] = datetime.strptime(startTime, Common().getDatetimeFormatString())
+        timed["start"] = startTime
         timed["metadata"] = metadata
 
         return Annotations().addAnnotationToTimeline(collection, timed, annotationText)
@@ -253,6 +265,6 @@ class PyKeyLogger:
         for obj in objects:
             obj["id"] = obj["_id"]["$oid"]
             obj["start"] = Common().formatEpochDatetime(obj["start"]["$date"])
-            # obj["metadata"]["importDate"] = Common().formatEpochDatetime(obj["metadata"]["importDate"]["$date"])
+            obj["metadata"]["importDate"] = Common().formatEpochDatetime(obj["metadata"]["importDate"]["$date"])
 
         return objects
