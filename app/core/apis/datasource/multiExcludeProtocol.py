@@ -39,7 +39,7 @@ class MultiExcludeProtocol:
         return jsonData
 
 
-    def insertFixedMultiExcludeProtocolData(self, dataId, oldDataId, content, className, title, start):
+    def insertFixedMultiExcludeProtocolData(self, dataId, oldDataId, content, className, title, startDate):
         """Override: Inserts a fixedData attribute.
 
         :param dataId: The key of the original data
@@ -55,7 +55,7 @@ class MultiExcludeProtocol:
         return result
 
 
-    def updateFixedMultiExcludeProtocolData(self, dataId, oldDataId, content, className, title, start):
+    def updateFixedMultiExcludeProtocolData(self, dataId, oldDataId, content, className, title, startDate):
         """Override: Updates the fixedData attribute.
 
         :param dataId: The key of the original data
@@ -138,11 +138,11 @@ class MultiExcludeProtocol:
 
 
     # add an annotation to the timeline, not a datapoint
-    def addAnnotationToMultiExcludeProtocolTimeline(self, startTime, annotationText):
+    def addAnnotationToMultiExcludeProtocolTimeline(self, startDate, annotationText):
         """Override: Ands an annotation to the timeline (not a data point)
 
-        :param startTime: The datetime to add the annotation to
-        :type startTime: datetime
+        :param startDate: The datetime to add the annotation to
+        :type startDate: datetime
         :param annotationText: The annotation text to add.
         :type annotationText: str
         :returns: The modified count.

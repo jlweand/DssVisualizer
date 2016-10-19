@@ -17,7 +17,6 @@ class MultiIncludeProtocol:
     # select data by date range of the 'start' column
     def selectMultiIncludeProtocolData(self, startDate, endDate):
         collection = self.getMultiIncludeProtocolCollection()
-        #findJson = {"start": {"$gte": datetime.strptime(startDate, Common().getDatetimeFormatString()), "$lt": datetime.strptime(endDate, Common().getDatetimeFormatString())}}
         findJson = { "start": {"$gte" : startDate, "$lte": endDate}}
         cursor = collection.find(findJson)
         return self.fixTheData(cursor)
@@ -29,18 +28,18 @@ class MultiIncludeProtocol:
         return self.fixTheData(cursor)
 
     # add a fixedData record to this data point
-    def insertFixedMultiIncludeProtocolData(self, dataId, oldDataId, content, className, title, startDate):
+    def insertFixedMultiIncludeProtocolData(self, dataId, traffic_all_id, content, className, title, startDate):
         collection = self.getMultiIncludeProtocolCollection()
         insertId = {"_id": ObjectId(dataId)}
-        insertText = {"$set": {"id": oldDataId, "content": content , "className": className, "title": title, "start": startDate}}
+        insertText = {"$set": {"fixedData": {"traffic_all_id": traffic_all_id, "content": content , "className": className, "title": title, "start": startDate}}}
         result = collection.update_one(insertId, insertText)
         return result.modified_count
 
     # update a previously 'fixed' record.
-    def updateFixedMultiIncludeProtocolData(self, dataId, oldDataId, content, className, title, startDate):
+    def updateFixedMultiIncludeProtocolData(self, dataId, traffic_all_id, content, className, title, startDate):
         collection = self.getMultiIncludeProtocolCollection()
         updateId = {"_id" : ObjectId(dataId)}
-        updateText = {"$set": {"id": oldDataId, "content": content , "className": className, "title": title, "start": startDate}}
+        updateText = {"$set": {"fixedData": {"traffic_all_id": traffic_all_id, "content": content , "className": className, "title": title, "start": startDate}}}
         result = collection.update_one(updateId, updateText)
         return result.modified_count
 
@@ -48,7 +47,7 @@ class MultiIncludeProtocol:
     def deleteFixedMultiIncludeProtocolData(self, dataId):
         collection = self.getMultiIncludeProtocolCollection()
         deleteId = {"_id" : ObjectId(dataId)}
-        deleteText = {"$unset": {"id": "", "content": "", "className": "", "title": "", "start": ""}}
+        deleteText = {"$unset": {"fixedData": ""}}
         result = collection.update_one(deleteId, deleteText)
         return result.modified_count
 
@@ -82,7 +81,7 @@ class MultiIncludeProtocol:
         multiInclude["content"] = ""
         multiInclude["type"] = ""
         multiInclude["title"] = ""
-        multiInclude["start"] = datetime.strptime(startTime, Common().getDatetimeFormatString())
+        multiInclude["start"] = startTime
         multiInclude["metadata"] = metadata
 
         return Annotations().addAnnotationToTimeline(collection, multiInclude, annotationText)

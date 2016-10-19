@@ -1,12 +1,13 @@
 import unittest
 from core.apis.datasource.multiExcludeProtocol import MultiExcludeProtocol
-
+from pprint import pprint
 
 class MultiExcludeProtocolTest(unittest.TestCase):
 
     def test_monolithicTestCase(self):
         # select by date
-        jsonData = MultiExcludeProtocol().selectMultiExcludeProtocolData('2016-10-18 18:27:20', '2016-10-18 18:27:25')
+        jsonData = MultiExcludeProtocol().selectMultiExcludeProtocolData('2016-10-15 11:59:27', '2016-10-15 11:59:27')
+        pprint(jsonData)
         dataId = jsonData[0]["id"]
         self.assertEqual(1, len(jsonData))
 
@@ -35,11 +36,11 @@ class MultiExcludeProtocolTest(unittest.TestCase):
         self.assertRaises(KeyError, lambda: deletedAll[0]["annotations"])
 
         # insert Fixed MultiExcludeProtocol Data
-        modifiedCount = MultiExcludeProtocol().insertFixedMultiExcludeProtocolData(dataId, '57f18727231bad12ecba99e4', '1 p/s', 'traffic', 'eth:ethertype:arp\neth:ethertype:ip:udp:dns\n', '2016-17-02 18:28:00')
+        modifiedCount = MultiExcludeProtocol().insertFixedMultiExcludeProtocolData(dataId, '55555', '1 p/s', 'traffic', 'eth:ethertype:arp\neth:ethertype:ip:udp:dns\n', '2016-12-02 18:28:00')
         self.assertEqual(1, modifiedCount)
 
         # update Fixed MultiExcludeProtocol Data
-        modifiedCount = MultiExcludeProtocol().updateFixedMultiExcludeProtocolData(dataId, '57f18727231bad12ecba99e4', '2 p/s', 'traffic', 'eth:ethertype:arp\neth:ethertype:ip:udp:dns\n', '2016-10-02 18:28:00')
+        modifiedCount = MultiExcludeProtocol().updateFixedMultiExcludeProtocolData(dataId, '7777', '2 p/s', 'traffic', 'eth:ethertype:arp\neth:ethertype:ip:udp:dns\n', '2016-10-02 18:28:00')
         self.assertEqual(1, modifiedCount)
 
         # delete Fixed MultiExcludeProtocol Data
@@ -48,8 +49,9 @@ class MultiExcludeProtocolTest(unittest.TestCase):
 
         # add Annotation To MultiExcludeProtocol Timeline
         objectId = MultiExcludeProtocol().addAnnotationToMultiExcludeProtocolTimeline('2016-08-01 10:00:00', "here's a timeline annotation")
-        changedAnn = MultiExcludeProtocol().selectMultiExcludeProtocolDataById(objectId)
-        self.assertIsNotNone(changedAnn)
+        addtimelineAnnotation = MultiExcludeProtocol().selectMultiExcludeProtocolDataById(objectId)
+        pprint(addtimelineAnnotation)
+        self.assertIsNotNone(addtimelineAnnotation)
 
 
 if __name__ == '__main__':
