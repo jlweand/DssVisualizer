@@ -7,7 +7,9 @@ from urllib.parse import parse_qs
 
 # Only use files from core.  DO NOT use files from plugins.
 from core.apis.renderer.generateHtml import GenerateHtml
-from core.apis.datasource.pyKeyLogger import PyKeyLogger
+from core.apis.datasource.pyClick import PyClick
+from core.apis.datasource.pyKeyPress import PyKeyPress
+from core.apis.datasource.pyTimed import PyTimed
 from core.apis.renderer.pluginImporter import PluginImporter
 from core.config.configDatasources import ConfigDatasources
 from core.config.configRenderers import ConfigRenderers
@@ -46,9 +48,9 @@ def handle(web_view,web_frame,web_resource,request,response):
 			if(queryDict['request'][0] == 'keypressData'):
 				startDate = queryDict['startDate'][0]
 				endDate = queryDict['endDate'][0]
-				keyData = PyKeyLogger().selectKeyPressData(startDate, endDate)
-				clickData = PyKeyLogger().selectClickData(startDate, endDate)
-				timedData = PyKeyLogger().selectTimedData(startDate, endDate)
+				keyData = PyKeyPress().selectKeyPressData(startDate, endDate)
+				clickData = PyClick().selectClickData(startDate, endDate)
+				timedData = PyTimed().selectTimedData(startDate, endDate)
 				js = "visData(%s, %s, %s);" % (keyData, clickData, timedData)
 				webKitWebView.execute_script(js)
 			elif(queryDict['request'][0] == 'pcapData'):
@@ -69,11 +71,11 @@ def handle(web_view,web_frame,web_resource,request,response):
 				itemType = queryDict['type'][0]
 				annotation = queryDict['annotation'][0]
 				if(itemType == 'keypress'):
-					PyKeyLogger().addAnnotationKeyPress(itemID, annotation)
+					PyKeyPress().addAnnotationKeyPress(itemID, annotation)
 				elif(itemType == 'click'):
-					PyKeyLogger().addAnnotationClick(itemID, annotation)
+					PyClick().addAnnotationClick(itemID, annotation)
 				elif(itemType == 'timed'):
-					PyKeyLogger().addAnnotationTimed(itemID, annotation)
+					PyTimed().addAnnotationTimed(itemID, annotation)
 		elif('adminRequest' in queryDict):
 			if(queryDict['adminRequest'][0] == 'availablePlugins'):
 				load_available_renderers()

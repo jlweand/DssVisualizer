@@ -1,6 +1,6 @@
 import unittest
 from pprint import pprint
-from plugins.datasource.mongodb.pyKeyLogger import PyKeyLogger
+from plugins.datasource.mongodb.pyKeyPress import PyKeyLogger
 from plugins.datasource.mongodb.multiExcludeThroughput import MultiExcludeThroughput
 from plugins.datasource.mongodb.multiIncludeThroughput import MultiIncludeThroughput
 from plugins.datasource.mongodb.tsharkThroughput import TsharkThroughput
