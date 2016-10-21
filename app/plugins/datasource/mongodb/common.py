@@ -15,7 +15,8 @@ class Common:
         :type epoch: long
         :returns: UTC ISO_8601 formatted date
         """
-        return datetime.fromtimestamp(epoch / 1e3).isoformat()
+        stringTime =  datetime.fromtimestamp(epoch / 1e3).isoformat()
+        return stringTime.replace('T', ' ')
 
     def getDatetimeFormatString(self):
         """Returns the string of how we want to format dates
