@@ -1,6 +1,8 @@
 import unittest
 from pprint import pprint
-from plugins.datasource.mongodb.pyKeyPress import PyKeyLogger
+from plugins.datasource.mongodb.pyClick import PyClick
+from plugins.datasource.mongodb.pyKeyPress import PyKeyPress
+from plugins.datasource.mongodb.pyTimed import PyTimed
 from plugins.datasource.mongodb.multiExcludeThroughput import MultiExcludeThroughput
 from plugins.datasource.mongodb.multiIncludeThroughput import MultiIncludeThroughput
 from plugins.datasource.mongodb.tsharkThroughput import TsharkThroughput
@@ -14,42 +16,45 @@ class CleanupDatabases(unittest.TestCase):
 
     def test_cleanEverythingUp(self):
         rightNow = "2016-10-10 10:10:10"
+        techName = "Alex"
+        eventName = "Super Summer Event"
+        comments = "here are some comments"
 
-        keypress = PyKeyLogger().getKeyPressCollection()
+        keypress = PyKeyPress().getKeyPressCollection()
         keypress.delete_many({})
-        DataImportConfig().importKeypressData("Alex", "Super summer Event", "here are some comments", rightNow)
+        DataImportConfig().importKeypressData(techName, eventName, comments, rightNow)
 
-        click = PyKeyLogger().getClickCollection()
+        click = PyClick().getClickCollection()
         click.delete_many({})
-        DataImportConfig().importClick("Alex", "Super summer Event", "here are some comments", rightNow)
+        DataImportConfig().importClick(techName, eventName, comments, rightNow, False, "")
 
-        timed = PyKeyLogger().getTimedCollection()
+        timed = PyTimed().getTimedCollection()
         timed.delete_many({})
-        DataImportConfig().importTimed("Alex", "Super summer Event", "here are some comments", rightNow)
+        DataImportConfig().importTimed(techName, eventName, comments, rightNow, False, "")
 
         multiExcludeThroughput = MultiExcludeThroughput().getMultiExcludeThroughputCollection()
         multiExcludeThroughput.delete_many({})
-        DataImportConfig().importMultiExcludeThroughput("Alex", "Super summer Event", "here are some comments", rightNow)
+        DataImportConfig().importMultiExcludeThroughput(techName, eventName, comments, rightNow)
 
         multiIncludeThroughput = MultiIncludeThroughput().getMultiIncludeThroughputCollection()
         multiIncludeThroughput.delete_many({})
-        DataImportConfig().importMultiIncludeThroughput("Alex", "Super summer Event", "here are some comments", rightNow)
+        DataImportConfig().importMultiIncludeThroughput(techName, eventName, comments, rightNow)
 
         tsharkThroughput = TsharkThroughput().getTsharkThroughputCollection()
         tsharkThroughput.delete_many({})
-        DataImportConfig().importTsharkThroughput("Alex", "Super summer Event", "here are some comments", rightNow)
+        DataImportConfig().importTsharkThroughput(techName, eventName, comments, rightNow)
 
         multiExcludeProtocol = MultiExcludeProtocol().getMultiExcludeProtocolCollection()
         multiExcludeProtocol.delete_many({})
-        DataImportConfig().importMultiExcludeProtocol("Alex", "Super summer Event", "here are some comments", rightNow)
+        DataImportConfig().importMultiExcludeProtocol(techName, eventName, comments, rightNow)
 
         multiIncludeProtocol = MultiIncludeProtocol().getMultiIncludeProtocolCollection()
         multiIncludeProtocol.delete_many({})
-        DataImportConfig().importMultiIncludeProtocol("Alex", "Super summer Event", "here are some comments", rightNow)
+        DataImportConfig().importMultiIncludeProtocol(techName, eventName, comments, rightNow)
 
         tsharkProtocol = TsharkProtocol().getTsharkProtocolCollection()
         tsharkProtocol.delete_many({})
-        DataImportConfig().importTsharkProtocol("Alex", "Super summer Event", "here are some comments", rightNow)
+        DataImportConfig().importTsharkProtocol(techName, eventName, comments, rightNow)
 
         jsonData = TsharkThroughput().selectTsharkThroughputData(Common().formatDateStringToUTC('2016-10-15 11:57:19'), Common().formatDateStringToUTC('2016-10-15 11:57:19'))
         pprint(jsonData)
