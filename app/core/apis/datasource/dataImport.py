@@ -3,18 +3,18 @@ from core.config.configReader import ConfigReader
 class DataImport:
 
     def importKeypressData(self, jsonData):
-        pyKeyLogger = ConfigReader().getInstanceOfDatasourcePlugin("PyKeyLogger")
-        insertedCount = pyKeyLogger.importKeypressData(jsonData)
+        pyKeyPress = ConfigReader().getInstanceOfDatasourcePlugin("PyKeyPress")
+        insertedCount = pyKeyPress.importKeypressData(jsonData)
         return insertedCount
 
     def importClick(self, jsonData):
-        pyKeyLogger = ConfigReader().getInstanceOfDatasourcePlugin("PyKeyLogger")
-        insertedCount = pyKeyLogger.importClick(jsonData)
+        pyClick = ConfigReader().getInstanceOfDatasourcePlugin("PyClick")
+        insertedCount = pyClick.importClick(jsonData)
         return insertedCount
 
     def importTimed(self, jsonData):
-        pyKeyLogger = ConfigReader().getInstanceOfDatasourcePlugin("PyKeyLogger")
-        insertedCount = pyKeyLogger.importTimed(jsonData)
+        pyTimed = ConfigReader().getInstanceOfDatasourcePlugin("PyTimed")
+        insertedCount = pyTimed.importTimed(jsonData)
         return insertedCount
 
     def importTsharkThroughput(self, jsonData):

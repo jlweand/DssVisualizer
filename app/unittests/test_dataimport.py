@@ -14,12 +14,12 @@ class DataImportTest(unittest.TestCase):
         self.assertEqual(size, 71)
 
     def test_2importClick(self):
-        size = DataImportConfig().importClick(self.techName, self.eventName, self.comments, self.nowString, True, "abcd")
+        size = DataImportConfig().importClick(self.techName, self.eventName, self.comments, self.nowString, False, "C:\\temp\images\\click")
         self.assertEqual(size, 29)
 
     def test_3importTimed(self):
-        size = DataImportConfig().importTimed(self.techName, self.eventName, self.comments, self.nowString, True, "abcd")
-        self.assertEqual(size, 34)
+        size = DataImportConfig().importTimed(self.techName, self.eventName, self.comments, self.nowString, False, "C:\\temp\images\\timed")
+        self.assertEqual(size, 48)
 
     def test_4importMultiExcludeThroughput(self):
         size = DataImportConfig().importMultiExcludeThroughput(self.techName, self.eventName, self.comments, self.nowString)
@@ -44,6 +44,9 @@ class DataImportTest(unittest.TestCase):
     def test_9importTsharkProtocol(self):
         size = DataImportConfig().importTsharkProtocol(self.techName, self.eventName, self.comments, self.nowString)
         self.assertEqual(size, 371)
+
+    # def test_01ImportAllFiles(self):
+    #     DataImportConfig().importAllDataFromFiles("C:\\temp\json", self.techName, self.eventName, self.comments, self.nowString)
 
 
 if __name__ == '__main__':

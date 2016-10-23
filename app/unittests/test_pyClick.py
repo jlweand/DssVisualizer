@@ -6,7 +6,7 @@ class PyKeyLoggerTest(unittest.TestCase):
 
     def test_monolithicTestCase(self):
         # select by date
-        jsonData = PyClick().selectClickData('2016-09-11 11:37:14', '2016-09-11 11:37:20')
+        jsonData = PyClick().selectClickData('2016-10-18 18:25:34', '2016-10-18 18:25:34')
         dataId = jsonData[0]["id"]
         self.assertEqual(1, len(jsonData))
 

@@ -1,0 +1,1 @@
+This is a placeholder for where the images will live when imported for click data

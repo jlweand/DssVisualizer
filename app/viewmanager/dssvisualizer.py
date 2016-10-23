@@ -2,6 +2,7 @@ import gi
 import logging
 import os
 import ujson
+import subprocess
 from urllib.parse import parse_qs
 # from core.apis.renderer.annotations import Annotations
 
@@ -138,6 +139,9 @@ def modify_uninstalled_plugin_html(plugin,tagID):
 
 # def handle_url(request):
 # 	print(request.get('annotation'))
+
+#subprocess.call(["mongod", "--repair"], shell=True)
+#subprocess.Popen(["mongod"], shell=True)
 
 gtkWindow = Gtk.Window()
 webKitWebView = WebKit.WebView()
