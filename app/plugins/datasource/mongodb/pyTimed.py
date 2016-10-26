@@ -13,9 +13,9 @@ class PyTimed:
         return len(result.inserted_ids)
 
     # select data by date range of the 'start' column
-    def selectTimedData(self, startDate, endDate):
+    def selectTimedData(self, startDate, endDate, techName, eventName):
         collection = self.getTimedCollection()
-        findJson = { "start": {"$gte" : startDate, "$lte": endDate}}
+        findJson = Common().updateTechAndEventNames(startDate, endDate, techName, eventName, True, False)
         cursor = collection.find(findJson)
         return self.fixTheDates(cursor)
 

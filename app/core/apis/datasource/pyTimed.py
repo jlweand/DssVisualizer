@@ -11,7 +11,7 @@ class PyTimed:
         """Internal method to get an instance of the active plugin"""
         return ConfigReader().getInstanceOfDatasourcePlugin("PyTimed")
 
-    def selectTimedData(self, startDate, endDate):
+    def selectTimedData(self, startDate, endDate, techName, eventName):
         """Override: Select the timed data by start and end date. The input here will be strings, datetimes will be passed to the plugin.
 
         :param startDate: The a string value of the local datetime to begin search on
@@ -21,7 +21,7 @@ class PyTimed:
         :returns: JSON object
         """
         pyTimed = self.getPlugin()
-        jsonData = pyTimed.selectTimedData(Common().formatDateStringToUTC(startDate), Common().formatDateStringToUTC(endDate))
+        jsonData = pyTimed.selectTimedData(Common().formatDateStringToUTC(startDate), Common().formatDateStringToUTC(endDate), techName, eventName)
         return jsonData
 
     def selectTimedDataById(self, dataId):

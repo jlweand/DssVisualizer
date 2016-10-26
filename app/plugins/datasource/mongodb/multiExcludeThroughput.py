@@ -13,9 +13,9 @@ class MultiExcludeThroughput:
         return len(result.inserted_ids)
 
     # select data by date range of the 'start' column
-    def selectMultiExcludeThroughputData(self, startDate, endDate):
+    def selectMultiExcludeThroughputData(self, startDate, endDate, techName, eventName):
         collection = self.getMultiExcludeThroughputCollection()
-        findJson = { "x": {"$gte" : startDate, "$lte": endDate}}
+        findJson = Common().updateTechAndEventNames(startDate, endDate,techName, eventName, False, True)
         cursor = collection.find(findJson)
         return self.fixTheData(cursor)
 

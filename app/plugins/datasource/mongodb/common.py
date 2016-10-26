@@ -4,6 +4,7 @@ from bson.json_util import dumps
 import ujson
 import pytz
 from tzlocal import get_localzone
+from core.apis.datasource.common import Common
 
 class Common:
     """Here lies some common functions so they don't have to continue to be written over and over again."""
@@ -64,3 +65,32 @@ class Common:
         metadata["importDate"] = datimeNow
 
         return metadata
+
+    def updateTechAndEventNames(self, startDate, endDate, techName, eventName, hasStartDate, hasXdate):
+        """Updates tech name and event name depending on what is found in the database
+
+        :param starDate: Start of date range
+        :type startDate: datetime
+        :param endDate: End of date range
+        :type endDate: datetime
+        :param techName: Name of technician
+        :type techName: string
+        :param eventName: Name of event where data was gathered
+        :type eventName: string
+        :param hasStartDate: If json file has start field
+        :type hasStartDate: boolean
+        :param hasXdate: If json file has x field instead of start field
+        :type hasXdate: boolean
+        :returns: mongoDB command with updated variables
+        """
+        if hasStartDate:
+            findJson = {"start": {"$gte" : startDate, "$lte": endDate}}
+
+        if hasXdate:
+            findJson = {"x": {"$gte" : startDate, "$lte": endDate}}
+
+        if len(techName) > 0 :
+            findJson["metadata.techName"] = techName
+        if len(eventName) > 0:
+            findJson["metadata.eventName"] = eventName
+        return findJson

@@ -13,9 +13,9 @@ class TsharkThroughput:
         return len(result.inserted_ids)
 
     # select data by date range of the 'start' column
-    def selectTsharkThroughputData(self, startDate, endDate):
+    def selectTsharkThroughputData(self, startDate, endDate, techName, eventName):
         collection = self.getTsharkThroughputCollection()
-        findJson = { "x": {"$gte" : startDate, "$lte": endDate}}
+        findJson = Common().updateTechAndEventNames(startDate, endDate, techName, eventName, False, True)
         cursor = collection.find(findJson)
         return self.fixTheData(cursor)
 

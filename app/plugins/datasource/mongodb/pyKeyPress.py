@@ -13,9 +13,9 @@ class PyKeyPress:
         return len(result.inserted_ids)
 
     # select data by date range of the 'start' column
-    def selectKeyPressData(self, startDate, endDate):
+    def selectKeyPressData(self, startDate, endDate, techName, eventName):
         collection = self.getKeyPressCollection()
-        findJson = { "start": {"$gte" : startDate, "$lte": endDate}}
+        findJson = Common().updateTechAndEventNames(startDate, endDate, techName, eventName, True, False)
         cursor = collection.find(findJson)
         return self.fixTheDates(cursor)
 

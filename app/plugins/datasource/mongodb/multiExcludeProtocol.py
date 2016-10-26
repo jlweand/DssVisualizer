@@ -15,9 +15,9 @@ class MultiExcludeProtocol:
         return len(result.inserted_ids)
 
     # select data by date range of the 'start' column
-    def selectMultiExcludeProtocolData(self, startDate, endDate):
+    def selectMultiExcludeProtocolData(self, startDate, endDate, techName, eventName):#add two parameters
         collection = self.getMultiExcludeProtocolCollection()
-        findJson = { "start": {"$gte" : startDate, "$lte": endDate}}
+        findJson= Common().updateTechAndEventNames(startDate, endDate, techName, eventName, True, False)
         cursor = collection.find(findJson)
         return self.fixTheData(cursor)
 
@@ -94,4 +94,3 @@ class MultiExcludeProtocol:
             obj["metadata"]["importDate"] = Common().formatEpochDatetime(obj["metadata"]["importDate"]["$date"])
 
         return objects
-

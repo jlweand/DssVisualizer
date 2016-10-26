@@ -12,17 +12,21 @@ class MultiIncludeThroughput:
         return ConfigReader().getInstanceOfDatasourcePlugin("MultiIncludeThroughput")
 
 
-    def selectMultiIncludeThroughputData(self, startDate, endDate):
+    def selectMultiIncludeThroughputData(self, startDate, endDate, techName, eventName):
         """Override: Select the timed data by start and end date. The input here will be strings, datetimes will be passed to the plugin.
 
         :param startDate: The a string value of the local datetime to begin search on
         :type startDate: str
         :param endDate: The a string value of the local datetime to end search on
         :type endDate: str
+        :param techName: The technician name to return data
+        :type: str
+        :param: eventName: The name of the event to return data
+        :type: str
         :returns: JSON object
         """
         multiIncludePlugin = self.getPlugin()
-        jsonData = multiIncludePlugin.selectMultiIncludeThroughputData(Common().formatDateStringToUTC(startDate), Common().formatDateStringToUTC(endDate))
+        jsonData = multiIncludePlugin.selectMultiIncludeThroughputData(Common().formatDateStringToUTC(startDate), Common().formatDateStringToUTC(endDate), techName, eventName)
         return jsonData
 
 

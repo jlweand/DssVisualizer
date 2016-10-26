@@ -13,9 +13,9 @@ class PyClick:
         return len(result.inserted_ids)
 
     # select data by date range of the 'start' column
-    def selectClickData(self, startDate, endDate):
+    def selectClickData(self, startDate, endDate, techName, eventName):
         collection = self.getClickCollection()
-        findJson = { "start": {"$gte" : startDate, "$lte": endDate}}
+        findJson = Common().updateTechAndEventNames(startDate, endDate, techName, eventName, True, False)
         cursor = collection.find(findJson)
         return self.fixTheDates(cursor)
 

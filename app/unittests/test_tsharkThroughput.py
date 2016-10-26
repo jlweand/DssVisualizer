@@ -6,13 +6,25 @@ class TsharkThroughputTest(unittest.TestCase):
 
     def test_monolithicTestCase(self):
         # select by date
-        jsonData = TsharkThroughput().selectTsharkThroughputData('2016-10-15 11:57:19', '2016-10-15 11:57:19')
+        jsonData = TsharkThroughput().selectTsharkThroughputData('2016-10-18 18:29:15', '2016-10-18 18:29:15', "", "")
         pprint(jsonData)
         dataId = jsonData[0]["id"]
         self.assertEqual(1, len(jsonData))
 
         # select by Id
         jsonData = TsharkThroughput().selectTsharkThroughputDataById(dataId)
+        self.assertEqual(1, len(jsonData))
+
+        #select by Tech name
+        jsonData = TsharkThroughput().selectTsharkThroughputData('2015-10-29 04:22:25', '2015-10-29 04:22:25', "Alex", "")
+        self.assertEqual(1, len(jsonData))
+
+        #select by event name
+        jsonData = TsharkThroughput().selectTsharkThroughputData('2015-10-29 04:22:25', '2015-10-29 04:22:25', "", "Super Summer Event")
+        self.assertEqual(1, len(jsonData))
+
+        #select by tech name AND event name
+        jsonData = TsharkThroughput().selectTsharkThroughputData('2015-10-29 04:22:25', '2015-10-29 04:22:25', "Alex", "Super Summer Event")
         self.assertEqual(1, len(jsonData))
 
         # test Annotations

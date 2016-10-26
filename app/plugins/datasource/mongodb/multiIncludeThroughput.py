@@ -13,9 +13,9 @@ class MultiIncludeThroughput:
         return len(result.inserted_ids)
 
     # select data by date range of the 'start' column
-    def selectMultiIncludeThroughputData(self, startDate, endDate):
+    def selectMultiIncludeThroughputData(self, startDate, endDate, techName, eventName):
         collection = self.getMultiIncludeThroughputCollection()
-        findJson = { "x": {"$gte" : startDate, "$lte": endDate}}
+        findJson = Common().updateTechAndEventNames(startDate, endDate, techName, eventName, False, True)
         cursor = collection.find(findJson)
         return self.fixTheData(cursor)
 

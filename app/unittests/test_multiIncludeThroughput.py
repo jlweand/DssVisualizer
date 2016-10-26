@@ -6,13 +6,25 @@ class MultiIncludeThroughputTest(unittest.TestCase):
 
     def test_monolithicTestCase(self):
         # select by date
-        jsonData = MultiIncludeThroughput().selectMultiIncludeThroughputData('2016-10-15 11:57:19', '2016-10-15 11:57:19')
+        jsonData = MultiIncludeThroughput().selectMultiIncludeThroughputData('2016-10-15 11:57:19', '2016-10-15 11:57:19', "", "")
         pprint(jsonData)
         dataId = jsonData[0]["id"]
         self.assertEqual(1, len(jsonData))
 
         # select by Id
         jsonData = MultiIncludeThroughput().selectMultiIncludeThroughputDataById(dataId)
+        self.assertEqual(1, len(jsonData))
+
+        #select by Tech name
+        jsonData = MultiIncludeThroughput().selectMultiIncludeThroughputData('2016-10-15 11:59:27', '2016-10-15 11:59:27', "Alex", "")
+        self.assertEqual(1, len(jsonData))
+        #select by event name
+
+        jsonData = MultiIncludeThroughput().selectMultiIncludeThroughputData('2016-10-15 11:59:27', '2016-10-15 11:59:27', "", "Super Summer Event")
+        self.assertEqual(1, len(jsonData))
+
+        #select by tech name AND event name
+        jsonData = MultiIncludeThroughput().selectMultiIncludeThroughputData('2016-10-15 11:59:27', '2016-10-15 11:59:27', "Alex", "Super Summer Event")
         self.assertEqual(1, len(jsonData))
 
         # test Annotations

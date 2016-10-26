@@ -6,13 +6,25 @@ class MultiExcludeProtocolTest(unittest.TestCase):
 
     def test_monolithicTestCase(self):
         # select by date
-        jsonData = MultiExcludeProtocol().selectMultiExcludeProtocolData('2016-10-15 11:59:27', '2016-10-15 11:59:27')
+        jsonData = MultiExcludeProtocol().selectMultiExcludeProtocolData('2016-10-15 11:59:27', '2016-10-15 11:59:27', "","")
         pprint(jsonData)
         dataId = jsonData[0]["id"]
         self.assertEqual(1, len(jsonData))
 
         # select by Id
         jsonData = MultiExcludeProtocol().selectMultiExcludeProtocolDataById(dataId)
+        self.assertEqual(1, len(jsonData))
+
+        #select by Tech name
+        jsonData = MultiExcludeProtocol().selectMultiExcludeProtocolData('2016-10-15 11:59:27', '2016-10-15 11:59:27', "Alex", "")
+        self.assertEqual(1, len(jsonData))
+
+        #select by event name
+        jsonData = MultiExcludeProtocol().selectMultiExcludeProtocolData('2016-10-15 11:59:27', '2016-10-15 11:59:27', "", "Super Summer Event")
+        self.assertEqual(1, len(jsonData))
+
+        #select by tech name AND event name
+        jsonData = MultiExcludeProtocol().selectMultiExcludeProtocolData('2016-10-15 11:59:27', '2016-10-15 11:59:27', "Alex", "Super Summer Event")
         self.assertEqual(1, len(jsonData))
 
         # test Annotations
@@ -50,11 +62,11 @@ class MultiExcludeProtocolTest(unittest.TestCase):
         # add Annotation To MultiExcludeProtocol Timeline
         objectId = MultiExcludeProtocol().addAnnotationToMultiExcludeProtocolTimeline('2016-08-01 10:00:00', "here's a timeline annotation")
         addtimelineAnnotation = MultiExcludeProtocol().selectMultiExcludeProtocolDataById(objectId)
-        pprint(addtimelineAnnotation)
+        # pprint(addtimelineAnnotation)
         self.assertIsNotNone(addtimelineAnnotation)
 
 
 if __name__ == '__main__':
     unittest.main()
 
-#python -m unittests.test_multiExcludeProtocol
+# python -m unittests.test_multiExcludeProtocol

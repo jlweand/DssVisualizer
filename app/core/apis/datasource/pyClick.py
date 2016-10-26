@@ -11,17 +11,21 @@ class PyClick:
         return ConfigReader().getInstanceOfDatasourcePlugin("PyClick")
 
 
-    def selectClickData(self, startDate, endDate):
+    def selectClickData(self, startDate, endDate, techName, eventName):
         """Override: Select the click data by start and end date. The input here will be strings, datetimes will be passed to the plugin.
 
         :param startDate: The a string value of the local datetime to begin search on
         :type startDate: str
         :param endDate: The a string value of the local datetime to end search on
         :type endDate: str
+        :param techName: The technician name to return data
+        :type: str
+        :param: eventName: The name of the event to return data
+        :type: str
         :returns: JSON object
         """
         pyClick = self.getPlugin()
-        jsonData = pyClick.selectClickData(Common().formatDateStringToUTC(startDate), Common().formatDateStringToUTC(endDate))
+        jsonData = pyClick.selectClickData(Common().formatDateStringToUTC(startDate), Common().formatDateStringToUTC(endDate), techName, eventName)
         return jsonData
 
     def selectClickDataById(self, dataId):

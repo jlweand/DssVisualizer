@@ -13,17 +13,21 @@ class MultiIncludeProtocol:
         return ConfigReader().getInstanceOfDatasourcePlugin("MultiIncludeProtocol")
 
 
-    def selectMultiIncludeProtocolData(self, startDate, endDate):
+    def selectMultiIncludeProtocolData(self, startDate, endDate, techName, eventName):
         """Override: Select the data by start and end date.
 
         :param startDate: The datetime to return data
         :type startDate: datetime
         :param endDate: The datatime to return data
         :type endDate: datetime
+        :param techName: The technician name to return data
+        :type: str
+        :param: eventName: The name of the event to return data
+        :type: str
         :returns: JSON object
         """
         multiIncludePlugin = self.getPlugin()
-        jsonData = multiIncludePlugin.selectMultiIncludeProtocolData(Common().formatDateStringToUTC(startDate), Common().formatDateStringToUTC(endDate))
+        jsonData = multiIncludePlugin.selectMultiIncludeProtocolData(Common().formatDateStringToUTC(startDate), Common().formatDateStringToUTC(endDate), techName, eventName)
         return jsonData
 
 

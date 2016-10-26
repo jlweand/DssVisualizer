@@ -15,9 +15,9 @@ class TsharkProtocol:
         return len(result.inserted_ids)
 
     # select data by date range of the 'start' column
-    def selectTsharkProtocolData(self, startDate, endDate):
+    def selectTsharkProtocolData(self, startDate, endDate, techName, eventName):
         collection = self.getTsharkProtocolCollection()
-        findJson = { "start": {"$gte" : startDate, "$lte": endDate}}
+        findJson = Common().updateTechAndEventNames(startDate, endDate, techName, eventName, True, False)
         cursor = collection.find(findJson)
         return self.fixTheData(cursor)
 

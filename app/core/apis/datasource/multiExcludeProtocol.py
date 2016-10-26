@@ -13,17 +13,23 @@ class MultiExcludeProtocol:
         return ConfigReader().getInstanceOfDatasourcePlugin("MultiExcludeProtocol")
 
 
-    def selectMultiExcludeProtocolData(self, startDate, endDate):
+    def selectMultiExcludeProtocolData(self, startDate, endDate, techName, eventName):#add tech name and event name parameters
+    #update documentation
         """Override: Select the data by start and end date.
 
         :param startDate: The datetime to return data
         :type startDate: datetime
         :param endDate: The datatime to return data
         :type endDate: datetime
+        :param techName: The technician name to return data
+        :type: str
+        :param: eventName: The name of the event to return data
+        :type: str
         :returns: JSON object
         """
         multiExcludePlugin = self.getPlugin()
-        jsonData = multiExcludePlugin.selectMultiExcludeProtocolData(Common().formatDateStringToUTC(startDate), Common().formatDateStringToUTC(endDate))
+        #pass two new parameters
+        jsonData = multiExcludePlugin.selectMultiExcludeProtocolData(Common().formatDateStringToUTC(startDate), Common().formatDateStringToUTC(endDate), techName, eventName)
         return jsonData
 
 

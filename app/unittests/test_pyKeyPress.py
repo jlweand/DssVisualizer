@@ -6,13 +6,25 @@ class PyKeyLoggerTest(unittest.TestCase):
 
     def test_monolithicTestCase(self):
         # select by date
-        jsonData = PyKeyPress().selectKeyPressData('2016-10-15 11:58:35', '2016-10-15 11:58:40')
+        jsonData = PyKeyPress().selectKeyPressData('2016-10-15 11:59:34', '2016-10-15 11:59:34', "", "")
         dataId = jsonData[0]["id"]
-        self.assertEqual(2, len(jsonData))
+        self.assertEqual(1, len(jsonData))
 
         # select by Id
         jsonData = PyKeyPress().selectKeyPressDataById(dataId)
         pprint(jsonData)
+        self.assertEqual(1, len(jsonData))
+
+        #select by Tech name
+        jsonData = PyKeyPress().selectKeyPressData('2016-10-15 11:59:34', '2016-10-15 11:59:34', "Alex", "")
+        self.assertEqual(1, len(jsonData))
+
+        #select by event name
+        jsonData = PyKeyPress().selectKeyPressData('2016-10-15 11:59:34', '2016-10-15 11:59:34', "", "Super Summer Event")
+        self.assertEqual(1, len(jsonData))
+
+        #select by tech name AND event name
+        jsonData = PyKeyPress().selectKeyPressData('2016-10-15 11:59:34', '2016-10-15 11:59:34', "Alex", "Super Summer Event")
         self.assertEqual(1, len(jsonData))
 
         # test Annotations

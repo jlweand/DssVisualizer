@@ -15,9 +15,9 @@ class MultiIncludeProtocol:
         return len(result.inserted_ids)
 
     # select data by date range of the 'start' column
-    def selectMultiIncludeProtocolData(self, startDate, endDate):
+    def selectMultiIncludeProtocolData(self, startDate, endDate, techName, eventName):
         collection = self.getMultiIncludeProtocolCollection()
-        findJson = { "start": {"$gte" : startDate, "$lte": endDate}}
+        findJson = Common().updateTechAndEventNames(startDate, endDate, techName, eventName, True, False)
         cursor = collection.find(findJson)
         return self.fixTheData(cursor)
 
