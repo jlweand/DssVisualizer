@@ -9,13 +9,13 @@ class DataImportTest(unittest.TestCase):
     eventName = "Super Summer Event"
     comments = "here are some comments"
 
-    def test_1insertKeypressData(self):
-        size = DataImportConfig().importKeypressData(self.techName, self.eventName, self.comments, self.nowString)
-        self.assertEqual(size, 71)
-
     def test_2importClick(self):
         size = DataImportConfig().importClick(self.techName, self.eventName, self.comments, self.nowString, False, "C:\\temp\images\\click")
         self.assertEqual(size, 29)
+
+    def test_1insertKeypressData(self):
+        size = DataImportConfig().importKeypressData(self.techName, self.eventName, self.comments, self.nowString)
+        self.assertEqual(size, 71)
 
     def test_3importTimed(self):
         size = DataImportConfig().importTimed(self.techName, self.eventName, self.comments, self.nowString, False, "C:\\temp\images\\timed")
@@ -45,8 +45,8 @@ class DataImportTest(unittest.TestCase):
         size = DataImportConfig().importTsharkProtocol(self.techName, self.eventName, self.comments, self.nowString)
         self.assertEqual(size, 371)
 
-    # def test_01ImportAllFiles(self):
-    #     DataImportConfig().importAllDataFromFiles("C:\\temp\json", self.techName, self.eventName, self.comments, self.nowString)
+    def test_01ImportAllFiles(self):
+        DataImportConfig().importAllDataFromFiles("C:\\temp\json", self.techName, self.eventName, self.comments, self.nowString)
 
 
 if __name__ == '__main__':

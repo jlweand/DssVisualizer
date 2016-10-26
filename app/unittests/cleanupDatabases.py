@@ -22,41 +22,35 @@ class CleanupDatabases(unittest.TestCase):
 
         keypress = PyKeyPress().getKeyPressCollection()
         keypress.delete_many({})
-        DataImportConfig().importKeypressData(techName, eventName, comments, rightNow)
 
         click = PyClick().getClickCollection()
         click.delete_many({})
-        DataImportConfig().importClick(techName, eventName, comments, rightNow, False, "")
 
         timed = PyTimed().getTimedCollection()
         timed.delete_many({})
-        DataImportConfig().importTimed(techName, eventName, comments, rightNow, False, "")
 
         multiExcludeThroughput = MultiExcludeThroughput().getMultiExcludeThroughputCollection()
         multiExcludeThroughput.delete_many({})
-        DataImportConfig().importMultiExcludeThroughput(techName, eventName, comments, rightNow)
 
         multiIncludeThroughput = MultiIncludeThroughput().getMultiIncludeThroughputCollection()
         multiIncludeThroughput.delete_many({})
-        DataImportConfig().importMultiIncludeThroughput(techName, eventName, comments, rightNow)
 
         tsharkThroughput = TsharkThroughput().getTsharkThroughputCollection()
         tsharkThroughput.delete_many({})
-        DataImportConfig().importTsharkThroughput(techName, eventName, comments, rightNow)
 
         multiExcludeProtocol = MultiExcludeProtocol().getMultiExcludeProtocolCollection()
         multiExcludeProtocol.delete_many({})
-        DataImportConfig().importMultiExcludeProtocol(techName, eventName, comments, rightNow)
 
         multiIncludeProtocol = MultiIncludeProtocol().getMultiIncludeProtocolCollection()
         multiIncludeProtocol.delete_many({})
-        DataImportConfig().importMultiIncludeProtocol(techName, eventName, comments, rightNow)
 
         tsharkProtocol = TsharkProtocol().getTsharkProtocolCollection()
         tsharkProtocol.delete_many({})
-        DataImportConfig().importTsharkProtocol(techName, eventName, comments, rightNow)
 
-        jsonData = TsharkThroughput().selectTsharkThroughputData(Common().formatDateStringToUTC('2016-10-15 11:57:19'), Common().formatDateStringToUTC('2016-10-15 11:57:19'))
+        DataImportConfig().importAllDataFromFiles("json", techName, eventName, comments, rightNow)
+
+        jsonData = TsharkThroughput().selectTsharkThroughputData(Common().formatDateStringToUTC('2016-10-15 11:57:19'),
+                                                                 Common().formatDateStringToUTC('2016-10-15 11:57:19'))
         pprint(jsonData)
 
 if __name__ == '__main__':
