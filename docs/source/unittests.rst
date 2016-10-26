@@ -12,14 +12,6 @@ unittests.cleanupDatabases module
     :undoc-members:
     :show-inheritance:
 
-unittests.test_click module
----------------------------
-
-.. automodule:: unittests.test_click
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 unittests.test_configDatasources module
 ---------------------------------------
 
@@ -48,14 +40,6 @@ unittests.test_generateHtml module
 ----------------------------------
 
 .. automodule:: unittests.test_generateHtml
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-unittests.test_keyPress module
-------------------------------
-
-.. automodule:: unittests.test_keyPress
     :members:
     :undoc-members:
     :show-inheritance:
@@ -92,10 +76,26 @@ unittests.test_multiIncludeThroughput module
     :undoc-members:
     :show-inheritance:
 
-unittests.test_timed module
----------------------------
+unittests.test_pyClick module
+-----------------------------
 
-.. automodule:: unittests.test_timed
+.. automodule:: unittests.test_pyClick
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+unittests.test_pyKeyPress module
+--------------------------------
+
+.. automodule:: unittests.test_pyKeyPress
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+unittests.test_pyTimed module
+-----------------------------
+
+.. automodule:: unittests.test_pyTimed
     :members:
     :undoc-members:
     :show-inheritance:

@@ -6,7 +6,7 @@ Installation and setup for MongoDB and Python libraries
 Follow the below instructions to get started with MongoDB
 
 Linux Instructions
-====================
+------------------
 
 Installing MongoDB, pymongo, ujson and other python dependencies
 
@@ -43,7 +43,7 @@ Other python installations
 
 
 Windows Instructions
-====================
+--------------------
 
 Installing MongoDB, pymongo, ujson and other python dependencies
 

@@ -1,5 +1,5 @@
 plugins package
-============
+===============
 
 Subpackages
 -----------

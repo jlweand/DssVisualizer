@@ -1,12 +1,11 @@
-plugins package
-============
+plugins.datasource package
+==========================
 
 Subpackages
 -----------
 
 .. toctree::
 
-    plugins.datasource.elasticsearch
     plugins.datasource.mongodb
 
 Module contents

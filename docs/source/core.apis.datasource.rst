@@ -52,10 +52,26 @@ core.apis.datasource.multiIncludeThroughput module
     :undoc-members:
     :show-inheritance:
 
-core.apis.datasource.pyKeyLogger module
----------------------------------------
+core.apis.datasource.pyClick module
+-----------------------------------
 
-.. automodule:: core.apis.datasource.pyKeyLogger
+.. automodule:: core.apis.datasource.pyClick
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+core.apis.datasource.pyKeyPress module
+--------------------------------------
+
+.. automodule:: core.apis.datasource.pyKeyPress
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+core.apis.datasource.pyTimed module
+-----------------------------------
+
+.. automodule:: core.apis.datasource.pyTimed
     :members:
     :undoc-members:
     :show-inheritance:
