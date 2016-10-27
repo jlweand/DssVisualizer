@@ -1,9 +1,26 @@
+#  Copyright (C) 2016  Jamie Acosta, Jennifer Weand, Juan Soto, Mark Eby, Mark Smith, Andres Olivas
+#
+# This file is part of DssVisualizer.
+#
+# DssVisualizer is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# DssVisualizer is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with DssVisualizer.  If not, see <http://www.gnu.org/licenses/>.
+
 import unittest
 from core.apis.datasource.tsharkThroughput import TsharkThroughput
 from pprint import pprint
 
-class TsharkThroughputTest(unittest.TestCase):
 
+class TsharkThroughputTest(unittest.TestCase):
     def test_monolithicTestCase(self):
         # select by date
         jsonData = TsharkThroughput().selectTsharkThroughputData('2016-10-18 18:29:15', '2016-10-18 18:29:15', "", "")
@@ -15,16 +32,19 @@ class TsharkThroughputTest(unittest.TestCase):
         jsonData = TsharkThroughput().selectTsharkThroughputDataById(dataId)
         self.assertEqual(1, len(jsonData))
 
-        #select by Tech name
-        jsonData = TsharkThroughput().selectTsharkThroughputData('2015-10-29 04:22:25', '2015-10-29 04:22:25', "Alex", "")
+        # select by Tech name
+        jsonData = TsharkThroughput().selectTsharkThroughputData('2015-10-29 04:22:25', '2015-10-29 04:22:25', "Alex",
+                                                                 "")
         self.assertEqual(1, len(jsonData))
 
-        #select by event name
-        jsonData = TsharkThroughput().selectTsharkThroughputData('2015-10-29 04:22:25', '2015-10-29 04:22:25', "", "Super Summer Event")
+        # select by event name
+        jsonData = TsharkThroughput().selectTsharkThroughputData('2015-10-29 04:22:25', '2015-10-29 04:22:25', "",
+                                                                 "Super Summer Event")
         self.assertEqual(1, len(jsonData))
 
-        #select by tech name AND event name
-        jsonData = TsharkThroughput().selectTsharkThroughputData('2015-10-29 04:22:25', '2015-10-29 04:22:25', "Alex", "Super Summer Event")
+        # select by tech name AND event name
+        jsonData = TsharkThroughput().selectTsharkThroughputData('2015-10-29 04:22:25', '2015-10-29 04:22:25', "Alex",
+                                                                 "Super Summer Event")
         self.assertEqual(1, len(jsonData))
 
         # test Annotations
@@ -60,7 +80,8 @@ class TsharkThroughputTest(unittest.TestCase):
         self.assertEqual(1, modifiedCount)
 
         # add Annotation To MultiExcludeThroughput Timeline
-        objectId = TsharkThroughput().addAnnotationToTsharkThroughputTimeline('2016-08-01 10:00:00', "here's a timeline annotation")
+        objectId = TsharkThroughput().addAnnotationToTsharkThroughputTimeline('2016-08-01 10:00:00',
+                                                                              "here's a timeline annotation")
         addtimelineAnnotation = TsharkThroughput().selectTsharkThroughputDataById(objectId)
         pprint(addtimelineAnnotation)
         self.assertIsNotNone(addtimelineAnnotation)
@@ -69,4 +90,4 @@ class TsharkThroughputTest(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main()
 
-#python -m unittests.test_tsharkThroughput
+# python -m unittests.test_tsharkThroughput

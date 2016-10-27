@@ -1,16 +1,32 @@
+#  Copyright (C) 2016  Jamie Acosta, Jennifer Weand, Juan Soto, Mark Eby, Mark Smith, Andres Olivas
+#
+# This file is part of DssVisualizer.
+#
+# DssVisualizer is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# DssVisualizer is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with DssVisualizer.  If not, see <http://www.gnu.org/licenses/>.
+
 from core.config.configReader import ConfigReader
 from core.apis.datasource.common import Common
+
 
 class MultiExcludeThroughput:
     """MultiExcludeThroughput API.  Most of these methods must be overwritten in your plugin.
     Datasource plugin must have a file named multiExcludeThroughput.py with a class name of MultiExcludeThroughput
     """
 
-
     def getPlugin(self):
         """Internal method to get an instance of the active plugin"""
         return ConfigReader().getInstanceOfDatasourcePlugin("MultiExcludeThroughput")
-
 
     def selectMultiExcludeThroughputData(self, startDate, endDate, techName, eventName):
         """Override: Select the timed data by start and end date. The input here will be strings, datetimes will be passed to the plugin.
@@ -26,9 +42,10 @@ class MultiExcludeThroughput:
         :returns: JSON object
         """
         multiExcludePlugin = self.getPlugin()
-        jsonData = multiExcludePlugin.selectMultiExcludeThroughputData(Common().formatDateStringToUTC(startDate), Common().formatDateStringToUTC(endDate), techName, eventName)
+        jsonData = multiExcludePlugin.selectMultiExcludeThroughputData(Common().formatDateStringToUTC(startDate),
+                                                                       Common().formatDateStringToUTC(endDate),
+                                                                       techName, eventName)
         return jsonData
-
 
     def selectMultiExcludeThroughputDataById(self, dataId):
         """Override: Select the MultiExcludeThroughput data by its ID
@@ -40,7 +57,6 @@ class MultiExcludeThroughput:
         multiExcludePlugin = self.getPlugin()
         jsonData = multiExcludePlugin.selectMultiExcludeThroughputDataById(dataId)
         return jsonData
-
 
     def insertFixedMultiExcludeThroughputData(self, dataId, x, y):
         """Override: Inserts a fixedData attribute.
@@ -57,7 +73,6 @@ class MultiExcludeThroughput:
         result = multiExcludePlugin.insertFixedMultiExcludeThroughputData(dataId, Common().formatDateStringToUTC(x), y)
         return result
 
-
     def updateFixedMultiExcludeThroughputData(self, dataId, x, y):
         """Override: Updates the fixedData attribute.
 
@@ -73,7 +88,6 @@ class MultiExcludeThroughput:
         result = multiExcludePlugin.updateFixedMultiExcludeThroughputData(dataId, Common().formatDateStringToUTC(x), y)
         return result
 
-
     def deleteFixedMultiExcludeThroughputData(self, dataId):
         """Override: Deletes the fixedData attribute.
 
@@ -84,7 +98,6 @@ class MultiExcludeThroughput:
         multiExcludePlugin = self.getPlugin()
         result = multiExcludePlugin.deleteFixedMultiExcludeThroughputData(dataId)
         return result
-
 
     def addAnnotationMultiExcludeThroughput(self, dataId, annotationText):
         """Override: Add an annotation to the MultiExcludeThroughput object.
@@ -97,7 +110,6 @@ class MultiExcludeThroughput:
         """
         multiExcludePlugin = self.getPlugin()
         return multiExcludePlugin.addAnnotationMultiExcludeThroughput(dataId, annotationText)
-
 
     # edit an annotation for the dataId
     def editAnnotationMultiExcludeThroughput(self, dataId, oldAnnotationText, newAnnotationText):
@@ -114,7 +126,6 @@ class MultiExcludeThroughput:
         multiExcludePlugin = self.getPlugin()
         return multiExcludePlugin.editAnnotationMultiExcludeThroughput(dataId, oldAnnotationText, newAnnotationText)
 
-
     # delete an annotation for the dataId
     def deleteAnnotationMultiExcludeThroughput(self, dataId, annotationText):
         """Override: Delete one annotation from the MultiExcludeThroughput object.
@@ -128,7 +139,6 @@ class MultiExcludeThroughput:
         multiExcludePlugin = self.getPlugin()
         return multiExcludePlugin.deleteAnnotationMultiExcludeThroughput(dataId, annotationText)
 
-
     # deletes all annotations for the dataId
     def deleteAllAnnotationsForMultiExcludeThroughput(self, dataId):
         """Override: Delete all annotations from the MultiExcludeThroughput object.
@@ -139,7 +149,6 @@ class MultiExcludeThroughput:
         """
         multiExcludePlugin = self.getPlugin()
         return multiExcludePlugin.deleteAllAnnotationsForMultiExcludeThroughput(dataId)
-
 
     # add an annotation to the timeline, not a datapoint
     def addAnnotationToMultiExcludeThroughputTimeline(self, x, annotationText):
@@ -153,4 +162,5 @@ class MultiExcludeThroughput:
          """
 
         multiExcludePlugin = self.getPlugin()
-        return multiExcludePlugin.addAnnotationToMultiExcludeThroughputTimeline(Common().formatDateStringToUTC(x), annotationText)
+        return multiExcludePlugin.addAnnotationToMultiExcludeThroughputTimeline(Common().formatDateStringToUTC(x),
+                                                                                annotationText)

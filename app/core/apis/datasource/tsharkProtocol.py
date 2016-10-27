@@ -1,17 +1,32 @@
+#  Copyright (C) 2016  Jamie Acosta, Jennifer Weand, Juan Soto, Mark Eby, Mark Smith, Andres Olivas
+#
+# This file is part of DssVisualizer.
+#
+# DssVisualizer is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# DssVisualizer is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with DssVisualizer.  If not, see <http://www.gnu.org/licenses/>.
+
 from core.config.configReader import ConfigReader
-#from plugins.datasource.mongodb.common import Common
 from core.apis.datasource.common import Common
+
 
 class TsharkProtocol:
     """TsharkProtocol API.  Most of these methods must be overwritten in your plugin.
     Datasource plugin must have a file named tsharkProtocol.py with a class name of TsharkProtocol
     """
 
-
     def getPlugin(self):
         """Internal method to get an instance of the active plugin"""
         return ConfigReader().getInstanceOfDatasourcePlugin("TsharkProtocol")
-
 
     def selectTsharkProtocolData(self, startDate, endDate, techName, eventName):
         """Override: Select the data by start and end date.
@@ -27,9 +42,10 @@ class TsharkProtocol:
         :returns: JSON object
         """
         tsharkProtocolPlugin = self.getPlugin()
-        jsonData = tsharkProtocolPlugin.selectTsharkProtocolData(Common().formatDateStringToUTC(startDate), Common().formatDateStringToUTC(endDate), techName, eventName)
+        jsonData = tsharkProtocolPlugin.selectTsharkProtocolData(Common().formatDateStringToUTC(startDate),
+                                                                 Common().formatDateStringToUTC(endDate), techName,
+                                                                 eventName)
         return jsonData
-
 
     def selectTsharkProtocolDataById(self, dataId):
         """Override: Select the TsharkProtocol data by its ID
@@ -41,7 +57,6 @@ class TsharkProtocol:
         tsharkProtocolPlugin = self.getPlugin()
         jsonData = tsharkProtocolPlugin.selectTsharkProtocolDataById(dataId)
         return jsonData
-
 
     def insertFixedTsharkProtocolData(self, dataId, oldDataId, content, className, title, startDate):
         """Override: Inserts a fixedData attribute.
@@ -55,9 +70,9 @@ class TsharkProtocol:
         :returns: The modified count.
         """
         tsharkProtocolPlugin = self.getPlugin()
-        result = tsharkProtocolPlugin.insertFixedTsharkProtocolData(dataId, oldDataId, content, className, title, Common().formatDateStringToUTC(startDate))
+        result = tsharkProtocolPlugin.insertFixedTsharkProtocolData(dataId, oldDataId, content, className, title,
+                                                                    Common().formatDateStringToUTC(startDate))
         return result
-
 
     def updateFixedTsharkProtocolData(self, dataId, oldDataId, content, className, title, startDate):
         """Override: Updates the fixedData attribute.
@@ -71,9 +86,9 @@ class TsharkProtocol:
         :returns: The modified count.
         """
         tsharkProtocolPlugin = self.getPlugin()
-        result = tsharkProtocolPlugin.updateFixedTsharkProtocolData(dataId, oldDataId, content, className, title, Common().formatDateStringToUTC(startDate))
+        result = tsharkProtocolPlugin.updateFixedTsharkProtocolData(dataId, oldDataId, content, className, title,
+                                                                    Common().formatDateStringToUTC(startDate))
         return result
-
 
     def deleteFixedTsharkProtocolData(self, dataId):
         """Override: Deletes the fixedData attribute.
@@ -98,7 +113,6 @@ class TsharkProtocol:
         tsharkPlugin = self.getPlugin()
         return tsharkPlugin.addAnnotationTsharkProtocol(dataId, annotationText)
 
-
     # edit an annotation for the dataId
     def editAnnotationTsharkProtocol(self, dataId, oldAnnotationText, newAnnotationText):
         """Override: Edit an annotation on the TsharkProtocol object.
@@ -114,7 +128,6 @@ class TsharkProtocol:
         tsharkPlugin = self.getPlugin()
         return tsharkPlugin.editAnnotationTsharkProtocol(dataId, oldAnnotationText, newAnnotationText)
 
-
     # delete an annotation for the dataId
     def deleteAnnotationTsharkProtocol(self, dataId, annotationText):
         """Override: Delete one annotation from the TsharkProtocol object.
@@ -128,7 +141,6 @@ class TsharkProtocol:
         tsharkPlugin = self.getPlugin()
         return tsharkPlugin.deleteAnnotationTsharkProtocol(dataId, annotationText)
 
-
     # deletes all annotations for the dataId
     def deleteAllAnnotationsForTsharkProtocol(self, dataId):
         """Override: Delete all annotations from the TsharkProtocol object.
@@ -139,7 +151,6 @@ class TsharkProtocol:
         """
         tsharkPlugin = self.getPlugin()
         return tsharkPlugin.deleteAllAnnotationsForTsharkProtocol(dataId)
-
 
     # add an annotation to the timeline, not a datapoint
     def addAnnotationToTsharkProtocolTimeline(self, startTime, annotationText):
@@ -153,4 +164,5 @@ class TsharkProtocol:
          """
 
         tsharkPlugin = self.getPlugin()
-        return tsharkPlugin.addAnnotationToTsharkProtocolTimeline(Common().formatDateStringToUTC(startTime), annotationText)
+        return tsharkPlugin.addAnnotationToTsharkProtocolTimeline(Common().formatDateStringToUTC(startTime),
+                                                                  annotationText)

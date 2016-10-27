@@ -1,5 +1,23 @@
+#  Copyright (C) 2016  Jamie Acosta, Jennifer Weand, Juan Soto, Mark Eby, Mark Smith, Andres Olivas
+#
+# This file is part of DssVisualizer.
+#
+# DssVisualizer is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# DssVisualizer is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with DssVisualizer.  If not, see <http://www.gnu.org/licenses/>.
+
 from core.config.configReader import ConfigReader
 from core.apis.datasource.common import Common
+
 
 class PyClick:
     """PyClick API.  Most of these methods must be overwritten in your plugin.
@@ -9,7 +27,6 @@ class PyClick:
     def getPlugin(self):
         """Internal method to get an instance of the active plugin"""
         return ConfigReader().getInstanceOfDatasourcePlugin("PyClick")
-
 
     def selectClickData(self, startDate, endDate, techName, eventName):
         """Override: Select the click data by start and end date. The input here will be strings, datetimes will be passed to the plugin.
@@ -25,7 +42,8 @@ class PyClick:
         :returns: JSON object
         """
         pyClick = self.getPlugin()
-        jsonData = pyClick.selectClickData(Common().formatDateStringToUTC(startDate), Common().formatDateStringToUTC(endDate), techName, eventName)
+        jsonData = pyClick.selectClickData(Common().formatDateStringToUTC(startDate),
+                                           Common().formatDateStringToUTC(endDate), techName, eventName)
         return jsonData
 
     def selectClickDataById(self, dataId):
@@ -57,7 +75,8 @@ class PyClick:
         :returns: newly created id.
         """
         pyClick = self.getPlugin()
-        result = pyClick.insertFixedClickData(dataId, clicks_id, content, className, Common().formatDateStringToUTC(start), title, typeClick)
+        result = pyClick.insertFixedClickData(dataId, clicks_id, content, className,
+                                              Common().formatDateStringToUTC(start), title, typeClick)
         return result
 
     def updateFixedClickData(self, dataId, clicks_id, content, className, start, title, typeClick):
@@ -78,7 +97,8 @@ class PyClick:
         :returns: The modified count.
         """
         pyClick = self.getPlugin()
-        result = pyClick.updateFixedClickData(dataId, clicks_id, content, className, Common().formatDateStringToUTC(start), title, typeClick)
+        result = pyClick.updateFixedClickData(dataId, clicks_id, content, className,
+                                              Common().formatDateStringToUTC(start), title, typeClick)
         return result
 
     def deleteFixedClickData(self, dataId):
@@ -119,7 +139,7 @@ class PyClick:
         pyClick = self.getPlugin()
         return pyClick.editAnnotationClick(dataId, oldAnnotationText, newAnnotationText)
 
-    #delete an annotation for the dataId
+    # delete an annotation for the dataId
     def deleteAnnotationClick(self, dataId, annotationText):
         """Override: Delete one annotation from the Click object.
 

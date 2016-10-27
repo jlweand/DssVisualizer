@@ -1,3 +1,20 @@
+#  Copyright (C) 2016  Jamie Acosta, Jennifer Weand, Juan Soto, Mark Eby, Mark Smith, Andres Olivas
+#
+# This file is part of DssVisualizer.
+#
+# DssVisualizer is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# DssVisualizer is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with DssVisualizer.  If not, see <http://www.gnu.org/licenses/>.
+
 import gi
 import logging
 import os
@@ -27,121 +44,124 @@ from gi.repository import Gtk
 from gi.repository import WebKit
 
 
+def handle(web_view, web_frame, web_resource, request, response):
+    ##'query' contains the data sent from the jquery.get method
 
-def handle(web_view,web_frame,web_resource,request,response):
-	##'query' contains the data sent from the jquery.get method
+    query = request.get_message().get_uri().get_query()
+    uri = request.get_uri()
 
-	query = request.get_message().get_uri().get_query()
-	uri = request.get_uri()
+    if ('installDatasources' in uri or 'adminset' in uri):
+        load_uninstalled_plugins(query, "datasource")
 
-	if('installDatasources' in uri or 'adminset' in uri):
-		load_uninstalled_plugins(query,"datasource")
+    if ('installRends' in uri or 'adminset' in uri):
+        load_uninstalled_plugins(query, "renderer")
 
-	if('installRends' in uri or 'adminset' in uri):
-		load_uninstalled_plugins(query,"renderer")
+    if not query:
+        return
+    else:
 
-	if not query:
-		return
-	else:
+        queryDict = parse_qs(query)
+        if ('request' in queryDict):
+            if (queryDict['request'][0] == 'keypressData'):
+                startDate = queryDict['startDate'][0]
+                endDate = queryDict['endDate'][0]
+                keyData = PyKeyPress().selectKeyPressData(startDate, endDate)
+                clickData = PyClick().selectClickData(startDate, endDate)
+                timedData = PyTimed().selectTimedData(startDate, endDate)
+                js = "visData(%s, %s, %s);" % (keyData, clickData, timedData)
+                webKitWebView.execute_script(js)
+            elif (queryDict['request'][0] == 'pcapData'):
+                startDate = queryDict['startDate'][0]
+                endDate = queryDict['endDate'][0]
+                multiEx = MultiExcludeThroughput().selectMultiExcludeThroughputData(startDate, endDate)
+                multiInc = MultiIncludeThroughput().selectMultiIncludeThroughputData(startDate, endDate)
+                tshark = TsharkThroughput().selectTsharkThroughputData(startDate, endDate)
+                multiExProt = MultiExcludeProtocol().selectMultiExcludeProtocolData(startDate, endDate)
+                multiIncProt = MultiIncludeProtocol().selectMultiIncludeProtocolData(startDate, endDate)
+                tsharkProt = TsharkProtocol().selectTsharkProtocolData(startDate, endDate)
+                js = "visPCAPData(%s, %s, %s, %s, %s, %s);" % (
+                multiEx, multiExProt, multiInc, multiIncProt, tshark, tsharkProt)
+                webKitWebView.execute_script(js)
 
-		queryDict = parse_qs(query)
-		if('request' in queryDict):
-			if(queryDict['request'][0] == 'keypressData'):
-				startDate = queryDict['startDate'][0]
-				endDate = queryDict['endDate'][0]
-				keyData = PyKeyPress().selectKeyPressData(startDate, endDate)
-				clickData = PyClick().selectClickData(startDate, endDate)
-				timedData = PyTimed().selectTimedData(startDate, endDate)
-				js = "visData(%s, %s, %s);" % (keyData, clickData, timedData)
-				webKitWebView.execute_script(js)
-			elif(queryDict['request'][0] == 'pcapData'):
-				startDate = queryDict['startDate'][0]
-				endDate = queryDict['endDate'][0]
-				multiEx = MultiExcludeThroughput().selectMultiExcludeThroughputData(startDate, endDate)
-				multiInc = MultiIncludeThroughput().selectMultiIncludeThroughputData(startDate, endDate)
-				tshark = TsharkThroughput().selectTsharkThroughputData(startDate, endDate)
-				multiExProt = MultiExcludeProtocol().selectMultiExcludeProtocolData(startDate, endDate)
-				multiIncProt = MultiIncludeProtocol().selectMultiIncludeProtocolData(startDate, endDate)
-				tsharkProt = TsharkProtocol().selectTsharkProtocolData(startDate, endDate)
-				js = "visPCAPData(%s, %s, %s, %s, %s, %s);" % (multiEx, multiExProt, multiInc, multiIncProt, tshark, tsharkProt)
-				webKitWebView.execute_script(js)
+        elif ('submission' in queryDict):
+            if (queryDict['submission'][0] == 'annotation'):
+                itemID = queryDict['itemID'][0]
+                itemType = queryDict['type'][0]
+                annotation = queryDict['annotation'][0]
+                if (itemType == 'keypress'):
+                    PyKeyPress().addAnnotationKeyPress(itemID, annotation)
+                elif (itemType == 'click'):
+                    PyClick().addAnnotationClick(itemID, annotation)
+                elif (itemType == 'timed'):
+                    PyTimed().addAnnotationTimed(itemID, annotation)
+        elif ('adminRequest' in queryDict):
+            if (queryDict['adminRequest'][0] == 'availablePlugins'):
+                load_available_renderers()
+        elif ('adminSubmission' in queryDict):
+            if (queryDict['adminSubmission'][0] == 'pluginChanges'):
+                database = queryDict['database'][0]
+                pcapDataProtocol = queryDict['pcapDataProtocol'][0]
+                pcapThroughput = queryDict['pcapThroughput'][0]
+                pyKeyLogger = queryDict['pyKeyLogger'][0]
+                screenshots = queryDict['screenshots'][0]
+                scriptFile = "scripts.txt"
+                ConfigDatasources().setDefaultDatasource(database)
+                ConfigRenderers().setDefaultRenderer("pcapDataProtocol", pcapDataProtocol, scriptFile)
+                ConfigRenderers().setDefaultRenderer("pcapThroughput", pcapThroughput, scriptFile)
+                ConfigRenderers().setDefaultRenderer("pyKeyLogger", pyKeyLogger, scriptFile)
+                ConfigRenderers().setDefaultRenderer("screenshots", screenshots, scriptFile)
 
-		elif('submission' in queryDict):
-			if(queryDict['submission'][0] == 'annotation'):
-				itemID = queryDict['itemID'][0]
-				itemType = queryDict['type'][0]
-				annotation = queryDict['annotation'][0]
-				if(itemType == 'keypress'):
-					PyKeyPress().addAnnotationKeyPress(itemID, annotation)
-				elif(itemType == 'click'):
-					PyClick().addAnnotationClick(itemID, annotation)
-				elif(itemType == 'timed'):
-					PyTimed().addAnnotationTimed(itemID, annotation)
-		elif('adminRequest' in queryDict):
-			if(queryDict['adminRequest'][0] == 'availablePlugins'):
-				load_available_renderers()
-		elif('adminSubmission' in queryDict):
-			if(queryDict['adminSubmission'][0] == 'pluginChanges'):
+                print("updating plugin")
+    return
 
-				database = queryDict['database'][0]
-				pcapDataProtocol= queryDict['pcapDataProtocol'][0]
-				pcapThroughput= queryDict['pcapThroughput'][0]
-				pyKeyLogger= queryDict['pyKeyLogger'][0]
-				screenshots= queryDict['screenshots'][0]
-				scriptFile = "scripts.txt"
-				ConfigDatasources().setDefaultDatasource(database)
-				ConfigRenderers().setDefaultRenderer("pcapDataProtocol",pcapDataProtocol,scriptFile)
-				ConfigRenderers().setDefaultRenderer("pcapThroughput",pcapThroughput,scriptFile)
-				ConfigRenderers().setDefaultRenderer("pyKeyLogger",pyKeyLogger,scriptFile)
-				ConfigRenderers().setDefaultRenderer("screenshots",screenshots,scriptFile)
-
-				print ("updating plugin")
-	return
 
 def getJson(file):
-	with open(file) as json_data:
-		d = ujson.load(json_data)
-		return(d)
+    with open(file) as json_data:
+        d = ujson.load(json_data)
+        return (d)
+
 
 def load_available_renderers():
+    jsonFile = getJson("core/config/config.JSON")
+    allFile = ujson.dumps(jsonFile)
+    js = "createRadioButtons(%s)" % (allFile)
+    webKitWebView.execute_script(js)
 
-	jsonFile=getJson("core/config/config.JSON")
-	allFile= ujson.dumps(jsonFile)
-	js= "createRadioButtons(%s)" % (allFile)
-	webKitWebView.execute_script(js)
 
-def load_uninstalled_plugins(query,type):
-	folder = "plugins/renderer/"
-	tagID = "installRends"
-	if type is "datasource":
-		folder = "plugins/datasource/"
-		tagID = "installDatasources"
+def load_uninstalled_plugins(query, type):
+    folder = "plugins/renderer/"
+    tagID = "installRends"
+    if type is "datasource":
+        folder = "plugins/datasource/"
+        tagID = "installDatasources"
 
-	importer = PluginImporter(folder) #diff
-	newPlugins = importer.getUninstalledPlugins()
-	if not query:
-		for plugin in newPlugins:
-			modify_uninstalled_plugin_html(plugin,tagID)
-	else:
-		importer.importPlugin(query)
-		script = 'document.getElementById("'+tagID+'").innerHTML = "";'#diff
-		webKitWebView.execute_script(script)
-		load_uninstalled_plugins(None,type)
+    importer = PluginImporter(folder)  # diff
+    newPlugins = importer.getUninstalledPlugins()
+    if not query:
+        for plugin in newPlugins:
+            modify_uninstalled_plugin_html(plugin, tagID)
+    else:
+        importer.importPlugin(query)
+        script = 'document.getElementById("' + tagID + '").innerHTML = "";'  # diff
+        webKitWebView.execute_script(script)
+        load_uninstalled_plugins(None, type)
 
-def modify_uninstalled_plugin_html(plugin,tagID):
-	if plugin:
-		script = 'var element = document.createElement("option");'
-		script = script + 'element.innerHTML = "' + plugin + '";'
-		script = script + 'document.getElementById("'+tagID+'").appendChild(element);'
-	else:
-		script = 'document.getElementById("'+tagID+'").innerHTML = "";'
-	webKitWebView.execute_script(script)
+
+def modify_uninstalled_plugin_html(plugin, tagID):
+    if plugin:
+        script = 'var element = document.createElement("option");'
+        script = script + 'element.innerHTML = "' + plugin + '";'
+        script = script + 'document.getElementById("' + tagID + '").appendChild(element);'
+    else:
+        script = 'document.getElementById("' + tagID + '").innerHTML = "";'
+    webKitWebView.execute_script(script)
+
 
 # def handle_url(request):
 # 	print(request.get('annotation'))
 
-#subprocess.call(["mongod", "--repair"], shell=True)
-#subprocess.Popen(["mongod"], shell=True)
+# subprocess.call(["mongod", "--repair"], shell=True)
+# subprocess.Popen(["mongod"], shell=True)
 
 gtkWindow = Gtk.Window()
 webKitWebView = WebKit.WebView()
@@ -150,7 +170,7 @@ gtkScrolledWindow.add(webKitWebView)
 gtkWindow.add(gtkScrolledWindow)
 gtkWindow.connect("delete-event", Gtk.main_quit)
 
-gtkWindow.set_size_request(1000,800)
+gtkWindow.set_size_request(1000, 800)
 
 # generate the index.html page based on the renderer plugin
 GenerateHtml().generatHtml()
@@ -159,6 +179,7 @@ uri = "file:///" + os.getcwd() + "/viewmanager/index.html"
 webKitWebView.load_uri(uri)
 webKitWebView.connect("resource-request-starting", handle)
 
-
 gtkWindow.show_all()
 Gtk.main()
+
+# python -m viewmanager.dssvisualizer

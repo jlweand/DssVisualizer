@@ -1,20 +1,37 @@
+#  Copyright (C) 2016  Jamie Acosta, Jennifer Weand, Juan Soto, Mark Eby, Mark Smith, Andres Olivas
+#
+# This file is part of DssVisualizer.
+#
+# DssVisualizer is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# DssVisualizer is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with DssVisualizer.  If not, see <http://www.gnu.org/licenses/>.
+
 from core.config.configReader import ConfigReader
-#from plugins.datasource.mongodb.common import Common
+# from plugins.datasource.mongodb.common import Common
 from core.apis.datasource.common import Common
+
 
 class MultiExcludeProtocol:
     """MultiExcludeProtocol API.  Most of these methods must be overwritten in your plugin.
     Datasource plugin must have a file named multiExcludeProtocol.py with a class name of MultiExcludeProtocol
     """
 
-
     def getPlugin(self):
         """Internal method to get an instance of the active plugin"""
         return ConfigReader().getInstanceOfDatasourcePlugin("MultiExcludeProtocol")
 
-
-    def selectMultiExcludeProtocolData(self, startDate, endDate, techName, eventName):#add tech name and event name parameters
-    #update documentation
+    def selectMultiExcludeProtocolData(self, startDate, endDate, techName,
+                                       eventName):  # add tech name and event name parameters
+        # update documentation
         """Override: Select the data by start and end date.
 
         :param startDate: The datetime to return data
@@ -28,10 +45,11 @@ class MultiExcludeProtocol:
         :returns: JSON object
         """
         multiExcludePlugin = self.getPlugin()
-        #pass two new parameters
-        jsonData = multiExcludePlugin.selectMultiExcludeProtocolData(Common().formatDateStringToUTC(startDate), Common().formatDateStringToUTC(endDate), techName, eventName)
+        # pass two new parameters
+        jsonData = multiExcludePlugin.selectMultiExcludeProtocolData(Common().formatDateStringToUTC(startDate),
+                                                                     Common().formatDateStringToUTC(endDate), techName,
+                                                                     eventName)
         return jsonData
-
 
     def selectMultiExcludeProtocolDataById(self, dataId):
         """Override: Select the MultiExcludeProtocol data by its ID
@@ -43,7 +61,6 @@ class MultiExcludeProtocol:
         multiExcludePlugin = self.getPlugin()
         jsonData = multiExcludePlugin.selectMultiExcludeProtocolDataById(dataId)
         return jsonData
-
 
     def insertFixedMultiExcludeProtocolData(self, dataId, oldDataId, content, className, title, startDate):
         """Override: Inserts a fixedData attribute.
@@ -57,9 +74,9 @@ class MultiExcludeProtocol:
         :returns: The modified count.
         """
         multiExcludePlugin = self.getPlugin()
-        result = multiExcludePlugin.insertFixedMultiExcludeProtocolData(dataId, oldDataId, content, className, title, Common().formatDateStringToUTC(startDate))
+        result = multiExcludePlugin.insertFixedMultiExcludeProtocolData(dataId, oldDataId, content, className, title,
+                                                                        Common().formatDateStringToUTC(startDate))
         return result
-
 
     def updateFixedMultiExcludeProtocolData(self, dataId, oldDataId, content, className, title, startDate):
         """Override: Updates the fixedData attribute.
@@ -73,9 +90,9 @@ class MultiExcludeProtocol:
         :returns: The modified count.
         """
         multiExcludePlugin = self.getPlugin()
-        result = multiExcludePlugin.updateFixedMultiExcludeProtocolData(dataId, oldDataId, content, className, title, Common().formatDateStringToUTC(startDate))
+        result = multiExcludePlugin.updateFixedMultiExcludeProtocolData(dataId, oldDataId, content, className, title,
+                                                                        Common().formatDateStringToUTC(startDate))
         return result
-
 
     def deleteFixedMultiExcludeProtocolData(self, dataId):
         """Override: Deletes the fixedData attribute.
@@ -100,7 +117,6 @@ class MultiExcludeProtocol:
         multiExcludePlugin = self.getPlugin()
         return multiExcludePlugin.addAnnotationMultiExcludeProtocol(dataId, annotationText)
 
-
     # edit an annotation for the dataId
     def editAnnotationMultiExcludeProtocol(self, dataId, oldAnnotationText, newAnnotationText):
         """Override: Edit an annotation on the MultiExcludeProtocol object.
@@ -116,7 +132,6 @@ class MultiExcludeProtocol:
         multiExcludePlugin = self.getPlugin()
         return multiExcludePlugin.editAnnotationMultiExcludeProtocol(dataId, oldAnnotationText, newAnnotationText)
 
-
     # delete an annotation for the dataId
     def deleteAnnotationMultiExcludeProtocol(self, dataId, annotationText):
         """Override: Delete one annotation from the MultiExcludeProtocol object.
@@ -130,7 +145,6 @@ class MultiExcludeProtocol:
         multiExcludePlugin = self.getPlugin()
         return multiExcludePlugin.deleteAnnotationMultiExcludeProtocol(dataId, annotationText)
 
-
     # deletes all annotations for the dataId
     def deleteAllAnnotationsForMultiExcludeProtocol(self, dataId):
         """Override: Delete all annotations from the MultiExcludeProtocol object.
@@ -141,7 +155,6 @@ class MultiExcludeProtocol:
         """
         multiExcludePlugin = self.getPlugin()
         return multiExcludePlugin.deleteAllAnnotationsForMultiExcludeProtocol(dataId)
-
 
     # add an annotation to the timeline, not a datapoint
     def addAnnotationToMultiExcludeProtocolTimeline(self, startDate, annotationText):
@@ -155,4 +168,5 @@ class MultiExcludeProtocol:
          """
 
         multiExcludePlugin = self.getPlugin()
-        return multiExcludePlugin.addAnnotationToMultiExcludeProtocolTimeline(Common().formatDateStringToUTC(startDate), annotationText)
+        return multiExcludePlugin.addAnnotationToMultiExcludeProtocolTimeline(Common().formatDateStringToUTC(startDate),
+                                                                              annotationText)

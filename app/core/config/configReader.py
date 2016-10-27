@@ -1,8 +1,25 @@
+#  Copyright (C) 2016  Jamie Acosta, Jennifer Weand, Juan Soto, Mark Eby, Mark Smith, Andres Olivas
+#
+# This file is part of DssVisualizer.
+#
+# DssVisualizer is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# DssVisualizer is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with DssVisualizer.  If not, see <http://www.gnu.org/licenses/>.
+
 import ujson
 from pprint import pprint
 
-class ConfigReader:
 
+class ConfigReader:
     def getListOfDatasources(self):
         config = self.importConfigJson()
         return config["datasourcePlugins"]
@@ -24,7 +41,6 @@ class ConfigReader:
             if plugin["name"] == activePlugin:
                 return plugin["location"] + "."
         return "No Datasource found"
-
 
     def getRedererPluginForPyKeyLogger(self):
         return self.getRendererPlugin("pyKeyLogger")
@@ -55,16 +71,16 @@ class ConfigReader:
 
     def getInstanceOfPlugin(self, classname, isDatasource):
         # get this information from the config.json
-        if(isDatasource):
+        if (isDatasource):
             module = self.getDatasourcePluginLocation()
         else:
             module = self.getRendererPluginLocation()
 
         module = module + classname[0].lower() + classname[1:]
 
-        #import the module by saying 'from myApp.models import Blog'
+        # import the module by saying 'from myApp.models import Blog'
         module = __import__(module, {}, {}, classname)
 
-        #now you can instantiate the class
-        obj = getattr(module, classname )()
+        # now you can instantiate the class
+        obj = getattr(module, classname)()
         return obj

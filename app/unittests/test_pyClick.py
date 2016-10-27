@@ -1,9 +1,26 @@
+#  Copyright (C) 2016  Jamie Acosta, Jennifer Weand, Juan Soto, Mark Eby, Mark Smith, Andres Olivas
+#
+# This file is part of DssVisualizer.
+#
+# DssVisualizer is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# DssVisualizer is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with DssVisualizer.  If not, see <http://www.gnu.org/licenses/>.
+
 import unittest
 from core.apis.datasource.pyClick import PyClick
 from pprint import pprint
 
-class PyKeyLoggerTest(unittest.TestCase):
 
+class PyKeyLoggerTest(unittest.TestCase):
     def test_monolithicTestCase(self):
         # select by date
         jsonData = PyClick().selectClickData('2015-10-29 04:23:08', '2015-10-29 04:23:08', "", "")
@@ -15,15 +32,15 @@ class PyKeyLoggerTest(unittest.TestCase):
         pprint(jsonData)
         self.assertEqual(1, len(jsonData))
 
-        #select by Tech name
+        # select by Tech name
         jsonData = PyClick().selectClickData('2015-10-29 04:23:08', '2015-10-29 04:23:08', "Alex", "")
         self.assertEqual(1, len(jsonData))
 
-        #select by event name
+        # select by event name
         jsonData = PyClick().selectClickData('2015-10-29 04:23:08', '2015-10-29 04:23:08', "", "Super Summer Event")
         self.assertEqual(1, len(jsonData))
 
-        #select by tech name AND event name
+        # select by tech name AND event name
         jsonData = PyClick().selectClickData('2015-10-29 04:23:08', '2015-10-29 04:23:08', "Alex", "Super Summer Event")
         self.assertEqual(1, len(jsonData))
 
@@ -48,11 +65,17 @@ class PyKeyLoggerTest(unittest.TestCase):
         self.assertRaises(KeyError, lambda: deletedAll[0]["annotations"])
 
         # insert Fixed Data
-        modifiedCount = PyClick().insertFixedClickData(dataId, '2222', '[New Content Added]', 'imgPoint', '2016-09-11 17:37:14', '/usr/logger/v2/dss-logger-pluggable/plugins/collectors/pykeylogger/raw/click_images/1474038815.78_TESTING.png', 'point')
+        modifiedCount = PyClick().insertFixedClickData(dataId, '2222', '[New Content Added]', 'imgPoint',
+                                                       '2016-09-11 17:37:14',
+                                                       '/new/path/1474038815.78_TESTING.png',
+                                                       'point')
         self.assertEqual(1, modifiedCount)
 
         # update Fixed Data
-        modifiedCount = PyClick().updateFixedClickData(dataId, '1111','[EDITED UNITTEST Content Added]',' imgPoint', '2016-10-02 19:35:51', '/usr/logger/v2/dss-logger-pluggable/plugins/collectors/pykeylogger/raw/click_images/1474038815.78_TESTING_UPDATE.png', 'point')
+        modifiedCount = PyClick().updateFixedClickData(dataId, '1111', '[EDITED UNITTEST Content Added]', ' imgPoint',
+                                                       '2016-10-02 19:35:51',
+                                                       '/newpath/click_images/1474038815.78_TESTING_UPDATE.png',
+                                                       'point')
         self.assertEqual(1, modifiedCount)
 
         # delete Fixed Data
@@ -69,4 +92,4 @@ class PyKeyLoggerTest(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main()
 
-#python -m unittests.test_pyClick
+# python -m unittests.test_pyClick

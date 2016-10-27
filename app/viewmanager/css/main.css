@@ -71,3 +71,9 @@ body, html {
 	overflow: auto !important;
 	border: 1px solid #eee;
 }
+
+#footer {
+ position:fixed;
+ bottom:0;
+ left:0;
+}

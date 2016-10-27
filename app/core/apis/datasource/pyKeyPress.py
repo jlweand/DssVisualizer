@@ -1,6 +1,23 @@
+#  Copyright (C) 2016  Jamie Acosta, Jennifer Weand, Juan Soto, Mark Eby, Mark Smith, Andres Olivas
+#
+# This file is part of DssVisualizer.
+#
+# DssVisualizer is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# DssVisualizer is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with DssVisualizer.  If not, see <http://www.gnu.org/licenses/>.
+
 from core.config.configReader import ConfigReader
-#from plugins.datasource.mongodb.common import Common
 from core.apis.datasource.common import Common
+
 
 class PyKeyPress:
     """PyKeyLogger API.  Most of these methods must be overwritten in your plugin.
@@ -11,7 +28,7 @@ class PyKeyPress:
         """Internal method to get an instance of the active plugin"""
         return ConfigReader().getInstanceOfDatasourcePlugin("PyKeyPress")
 
-#Keypress#
+    # Keypress#
     def selectKeyPressData(self, startDate, endDate, techName, eventName):
         """Override: Select the key press data by start and end date. The input here will be strings, datetimes will be passed to the plugin.
 
@@ -26,7 +43,8 @@ class PyKeyPress:
         :returns: JSON object
         """
         pyKeyPress = self.getPlugin()
-        jsonData = pyKeyPress.selectKeyPressData(Common().formatDateStringToUTC(startDate), Common().formatDateStringToUTC(endDate), techName, eventName)
+        jsonData = pyKeyPress.selectKeyPressData(Common().formatDateStringToUTC(startDate),
+                                                 Common().formatDateStringToUTC(endDate), techName, eventName)
         return jsonData
 
     def selectKeyPressDataById(self, dataId):
@@ -54,7 +72,8 @@ class PyKeyPress:
         :returns: newly created id.
         """
         pyKeyPress = self.getPlugin()
-        result = pyKeyPress.insertFixedKeyPressData(dataId, keypress_id, content, className, Common().formatDateStringToUTC(start))
+        result = pyKeyPress.insertFixedKeyPressData(dataId, keypress_id, content, className,
+                                                    Common().formatDateStringToUTC(start))
         return result
 
     def updateFixedKeyPressData(self, dataId, keypress_id, content, className, start):
@@ -71,7 +90,8 @@ class PyKeyPress:
         :returns: The modified count.
         """
         pyKeyPress = self.getPlugin()
-        result = pyKeyPress.updateFixedKeyPressData(dataId, keypress_id, content, className, Common().formatDateStringToUTC(start))
+        result = pyKeyPress.updateFixedKeyPressData(dataId, keypress_id, content, className,
+                                                    Common().formatDateStringToUTC(start))
         return result
 
     def deleteFixedKeyPressData(self, dataId):
@@ -111,7 +131,7 @@ class PyKeyPress:
         pyKeyPress = self.getPlugin()
         return pyKeyPress.editAnnotationKeyPress(dataId, oldAnnotationText, newAnnotationText)
 
-    #delete an annotation for the dataId
+    # delete an annotation for the dataId
     def deleteAnnotationKeyPress(self, dataId, annotationText):
         """Override: Delete one annotation from the key press object.
 
