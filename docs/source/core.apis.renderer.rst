@@ -4,14 +4,6 @@ core.apis.renderer package
 Submodules
 ----------
 
-core.apis.renderer.annotations module
--------------------------------------
-
-.. automodule:: core.apis.renderer.annotations
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 core.apis.renderer.generateHtml module
 --------------------------------------
 
