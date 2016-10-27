@@ -69,9 +69,9 @@ class DataImportTest(unittest.TestCase):
         size = DataImportConfig().importTsharkProtocol(self.techName, self.eventName, self.comments, self.nowString)
         self.assertEqual(size, 371)
 
-    def test_01ImportAllFiles(self):
-        DataImportConfig().importAllDataFromFiles("C:\\temp\json", self.techName, self.eventName, self.comments,
-                                                  self.nowString)
+    # def test_01ImportAllFiles(self):
+    #     DataImportConfig().importAllDataFromFiles("C:\\temp\json", self.techName, self.eventName, self.comments,
+    #                                               self.nowString)
 
 
 if __name__ == '__main__':
