@@ -19,7 +19,6 @@ from bson import ObjectId
 from plugins.datasource.mongodb.annotations import Annotations
 from plugins.datasource.mongodb.common import Common
 
-
 class PyClick:
     def getClickCollection(self):
         return Common().getDatabase().click
@@ -27,6 +26,7 @@ class PyClick:
     def importClick(self, json):
         collection = self.getClickCollection()
         result = collection.insert_many(json)
+        Common().addIndex(collection, True)
         return len(result.inserted_ids)
 
     # select data by date range of the 'start' column
@@ -113,3 +113,4 @@ class PyClick:
             obj["metadata"]["importDate"] = Common().formatEpochDatetime(obj["metadata"]["importDate"]["$date"])
 
         return objects
+

@@ -27,6 +27,7 @@ class PyKeyPress:
     def importKeypressData(self, json):
         collection = self.getKeyPressCollection()
         result = collection.insert_many(json)
+        Common().addIndex(collection, True)
         return len(result.inserted_ids)
 
     # select data by date range of the 'start' column

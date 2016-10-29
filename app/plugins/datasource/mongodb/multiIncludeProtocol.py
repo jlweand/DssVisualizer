@@ -29,6 +29,7 @@ class MultiIncludeProtocol:
     def importMultiIncludeProtocolData(self, json):
         collection = self.getMultiIncludeProtocolCollection()
         result = collection.insert_many(json)
+        Common().addIndex(collection, True)
         return len(result.inserted_ids)
 
     # select data by date range of the 'start' column

@@ -27,6 +27,7 @@ class PyTimed:
     def importTimed(self, json):
         collection = self.getTimedCollection()
         result = collection.insert_many(json)
+        Common().addIndex(collection, True)
         return len(result.inserted_ids)
 
     # select data by date range of the 'start' column

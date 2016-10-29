@@ -27,6 +27,7 @@ class MultiIncludeThroughput:
     def importMultiIncludeThroughputData(self, json):
         collection = self.getMultiIncludeThroughputCollection()
         result = collection.insert_many(json)
+        Common().addIndex(collection, False)
         return len(result.inserted_ids)
 
     # select data by date range of the 'start' column

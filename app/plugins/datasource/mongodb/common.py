@@ -15,13 +15,12 @@
 # You should have received a copy of the GNU General Public License
 # along with DssVisualizer.  If not, see <http://www.gnu.org/licenses/>.
 
-from datetime import datetime, timezone
-from pymongo import MongoClient
-from bson.json_util import dumps
+import pymongo
 import ujson
 import pytz
+from datetime import datetime
 from tzlocal import get_localzone
-from core.apis.datasource.common import Common
+from bson.json_util import dumps
 
 class Common:
     """Here lies some common functions so they don't have to continue to be written over and over again."""
@@ -50,7 +49,7 @@ class Common:
 
         :returns: MongoDB Database
         """
-        client = MongoClient()
+        client = pymongo.MongoClient()
         return client.dssvisualizer
 
     def formatOutput(self, cursor):
@@ -111,3 +110,22 @@ class Common:
         if len(eventName) > 0:
             findJson["metadata.eventName"] = eventName
         return findJson
+
+    def addIndex(self, collection, hasStart):
+        """Adds an index to the collection if it does not already exist
+
+        :param collection: The collection to add the index to
+        :type collection: MongoDB collection
+        :param hasStart: True if the date to search by is 'start' otherwise it's assumed to be 'x'
+        :type hasStart: boolean
+        :return:
+        """
+
+        if hasStart:
+            collection.create_index([("start", pymongo.ASCENDING),
+                                     ("metadata.techName", pymongo.ASCENDING),
+                                     ("metadata.eventName", pymongo.ASCENDING)], background=True)
+        else:
+            collection.create_index([("x", pymongo.ASCENDING),
+                                     ("metadata.techName", pymongo.ASCENDING),
+                                     ("metadata.eventName", pymongo.ASCENDING)], background=True)

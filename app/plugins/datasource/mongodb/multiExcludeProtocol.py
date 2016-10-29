@@ -29,6 +29,7 @@ class MultiExcludeProtocol:
     def importMultiExcludeProtocolData(self, json):
         collection = self.getMultiExcludeProtocolCollection()
         result = collection.insert_many(json)
+        Common().addIndex(collection, True)
         return len(result.inserted_ids)
 
     # select data by date range of the 'start' column
