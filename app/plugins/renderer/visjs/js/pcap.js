@@ -1,139 +1,85 @@
-$(document).on("click", "#dateInput", function(){
-	$("#loading").removeClass("hidden");
-	$("#pcapData").addClass("hidden");
-	$("#multiExcludeData").html("");
-	$("#multiIncludeData").html("");
-	$("#tsharkData").html("");
-	var start = $("#datepickerStart").val();
-	var end = $("#datepickerEnd").val();
-	if(start == ""){
-		start = '2000-01-01 00:00:00';
-	}
-	else{
-		start = start + " 00:00:00";
-	}
-	if(end == ""){
-		end = '3000-01-01 23:59:59';
-	}
-	else{
-		end = end + " 23:59:59";
-	}
-	var pcapDataUrl = "http://localhost?request=pcapData&startDate="+start+"&endDate="+end;
-	$.get(pcapDataUrl);
-});
+var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
+	var containerME = document.getElementById("multiExcludeData");
+	var containerMI = document.getElementById("multiIncludeData");
+	var containerTS = document.getElementById("tsharkData");
 
-function visPCAPData(meXY, meAll, miXY, miAll, tsXY, tsAll){
-	visMEData(meXY, meAll);
-	visMIData(miXY, miAll);
-	visTSData(tsXY, tsAll);
-}
+	var datasetME = new vis.DataSet(meXY);
+	var datasetMI = new vis.DataSet(miXY);
+	var datasetTS = new vis.DataSet(tsXY);
 
-function visMEData(xyData, allData){
-	xyData.forEach(function(xyObj){
-		var xyTime = xyObj['x'];
-		allData.forEach(function(allObj){
-			var allTime = allObj['start'];
-			if(allTime == xyTime){
-				xyObj['label'] = {"content": allObj['content']};
-			}
-		});
-	});
-	var container = document.getElementById("multiExcludeData");
-	var datasetME = new vis.DataSet(xyData);
 	var options = {
 		drawPoints: true,
 		interpolation: false,
 		height: "150px"
 	};
-	var graph2dME = new vis.Graph2d(container, datasetME, options);
+
+	var graph2dME = new vis.Graph2d(containerME, datasetME, options);
+	var graph2dMI = new vis.Graph2d(containerMI, datasetMI, options);
+	var graph2dTS = new vis.Graph2d(containerTS, datasetTS, options);
+
 	$("#loading").addClass("hidden");
 	$("#multiExcludeData").removeClass("hidden");
+	$("#multiIncludeData").removeClass("hidden");
+	$("#tsharkData").removeClass("hidden");
+
+	var xBuffer = 100;
+	var yBuffer = 5;
 
 	// alert("before select");
 	graph2dME.on('click', function(properties){
 		var currTime = new Date(properties.time);
-		allData.forEach(function(allObj){
+		var currY = properties.value;
+		console.log(currY);
+		meAll.forEach(function(allObj){
 			var allTime = new Date(allObj['start'].replace(/-/g, "/").replace(/T/, " "));
+			var allY = allObj[''];
 			// var allTime = new Date(allObj['start']);
-			var diff = Math.abs(currTime - allTime);
-			var buffer = 100;
+			var xDiff = Math.abs(currTime - allTime);
+			var yDiff = Math.abs(currY - allY);
 			// console.log(allObj['start']);
 			// console.log(currTime+" - "+allTime+" = "+diff);
-			if( diff < buffer){
-				prettyPrompt(allObj['start'], allObj['title']);
+			if( xDiff < xBuffer){
+				if( yDiff < yBuffer){
+					prettyPrompt(allObj['start'], allObj['title']);
+				}
 			}
 		});
 	});
-}
-
-function visMIData(xyData, allData){
-	xyData.forEach(function(xyObj){
-		var xyTime = xyObj['x'];
-		allData.forEach(function(allObj){
-			var allTime = allObj['start'];
-			if(allTime == xyTime){
-				xyObj['label'] = {"content": allObj['content']};
-			}
-		});
-	});
-	var container = document.getElementById("multiIncludeData");
-	var datasetMI = new vis.DataSet(xyData);
-	var options = {
-		drawPoints: true,
-		interpolation: false,
-		height: "150px"
-	};
-	var graph2dMI = new vis.Graph2d(container, datasetMI, options);
-	$("#loading").addClass("hidden");
-	$("#multiIncludeData").removeClass("hidden");
-
-	// alert("before select");
 	graph2dMI.on('click', function(properties){
 		var currTime = new Date(properties.time);
-		allData.forEach(function(allObj){
+		var currY = properties.value;
+		console.log(currY);
+		miAll.forEach(function(allObj){
 			var allTime = new Date(allObj['start'].replace(/-/g, "/").replace(/T/, " "));
-			var diff = Math.abs(currTime - allTime);
-			var buffer = 100;
-			// alert(currTime+" - "+allTime+" = "+diff);
-			if( diff < buffer){
-				prettyPrompt(allObj['start'], allObj['title']);
+			var allY = allObj[''];
+			// var allTime = new Date(allObj['start']);
+			var xDiff = Math.abs(currTime - allTime);
+			var yDiff = Math.abs(currY - allY);
+			// console.log(allObj['start']);
+			// console.log(currTime+" - "+allTime+" = "+diff);
+			if( xDiff < xBuffer){
+				if( yDiff < yBuffer){
+					prettyPrompt(allObj['start'], allObj['title']);
+				}
 			}
 		});
 	});
-}
-
-function visTSData(xyData, allData){
-	xyData.forEach(function(xyObj){
-		var xyTime = xyObj['x'];
-		allData.forEach(function(allObj){
-			var allTime = allObj['start'];
-			if(allTime == xyTime){
-				xyObj['label'] = {"content": allObj['content']};
-			}
-		});
-	});
-	var container = document.getElementById("tsharkData");
-	var datasetTS = new vis.DataSet(xyData);
-	var options = {
-		drawPoints: true,
-		interpolation: false,
-		height: "150px"
-	};
-	var graph2dTS = new vis.Graph2d(container, datasetTS, options);
-	$("#loading").addClass("hidden");
-	$("#tsharkData").removeClass("hidden");
-
-	// alert("before select");
 	graph2dTS.on('click', function(properties){
 		var currTime = new Date(properties.time);
-		allData.forEach(function(allObj){
+		var currY = properties.value;
+		console.log(currY);
+		tsAll.forEach(function(allObj){
 			var allTime = new Date(allObj['start'].replace(/-/g, "/").replace(/T/, " "));
-			var diff = Math.abs(currTime - allTime);
-			var buffer = 100;
-			// alert(currTime+" - "+allTime+" = "+diff);
-			if( diff < buffer){
-				prettyPrompt(allObj['start'], allObj['title']);
-				$(".sweet-alert").scrollTop(0);
+			var allY = allObj[''];
+			// var allTime = new Date(allObj['start']);
+			var xDiff = Math.abs(currTime - allTime);
+			var yDiff = Math.abs(currY - allY);
+			// console.log(allObj['start']);
+			// console.log(currTime+" - "+allTime+" = "+diff);
+			if( xDiff < xBuffer){
+				if( yDiff < yBuffer){
+					prettyPrompt(allObj['start'], allObj['title']);
+				}
 			}
 		});
 	});

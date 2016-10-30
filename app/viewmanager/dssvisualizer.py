@@ -85,7 +85,7 @@ def handle(web_view, web_frame, web_resource, request, response):
                 keyData = PyKeyPress().selectKeyPressData(startDate, endDate, '', '')
                 clickData = PyClick().selectClickData(startDate, endDate, '', '')
                 timedData = PyTimed().selectTimedData(startDate, endDate, '', '')
-                js = "visData(%s, %s, %s);" % (keyData, clickData, timedData)
+                js = "visualizeKeyData(%s, %s, %s);" % (keyData, clickData, timedData)
                 webKitWebView.execute_script(js)
             elif queryDict['request'][0] == 'pcapData':
                 startDate = queryDict['startDate'][0]
@@ -96,7 +96,7 @@ def handle(web_view, web_frame, web_resource, request, response):
                 multiExProt = MultiExcludeProtocol().selectMultiExcludeProtocolData(startDate, endDate, '', '')
                 multiIncProt = MultiIncludeProtocol().selectMultiIncludeProtocolData(startDate, endDate, '', '')
                 tsharkProt = TsharkProtocol().selectTsharkProtocolData(startDate, endDate, '', '')
-                js = "visPCAPData(%s, %s, %s, %s, %s, %s);" % (
+                js = "visualizePCAPData(%s, %s, %s, %s, %s, %s);" % (
                     multiEx, multiExProt, multiInc, multiIncProt, tshark, tsharkProt)
                 webKitWebView.execute_script(js)
 

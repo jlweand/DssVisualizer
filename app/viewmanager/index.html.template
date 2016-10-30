@@ -29,7 +29,8 @@
 	<!-- Load jquery for ajax support -->
 	<script src="js/jquery-3.1.0.min.js"></script>
 	<script src="js/jquery-ui.min.js"></script>
-	<script src="js/annotation.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/annotation.js"></script>
 	<script src="js/datepicker.js"></script>
 	<script>
 		$(window).resize(function(){
@@ -39,49 +40,51 @@
 <SCRIPTS GO HERE>
 </head>
 <body>
-	<div id="admin">
-		<a href="admin.html">Edit Plug-Ins</a>
-	</div>
-	<div id="dateSelect">
-		<div id="start-container">
-			<label for="start">Select start date:</label>
-			<input type="text" id="datepickerStart" name="start" size="30" />
-		</div>
+    <div id="content">
+    	<div id="admin">
+    		<a href="admin.html">Edit Plug-Ins</a>
+    	</div>
+    	<div id="dateSelect">
+    		<div id="start-container">
+    			<label for="start">Select start date:</label>
+    			<input type="text" id="datepickerStart" name="start" size="30" />
+    		</div>
 
-		<div id="end-container">
-			<label for="end">Select end date:</label>
-			<input type="text" id="datepickerEnd" name="end" size="30" />
-		</div>
-		<div id="end-container">
-			<button id="dateInput" name="dateInput">Go</button>
-		</div>
-	</div>
-	<div class="clear"></div>
-	<h3>Keypress Data</h3>
-	<div id="keypressData"></div>
-	<h3>Multi Exclude Data</h3>
-	<div id="multiExcludeData"></div>
-	<h3>Multi Include Data</h3>
-	<div id="multiIncludeData"></div>
-	<h3>TShark Data</h3>
-	<div id="tsharkData"></div>
-	<div id="loading" class="hidden">
-		<img src="img/ripple.gif" />
-	</div>
-	<div id="currentItem"></div>
-	<div id="oldAnnotations"></div>
-	<!--
-	<div id="dialog-form">
-		<form id="annotationsForm">
-			<div>
-				<label id="annotationLabel" for="annotation">Please select an object first</label>
-			</div>
-			<div>
-				<textarea id="annotation" name="annotation" rows="5"></textarea>
-			</div>
-			<input type="hidden" id="objID" name="objID" val=""/>
-		</form>
-	</div>
+    		<div id="end-container">
+    			<label for="end">Select end date:</label>
+    			<input type="text" id="datepickerEnd" name="end" size="30" />
+    		</div>
+    		<div id="end-container">
+    			<button id="dateInput" name="dateInput">Go</button>
+    		</div>
+    	</div>
+    	<div class="clear"></div>
+    	<h3>Keypress Data</h3>
+    	<div id="keypressData"></div>
+    	<h3>Multi Exclude Data</h3>
+    	<div id="multiExcludeData"></div>
+    	<h3>Multi Include Data</h3>
+    	<div id="multiIncludeData"></div>
+    	<h3>TShark Data</h3>
+    	<div id="tsharkData"></div>
+    	<div id="loading" class="hidden">
+    		<img src="img/ripple.gif"/>
+    	</div>
+    	<div id="currentItem"></div>
+    	<div id="oldAnnotations"></div>
+    	<!--
+    	<div id="dialog-form">
+    		<form id="annotationsForm">
+    			<div>
+    				<label id="annotationLabel" for="annotation">Please select an object first</label>
+    			</div>
+    			<div>
+    				<textarea id="annotation" name="annotation" rows="5"></textarea>
+    			</div>
+    			<input type="hidden" id="objID" name="objID" val=""/>
+    		</form>
+    	</div>
+    </div>
 	-->
 	<div id="footer">Code licensed under the <a href="https://www.gnu.org/licenses/gpl-3.0-standalone.html">GPLv3</a></div>
 

@@ -1,40 +1,7 @@
-$(document).ready(function(){
-	// var startDate = '2016-09-01 09:00:00';
-	// var endDate = '2016-09-16 10:00:00';
-	// var keypressDataUrl = "http://localhost?request=keypressData&startDate="+startDate+"&endDate="+endDate;
-	// $.get(keypressDataUrl);
-});
-$(document).on("click", "#dateInput", function(){
-	$("#loading").removeClass("hidden");
-	$("#keypressData").addClass("hidden");
-	$("#keypressData").html("");
-	var start = $("#datepickerStart").val();
-	var end = $("#datepickerEnd").val();
-	if(start == ""){
-		start = '2000-01-01 00:00:00';
-	}
-	else{
-		start = start + " 00:00:00";
-	}
-	if(end == ""){
-		end = '3000-01-01 23:59:59';
-	}
-	else{
-		end = end + " 23:59:59";
-	}
-	var keypressDataUrl = "http://localhost?request=keypressData&startDate="+start+"&endDate="+end;
-	$.get(keypressDataUrl);
-});
-function visData(keyData, clickData, timedData){
+var KeyLogger = function(keyData, clickData, timedData){
 	keyData.forEach(function(obj){ obj['group'] = '0';});
 	clickData.forEach(function(obj){ obj['group'] = '1';});
 	timedData.forEach(function(obj){ obj['group'] = '2';});
-
-	// var startDate = '2016-09-01 09:00:00';
-	// var endDate = '2016-09-16 10:00:00';
-
-	// hide the "loading..." message
-	// document.getElementById('loading').style.display = 'none';
 
 	// DOM element where the Timeline will be attached
 	var container = document.getElementById("keypressData");
@@ -59,10 +26,10 @@ function visData(keyData, clickData, timedData){
 		template: function (item) {
 			var display = item.content;
 			if(display == " "){
-				return '<p>Img ' + item.start + '</p>';
+				return '<div>Img ' + item.start + '</div>';
 			}
 			else{
-		    	return '<p>' + item.content + '</p>';
+		    	return '<div>' + item.content + '</div>';
 			}
 		  }
 	};
