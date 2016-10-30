@@ -32,10 +32,10 @@ from core.apis.datasource.common import Common
 
 
 class DataExportConfig:
-    def exportAllData(self, startDate, endDate, techName, eventName, moveFiles, exportLocation):
-        self.exportClickData(startDate, endDate, techName, eventName, moveFiles, exportLocation)
+    def exportAllData(self, startDate, endDate, techName, eventName, moveImages, exportLocation):
+        self.exportClickData(startDate, endDate, techName, eventName, moveImages, exportLocation)
         self.exporKeyPressData(startDate, endDate, techName, eventName, exportLocation)
-        self.exportTimedData(startDate, endDate, techName, eventName, moveFiles, exportLocation)
+        self.exportTimedData(startDate, endDate, techName, eventName, moveImages, exportLocation)
         self.exportMultiExcludeProtocolData(startDate, endDate, techName, eventName, exportLocation)
         self.exportMultiExcludeThroughputData(startDate, endDate, techName, eventName, exportLocation)
         self.exportMultiIncludeProtocolData(startDate, endDate, techName, eventName, exportLocation)
@@ -43,11 +43,11 @@ class DataExportConfig:
         self.exportTsharkProtocolData(startDate, endDate, techName, eventName, exportLocation)
         self.exportTsharkThroughputData(startDate, endDate, techName, eventName, exportLocation)
 
-    def exportClickData(self, startDate, endDate, techName, eventName, moveFiles, exportLocation):
+    def exportClickData(self, startDate, endDate, techName, eventName, moveImages, exportLocation):
         pyClickData = PyClick().selectClickData(startDate, endDate, techName, eventName)
         self.cleanupData(pyClickData, True, False)
         self.exportToFile(exportLocation + "\\pyKeyLogger", "click.json" , pyClickData)
-        if moveFiles and len(pyClickData) > 0:
+        if moveImages and len(pyClickData) > 0:
             self.copyImages(exportLocation + "\\pyKeyLogger\\click_images", pyClickData)
         return len(pyClickData)
 
@@ -57,11 +57,11 @@ class DataExportConfig:
         self.exportToFile(exportLocation + "\\pyKeyLogger", "keyPress.json", pyKeyPressData)
         return len(pyKeyPressData)
 
-    def exportTimedData(self, startDate, endDate, techName, eventName, moveFiles, exportLocation):
+    def exportTimedData(self, startDate, endDate, techName, eventName, moveImages, exportLocation):
         pyTimedData = PyTimed().selectTimedData(startDate, endDate, techName, eventName)
         self.cleanupData(pyTimedData, True, False)
         self.exportToFile(exportLocation + "\\pyKeyLogger", "timed.json", pyTimedData)
-        if moveFiles and len(pyTimedData) > 0:
+        if moveImages and len(pyTimedData) > 0:
             self.copyImages(exportLocation + "\\pyKeyLogger\\timed_images", pyTimedData)
         return len(pyTimedData)
 

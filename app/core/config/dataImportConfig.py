@@ -84,35 +84,38 @@ class DataImportConfig:
             data = ujson.loads(jsonStr)
         return data
 
-    def moveImages(self, json, originalImageLocation, newImageLocation):
-        """This method will moves the images from originalImageLocation to newImageLocation and update the path
+    def moveImages(self, json, newImageLocation):
+        """This method will moves the images from the location found in the JSON file to newImageLocation and update the path
         in the JSON object.
 
         :param json: A python object of the parsed JSON
         :type json: object[]
-        :param originalImageLocation: the path of the original location of the images.
-        :type originalImageLocation: str
         :param newImageLocation: The path to where the images should be copied to.
         :type newImageLocation: str
         :returns: A python object of the parsed JSON
         """
-        # copy the images into our file system
-        src_files = os.listdir(originalImageLocation)
-        for fileName in src_files:
-            if fileName.lower().endswith('.png'):
-                fullFileName = os.path.join(originalImageLocation, fileName)
-                if os.path.isfile(fullFileName):
-                    shutil.copy(fullFileName, newImageLocation)
 
-        # update raw json with the new file path
-        for data in json:
-            indexOf = data["title"].rfind('/')
-            imageName = data["title"][indexOf+1:]
-            data["title"] = newImageLocation + imageName
+        if not os.path.exists(newImageLocation):
+            os.makedirs(newImageLocation)
+
+        for dataObj in json:
+
+            # get the location of the image from the object.
+            indexOf = dataObj["title"].rfind('/')
+            originalImageLocation = dataObj["title"][:indexOf]
+            imageName = dataObj["title"][indexOf+1:]
+
+            # copy the image into the export path
+            fullFileName = os.path.join(originalImageLocation, imageName)
+            if os.path.isfile(fullFileName):
+                shutil.copy(fullFileName, newImageLocation)
+
+            # update raw json with the new file path
+            dataObj["title"] = newImageLocation + imageName
 
         return json
 
-    def importAllDataFromFiles(self, fileLocation, techName, eventName, comments, importDate):
+    def importAllDataFromFiles(self, fileLocation, techName, eventName, comments, importDate, moveImages):
         """This method will recursive search all folders.  if it finds a .json file it will try to import it based
         on the folder and file name.
 
@@ -126,6 +129,8 @@ class DataImportConfig:
         :type comments: str
         :param importDate: User entered value for imported date
         :type importDate: str
+        :param moveImages: True if the Click, Timed, Manual Screenshot images should be moved into our file system, False if they should stay where they are.
+        :type importDate: bool
         :return:
         """
         for subdir, dirs, files in os.walk(fileLocation):
@@ -133,11 +138,11 @@ class DataImportConfig:
                 fullFileName = os.path.join(subdir, file)
                 if os.path.isfile(fullFileName) and file.lower().endswith(".json"):
                     if "click" in fullFileName.lower():
-                        self.importClickFile(fullFileName, techName, eventName, comments, importDate, False, "")
+                        self.importClickFile(fullFileName, techName, eventName, comments, importDate, moveImages)
                     elif "keypressdata" in fullFileName.lower():
                         self.importKeypressDataFile(fullFileName, techName, eventName, comments, importDate)
                     elif "timed" in fullFileName.lower():
-                        self.importTimedFile(fullFileName, techName, eventName, comments, importDate, False, "")
+                        self.importTimedFile(fullFileName, techName, eventName, comments, importDate, moveImages)
 
                     elif "multi_exec_tshark" in fullFileName.lower() and "networkdataall" in fullFileName.lower():
                         self.importMultiExcludeProtocolFile(fullFileName, techName, eventName, comments, importDate)
@@ -155,16 +160,14 @@ class DataImportConfig:
                         self.importTsharkThroughputFile(fullFileName, techName, eventName, comments, importDate)
 
 
-    def importClick(self, techName, eventName, comments, importDate, moveImages, originalImageLocation):
-        return self.importClickFile(self.clickFile, techName, eventName, comments, importDate, moveImages,
-                                    originalImageLocation)
+    def importClick(self, techName, eventName, comments, importDate, moveImages):
+        return self.importClickFile(self.clickFile, techName, eventName, comments, importDate, moveImages)
 
-    def importClickFile(self, fullFileName, techName, eventName, comments, importDate, moveImages,
-                        originalImageLocation):
+    def importClickFile(self, fullFileName, techName, eventName, comments, importDate, moveImages):
         data = self.importJson(fullFileName)
         data = self.addExtraData(data, techName, eventName, comments, importDate, True, False)
         if moveImages:
-            data = self.moveImages(data, originalImageLocation, "images/click/")
+            data = self.moveImages(data, "images/click/")
         return DataImport().importClick(data)
 
     def importKeypressData(self, techName, eventName, comments, importDate):
@@ -175,16 +178,14 @@ class DataImportConfig:
         data = self.addExtraData(data, techName, eventName, comments, importDate, True, False)
         return DataImport().importKeypressData(data)
 
-    def importTimed(self, techName, eventName, comments, importDate, moveImages, originalImageLocation):
-        return self.importTimedFile(self.timedFile, techName, eventName, comments, importDate, moveImages,
-                                    originalImageLocation)
+    def importTimed(self, techName, eventName, comments, importDate, moveImages):
+        return self.importTimedFile(self.timedFile, techName, eventName, comments, importDate, moveImages)
 
-    def importTimedFile(self, fullFileName, techName, eventName, comments, importDate, moveImages,
-                        originalImageLocation):
+    def importTimedFile(self, fullFileName, techName, eventName, comments, importDate, moveImages):
         data = self.importJson(fullFileName)
         data = self.addExtraData(data, techName, eventName, comments, importDate, True, False)
         if moveImages:
-            data = self.moveImages(data, originalImageLocation, "images/timed/")
+            data = self.moveImages(data, "images/timed/")
         return DataImport().importTimed(data)
 
     def importMultiExcludeProtocol(self, techName, eventName, comments, importDate):

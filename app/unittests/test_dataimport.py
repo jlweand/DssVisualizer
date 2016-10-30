@@ -28,8 +28,7 @@ class DataImportTest(unittest.TestCase):
     comments = "here are some comments"
 
     def test_1importClick(self):
-        size = DataImportConfig().importClick(self.techName, self.eventName, self.comments, self.nowString, False,
-                                              "C:\\temp\images\\click")
+        size = DataImportConfig().importClick(self.techName, self.eventName, self.comments, self.nowString, False)
         self.assertEqual(size, 29)
 
     def test_2insertKeypressData(self):
@@ -37,8 +36,7 @@ class DataImportTest(unittest.TestCase):
         self.assertEqual(size, 71)
 
     def test_3importTimed(self):
-        size = DataImportConfig().importTimed(self.techName, self.eventName, self.comments, self.nowString, False,
-                                              "C:\\temp\images\\timed")
+        size = DataImportConfig().importTimed(self.techName, self.eventName, self.comments, self.nowString, False)
         self.assertEqual(size, 48)
 
     def test_4importMultiExcludeThroughput(self):
