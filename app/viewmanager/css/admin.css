@@ -59,3 +59,27 @@ label{
 .submitContainer{
 	text-align: center;
 }
+
+#importSlide, #importPanel{
+	padding: 5px;
+	text-align: center;
+
+	background-color: #eeeeee;
+
+}
+#exportSlide, #exportPanel {
+	padding: 5px;
+	text-align: center;
+
+	background-color: #eeeeee;
+
+}
+
+#importPanel {
+	padding: 5px;
+	display: none;
+}
+#exportPanel {
+	padding: 5px;
+	display: none;
+}

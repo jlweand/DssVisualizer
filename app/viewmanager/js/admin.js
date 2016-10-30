@@ -82,3 +82,19 @@ function updateJson(){
 	var updateRendJson = "http://localhost?adminSubmission=pluginChanges&database="+database+"&pcapDataProtocol="+pcapDataProtocol+"&pcapThroughput="+pcapThroughput+"&pyKeyLogger="+pyKeyLogger+"&screenshots="+screenshots;
 	$.get(updateRendJson);
 }
+$(document).ready(function(){
+	$("#importSlide").click(function(){
+			$("#importPanel").slideToggle("slow");
+	});
+ $("#exportSlide").click(function(){
+			$("#exportPanel").slideToggle("slow");
+	});
+ $('#import').submit(function(){
+
+		$.get("http://dssvisualizer.py/importData", $( '#import' ).serialize());
+ });
+ $('#export').submit(function(){
+
+		$.get("http://dssvisualizer.py/exportData", $( '#export' ).serialize());
+ });
+});

@@ -16,12 +16,9 @@
 # along with DssVisualizer.  If not, see <http://www.gnu.org/licenses/>.
 
 import gi
-import logging
 import os
 import ujson
-import subprocess
 from urllib.parse import parse_qs
-# from core.apis.renderer.annotations import Annotations
 
 # Only use files from core.  DO NOT use files from plugins.
 from core.apis.renderer.generateHtml import GenerateHtml
@@ -48,57 +45,77 @@ def handle(web_view, web_frame, web_resource, request, response):
     ##'query' contains the data sent from the jquery.get method
 
     query = request.get_message().get_uri().get_query()
-    uri = request.get_uri()
+    _uri = request.get_uri()
 
-    if ('installDatasources' in uri or 'adminset' in uri):
+    if 'installDatasources' in _uri or 'adminset' in _uri:
         load_uninstalled_plugins(query, "datasource")
 
-    if ('installRends' in uri or 'adminset' in uri):
+    if 'installRends' in _uri or 'adminset' in _uri:
         load_uninstalled_plugins(query, "renderer")
+
+    if 'importData' in _uri:
+        importInfo = parse_qs(query)
+        print("Technician:" + importInfo['tech'][0])
+        print("Move to workspace:" + importInfo['moveFiles'][0])
+        print("Import files from:" + importInfo['location'][0])
+        print("Comments:" + importInfo['comment'][0])
+        print("Event name:" + importInfo['event'][0])
+        print("Date:" + importInfo['date'][0])
+    # print (parse_qs(query))
+
+    if 'exportData' in _uri:
+        exportInfo = parse_qs(query)
+        print("Technician:" + exportInfo['tech'][0])
+        print("Move images:" + exportInfo['moveImages'][0])
+        print("Import files from:" + exportInfo['location'][0])
+        print("Event name:" + exportInfo['event'][0])
+        print("Date:" + exportInfo['date'][0])
+    # print (parse_qs(query))
+
 
     if not query:
         return
     else:
 
         queryDict = parse_qs(query)
-        if ('request' in queryDict):
-            if (queryDict['request'][0] == 'keypressData'):
+        if 'request' in queryDict:
+            if queryDict['request'][0] == 'keypressData':
                 startDate = queryDict['startDate'][0]
                 endDate = queryDict['endDate'][0]
-                keyData = PyKeyPress().selectKeyPressData(startDate, endDate)
-                clickData = PyClick().selectClickData(startDate, endDate)
-                timedData = PyTimed().selectTimedData(startDate, endDate)
+                keyData = PyKeyPress().selectKeyPressData(startDate, endDate, '', '')
+                clickData = PyClick().selectClickData(startDate, endDate, '', '')
+                timedData = PyTimed().selectTimedData(startDate, endDate, '', '')
                 js = "visData(%s, %s, %s);" % (keyData, clickData, timedData)
                 webKitWebView.execute_script(js)
-            elif (queryDict['request'][0] == 'pcapData'):
+            elif queryDict['request'][0] == 'pcapData':
                 startDate = queryDict['startDate'][0]
                 endDate = queryDict['endDate'][0]
-                multiEx = MultiExcludeThroughput().selectMultiExcludeThroughputData(startDate, endDate)
-                multiInc = MultiIncludeThroughput().selectMultiIncludeThroughputData(startDate, endDate)
-                tshark = TsharkThroughput().selectTsharkThroughputData(startDate, endDate)
-                multiExProt = MultiExcludeProtocol().selectMultiExcludeProtocolData(startDate, endDate)
-                multiIncProt = MultiIncludeProtocol().selectMultiIncludeProtocolData(startDate, endDate)
-                tsharkProt = TsharkProtocol().selectTsharkProtocolData(startDate, endDate)
+                multiEx = MultiExcludeThroughput().selectMultiExcludeThroughputData(startDate, endDate, '', '')
+                multiInc = MultiIncludeThroughput().selectMultiIncludeThroughputData(startDate, endDate, '', '')
+                tshark = TsharkThroughput().selectTsharkThroughputData(startDate, endDate, '', '')
+                multiExProt = MultiExcludeProtocol().selectMultiExcludeProtocolData(startDate, endDate, '', '')
+                multiIncProt = MultiIncludeProtocol().selectMultiIncludeProtocolData(startDate, endDate, '', '')
+                tsharkProt = TsharkProtocol().selectTsharkProtocolData(startDate, endDate, '', '')
                 js = "visPCAPData(%s, %s, %s, %s, %s, %s);" % (
-                multiEx, multiExProt, multiInc, multiIncProt, tshark, tsharkProt)
+                    multiEx, multiExProt, multiInc, multiIncProt, tshark, tsharkProt)
                 webKitWebView.execute_script(js)
 
-        elif ('submission' in queryDict):
-            if (queryDict['submission'][0] == 'annotation'):
+        elif 'submission' in queryDict:
+            if queryDict['submission'][0] == 'annotation':
                 itemID = queryDict['itemID'][0]
                 itemType = queryDict['type'][0]
                 annotation = queryDict['annotation'][0]
-                if (itemType == 'keypress'):
+                if itemType == 'keypress':
                     PyKeyPress().addAnnotationKeyPress(itemID, annotation)
-                elif (itemType == 'click'):
+                elif itemType == 'click':
                     PyClick().addAnnotationClick(itemID, annotation)
-                elif (itemType == 'timed'):
+                elif itemType == 'timed':
                     PyTimed().addAnnotationTimed(itemID, annotation)
-        elif ('adminRequest' in queryDict):
-            if (queryDict['adminRequest'][0] == 'availablePlugins'):
+        elif 'adminRequest' in queryDict:
+            if queryDict['adminRequest'][0] == 'availablePlugins':
                 load_available_renderers()
-        elif ('adminSubmission' in queryDict):
-            if (queryDict['adminSubmission'][0] == 'pluginChanges'):
+        elif 'adminSubmission' in queryDict:
+            if queryDict['adminSubmission'][0] == 'pluginChanges':
                 database = queryDict['database'][0]
                 pcapDataProtocol = queryDict['pcapDataProtocol'][0]
                 pcapThroughput = queryDict['pcapThroughput'][0]
@@ -118,20 +135,20 @@ def handle(web_view, web_frame, web_resource, request, response):
 def getJson(file):
     with open(file) as json_data:
         d = ujson.load(json_data)
-        return (d)
+        return d
 
 
 def load_available_renderers():
     jsonFile = getJson("core/config/config.JSON")
     allFile = ujson.dumps(jsonFile)
-    js = "createRadioButtons(%s)" % (allFile)
+    js = "createRadioButtons(%s)" % allFile
     webKitWebView.execute_script(js)
 
 
-def load_uninstalled_plugins(query, type):
+def load_uninstalled_plugins(query, _type):
     folder = "plugins/renderer/"
     tagID = "installRends"
-    if type is "datasource":
+    if _type is "datasource":
         folder = "plugins/datasource/"
         tagID = "installDatasources"
 
@@ -144,7 +161,7 @@ def load_uninstalled_plugins(query, type):
         importer.importPlugin(query)
         script = 'document.getElementById("' + tagID + '").innerHTML = "";'  # diff
         webKitWebView.execute_script(script)
-        load_uninstalled_plugins(None, type)
+        load_uninstalled_plugins(None, _type)
 
 
 def modify_uninstalled_plugin_html(plugin, tagID):
@@ -157,9 +174,8 @@ def modify_uninstalled_plugin_html(plugin, tagID):
     webKitWebView.execute_script(script)
 
 
-# def handle_url(request):
-# 	print(request.get('annotation'))
-
+# Once MongoDB is installed as a service one everyone's machine, this can be uncommented.
+# MongoDB will then be started as the app is started.
 # subprocess.call(["mongod", "--repair"], shell=True)
 # subprocess.Popen(["mongod"], shell=True)
 
