@@ -47,9 +47,9 @@ class TsharkThroughput:
         :param endDate: The a string value of the local datetime to end search on
         :type endDate: str
         :param techName: The technician name to return data
-        :type: str
-        :param: eventName: The name of the event to return data
-        :type: str
+        :type techName: str
+        :param eventName: The name of the event to return data
+        :type eventName: str
         :returns: JSON object
         """
         tsharkPlugin = self.getPlugin()
