@@ -28,6 +28,14 @@ unittests.test_configRenderers module
     :undoc-members:
     :show-inheritance:
 
+unittests.test_dataexport module
+--------------------------------
+
+.. automodule:: unittests.test_dataexport
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 unittests.test_dataimport module
 --------------------------------
 

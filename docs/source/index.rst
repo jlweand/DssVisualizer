@@ -48,7 +48,7 @@ But to not keep you hanging here are some things to get you started!
 
 How to run the DssVisualizer
 ============================
-* Copy your .json files into the dssvisualizer/app/json/<dataType> folders.  Check out the source code of :func:`DataImportConfig <core.config.dataImportConfig>` for where the application is looking for the json files.
+* Copy your .json files into the dssvisualizer/app/json/<dataType> folders.  Check out the source code of :func:`DataImport <core.config.dataImport>` for where the application is looking for the json files.
 
 * Until the UI is complete, in a `cmd` line, from within the `app` folder run the test_dataimport.py file::
 

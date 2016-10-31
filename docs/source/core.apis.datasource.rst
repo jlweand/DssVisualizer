@@ -12,14 +12,6 @@ core.apis.datasource.common module
     :undoc-members:
     :show-inheritance:
 
-core.apis.datasource.dataImport module
---------------------------------------
-
-.. automodule:: core.apis.datasource.dataImport
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 core.apis.datasource.multiExcludeProtocol module
 ------------------------------------------------
 
