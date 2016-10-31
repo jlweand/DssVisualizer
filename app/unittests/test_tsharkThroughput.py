@@ -81,7 +81,7 @@ class TsharkThroughputTest(unittest.TestCase):
 
         # add Annotation To MultiExcludeThroughput Timeline
         objectId = TsharkThroughput().addAnnotationToTsharkThroughputTimeline('2016-08-01 10:00:00',
-                                                                              "here's a timeline annotation")
+                                                                              "here's a timeline annotation", "Alex", "Super Summer Event")
         addtimelineAnnotation = TsharkThroughput().selectTsharkThroughputDataById(objectId)
         pprint(addtimelineAnnotation)
         self.assertIsNotNone(addtimelineAnnotation)

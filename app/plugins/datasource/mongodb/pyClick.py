@@ -91,9 +91,9 @@ class PyClick:
         return Annotations().deleteAllAnnotationsForData(collection, dataId)
 
     # add an annotation to the timeline, not a datapoint
-    def addAnnotationToClickTimeline(self, startTime, annotationText):
+    def addAnnotationToClickTimeline(self, startTime, annotationText, techName, eventName):
         collection = self.getClickCollection()
-        metadata = Common().createMetadataForTimelineAnnotations()
+        metadata = Common().createMetadataForTimelineAnnotations(techName, eventName)
 
         click = {}
         click["className"] = ""

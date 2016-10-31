@@ -83,7 +83,7 @@ class PyKeyLoggerTest(unittest.TestCase):
         self.assertEqual(1, modifiedCount)
 
         # add Annotation to Timeline
-        objectId = PyTimed().addAnnotationToTimedTimeline('2016-09-16 15:16:34', "here's a Timed timeline annotation")
+        objectId = PyTimed().addAnnotationToTimedTimeline('2016-09-16 15:16:34', "here's a Timed timeline annotation", "Alex", "Super Summer Event")
         addtimelineAnnotation = PyTimed().selectTimedDataById(objectId)
         pprint(addtimelineAnnotation)
         self.assertIsNotNone(addtimelineAnnotation)

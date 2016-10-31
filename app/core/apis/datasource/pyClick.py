@@ -47,9 +47,9 @@ class PyClick:
         :param endDate: The a string value of the local datetime to end search on
         :type endDate: str
         :param techName: The technician name to return data
-        :type: str
+        :type techName: str
         :param: eventName: The name of the event to return data
-        :type: str
+        :type eventName: str
         :returns: JSON object
         """
         pyClick = self.getPlugin()
@@ -175,15 +175,19 @@ class PyClick:
         return pyClick.deleteAllAnnotationsForClick(dataId)
 
     # add an annotation to the timeline, not a datapoint
-    def addAnnotationToClickTimeline(self, startTime, annotationText):
+    def addAnnotationToClickTimeline(self, startTime, annotationText, techName, eventName):
         """Override: Ands an annotation to the timeline (not a data point)
 
         :param startTime: The datetime string in local time to add the annotation to.  Will be converted to UTC before passing on to plugin
         :type startTime: str
         :param annotationText: The annotation text to add.
         :type annotationText: str
+        :param techName: The technician name to add to the metadata
+        :type techName: str
+        :param eventName: The name of the event to add to the metadata
+        :type eventName: str
         :returns: The modified count.
          """
 
         pyClick = self.getPlugin()
-        return pyClick.addAnnotationToClickTimeline(Common().formatDateStringToUTC(startTime), annotationText)
+        return pyClick.addAnnotationToClickTimeline(Common().formatDateStringToUTC(startTime), annotationText, techName, eventName)

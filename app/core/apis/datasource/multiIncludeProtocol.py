@@ -164,16 +164,20 @@ class MultiIncludeProtocol:
         return multiIncludePlugin.deleteAllAnnotationsForMultiIncludeProtocol(dataId)
 
     # add an annotation to the timeline, not a datapoint
-    def addAnnotationToMultiIncludeProtocolTimeline(self, startTime, annotationText):
+    def addAnnotationToMultiIncludeProtocolTimeline(self, startTime, annotationText, techName, eventName):
         """Override: Ands an annotation to the timeline (not a data point)
 
         :param startTime: The datetime to add the annotation to
         :type startTime: datetime
         :param annotationText: The annotation text to add.
         :type annotationText: str
+        :param techName: The technician name to add to the metadata
+        :type techName: str
+        :param eventName: The name of the event to add to the metadata
+        :type eventName: str
         :returns: The modified count.
          """
 
         multiIncludePlugin = self.getPlugin()
         return multiIncludePlugin.addAnnotationToMultiIncludeProtocolTimeline(Common().formatDateStringToUTC(startTime),
-                                                                              annotationText)
+                                                                              annotationText, techName, eventName)

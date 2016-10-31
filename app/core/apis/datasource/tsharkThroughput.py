@@ -161,15 +161,19 @@ class TsharkThroughput:
         return tsharkPlugin.deleteAllAnnotationsForTsharkThroughput(dataId)
 
     # add an annotation to the timeline, not a datapoint
-    def addAnnotationToTsharkThroughputTimeline(self, x, annotationText):
+    def addAnnotationToTsharkThroughputTimeline(self, x, annotationText, techName, eventName):
         """Override: Ands an annotation to the timeline (not a data point)
 
         :param x: The datetime string in local time to add the annotation to.  Will be converted to UTC before passing on to plugin
         :type x: str
         :param annotationText: The annotation text to add.
         :type annotationText: str
+        :param techName: The technician name to add to the metadata
+        :type techName: str
+        :param eventName: The name of the event to add to the metadata
+        :type eventName: str
         :returns: The modified count.
          """
 
         tsharkPlugin = self.getPlugin()
-        return tsharkPlugin.addAnnotationToTsharkThroughputTimeline(Common().formatDateStringToUTC(x), annotationText)
+        return tsharkPlugin.addAnnotationToTsharkThroughputTimeline(Common().formatDateStringToUTC(x), annotationText, techName, eventName)

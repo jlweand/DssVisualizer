@@ -85,7 +85,7 @@ class MultiExcludeThroughputTest(unittest.TestCase):
 
         # add Annotation To MultiExcludeThroughput Timeline
         objectId = MultiExcludeThroughput().addAnnotationToMultiExcludeThroughputTimeline('2016-08-01 10:00:00',
-                                                                                          "here's a timeline annotation")
+                                                                                          "here's a timeline annotation", "Alex", "Super Summer Event")
         addtimelineAnnotation = MultiExcludeThroughput().selectMultiExcludeThroughputDataById(objectId)
         pprint(addtimelineAnnotation)
         self.assertIsNotNone(addtimelineAnnotation)

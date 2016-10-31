@@ -167,15 +167,19 @@ class PyTimed:
         return pyTimed.deleteAllAnnotationsForTimed(dataId)
 
     # add an annotation to the timeline, not a datapoint
-    def addAnnotationToTimedTimeline(self, startTime, annotationText):
+    def addAnnotationToTimedTimeline(self, startTime, annotationText, techName, eventName):
         """Override: Ands an annotation to the timeline (not a data point)
 
         :param startTime: The datetime string in local time to add the annotation to.  Will be converted to UTC before passing on to plugin
         :type startTime: str
         :param annotationText: The annotation text to add.
         :type annotationText: str
+        :param techName: The technician name to add to the metadata
+        :type techName: str
+        :param eventName: The name of the event to add to the metadata
+        :type eventName: str
         :returns: The modified count.
          """
 
         pyTimed = self.getPlugin()
-        return pyTimed.addAnnotationToTimedTimeline(Common().formatDateStringToUTC(startTime), annotationText)
+        return pyTimed.addAnnotationToTimedTimeline(Common().formatDateStringToUTC(startTime), annotationText, techName, eventName)

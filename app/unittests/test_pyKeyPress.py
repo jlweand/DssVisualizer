@@ -82,7 +82,7 @@ class PyKeyLoggerTest(unittest.TestCase):
 
         # add Annotation to Timeline
         objectId = PyKeyPress().addAnnotationToKeyPressTimeline('2016-09-16 09:13:57',
-                                                                "here's a Keypress timeline annotation")
+                                                                "here's a Keypress timeline annotation", "Alex", "Super Summer Event")
         addtimelineAnnotation = PyKeyPress().selectKeyPressDataById(objectId)
         pprint(addtimelineAnnotation)
         self.assertIsNotNone(addtimelineAnnotation)

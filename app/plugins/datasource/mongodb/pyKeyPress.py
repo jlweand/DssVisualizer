@@ -88,9 +88,9 @@ class PyKeyPress:
         return Annotations().deleteAllAnnotationsForData(collection, dataId)
 
     # add an annotation to the timeline, not a datapoint
-    def addAnnotationToKeyPressTimeline(self, startTime, annotationText):
+    def addAnnotationToKeyPressTimeline(self, startTime, annotationText, techName, eventName):
         collection = self.getKeyPressCollection()
-        metadata = Common().createMetadataForTimelineAnnotations()
+        metadata = Common().createMetadataForTimelineAnnotations(techName, eventName)
 
         keyPress = {}
         keyPress["className"] = ""

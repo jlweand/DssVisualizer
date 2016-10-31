@@ -84,7 +84,7 @@ class TsharkProtocolTest(unittest.TestCase):
 
         # add Annotation To MultiExcludeProtocol Timeline
         objectId = TsharkProtocol().addAnnotationToTsharkProtocolTimeline('2016-08-01 10:00:00',
-                                                                          "here's a timeline annotation")
+                                                                          "here's a timeline annotation", "Alex", "Super Summer Event")
         addtimelineAnnotation = TsharkProtocol().selectTsharkProtocolDataById(objectId)
         pprint(addtimelineAnnotation)
         self.assertIsNotNone(addtimelineAnnotation)

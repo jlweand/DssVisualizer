@@ -64,14 +64,14 @@ class Common:
         return objects
 
 
-    def createMetadataForTimelineAnnotations(self):
+    def createMetadataForTimelineAnnotations(self, techName, eventName):
         """Creates the generic metadata for the object when adding an annotation to just the timeline
 
         :returns: a metadata object.
         """
         metadata = {}
-        metadata["techName"] = "Manual Entry"
-        metadata["eventName"] = ""
+        metadata["techName"] = techName
+        metadata["eventName"] = eventName
         metadata["comments"] = ""
 
         _date = datetime.now()

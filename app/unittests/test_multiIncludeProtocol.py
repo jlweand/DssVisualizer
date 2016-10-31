@@ -86,7 +86,7 @@ class MultiIncludeProtocolTest(unittest.TestCase):
 
         # add Annotation To MultiExcludeProtocol Timeline
         objectId = MultiIncludeProtocol().addAnnotationToMultiIncludeProtocolTimeline('2016-08-01 10:00:00',
-                                                                                      "here's a timeline annotation")
+                                                                                      "here's a timeline annotation", "Alex", "Super Summer Event")
         addtimelineAnnotation = MultiIncludeProtocol().selectMultiIncludeProtocolDataById(objectId)
         pprint(addtimelineAnnotation)
         self.assertIsNotNone(addtimelineAnnotation)

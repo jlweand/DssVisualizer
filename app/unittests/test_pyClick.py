@@ -83,7 +83,7 @@ class PyKeyLoggerTest(unittest.TestCase):
         self.assertEqual(1, modifiedCount)
 
         # add Annotation to Timeline
-        objectId = PyClick().addAnnotationToClickTimeline('2016-09-11 17:37:14', "here's a Click timeline annotation")
+        objectId = PyClick().addAnnotationToClickTimeline('2016-09-11 17:37:14', "here's a Click timeline annotation", "Alex", "Super Summer Event")
         addtimelineAnnotation = PyClick().selectClickDataById(objectId)
         pprint(addtimelineAnnotation)
         self.assertIsNotNone(addtimelineAnnotation)

@@ -168,16 +168,20 @@ class MultiExcludeProtocol:
         return multiExcludePlugin.deleteAllAnnotationsForMultiExcludeProtocol(dataId)
 
     # add an annotation to the timeline, not a datapoint
-    def addAnnotationToMultiExcludeProtocolTimeline(self, startDate, annotationText):
+    def addAnnotationToMultiExcludeProtocolTimeline(self, startDate, annotationText, techName, eventName):
         """Override: Ands an annotation to the timeline (not a data point)
 
         :param startDate: The datetime to add the annotation to
         :type startDate: datetime
         :param annotationText: The annotation text to add.
         :type annotationText: str
+        :param techName: The technician name to add to the metadata
+        :type techName: str
+        :param eventName: The name of the event to add to the metadata
+        :type eventName: str
         :returns: The modified count.
          """
 
         multiExcludePlugin = self.getPlugin()
         return multiExcludePlugin.addAnnotationToMultiExcludeProtocolTimeline(Common().formatDateStringToUTC(startDate),
-                                                                              annotationText)
+                                                                              annotationText, techName, eventName)
