@@ -16,6 +16,7 @@
 # along with DssVisualizer.  If not, see <http://www.gnu.org/licenses/>.
 
 import unittest
+from datetime import datetime
 from pprint import pprint
 from plugins.datasource.mongodb.pyClick import PyClick
 from plugins.datasource.mongodb.pyKeyPress import PyKeyPress
@@ -32,7 +33,8 @@ from core.apis.datasource.common import Common
 class CleanupDatabases(unittest.TestCase):
 
     def test_cleanEverythingUp(self):
-        rightNow = "2016-10-10 10:10:10"
+        now = datetime.now()
+        rightNow = datetime.strftime(now, '%Y-%m-%d %H:%M:%S')
         techName = "Alex"
         eventName = "Super Summer Event"
         comments = "here are some comments"
