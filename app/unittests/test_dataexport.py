@@ -16,7 +16,7 @@
 # along with DssVisualizer.  If not, see <http://www.gnu.org/licenses/>.
 
 import unittest
-from core.config.dataExportConfig import DataExportConfig
+from core.config.dataExport import DataExport
 
 
 class DataImportTest(unittest.TestCase):
@@ -26,51 +26,51 @@ class DataImportTest(unittest.TestCase):
     eventName = "Super Summer Event"
 
     def test_1ExportClick(self):
-        size = DataExportConfig().exportClickData(self.startDate, self.endDate, self.techName, self.eventName, False, "C:\\temp\export")
+        size = DataExport().exportClickData(self.startDate, self.endDate, self.techName, self.eventName, False, "C:\\temp\export")
         self.assertEqual(size, 8)
 
 
     def test_2exportKeypressData(self):
-        size = DataExportConfig().exportKeyPressData(self.startDate, self.endDate, self.techName, self.eventName, "C:\\temp\export")
+        size = DataExport().exportKeyPressData(self.startDate, self.endDate, self.techName, self.eventName, "C:\\temp\export")
         self.assertEqual(size, 6)
 
 
     def test_3exportTimed(self):
-        size = DataExportConfig().exportTimedData(self.startDate, self.endDate, self.techName, self.eventName, False, "C:\\temp\export")
+        size = DataExport().exportTimedData(self.startDate, self.endDate, self.techName, self.eventName, False, "C:\\temp\export")
         self.assertEqual(size, 6)
 
 
     def test_4exportMultiExcludeThroughput(self):
-        size = DataExportConfig().exportMultiExcludeThroughputData(self.startDate, self.endDate, self.techName, self.eventName, "C:\\temp\export")
+        size = DataExport().exportMultiExcludeThroughputData(self.startDate, self.endDate, self.techName, self.eventName, "C:\\temp\export")
         self.assertEqual(size, 77)
 
 
     def test_5exportMultiExcludeProtocol(self):
-        size = DataExportConfig().exportMultiExcludeProtocolData(self.startDate, self.endDate, self.techName, self.eventName, "C:\\temp\export")
+        size = DataExport().exportMultiExcludeProtocolData(self.startDate, self.endDate, self.techName, self.eventName, "C:\\temp\export")
         self.assertEqual(size, 77)
 
 
     def test_6exportMultiIncludeThroughput(self):
-        size = DataExportConfig().exportMultiIncludeThroughputData(self.startDate, self.endDate, self.techName, self.eventName, "C:\\temp\export")
+        size = DataExport().exportMultiIncludeThroughputData(self.startDate, self.endDate, self.techName, self.eventName, "C:\\temp\export")
         self.assertEqual(size, 77)
 
 
     def test_7exportMultiIncludeProtocol(self):
-        size = DataExportConfig().exportMultiIncludeProtocolData(self.startDate, self.endDate, self.techName, self.eventName, "C:\\temp\export")
+        size = DataExport().exportMultiIncludeProtocolData(self.startDate, self.endDate, self.techName, self.eventName, "C:\\temp\export")
         self.assertEqual(size, 77)
 
 
     def test_8exportTsharkThroughput(self):
-        size = DataExportConfig().exportTsharkThroughputData(self.startDate, self.endDate, self.techName, self.eventName, "C:\\temp\export")
+        size = DataExport().exportTsharkThroughputData(self.startDate, self.endDate, self.techName, self.eventName, "C:\\temp\export")
         self.assertEqual(size, 79)
 
 
     def test_9exportTsharkProtocol(self):
-        size = DataExportConfig().exportTsharkProtocolData(self.startDate, self.endDate, self.techName, self.eventName, "C:\\temp\export")
+        size = DataExport().exportTsharkProtocolData(self.startDate, self.endDate, self.techName, self.eventName, "C:\\temp\export")
         self.assertEqual(size, 79)
     #
     # def test_01exportAllData(self):
-    #     DataExportConfig().exportAllDataFromFilesData(self.startDate, self.endDate, self.techName, self.eventName, False, "C:\\temp\export")
+    #     DataExport().exportAllDataFromFilesData(self.startDate, self.endDate, self.techName, self.eventName, False, "C:\\temp\export")
 
 
 if __name__ == '__main__':

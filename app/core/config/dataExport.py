@@ -18,6 +18,7 @@
 import json
 import os
 import shutil
+from datetime import datetime
 from bson import json_util
 from core.apis.datasource.pyClick import PyClick
 from core.apis.datasource.pyKeyPress import PyKeyPress
@@ -141,9 +142,10 @@ class DataExport:
             dataObj.pop("id", None)
             dataObj.pop("_id", None)
 
-            dataObj["metadata"]["importDate"] = Common().formatDateStringToUTC(dataObj["metadata"]["importDate"])
+            dataObj["metadata"]["exportDate"] = Common().getRightNowAsUTCString()
+            dataObj["metadata"]["importDate"] = Common().getLocalStringDateAsUTCString(dataObj["metadata"]["importDate"])
             if hasStartDate:
-                dataObj["start"] = Common().formatDateStringToUTC(dataObj["start"])
+                dataObj["start"] = Common().getLocalStringDateAsUTCString(dataObj["start"])
 
             if hasXDate:
-                dataObj["x"] = Common().formatDateStringToUTC(dataObj["x"])
+                dataObj["x"] = Common().getLocalStringDateAsUTCString(dataObj["x"])

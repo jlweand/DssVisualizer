@@ -22,7 +22,7 @@ from datetime import datetime
 class Common:
 
     def formatDateStringToUTC(self, dateString):
-        """Takes a date string in local time and converts it into UTC time.  Used to format dates coming from the UI into UTC dates.
+        """Takes a date string in local time and converts it into UTC time.  Used to format dates coming from the GUI into UTC dates.
 
         :param dateString: A date string in local time
         :type dateString: str
@@ -35,7 +35,7 @@ class Common:
 
 
     def addUTCToDate(self, dateString):
-        """Takes a date string in local time and converts it into UTC time. Used to format dates in the JSON files into UTC dates.
+        """Takes a date string in local time and converts it into UTC time. Used to format UTC date strings in the JSON files into dates.
 
         :param dateString: A date string in UTC time
         :type dateString: str
@@ -46,3 +46,18 @@ class Common:
         utc = pytz.utc
         local_dt = utc.localize(_date)
         return local_dt.astimezone(pytz.utc)
+
+    def getRightNowAsUTCString(self):
+        """Gets the datetime of right now in UTC and returns it as a string. Used for exporting data.
+
+        :returns: UTC ISO_8601 formatted string
+        """
+        return datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S')
+
+    def getLocalStringDateAsUTCString(self, dateString):
+        """Takes a Local date as a string, converts it to UTC, returns it as a string. Used for exporting data.
+
+        :returns: UTC ISO_8601 formatted string
+        """
+        dateDate = self.formatDateStringToUTC(dateString)
+        return dateDate.strftime('%Y-%m-%dT%H:%M:%S')
