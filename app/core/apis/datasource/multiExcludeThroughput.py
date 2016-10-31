@@ -28,6 +28,17 @@ class MultiExcludeThroughput:
         """Internal method to get an instance of the active plugin"""
         return ConfigReader().getInstanceOfDatasourcePlugin("MultiExcludeThroughput")
 
+    def importMultiExcludeThroughput(self, jsonData):
+        """Override: Imports all records from a JSON file. Dates are in UTC time.
+
+        :param jsonData: The JSON data with the metadata added.
+        :type jsonData: Parsed JSON
+        :return: number of records inserted
+        """
+        multiExcludeThroughput = self.getPlugin()
+        insertedCount = multiExcludeThroughput.importMultiExcludeThroughputData(jsonData)
+        return insertedCount
+
     def selectMultiExcludeThroughputData(self, startDate, endDate, techName, eventName):
         """Override: Select the timed data by start and end date. The input here will be strings, datetimes will be passed to the plugin.
 

@@ -29,6 +29,17 @@ class MultiExcludeProtocol:
         """Internal method to get an instance of the active plugin"""
         return ConfigReader().getInstanceOfDatasourcePlugin("MultiExcludeProtocol")
 
+    def importMultiExcludeProtocol(self, jsonData):
+        """Override: Imports all records from a JSON file. Dates are in UTC time.
+
+        :param jsonData: The JSON data with the metadata added.
+        :type jsonData: Parsed JSON
+        :return: number of records inserted
+        """
+        multiExcludeProtocol = self.getPlugin()
+        insertedCount = multiExcludeProtocol.importMultiExcludeProtocolData(jsonData)
+        return insertedCount
+
     def selectMultiExcludeProtocolData(self, startDate, endDate, techName,
                                        eventName):  # add tech name and event name parameters
         # update documentation

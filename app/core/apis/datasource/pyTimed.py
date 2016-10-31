@@ -27,6 +27,17 @@ class PyTimed:
         """Internal method to get an instance of the active plugin"""
         return ConfigReader().getInstanceOfDatasourcePlugin("PyTimed")
 
+    def importTimed(self, jsonData):
+        """Override: Imports all records from a JSON file. Dates are in UTC time.
+
+        :param jsonData: The JSON data with the metadata added.
+        :type jsonData: Parsed JSON
+        :return: number of records inserted
+        """
+        pyTimed = self.getPlugin()
+        insertedCount = pyTimed.importTimed(jsonData)
+        return insertedCount
+
     def selectTimedData(self, startDate, endDate, techName, eventName):
         """Override: Select the timed data by start and end date. The input here will be strings, datetimes will be passed to the plugin.
 

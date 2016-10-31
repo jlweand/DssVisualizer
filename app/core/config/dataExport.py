@@ -31,7 +31,8 @@ from core.apis.datasource.tsharkThroughput import TsharkThroughput
 from core.apis.datasource.common import Common
 
 
-class DataExportConfig:
+class DataExport:
+
     def exportAllData(self, startDate, endDate, techName, eventName, moveImages, exportLocation):
         self.exportClickData(startDate, endDate, techName, eventName, moveImages, exportLocation)
         self.exporKeyPressData(startDate, endDate, techName, eventName, exportLocation)

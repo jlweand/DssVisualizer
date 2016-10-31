@@ -18,10 +18,18 @@
 import ujson
 import os
 import shutil
-from core.apis.datasource.dataImport import DataImport
+from core.apis.datasource.pyClick import PyClick
+from core.apis.datasource.pyKeyPress import PyKeyPress
+from core.apis.datasource.pyTimed import PyTimed
+from core.apis.datasource.multiExcludeProtocol import MultiExcludeProtocol
+from core.apis.datasource.multiExcludeThroughput import MultiExcludeThroughput
+from core.apis.datasource.multiIncludeProtocol import MultiIncludeProtocol
+from core.apis.datasource.multiIncludeThroughput import MultiIncludeThroughput
+from core.apis.datasource.tsharkProtocol import TsharkProtocol
+from core.apis.datasource.tsharkThroughput import TsharkThroughput
 from core.apis.datasource.common import Common
 
-class DataImportConfig:
+class DataImport:
 
     def __init__(self):
         self.clickFile = "json/pyKeyLogger/click.json"
@@ -168,7 +176,7 @@ class DataImportConfig:
         data = self.addExtraData(data, techName, eventName, comments, importDate, True, False)
         if moveImages:
             data = self.moveImages(data, "images/click/")
-        return DataImport().importClick(data)
+        return PyClick().importClick(data)
 
     def importKeypressData(self, techName, eventName, comments, importDate):
         return self.importKeypressDataFile(self.keypressFile, techName, eventName, comments, importDate)
@@ -176,7 +184,7 @@ class DataImportConfig:
     def importKeypressDataFile(self, fullFileName, techName, eventName, comments, importDate):
         data = self.importJson(fullFileName)
         data = self.addExtraData(data, techName, eventName, comments, importDate, True, False)
-        return DataImport().importKeypressData(data)
+        return PyKeyPress().importKeypressData(data)
 
     def importTimed(self, techName, eventName, comments, importDate, moveImages):
         return self.importTimedFile(self.timedFile, techName, eventName, comments, importDate, moveImages)
@@ -186,7 +194,7 @@ class DataImportConfig:
         data = self.addExtraData(data, techName, eventName, comments, importDate, True, False)
         if moveImages:
             data = self.moveImages(data, "images/timed/")
-        return DataImport().importTimed(data)
+        return PyTimed().importTimed(data)
 
     def importMultiExcludeProtocol(self, techName, eventName, comments, importDate):
         return self.importMultiExcludeProtocolFile(self.multiExcludeProtocolFile, techName, eventName,
@@ -195,7 +203,7 @@ class DataImportConfig:
     def importMultiExcludeProtocolFile(self, fullFileName, techName, eventName, comments, importDate):
         data = self.importJson(fullFileName)
         multiExcludeProtocol = self.addExtraData(data, techName, eventName, comments, importDate, True, False)
-        return DataImport().importMultiExcludeProtocol(multiExcludeProtocol)
+        return MultiExcludeProtocol().importMultiExcludeProtocol(multiExcludeProtocol)
 
     def importMultiExcludeThroughput(self, techName, eventName, comments, importDate):
         return self.importMultiExcludeThroughputFile(self.multiExcludeThroughputFile, techName, eventName,
@@ -204,7 +212,7 @@ class DataImportConfig:
     def importMultiExcludeThroughputFile(self, fullFileName, techName, eventName, comments, importDate):
         data = self.importJson(fullFileName)
         data = self.addExtraData(data, techName, eventName, comments, importDate, False, True)
-        return DataImport().importMultiExcludeThroughput(data)
+        return MultiExcludeThroughput().importMultiExcludeThroughput(data)
 
     def importMultiIncludeProtocol(self, techName, eventName, comments, importDate):
         return self.importMultiIncludeProtocolFile(self.multiIncludeProtocolFile, techName, eventName,
@@ -213,7 +221,7 @@ class DataImportConfig:
     def importMultiIncludeProtocolFile(self, fullFileName, techName, eventName, comments, importDate):
         data = self.importJson(fullFileName)
         multiIncludeProtocol = self.addExtraData(data, techName, eventName, comments, importDate, True, False)
-        return DataImport().importMultiIncludeProtocol(multiIncludeProtocol)
+        return MultiIncludeProtocol().importMultiIncludeProtocol(multiIncludeProtocol)
 
     def importMultiIncludeThroughput(self, techName, eventName, comments, importDate):
         return self.importMultiIncludeThroughputFile(self.multiIncludeThroughputFile, techName, eventName,
@@ -222,7 +230,7 @@ class DataImportConfig:
     def importMultiIncludeThroughputFile(self, fullFileName, techName, eventName, comments, importDate):
         data = self.importJson(fullFileName)
         data = self.addExtraData(data, techName, eventName, comments, importDate, False, True)
-        return DataImport().importMultiIncludeThroughput(data)
+        return MultiIncludeThroughput().importMultiIncludeThroughput(data)
 
     def importTsharkProtocol(self, techName, eventName, comments, importDate):
         return self.importTsharkProtocolFile(self.tsharkProtocolFile, techName, eventName, comments, importDate)
@@ -230,7 +238,7 @@ class DataImportConfig:
     def importTsharkProtocolFile(self, fullFileName, techName, eventName, comments, importDate):
         data = self.importJson(fullFileName)
         tsharkProtocol = self.addExtraData(data, techName, eventName, comments, importDate, True, False)
-        return DataImport().importTsharkProtocol(tsharkProtocol)
+        return TsharkProtocol().importTsharkProtocol(tsharkProtocol)
 
     def importTsharkThroughput(self, techName, eventName, comments, importDate):
         return self.importTsharkThroughputFile(self.tsharkThroughputFile, techName, eventName, comments, importDate)
@@ -238,5 +246,5 @@ class DataImportConfig:
     def importTsharkThroughputFile(self, fullFileName, techName, eventName, comments, importDate):
         data = self.importJson(fullFileName)
         data = self.addExtraData(data, techName, eventName, comments, importDate, False, True)
-        return DataImport().importTsharkThroughput(data)
+        return TsharkThroughput().importTsharkThroughput(data)
 

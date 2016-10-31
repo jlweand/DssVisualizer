@@ -29,6 +29,17 @@ class PyKeyPress:
         return ConfigReader().getInstanceOfDatasourcePlugin("PyKeyPress")
 
     # Keypress#
+    def importKeypressData(self, jsonData):
+        """Override: Imports all records from a JSON file. Dates are in UTC time.
+
+        :param jsonData: The JSON data with the metadata added.
+        :type jsonData: Parsed JSON
+        :return: number of records inserted
+        """
+        pyKeyPress = self.getPlugin()
+        insertedCount = pyKeyPress.importKeypressData(jsonData)
+        return insertedCount
+
     def selectKeyPressData(self, startDate, endDate, techName, eventName):
         """Override: Select the key press data by start and end date. The input here will be strings, datetimes will be passed to the plugin.
 
