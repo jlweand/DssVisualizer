@@ -18,7 +18,6 @@
 import json
 import os
 import shutil
-from datetime import datetime
 from bson import json_util
 from core.apis.datasource.pyClick import PyClick
 from core.apis.datasource.pyKeyPress import PyKeyPress
@@ -34,10 +33,26 @@ from core.apis.datasource.common import Common
 
 class DataExport:
 
-    def exportAllData(self, startDate, endDate, techName, eventName, moveImages, exportLocation):
-        self.exportClickData(startDate, endDate, techName, eventName, moveImages, exportLocation)
-        self.exporKeyPressData(startDate, endDate, techName, eventName, exportLocation)
-        self.exportTimedData(startDate, endDate, techName, eventName, moveImages, exportLocation)
+    def exportAllData(self, startDate, endDate, techName, eventName, copyImages, exportLocation):
+        """Selects and exports all data to the exportLocation based on the start and end dates, tech name, event name.  Will copy images to exportLocation if copyImages is True.
+
+        :param startDate: The datetime to return data
+        :type startDate: str
+        :param endDate: The datetime to return data
+        :type endDate: str
+        :param techName: The technician name to return data
+        :type techName: str
+        :param eventName: The name of the event to return data
+        :type eventName: str
+        :param copyImages: Flag to indicate whether to copy images to exportLocation
+        :type copyImages: bool
+        :param exportLocation: Base path to copy all json and images (if requested).  Data will all be copied to their specific folders within exportLocation.
+        :type exportLocation: str
+        :return:
+        """
+        self.exportClickData(startDate, endDate, techName, eventName, copyImages, exportLocation)
+        self.exportKeyPressData(startDate, endDate, techName, eventName, exportLocation)
+        self.exportTimedData(startDate, endDate, techName, eventName, copyImages, exportLocation)
         self.exportMultiExcludeProtocolData(startDate, endDate, techName, eventName, exportLocation)
         self.exportMultiExcludeThroughputData(startDate, endDate, techName, eventName, exportLocation)
         self.exportMultiIncludeProtocolData(startDate, endDate, techName, eventName, exportLocation)
@@ -45,11 +60,11 @@ class DataExport:
         self.exportTsharkProtocolData(startDate, endDate, techName, eventName, exportLocation)
         self.exportTsharkThroughputData(startDate, endDate, techName, eventName, exportLocation)
 
-    def exportClickData(self, startDate, endDate, techName, eventName, moveImages, exportLocation):
+    def exportClickData(self, startDate, endDate, techName, eventName, copyImages, exportLocation):
         pyClickData = PyClick().selectClickData(startDate, endDate, techName, eventName)
         self.cleanupData(pyClickData, True, False)
         self.exportToFile(exportLocation + "\\pyKeyLogger", "click.json" , pyClickData)
-        if moveImages and len(pyClickData) > 0:
+        if copyImages and len(pyClickData) > 0:
             self.copyImages(exportLocation + "\\pyKeyLogger\\click_images", pyClickData)
         return len(pyClickData)
 
@@ -59,38 +74,34 @@ class DataExport:
         self.exportToFile(exportLocation + "\\pyKeyLogger", "keyPress.json", pyKeyPressData)
         return len(pyKeyPressData)
 
-    def exportTimedData(self, startDate, endDate, techName, eventName, moveImages, exportLocation):
+    def exportTimedData(self, startDate, endDate, techName, eventName, copyImages, exportLocation):
         pyTimedData = PyTimed().selectTimedData(startDate, endDate, techName, eventName)
         self.cleanupData(pyTimedData, True, False)
         self.exportToFile(exportLocation + "\\pyKeyLogger", "timed.json", pyTimedData)
-        if moveImages and len(pyTimedData) > 0:
+        if copyImages and len(pyTimedData) > 0:
             self.copyImages(exportLocation + "\\pyKeyLogger\\timed_images", pyTimedData)
         return len(pyTimedData)
 
     def exportMultiExcludeProtocolData(self, startDate, endDate, techName, eventName, exportLocation):
-        multiExcludePrototcolData = MultiExcludeProtocol().selectMultiExcludeProtocolData(startDate, endDate, techName,
-                                                                                      eventName)
+        multiExcludePrototcolData = MultiExcludeProtocol().selectMultiExcludeProtocolData(startDate, endDate, techName, eventName)
         self.cleanupData(multiExcludePrototcolData, True, False)
         self.exportToFile(exportLocation + "\\multi_exec_tshark", "networkDataAll.json", multiExcludePrototcolData)
         return len(multiExcludePrototcolData)
 
     def exportMultiExcludeThroughputData(self, startDate, endDate, techName, eventName, exportLocation):
-        multiExcludeThroughputData = MultiExcludeThroughput().selectMultiExcludeThroughputData(startDate, endDate,
-                                                                                               techName, eventName)
+        multiExcludeThroughputData = MultiExcludeThroughput().selectMultiExcludeThroughputData(startDate, endDate, techName, eventName)
         self.cleanupData(multiExcludeThroughputData, False, True)
         self.exportToFile(exportLocation + "\\multi_exec_tshark", "networkDataXY.json", multiExcludeThroughputData)
         return len(multiExcludeThroughputData)
 
     def exportMultiIncludeProtocolData(self, startDate, endDate, techName, eventName, exportLocation):
-        multiIncludeProtocolData = MultiIncludeProtocol().selectMultiIncludeProtocolData(startDate, endDate, techName,
-                                                                                     eventName)
+        multiIncludeProtocolData = MultiIncludeProtocol().selectMultiIncludeProtocolData(startDate, endDate, techName, eventName)
         self.cleanupData(multiIncludeProtocolData, True, False)
         self.exportToFile(exportLocation + "\\multi_incl_tshark", "networkDataAll.json", multiIncludeProtocolData)
         return len(multiIncludeProtocolData)
 
     def exportMultiIncludeThroughputData(self, startDate, endDate, techName, eventName, exportLocation):
-        multiIncludeThroughputData = MultiIncludeThroughput().selectMultiIncludeThroughputData(startDate, endDate,
-                                                                                               techName, eventName)
+        multiIncludeThroughputData = MultiIncludeThroughput().selectMultiIncludeThroughputData(startDate, endDate, techName, eventName)
         self.cleanupData(multiIncludeThroughputData, False, True)
         self.exportToFile(exportLocation + "\\multi_incl_tshark", "networkDataXY.json", multiIncludeThroughputData)
         return len(multiIncludeThroughputData)
@@ -108,6 +119,16 @@ class DataExport:
         return len(tsharkThroughputData)
 
     def exportToFile(self, outputDirectory, outputFileName, jsonToExport):
+        """Creates the output directory, and dumps the JSON data to the specified file. Right now the JSON is pretty printed.
+        There is a commented out json.dump command that will print the JOSN all on one line if it's needed in the future.
+
+        :param outputDirectory: The directory to write the file to.
+        :type outputDirectory: str
+        :param outputFileName: The filename of the file.
+        :type outputFileName: str
+        :param jsonToExport: A python object of the parsed JSON
+        :type jsonToExport: object[]
+        """
         # check that the output directory exists and create it if not.
         if not os.path.exists(outputDirectory):
             os.makedirs(outputDirectory)
@@ -121,6 +142,15 @@ class DataExport:
             # json.dump(jsonToExport, file, default=json_util.default)
 
     def copyImages(self, exportPath, dataObjects):
+        """This method will copy the images from the location found in the JSON file to newImageLocation and update the path
+        in the JSON object.
+
+        :param dataObjects: A python object of the parsed JSON
+        :type dataObjects: object[]
+        :param exportPath: The path to where the images should be copied to.
+        :type exportPath: str
+        :returns: A python object of the parsed JSON
+        """
         # check that the output directory exists and create it if not.
         if not os.path.exists(exportPath):
             os.makedirs(exportPath)
@@ -138,6 +168,16 @@ class DataExport:
                 shutil.copy(fullFileName, exportPath)
 
     def cleanupData(self, dataObjects, hasStartDate, hasXDate):
+        """ Takes the data selected from the data source, removes the IDs, adds an exportedDate to the metadata and
+         converts all dates to ISO_8601 UTC strings
+
+        :param dataObjects: A python object of the parsed JSON
+        :type dataObjects: object[]
+        :param hasStartDate: Flag to convert the 'start' date in the object.
+        :type hasStartDate: bool
+        :param hasXDate: Flag to convert the 'x' date in the object.
+        :type hasXDate: bool
+        """
         for dataObj in dataObjects:
             dataObj.pop("id", None)
             dataObj.pop("_id", None)

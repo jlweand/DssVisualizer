@@ -92,8 +92,8 @@ class DataImport:
             data = ujson.loads(jsonStr)
         return data
 
-    def moveImages(self, json, newImageLocation):
-        """This method will moves the images from the location found in the JSON file to newImageLocation and update the path
+    def copyImages(self, json, newImageLocation):
+        """This method will copy the images from the location found in the JSON file to newImageLocation and update the path
         in the JSON object.
 
         :param json: A python object of the parsed JSON
@@ -123,7 +123,7 @@ class DataImport:
 
         return json
 
-    def importAllDataFromFiles(self, fileLocation, techName, eventName, comments, importDate, moveImages):
+    def importAllDataFromFiles(self, fileLocation, techName, eventName, comments, importDate, copyImages):
         """This method will recursive search all folders.  if it finds a .json file it will try to import it based
         on the folder and file name.
 
@@ -137,8 +137,8 @@ class DataImport:
         :type comments: str
         :param importDate: User entered value for imported date
         :type importDate: str
-        :param moveImages: True if the Click, Timed, Manual Screenshot images should be moved into our file system, False if they should stay where they are.
-        :type importDate: bool
+        :param copyImages: True if the Click, Timed, Manual Screenshot images should be moved into our file system, False if they should stay where they are.
+        :type copyImages: bool
         :return:
         """
         for subdir, dirs, files in os.walk(fileLocation):
@@ -146,11 +146,11 @@ class DataImport:
                 fullFileName = os.path.join(subdir, file)
                 if os.path.isfile(fullFileName) and file.lower().endswith(".json"):
                     if "click" in fullFileName.lower():
-                        self.importClickFile(fullFileName, techName, eventName, comments, importDate, moveImages)
+                        self.importClickFile(fullFileName, techName, eventName, comments, importDate, copyImages)
                     elif "keypressdata" in fullFileName.lower():
                         self.importKeypressDataFile(fullFileName, techName, eventName, comments, importDate)
                     elif "timed" in fullFileName.lower():
-                        self.importTimedFile(fullFileName, techName, eventName, comments, importDate, moveImages)
+                        self.importTimedFile(fullFileName, techName, eventName, comments, importDate, copyImages)
 
                     elif "multi_exec_tshark" in fullFileName.lower() and "networkdataall" in fullFileName.lower():
                         self.importMultiExcludeProtocolFile(fullFileName, techName, eventName, comments, importDate)
@@ -168,14 +168,14 @@ class DataImport:
                         self.importTsharkThroughputFile(fullFileName, techName, eventName, comments, importDate)
 
 
-    def importClick(self, techName, eventName, comments, importDate, moveImages):
-        return self.importClickFile(self.clickFile, techName, eventName, comments, importDate, moveImages)
+    def importClick(self, techName, eventName, comments, importDate, copyImages):
+        return self.importClickFile(self.clickFile, techName, eventName, comments, importDate, copyImages)
 
-    def importClickFile(self, fullFileName, techName, eventName, comments, importDate, moveImages):
+    def importClickFile(self, fullFileName, techName, eventName, comments, importDate, copyImages):
         data = self.importJson(fullFileName)
         data = self.addExtraData(data, techName, eventName, comments, importDate, True, False)
-        if moveImages:
-            data = self.moveImages(data, "images/click/")
+        if copyImages:
+            data = self.copyImages(data, "images/click/")
         return PyClick().importClick(data)
 
     def importKeypressData(self, techName, eventName, comments, importDate):
@@ -186,14 +186,14 @@ class DataImport:
         data = self.addExtraData(data, techName, eventName, comments, importDate, True, False)
         return PyKeyPress().importKeypressData(data)
 
-    def importTimed(self, techName, eventName, comments, importDate, moveImages):
-        return self.importTimedFile(self.timedFile, techName, eventName, comments, importDate, moveImages)
+    def importTimed(self, techName, eventName, comments, importDate, copyImages):
+        return self.importTimedFile(self.timedFile, techName, eventName, comments, importDate, copyImages)
 
-    def importTimedFile(self, fullFileName, techName, eventName, comments, importDate, moveImages):
+    def importTimedFile(self, fullFileName, techName, eventName, comments, importDate, copyImages):
         data = self.importJson(fullFileName)
         data = self.addExtraData(data, techName, eventName, comments, importDate, True, False)
-        if moveImages:
-            data = self.moveImages(data, "images/timed/")
+        if copyImages:
+            data = self.copyImages(data, "images/timed/")
         return PyTimed().importTimed(data)
 
     def importMultiExcludeProtocol(self, techName, eventName, comments, importDate):
