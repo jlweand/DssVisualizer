@@ -27,6 +27,7 @@ from plugins.datasource.mongodb.tsharkThroughput import TsharkThroughput
 from plugins.datasource.mongodb.multiExcludeProtocol import MultiExcludeProtocol
 from plugins.datasource.mongodb.multiIncludeProtocol import MultiIncludeProtocol
 from plugins.datasource.mongodb.tsharkProtocol import TsharkProtocol
+from plugins.datasource.mongodb.manualScreenShot import ManualScreenShot
 from core.config.dataImport import DataImport
 from core.apis.datasource.common import Common
 
@@ -66,7 +67,10 @@ class CleanupDatabases(unittest.TestCase):
         tsharkProtocol = TsharkProtocol().getTsharkProtocolCollection()
         tsharkProtocol.delete_many({})
 
-        DataImport().importAllDataFromFiles("json", techName, eventName, comments, rightNow, False)
+        manualScreenShot = ManualScreenShot().getManualScreenShotCollection()
+        manualScreenShot.delete_many({})
+
+        DataImport().importAllDataFromFiles("json", techName, eventName, comments, rightNow, True)
 
         jsonData = TsharkThroughput().selectTsharkThroughputData(Common().formatDateStringToUTC('2016-10-15 11:57:19'),
                                                                  Common().formatDateStringToUTC('2016-10-15 11:57:19'), '', '')

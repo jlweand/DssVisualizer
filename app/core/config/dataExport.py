@@ -28,6 +28,7 @@ from core.apis.datasource.multiIncludeProtocol import MultiIncludeProtocol
 from core.apis.datasource.multiIncludeThroughput import MultiIncludeThroughput
 from core.apis.datasource.tsharkProtocol import TsharkProtocol
 from core.apis.datasource.tsharkThroughput import TsharkThroughput
+from core.apis.datasource.manualScreenShot import ManualScreenShot
 from core.apis.datasource.common import Common
 
 
@@ -59,6 +60,7 @@ class DataExport:
         self.exportMultiIncludeThroughputData(startDate, endDate, techName, eventName, exportLocation)
         self.exportTsharkProtocolData(startDate, endDate, techName, eventName, exportLocation)
         self.exportTsharkThroughputData(startDate, endDate, techName, eventName, exportLocation)
+        self.exportManualScreenShotData(startDate, endDate, techName, eventName, copyImages, exportLocation)
 
     def exportClickData(self, startDate, endDate, techName, eventName, copyImages, exportLocation):
         pyClickData = PyClick().selectClickData(startDate, endDate, techName, eventName)
@@ -117,6 +119,14 @@ class DataExport:
         self.cleanupData(tsharkThroughputData, False, True)
         self.exportToFile(exportLocation + "\\tshark", "networkDataXY.json", tsharkThroughputData)
         return len(tsharkThroughputData)
+
+    def exportManualScreenShotData(self, startDate, endDate, techName, eventName, copyImages, exportLocation):
+        manualScreenShotData = ManualScreenShot().selectManualScreenShotData(startDate, endDate, techName, eventName)
+        self.cleanupData(manualScreenShotData, True, False)
+        self.exportToFile(exportLocation + "\\manualscreenshot", "snap.json", manualScreenShotData)
+        if copyImages and len(manualScreenShotData) > 0:
+            self.copyImages(exportLocation + "\\manualscreenshot\\images", manualScreenShotData)
+        return len(manualScreenShotData)
 
     def exportToFile(self, outputDirectory, outputFileName, jsonToExport):
         """Creates the output directory, and dumps the JSON data to the specified file. Right now the JSON is pretty printed.
