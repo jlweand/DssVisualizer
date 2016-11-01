@@ -27,6 +27,7 @@ from core.apis.datasource.multiIncludeProtocol import MultiIncludeProtocol
 from core.apis.datasource.multiIncludeThroughput import MultiIncludeThroughput
 from core.apis.datasource.tsharkProtocol import TsharkProtocol
 from core.apis.datasource.tsharkThroughput import TsharkThroughput
+from core.apis.datasource.manualScreenShot import ManualScreenShot
 from core.apis.datasource.common import Common
 
 class DataImport:
@@ -41,6 +42,7 @@ class DataImport:
         self.multiIncludeThroughputFile = "json/multi_incl_tshark/networkDataXY.json"
         self.tsharkProtocolFile = "json/tshark/networkDataAll.json"
         self.tsharkThroughputFile = "json/tshark/networkDataXY.json"
+        self.manualScreenShotFile = "json/manualScreenShot/snap.json"
 
     def addExtraData(self, json, techName, eventName, comments, importDate, hasStartDate, hasXdate):
         """This method will add the metadata to each object as well as convert any dates into a datetime object
@@ -167,6 +169,8 @@ class DataImport:
                     elif "tshark" in fullFileName.lower() and "networkdataxy" in fullFileName.lower():
                         self.importTsharkThroughputFile(fullFileName, techName, eventName, comments, importDate)
 
+                    elif "snap" in fullFileName.lower():
+                        self.importManualScreenShotFile(fullFileName, techName, eventName, comments, importDate, copyImages)
 
     def importClick(self, techName, eventName, comments, importDate, copyImages):
         return self.importClickFile(self.clickFile, techName, eventName, comments, importDate, copyImages)
@@ -247,4 +251,14 @@ class DataImport:
         data = self.importJson(fullFileName)
         data = self.addExtraData(data, techName, eventName, comments, importDate, False, True)
         return TsharkThroughput().importTsharkThroughput(data)
+
+    def importManualScreenShot(self, techName, eventName, comments, importDate, copyImages):
+        return self.importManualScreenShotFile(self.manualScreenShotFile, techName, eventName, comments, importDate, copyImages)
+
+    def importManualScreenShotFile(self, fullFileName, techName, eventName, comments, importDate, copyImages):
+        data = self.importJson(fullFileName)
+        data = self.addExtraData(data, techName, eventName, comments, importDate, True, False)
+        if copyImages:
+            data = self.copyImages(data, "images/manualscreenshot/")
+        return ManualScreenShot().importManualScreenShot(data)
 

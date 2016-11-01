@@ -27,49 +27,48 @@ class DataImportTest(unittest.TestCase):
     eventName = "Super Summer Event"
     comments = "here are some comments"
 
-    def test_1importClick(self):
+    def test_01importClick(self):
         size = DataImport().importClick(self.techName, self.eventName, self.comments, self.nowString, False)
         self.assertEqual(size, 29)
 
-    def test_2insertKeypressData(self):
+    def test_02insertKeypressData(self):
         size = DataImport().importKeypressData(self.techName, self.eventName, self.comments, self.nowString)
         self.assertEqual(size, 71)
 
-    def test_3importTimed(self):
+    def test_03importTimed(self):
         size = DataImport().importTimed(self.techName, self.eventName, self.comments, self.nowString, False)
         self.assertEqual(size, 48)
 
-    def test_4importMultiExcludeThroughput(self):
-        size = DataImport().importMultiExcludeThroughput(self.techName, self.eventName, self.comments,
-                                                               self.nowString)
+    def test_04importMultiExcludeThroughput(self):
+        size = DataImport().importMultiExcludeThroughput(self.techName, self.eventName, self.comments, self.nowString)
         self.assertEqual(size, 222)
 
-    def test_5importMultiExcludeProtocol(self):
-        size = DataImport().importMultiExcludeProtocol(self.techName, self.eventName, self.comments,
-                                                             self.nowString)
+    def test_05importMultiExcludeProtocol(self):
+        size = DataImport().importMultiExcludeProtocol(self.techName, self.eventName, self.comments, self.nowString)
         self.assertEqual(size, 222)
 
-    def test_6importMultiIncludeThroughput(self):
-        size = DataImport().importMultiIncludeThroughput(self.techName, self.eventName, self.comments,
-                                                               self.nowString)
+    def test_06importMultiIncludeThroughput(self):
+        size = DataImport().importMultiIncludeThroughput(self.techName, self.eventName, self.comments, self.nowString)
         self.assertEqual(size, 221)
 
-    def test_7importMultiIncludeProtocol(self):
-        size = DataImport().importMultiIncludeProtocol(self.techName, self.eventName, self.comments,
-                                                             self.nowString)
+    def test_07importMultiIncludeProtocol(self):
+        size = DataImport().importMultiIncludeProtocol(self.techName, self.eventName, self.comments, self.nowString)
         self.assertEqual(size, 221)
 
-    def test_8importTsharkThroughput(self):
+    def test_08importTsharkThroughput(self):
         size = DataImport().importTsharkThroughput(self.techName, self.eventName, self.comments, self.nowString)
         self.assertEqual(size, 371)
 
-    def test_9importTsharkProtocol(self):
+    def test_09importTsharkProtocol(self):
         size = DataImport().importTsharkProtocol(self.techName, self.eventName, self.comments, self.nowString)
         self.assertEqual(size, 371)
 
-    # def test_01ImportAllFiles(self):
-    #     DataImport().importAllDataFromFiles("C:\\temp\json", self.techName, self.eventName, self.comments,
-    #                                               self.nowString)
+    def test_10importManualScreenShot(self):
+        size = DataImport().importManualScreenShot(self.techName, self.eventName, self.comments, self.nowString, False)
+        self.assertEqual(size, 15)
+
+    # def test_11ImportAllFiles(self):
+    #     DataImport().importAllDataFromFiles("C:\\temp\json", self.techName, self.eventName, self.comments, self.nowString, False)
 
 
 if __name__ == '__main__':
