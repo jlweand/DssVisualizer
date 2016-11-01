@@ -26,7 +26,7 @@ class GenerateHtml:
         thefile = location + plugin["scripts"]
         return thefile
 
-    def generatHtml(self):
+    def generateHtml(self):
         """This method generates the index.html page based on the current active renderer plugin."""
         # read html file
         html = '';
