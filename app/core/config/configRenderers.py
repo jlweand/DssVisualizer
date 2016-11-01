@@ -17,8 +17,6 @@
 
 import ujson
 import json
-from pprint import pprint
-
 
 class ConfigRenderers:
     def importConfigJson(self):
