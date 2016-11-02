@@ -45,6 +45,10 @@ class PyTimed:
         :type startDate: str
         :param endDate: The a string value of the local datetime to end search on
         :type endDate: str
+        :param techName: The technician name to add to the metadata
+        :type techName: str
+        :param eventName: The name of the event to add to the metadata
+        :type eventName: str
         :returns: JSON object
         """
         pyTimed = self.getPlugin()
@@ -65,18 +69,20 @@ class PyTimed:
     def insertFixedTimedData(self,dataId, timed_id, content, className, startDate, title, typeTimed):
         """Override: Inserts a new record of the data. Does not overwrite the original key press.
 
-        :param oldDataId: The key of the original timed data
-        :type oldDataId: str
+        :param dataId: The ID of the 'fixed' timed data to edit.
+        :type dataId: str
+        :param timed_id: The key of the original timed data
+        :type timed_id: str
         :param content: The updated content
         :type content: str
-        :param _type: The updated type
-        :type _type: str
-        :param classname: The updated class name
-        :type classname: str
+        :param typeTimed: The updated type
+        :type typeTimed: str
+        :param className: The updated class name
+        :type className: str
         :param title: The updated title
         :type title: str
-        :param start: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
-        :type start: str
+        :param startDate: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
+        :type startDate: str
         :returns: newly created id.
         """
         pyTimed = self.getPlugin()
@@ -88,17 +94,19 @@ class PyTimed:
 
         :param dataId: The ID of the 'fixed' timed data to edit.
         :type dataId: str
+        :param timed_id: The key of the original timed data
+        :type timed_id: str
         :param content: The updated content
         :type content: str
-        :param _type: The updated type
-        :type _type: str
-        :param classname: The updated class name
-        :type classname: str
+        :param typeTimed: The updated type
+        :type typeTimed: str
+        :param className: The updated class name
+        :type className: str
         :param title: The updated title
         :type title: str
-        :param start: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
-        :type start: str
-        :returns: The modified count.
+        :param startDate: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
+        :type startDate: str
+        :returns: newly created id.
         """
         pyTimed = self.getPlugin()
         result = pyTimed.updateFixedTimedData(dataId, timed_id, content, className, Common().formatDateStringToUTC(startDate), title, typeTimed)

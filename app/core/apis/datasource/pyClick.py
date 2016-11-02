@@ -68,48 +68,52 @@ class PyClick:
         jsonData = pyClick.selectClickDataById(dataId)
         return jsonData
 
-    def insertFixedClickData(self, dataId, clicks_id, content, className, start, title, typeClick):
+    def insertFixedClickData(self, dataId, clicks_id, content, className, startDate, title, typeClick):
         """Override: Inserts a new record of the data. Does not overwrite the original key press.
 
-        :param oldDataId: The key of the original click data
-        :type oldDataId: str
+        :param dataId: The ID of the Data point
+        :type dataId: str
+        :param clicks_id: The key of the original click data
+        :type clicks_id: str
         :param content: The updated content
         :type content: str
-        :param _type: The updated type
-        :type _type: str
-        :param classname: The updated class name
-        :type classname: str
+        :param typeClick: The updated type
+        :type typeClick: str
+        :param className: The updated class name
+        :type className: str
         :param title: The updated title
         :type title: str
-        :param start: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
-        :type start: str
+        :param startDate: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
+        :type startDate: str
         :returns: newly created id.
         """
         pyClick = self.getPlugin()
         result = pyClick.insertFixedClickData(dataId, clicks_id, content, className,
-                                              Common().formatDateStringToUTC(start), title, typeClick)
+                                              Common().formatDateStringToUTC(startDate), title, typeClick)
         return result
 
-    def updateFixedClickData(self, dataId, clicks_id, content, className, start, title, typeClick):
+    def updateFixedClickData(self, dataId, clicks_id, content, className, startDate, title, typeClick):
         """Override: Updates the record of the 'fixed' click data.
 
-        :param dataId: The ID of the 'fixed' click data to edit.
+        :param dataId: The ID of the Data point
         :type dataId: str
+        :param clicks_id: The key of the original click data
+        :type clicks_id: str
         :param content: The updated content
         :type content: str
-        :param _type: The updated type
-        :type _type: str
-        :param classname: The updated class name
-        :type classname: str
+        :param typeClick: The updated type
+        :type typeClick: str
+        :param className: The updated class name
+        :type className: str
         :param title: The updated title
         :type title: str
-        :param start: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
-        :type start: str
-        :returns: The modified count.
+        :param startDate: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
+        :type startDate: str
+        :returns: newly created id.
         """
         pyClick = self.getPlugin()
         result = pyClick.updateFixedClickData(dataId, clicks_id, content, className,
-                                              Common().formatDateStringToUTC(start), title, typeClick)
+                                              Common().formatDateStringToUTC(startDate), title, typeClick)
         return result
 
     def deleteFixedClickData(self, dataId):

@@ -69,40 +69,44 @@ class PyKeyPress:
         jsonData = pyKeyPress.selectKeyPressDataById(dataId)
         return jsonData
 
-    def insertFixedKeyPressData(self, dataId, keypress_id, content, className, start):
+    def insertFixedKeyPressData(self, dataId, keypress_id, content, className, startDate):
         """Override: Inserts a new record of the data. Does not overrite the original key press.
 
-        :param oldDataId: The key of the original key press data
-        :type oldDataId: str
+        :param dataId: The ID of the Data point
+        :type dataId: str
+        :param keypress_id: The key of the original key press data
+        :type keypress_id: str
         :param content: The updated content
         :type content: str
         :param className: The updtaed class name
         :type className: str
-        :param start: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
-        :type start: str
+        :param startDate: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
+        :type startDate: str
         :returns: newly created id.
         """
         pyKeyPress = self.getPlugin()
         result = pyKeyPress.insertFixedKeyPressData(dataId, keypress_id, content, className,
-                                                    Common().formatDateStringToUTC(start))
+                                                    Common().formatDateStringToUTC(startDate))
         return result
 
-    def updateFixedKeyPressData(self, dataId, keypress_id, content, className, start):
+    def updateFixedKeyPressData(self, dataId, keypress_id, content, className, startDate):
         """Override: Updates the record of the 'fixed' key press data.
 
-        :param dataId: The ID of the 'fixed' key press data to edit.
+        :param dataId: The ID of the Data point
         :type dataId: str
+        :param keypress_id: The key of the original key press data
+        :type keypress_id: str
         :param content: The updated content
         :type content: str
         :param className: The updtaed class name
         :type className: str
-        :param start: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
-        :type start: str
-        :returns: The modified count.
+        :param startDate: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
+        :type startDate: str
+        :returns: newly created id.
         """
         pyKeyPress = self.getPlugin()
         result = pyKeyPress.updateFixedKeyPressData(dataId, keypress_id, content, className,
-                                                    Common().formatDateStringToUTC(start))
+                                                    Common().formatDateStringToUTC(startDate))
         return result
 
     def deleteFixedKeyPressData(self, dataId):
