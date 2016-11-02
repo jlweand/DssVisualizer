@@ -44,8 +44,9 @@ But to not keep you hanging here are some things to get you started!
    Datasource API <datasourceapi>
    Renderer API <rendererapi>
    Install a Plugin <plugininstall>
-   Import Data
+   Import Data <dataimport>
    limitations
+
 
 
 How to run the DssVisualizer
