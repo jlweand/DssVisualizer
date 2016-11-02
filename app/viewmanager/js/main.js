@@ -27,7 +27,13 @@ $(document).on("click", "#dateInput", function(){
 
 function visualizeKeyData(keyData, clickData, timedData){
 	keyData.forEach(function(obj){
-		obj['type'] = ['point'];
+		obj['type'] = ['box'];
+	});
+	clickData.forEach(function(obj){
+		obj['type'] = ['box'];
+	});
+	timedData.forEach(function(obj){
+		obj['type'] = ['box'];
 	});
 	var keylogger = new KeyLogger(keyData, clickData, timedData);
 }

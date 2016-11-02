@@ -55,23 +55,18 @@ body, html {
 	display: none;
 }
 
-.sweet-alert{
-	box-sizing : border-box;
-	max-height : 90% !important;
-	/*overflow-y : auto !important;*/
-	padding : 0 17px 17px !important;
-	width : 512px;
+.swal2-content div{
+	overflow-y: scroll;
+	max-height: 500px;
+	border: 1px solid #999;
 }
-.sweet-alert:before {
-	content : "";
-	display : block;
-	height : 17px;
-	width : 0;
+
+.swal2-content div table{
+	border-collapse: collapse;
 }
-.sweet-alert p{
-	max-height: 500px !important;
-	overflow: auto !important;
-	border: 1px solid #eee;
+
+.swal2-content div table td{
+	border: 1px solid #aaa;
 }
 
 #content{

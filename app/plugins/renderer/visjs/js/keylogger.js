@@ -31,7 +31,41 @@ var KeyLogger = function(keyData, clickData, timedData){
 			else{
 		    	return '<div>' + item.content + '</div>';
 			}
-		  }
+		},
+		editable: true,
+		onAdd: function(item, callback){
+			prettyAdd('Add Annotation', function(value) {
+				if (value) {
+		          item.content = "Annotation: "+value;
+  		// 		  console.log(value);
+				  item.annotation = value;
+				  console.log(JSON.stringify(item));
+				  var currItem = item.id;
+				  var groupName = dataNames[item.group];
+				  $.get("http://localhost?submission=annotation&itemID="+currItem+"&type="+groupName+"&annotation="+value);
+		          callback(item); // send back adjusted new item
+		        }
+		        else {
+		          callback(null); // cancel item creation
+		        }
+			});
+		},
+		onUpdate: function(item, callback){
+			prettyEdit('Edit Item', item.content, item.annotation, function(value){
+				if (value) {
+					item.content = "Annotation: "+value;
+				  item.annotation = value;
+				  console.log(JSON.stringify(item));
+				  var currItem = item.id;
+				  var groupName = dataNames[item.group];
+				  $.get("http://localhost?submission=annotation&itemID="+currItem+"&type="+groupName+"&annotation="+value);
+		          callback(item); // send back adjusted new item
+		        }
+		        else {
+		          callback(null); // cancel item creation
+		        }
+			});
+		}
 	};
 
 	// Create a Timeline
@@ -46,26 +80,68 @@ var KeyLogger = function(keyData, clickData, timedData){
 
 	timeline.on('select', function (properties) {
 		var currItem = properties.items;
-		addAnnotation(currItem);
+		// var title = currItem.start;
+		// var text = "";
+		// if(currItem.annotation){
+		// 	text = currItem.annotation;
+		// }
+		// prettyDisplay(title, text);
 	});
 
-	function prettyConfirm(title, text, callback) {
+	// function prettyDisplay(title, text){
+	// 	swal({
+	// 		title: title,
+	// 		text: text
+	// 	});
+	// }
+
+	function prettyAdd(title, callback){
 		swal({
 			title: title,
-			text: text,
-			type: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: "#DD6B55"
-		}, callback);
+			input: 'textarea',
+			showCancelButton: true
+		}).then(callback);
 	}
 
-	function prettyPrompt(title, text, inputValue, callback) {
+	function prettyEdit(title, text, inputValue, callback){
 		swal({
 			title: title,
 			text: text,
-			type: 'input',
-			showCancelButton: true,
-			inputValue: inputValue
-		}, callback);
+			input: "textarea",
+			inputValue: inputValue,
+			showCancelButton: true
+		}).then(callback);
 	}
+
+	// function prettyAdd(title, callback){
+	// 	var form = "<div style='border: none'>";
+	// 	form += "<label for='addStart'>Select start date:</label>";
+	// 	form += "<input type='text' id='addEventDatePicker' name='addStart' size='30'/>";
+	// 	form += "</div><div style='border: none'>";
+	// 	form += "<label for='annotation'>Enter the annotation:</label>";
+	// 	form += "<input type='text' id='annotation' name='annotation'/>"
+	// 	form += "</div>";
+	// 	swal({
+	// 		title: title,
+	// 		html: form,
+	// 		preConfirm: function(result) {
+	// 			return new Promise(function(resolve) {
+	// 				if (result) {
+	// 					resolve([
+	// 						$('#addEventDatePicker').val(),
+	// 						$('#annotation').val()
+	// 					])
+	// 				}
+	// 			})
+	// 		}
+	// 	}).then(callback);
+	// 	var datePicker = $("#addEventDatePicker").datepicker({
+	// 		defaultDate:"+1w",
+	// 		changeMonth: true,
+	// 		changeYear: true,
+	// 		maxDate: 0
+	// 	});
+	// }
+
+	// function prettyEdit(title, text, )
 }

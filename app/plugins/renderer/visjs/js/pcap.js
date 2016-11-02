@@ -39,9 +39,10 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
 			// console.log(allObj['start']);
 			// console.log(currTime+" - "+allTime+" = "+diff);
 			if( xDiff < xBuffer){
-				if( yDiff < yBuffer){
+				// if( yDiff < yBuffer){
+				// replaceNewLines(allObj['title']);
 					prettyPrompt(allObj['start'], allObj['title']);
-				}
+				// }
 			}
 		});
 	});
@@ -86,5 +87,17 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
 }
 
 function prettyPrompt(title, text) {
-	swal({title: title, text: text, html: true, allowOutsideClick: true});
+	var newText = replaceNewLines(text);
+	swal({
+		title: title,
+		html: newText,
+		width: '90%'
+	});
+}
+
+function replaceNewLines(text){
+	var newText = "<div><table style='text-align: left'><tr><td>";
+	newText += text.replace(/\n/g, "</td></tr><tr><td>");
+	newText += "</td></tr></table><div>";
+	return newText;
 }

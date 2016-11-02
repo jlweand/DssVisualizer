@@ -73,10 +73,10 @@ def handle(web_view, web_frame, web_resource, request, response):
     # print (parse_qs(query))
 
 
+
     if not query:
         return
     else:
-
         queryDict = parse_qs(query)
         if 'request' in queryDict:
             if queryDict['request'][0] == 'keypressData':
@@ -102,6 +102,7 @@ def handle(web_view, web_frame, web_resource, request, response):
 
         elif 'submission' in queryDict:
             if queryDict['submission'][0] == 'annotation':
+                print("trying to submit"+query)
                 itemID = queryDict['itemID'][0]
                 itemType = queryDict['type'][0]
                 annotation = queryDict['annotation'][0]
@@ -189,7 +190,7 @@ gtkWindow.connect("delete-event", Gtk.main_quit)
 gtkWindow.set_size_request(1000, 800)
 
 # generate the index.html page based on the renderer plugin
-GenerateHtml().generatHtml()
+GenerateHtml().generateHtml()
 uri = "file:///" + os.getcwd() + "/viewmanager/index.html"
 
 webKitWebView.load_uri(uri)

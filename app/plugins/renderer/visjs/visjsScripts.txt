@@ -1,10 +1,6 @@
-<script src="http://t4t5.github.io/sweetalert/dist/sweetalert.min.js"></script>
-<link href="http://t4t5.github.io/sweetalert/dist/sweetalert.css" rel="stylesheet" type="text/css"/>
-
 <script src="../plugins/renderer/visjs/vis.js"></script>
 <link href="../plugins/renderer/visjs/vis.css" rel="stylesheet" type="text/css" />
 
 
 <script src="../plugins/renderer/visjs/js/pcap.js"></script>
 <script src="../plugins/renderer/visjs/js/keylogger.js"></script>
-
