@@ -168,12 +168,12 @@ class DataExport:
         # we only want to export the images for the data we are exporting
         for dataObj in dataObjects:
             # get the location of the image from the object.
-            indexOf = dataObj["title"].rfind('/')
-            originalImageLocation = dataObj["title"][:indexOf]
-            fileName = dataObj["title"][indexOf+1:]
+            split = os.path.split(dataObj["title"])
+            originalImageLocation = split[0]
+            imageName = split[1]
 
             # copy the image into the export path
-            fullFileName = os.path.join(originalImageLocation, fileName)
+            fullFileName = os.path.join(originalImageLocation, imageName)
             if os.path.isfile(fullFileName):
                 shutil.copy(fullFileName, exportPath)
 

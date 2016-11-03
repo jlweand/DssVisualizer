@@ -111,9 +111,9 @@ class DataImport:
         for dataObj in json:
 
             # get the location of the image from the object.
-            indexOf = dataObj["title"].rfind('/')
-            originalImageLocation = dataObj["title"][:indexOf]
-            imageName = dataObj["title"][indexOf+1:]
+            split = os.path.split(dataObj["title"])
+            originalImageLocation = split[0]
+            imageName = split[1]
 
             # copy the image into the export path
             fullFileName = os.path.join(originalImageLocation, imageName)
