@@ -28,7 +28,7 @@ class Annotations:
 
         :param collection: The collection in which the data lives.
         :type collection: MongoDb collection
-        :param dataId: The ObjectId of the data to add the anotation to.
+        :param dataId: The ObjectId of the data to add the annotation to.
         :type dataId: str
         :param annotationText: The text of the annotation.
         :type annotationText: str
@@ -46,7 +46,7 @@ class Annotations:
 
         :param collection: The collection in which the data lives.
         :type collection: MongoDb collection
-        :param dataId: The ObjectId of the data to edit the anotation.
+        :param dataId: The ObjectId of the data to edit the annotation.
         :type dataId: str
         :param oldAnnotationText: The old version of the text of the annotation.
         :type oldAnnotationText: str
@@ -66,7 +66,7 @@ class Annotations:
 
         :param collection: The collection in which the data lives.
         :type collection: MongoDb collection
-        :param dataId: The ObjectId of the data to delete the anotation from.
+        :param dataId: The ObjectId of the data to delete the annotation from.
         :type dataId: str
         :param annotationText: The text of the annotation to remove.
         :type annotationText: str
@@ -83,7 +83,7 @@ class Annotations:
 
         :param collection: The collection in which the data lives.
         :type collection: MongoDb collection
-        :param dataId: The ObjectId of the data to remove the anotations from.
+        :param dataId: The ObjectId of the data to remove the annotations from.
         :type dataId: str
         :returns: modified_count
         """
