@@ -4,6 +4,7 @@ $(document).on("click", "#dateInput", function(){
 	$("#multiExcludeData").html("");
 	$("#multiIncludeData").html("");
 	$("#tsharkData").html("");
+	$("#screenshotData").html("");
 
 	var start = $("#datepickerStart").val();
 	var end = $("#datepickerEnd").val();
@@ -23,6 +24,8 @@ $(document).on("click", "#dateInput", function(){
 	$.get(keypressDataUrl);
 	var pcapDataUrl = "http://localhost?request=pcapData&startDate="+start+"&endDate="+end;
 	$.get(pcapDataUrl);
+	var screenshotDataUrl = "http://localhost?request=screenshotData&startDate="+start+"&endDate="+end;
+	$.get(screenshotDataUrl);
 });
 
 function visualizeKeyData(keyData, clickData, timedData){
@@ -67,4 +70,11 @@ function visualizePCAPData(meXY, meAll, miXY, miAll, tsXY, tsAll){
 		});
 	});
 	var pcapData = new PCAPData(meXY, meAll, miXY, miAll, tsXY, tsAll);
+}
+
+function visualizeSnapshotData(snapData){
+	snapData.forEach(function(obj){
+		obj['type'] = ['box'];
+	});
+	var snap = new Screenshot(snapData);
 }

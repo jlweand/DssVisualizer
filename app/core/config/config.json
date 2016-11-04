@@ -17,9 +17,9 @@
       "scripts": "visjsScripts.txt"
     },
     "screenshots": {
-      "location": "plugins.renderer.d3",
-      "plugin": "d3.js",
-      "scripts": "tom.txt"
+      "location": "plugins.renderer.visjs",
+      "plugin": "visjs.js",
+      "scripts": "visjsScripts.txt"
     }
   },
   "datasourcePlugins": [

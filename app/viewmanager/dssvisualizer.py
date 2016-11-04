@@ -34,6 +34,7 @@ from core.apis.datasource.tsharkThroughput import TsharkThroughput
 from core.apis.datasource.multiExcludeProtocol import MultiExcludeProtocol
 from core.apis.datasource.multiIncludeProtocol import MultiIncludeProtocol
 from core.apis.datasource.tsharkProtocol import TsharkProtocol
+from core.apis.datasource.manualScreenShot import ManualScreenShot
 
 gi.require_version("Gtk", "3.0")
 gi.require_version("WebKit", "3.0")
@@ -98,6 +99,12 @@ def handle(web_view, web_frame, web_resource, request, response):
                 tsharkProt = TsharkProtocol().selectTsharkProtocolData(startDate, endDate, '', '')
                 js = "visualizePCAPData(%s, %s, %s, %s, %s, %s);" % (
                     multiEx, multiExProt, multiInc, multiIncProt, tshark, tsharkProt)
+                webKitWebView.execute_script(js)
+            elif queryDict['request'][0] == 'screenshotData':
+                startDate = queryDict['startDate'][0]
+                endDate = queryDict['endDate'][0]
+                snap = ManualScreenShot().selectManualScreenShotData(startDate, endDate, '', '')
+                js = "visualizeSnapshotData(%s);" % (snap)
                 webKitWebView.execute_script(js)
 
         elif 'submission' in queryDict:

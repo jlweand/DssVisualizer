@@ -47,6 +47,10 @@ body, html {
 	width : 95%
 }
 
+#screenshotData {
+	width : 95%
+}
+
 .clear{
 	clear: both;
 }

@@ -29,7 +29,7 @@ class GenerateHtml:
     def generateHtml(self):
         """This method generates the index.html page based on the current active renderer plugin."""
         # read html file
-        html = '';
+        html = ''
         with open('viewmanager/index.html.template', 'r') as htmlFile:
             html = htmlFile.read()
 
