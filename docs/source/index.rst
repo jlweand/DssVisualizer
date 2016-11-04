@@ -8,12 +8,12 @@
 Welcome to the Decision Support System Visualizer
 =================================================
 
-DSS Visualizer is being developed for Dr. Jamie Acosta from the U.S. Army Research Laboratory.  It is a non-web based web based application that displays Key Logger, PCAP,
+DSS Visualizer is being developed by Interrupt 0x22 for Dr. Jamie Acosta from the U.S. Army Research Laboratory.  It is a non-web based web based application that displays Key Logger, PCAP,
 and screenshots gathered at various events. What do you mean by "non-web based web based application", you ask?  One of the requirements of this application was for it to
 use a Webkit outside of a real web server.  So, while it has all the makeup of a real life web application, it does not need Apache, Tomcat, IIS, or any other web server.
 This keeps it lightweight and portable.  It is written in Python and JavaScript with a MongoDB data source.
 
-Its developers are:
+The Interrupt 0x22 developers are:
 
 * Jennifer Weand: In her free time, Jennifer spends her time playing with her four cats, officiating at local roller derby bouts, or (and this has been much too infrequent as of late) driving off into the sunset and camping.
 
