@@ -35,13 +35,13 @@ class ManualScreenShot:
         collection = self.getManualScreenShotCollection()
         findJson = Common().updateTechAndEventNames(startDate, endDate, techName, eventName, True, False)
         cursor = collection.find(findJson)
-        return self.fixTheDates(cursor)
+        return Common().formatOutput(cursor)
 
     # select single data point
     def selectManualScreenShotDataById(self, dataId):
         collection = self.getManualScreenShotCollection()
         cursor = collection.find({"_id": ObjectId(dataId)})
-        return self.fixTheDates(cursor)
+        return Common().formatOutput(cursor)
 
     # add a fixedData record to this data point
     def insertFixedManualScreenShotData(self, dataId, manualScreenShot_id, content, className, start, title, typeManualScreenShot):
@@ -106,11 +106,12 @@ class ManualScreenShot:
 
         return Annotations().addAnnotationToTimeline(collection, manualScreenShot, annotationText)
 
-    def fixTheDates(self, cursor):
-        objects = Common().formatOutput(cursor)
-        for obj in objects:
-            obj["id"] = obj["_id"]["$oid"]
-            obj["start"] = Common().formatEpochDatetime(obj["start"]["$date"])
-            obj["metadata"]["importDate"] = Common().formatEpochDatetime(obj["metadata"]["importDate"]["$date"])
+    def getDistinctTechNames(self):
+        collection = self.getManualScreenShotCollection()
+        cursor = collection.find().distinct("metadata.techName")
+        return Common().getPythonObjects(cursor)
 
-        return objects
+    def getDistinctEventNames(self):
+        collection = self.getManualScreenShotCollection()
+        cursor = collection.find().distinct("metadata.eventName")
+        return Common().getPythonObjects(cursor)

@@ -59,10 +59,22 @@ class Common:
         :type cursor: documents
         :returns: Python object (list)
         """
-        bsonResult = dumps(cursor)
-        objects = ujson.loads(bsonResult)
+        objects = self.getPythonObjects(cursor)
+
+        for obj in objects:
+            obj["id"] = obj["_id"]["$oid"]
+            obj["metadata"]["importDate"] = self.formatEpochDatetime(obj["metadata"]["importDate"]["$date"])
+
+            if obj["start"]:
+                obj["start"] = self.formatEpochDatetime(obj["start"]["$date"])
+            else:
+                obj["x"] = self.formatEpochDatetime(obj["x"]["$date"])
+
         return objects
 
+    def getPythonObjects(self, cursor):
+        bsonResult = dumps(cursor)
+        return ujson.loads(bsonResult)
 
     def createMetadataForTimelineAnnotations(self, techName, eventName):
         """Creates the generic metadata for the object when adding an annotation to just the timeline

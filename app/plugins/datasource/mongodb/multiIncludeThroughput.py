@@ -35,13 +35,13 @@ class MultiIncludeThroughput:
         collection = self.getMultiIncludeThroughputCollection()
         findJson = Common().updateTechAndEventNames(startDate, endDate, techName, eventName, False, True)
         cursor = collection.find(findJson)
-        return self.fixTheData(cursor)
+        return Common().formatOutput(cursor)
 
     # select single data point
     def selectMultiIncludeThroughputDataById(self, dataId):
         collection = self.getMultiIncludeThroughputCollection()
         cursor = collection.find({"_id": ObjectId(dataId)})
-        return self.fixTheData(cursor)
+        return Common().formatOutput(cursor)
 
     # add a fixedData record to this data point
     def insertFixedMultiIncludeThroughputData(self, dataId, x, y):
@@ -100,13 +100,12 @@ class MultiIncludeThroughput:
 
         return Annotations().addAnnotationToTimeline(collection, multiInclude, annotationText)
 
-    def fixTheData(self, cursor):
-        objects = Common().formatOutput(cursor)
-        for obj in objects:
-            obj["id"] = obj["_id"]["$oid"]
-            obj["metadata"]["importDate"] = Common().formatEpochDatetime(obj["metadata"]["importDate"]["$date"])
+    def getDistinctTechNames(self):
+        collection = self.getMultiIncludeThroughputCollection()
+        cursor = collection.find().distinct("metadata.techName")
+        return Common().getPythonObjects(cursor)
 
-            if obj["x"] != "":
-                obj["x"] = Common().formatEpochDatetime(obj["x"]["$date"])
-
-        return objects
+    def getDistinctEventNames(self):
+        collection = self.getMultiIncludeThroughputCollection()
+        cursor = collection.find().distinct("metadata.eventName")
+        return Common().getPythonObjects(cursor)

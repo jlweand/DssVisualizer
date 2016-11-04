@@ -37,13 +37,13 @@ class MultiExcludeProtocol:
         collection = self.getMultiExcludeProtocolCollection()
         findJson = Common().updateTechAndEventNames(startDate, endDate, techName, eventName, True, False)
         cursor = collection.find(findJson)
-        return self.fixTheData(cursor)
+        return Common().formatOutput(cursor)
 
     # select single data point
     def selectMultiExcludeProtocolDataById(self, dataId):
         collection = self.getMultiExcludeProtocolCollection()
         cursor = collection.find({"_id": ObjectId(dataId)})
-        return self.fixTheData(cursor)
+        return Common().formatOutput(cursor)
 
     # add a fixedData record to this data point
     def insertFixedMultiExcludeProtocolData(self, dataId, traffic_all_id, content, className, title, startDate):
@@ -107,12 +107,3 @@ class MultiExcludeProtocol:
         multiExclude["metadata"] = metadata
 
         return Annotations().addAnnotationToTimeline(collection, multiExclude, annotationText)
-
-    def fixTheData(self, cursor):
-        objects = Common().formatOutput(cursor)
-        for obj in objects:
-            obj["id"] = obj["_id"]["$oid"]
-            obj["start"] = Common().formatEpochDatetime(obj["start"]["$date"])
-            obj["metadata"]["importDate"] = Common().formatEpochDatetime(obj["metadata"]["importDate"]["$date"])
-
-        return objects

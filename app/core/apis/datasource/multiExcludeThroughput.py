@@ -179,3 +179,17 @@ class MultiExcludeThroughput:
         multiExcludePlugin = self.getPlugin()
         return multiExcludePlugin.addAnnotationToMultiExcludeThroughputTimeline(Common().formatDateStringToUTC(x),
                                                                                 annotationText, techName, eventName)
+
+    def getDistinctTechNames(self):
+        """Override: Get a list of distinct technician names. used for the UI when searching by technician name.
+
+        :return: a collection of distinct technician names in the data source.
+        """
+        return self.getPlugin().getDistinctTechName()
+
+    def getDistinctEventNames(self):
+        """Override: Get a list of distinct event names. used for the UI when searching by event name.
+
+        :return: a collection of distinct event names in the data source.
+        """
+        return self.getPlugin().getDistinctEventName()
