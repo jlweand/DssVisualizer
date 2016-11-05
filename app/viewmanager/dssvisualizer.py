@@ -171,7 +171,7 @@ def getJson(file):
 
 
 def load_available_renderers():
-    jsonFile = getJson("core/config/config.JSON")
+    jsonFile = getJson("core/config/config.json")
     allFile = ujson.dumps(jsonFile)
     js = "createRadioButtons(%s)" % allFile
     webKitWebView.execute_script(js)
