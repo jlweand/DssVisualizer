@@ -44,17 +44,25 @@
 <body>
     <div id="content">
     	<div id="admin">
-    		<a href="admin.html">Edit Plug-Ins</a>
+    		<a href="admin.html">Administration</a>
     	</div>
     	<div id="dateSelect">
     		<div id="start-container">
     			<label for="start">Select start date:</label>
-    			<input type="text" id="datepickerStart" name="start" size="30" />
+    			<input type="text" id="datepickerStart" name="start" size="20" value="2016-10-18" />
     		</div>
 
     		<div id="end-container">
     			<label for="end">Select end date:</label>
-    			<input type="text" id="datepickerEnd" name="end" size="30" />
+    			<input type="text" id="datepickerEnd" name="end" size="20" value="2016-10-18" />
+    		</div>
+    		<div id="end-container">
+    			<label for="techName">Enter Tech Name:</label>
+    			<input type="text" id="techName" name="techName" size="20" value="Alex" />
+    		</div>
+    		<div id="end-container">
+    			<label for="eventName">Enter Event Name:</label>
+    			<input type="text" id="eventName" name="eventName" size="20" />
     		</div>
     		<div id="end-container">
     			<button id="dateInput" name="dateInput">Go</button>

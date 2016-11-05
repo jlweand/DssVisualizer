@@ -83,3 +83,12 @@ label{
 	padding: 5px;
 	display: none;
 }
+
+#visualizer{
+	text-align: right;
+	margin-bottom: 20px;
+}
+#visualizer a{
+	text-decoration: none;
+	color: black;
+}
