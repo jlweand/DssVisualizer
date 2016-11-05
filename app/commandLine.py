@@ -16,6 +16,7 @@
 # along with DssVisualizer.  If not, see <http://www.gnu.org/licenses/>.
 
 import argparse
+import os
 from datetime import datetime
 from core.config.dataImport import DataImport
 from core.config.dataExport import DataExport
@@ -52,7 +53,7 @@ class CommandLine:
 
         args = vars(parser.parse_args())
 
-        print(args)
+        #print(args)
 
         if args["command"] == "import":
             try:
@@ -65,7 +66,7 @@ class CommandLine:
         elif args["command"] == "export":
             DataExport().exportAllData(args["startdate"], args["enddate"], args["techname"], args["eventname"], args["copyimages"], args["directory"])
         elif args["command"] == "start":
-            
+            os.system('python -m viewmanager.dssvisualizer')
 
     if __name__ == "__main__":
         main()
@@ -75,5 +76,6 @@ class CommandLine:
         techName = "Alex"
         eventName = "Super Summer Event"
 
-# python -m core.commandLine export -sd "2016-10-18 00:00:00" -ed "2016-10-18 23:59:59" -t "Julie" -cp -dir "C:\temp\export"
-# python -m core.commandLine import -t "Julie" -e "Julie's event" -dir "C:\temp\json" -c "someComments"
+# python commandLine.py export -sd "2016-10-18 00:00:00" -ed "2016-10-18 23:59:59" -t "Julie" -cp -dir "C:\temp\export"
+# python commandLine.py import -t "Julie" -e "Julie's event" -dir "C:\temp\json" -c "someComments"
+# python commandLine.py start
