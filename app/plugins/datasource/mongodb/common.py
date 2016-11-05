@@ -65,9 +65,9 @@ class Common:
             obj["id"] = obj["_id"]["$oid"]
             obj["metadata"]["importDate"] = self.formatEpochDatetime(obj["metadata"]["importDate"]["$date"])
 
-            if obj["start"]:
+            try:
                 obj["start"] = self.formatEpochDatetime(obj["start"]["$date"])
-            else:
+            except KeyError:
                 obj["x"] = self.formatEpochDatetime(obj["x"]["$date"])
 
         return objects
