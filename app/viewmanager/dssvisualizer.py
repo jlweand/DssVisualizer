@@ -18,7 +18,9 @@
 import gi
 import os
 import ujson
+import subprocess 
 from urllib.parse import parse_qs
+from sys import platform as _platform
 
 # Only use files from core.  DO NOT use files from plugins.
 from core.apis.renderer.generateHtml import GenerateHtml
@@ -206,10 +208,9 @@ def modify_uninstalled_plugin_html(plugin, tagID):
     webKitWebView.execute_script(script)
 
 
-# Once MongoDB is installed as a service one everyone's machine, this can be uncommented.
-# MongoDB will then be started as the app is started.
-# subprocess.call(["mongod", "--repair"], shell=True)
-# subprocess.Popen(["mongod"], shell=True)
+if _platform == "linux" or _platform == "linux2":
+    subprocess.call(["mongod", "--repair"], shell=True)
+    subprocess.Popen(["mongod"], shell=True)
 
 gtkWindow = Gtk.Window()
 webKitWebView = WebKit.WebView()
