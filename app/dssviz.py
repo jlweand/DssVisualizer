@@ -17,6 +17,7 @@
 
 import argparse
 import os
+from sys import platform as _platform
 from datetime import datetime
 from core.config.dataImport import DataImport
 from core.config.dataExport import DataExport
@@ -65,7 +66,10 @@ class CommandLine:
             DataExport().exportAllData(args["startdate"], args["enddate"], args["techname"], args["eventname"], args["copyimages"], args["directory"])
 
         elif args["command"] == "start" or args["command"] is None:
-            os.system('python -m viewmanager.dssvisualizer')
+            if _platform == "linux" or _platform == "linux2":
+                os.system('python3 -m viewmanager.dssvisualizer')
+            elif _platform == "win32":
+                os.system('python -m viewmanager.dssvisualizer')
 
     if __name__ == "__main__":
         main()
