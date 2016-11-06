@@ -18,9 +18,9 @@
 import gi
 import os
 import ujson
-import subprocess 
+#import subprocess
 from urllib.parse import parse_qs
-from sys import platform as _platform
+#from sys import platform as _platform
 
 # Only use files from core.  DO NOT use files from plugins.
 from core.apis.renderer.generateHtml import GenerateHtml
@@ -207,10 +207,12 @@ def modify_uninstalled_plugin_html(plugin, tagID):
         script = 'document.getElementById("' + tagID + '").innerHTML = "";'
     webKitWebView.execute_script(script)
 
-
-if _platform == "linux" or _platform == "linux2":
-    subprocess.call(["mongod", "--repair"], shell=True)
-    subprocess.Popen(["mongod"], shell=True)
+# this causes the process to take over.  more research is needed.
+# and I have other homework I need to do at the moment.
+# put the python down and walk away...
+# if _platform == "linux" or _platform == "linux2":
+#     subprocess.call(["mongod", "--repair"], shell=True)
+#     subprocess.call(["mongod"], shell=True)
 
 gtkWindow = Gtk.Window()
 webKitWebView = WebKit.WebView()
