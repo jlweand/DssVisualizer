@@ -30,6 +30,35 @@ $(document).on("click", "#dateInput", function(){
 	$.get(screenshotDataUrl);
 });
 
+$(document).ready(function() {
+    $('#keylogger').val($(this).is(':checked'));
+    $('#multiexclude').val($(this).is(':checked'));
+    $('#multiinclude').val($(this).is(':checked'));
+    $('#tshark').val($(this).is(':checked'));
+    $('#snapshots').val($(this).is(':checked'));
+});
+
+$(document).on("change", "#keylogger", function(){
+    $('#keypressData').toggle();
+});
+
+$(document).on("change", "#multiexclude", function(){
+    $('#multiExcludeData').toggle();
+});
+
+$(document).on("change", "#multiinclude", function(){
+    $('#multiIncludeData').toggle();
+});
+
+$(document).on("change", "#tshark", function(){
+    $('#tsharkData').toggle();
+});
+
+$(document).on("change", "#snapshots", function(){
+    $('#screenshotData').toggle();
+});
+
+
 function visualizeKeyData(keyData, clickData, timedData){
 	keyData.forEach(function(obj){
 		obj['type'] = ['box'];
@@ -80,3 +109,4 @@ function visualizeSnapshotData(snapData){
 	});
 	var snap = new Screenshot(snapData);
 }
+

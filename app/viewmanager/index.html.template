@@ -68,6 +68,13 @@
     			<button id="dateInput" name="dateInput">Go</button>
     		</div>
     	</div>
+    	<div id="dateSelect">
+			Key Logger <input type='checkbox' id='keylogger' checked> <br>
+			Multi Exclude Traffic <input type='checkbox' id='multiexclude' checked> <br>
+			Multi Include Traffic <input type='checkbox' id='multiinclude' checked> <br>
+			TShark Traffic <input type='checkbox' class='view-toggle' id='tshark' checked> <br>
+			Manual Snapshots <input type='checkbox' id='snapshots' checked> <br>
+    	</div>
     	<div class="clear"></div>
     	<h3>Keypress Data</h3>
     	<div id="keypressData"></div>
