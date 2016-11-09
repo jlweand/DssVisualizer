@@ -36,34 +36,47 @@ var KeyLogger = function(keyData, clickData, timedData){
 		onAdd: function(item, callback){
 			prettyAdd('Add Annotation', function(value) {
 				if (value) {
-		          item.content = "Annotation: "+value;
-  		// 		  console.log(value);
-				  item.annotation = value;
-				  console.log(JSON.stringify(item));
-				  var currItem = item.id;
-				  var groupName = dataNames[item.group];
-				  $.get("http://localhost?submission=annotation&itemID="+currItem+"&type="+groupName+"&annotation="+value);
-		          callback(item); // send back adjusted new item
-		        }
-		        else {
-		          callback(null); // cancel item creation
-		        }
+					item.content = "Annotation: "+value;
+					// 		  console.log(value);
+					item.annotation = value;
+					var currItem = item.id;
+					var groupName = dataNames[item.group];
+					$.get("http://localhost?submission=annotation&itemID="+currItem+"&type="+groupName+"&annotation="+value);
+					callback(item); // send back adjusted new item
+				}
+				else {
+					callback(null); // cancel item creation
+				}
 			});
 		},
 		onUpdate: function(item, callback){
-			prettyEdit('Edit Item', item.content, item.annotation, function(value){
-				if (value) {
-					item.content = "Annotation: "+value;
-				  item.annotation = value;
-				  console.log(JSON.stringify(item));
-				  var currItem = item.id;
-				  var groupName = dataNames[item.group];
-				  $.get("http://localhost?submission=annotation&itemID="+currItem+"&type="+groupName+"&annotation="+value);
-		          callback(item); // send back adjusted new item
-		        }
-		        else {
-		          callback(null); // cancel item creation
-		        }
+			// prettyEdit('Edit Item', item.content, item.annotation, function(value){
+			// 	if (value) {
+			// 		item.content = "Annotation: "+value;
+			// 	  item.annotation = value;
+			// 	  console.log(JSON.stringify(item));
+			// 	  var currItem = item.id;
+			// 	  var groupName = dataNames[item.group];
+			// 	  $.get("http://localhost?submission=annotation&itemID="+currItem+"&type="+groupName+"&annotation="+value);
+		    //       callback(item); // send back adjusted new item
+		    //     }
+		    //     else {
+		    //       callback(null); // cancel item creation
+		    //     }
+			// });
+			prettyEdit("Edit item", item, function(value){
+				var startDate = value[0];
+				var startDateArr = startDate.split("/");
+				var startDateTime = new Date(value[0]+" "+value[1]+":"+value[2]+":"+value[3]);
+				var content = value[4];
+				var title = value[5];
+				var comment = value[6];
+				var annotation = value[7];
+				// console.log(startDateTime.toISOString());
+				item.content = content;
+				item.title = title;
+				item.start = startDateTime.toISOString();
+				callback(item);
 			});
 		}
 	};
@@ -80,68 +93,83 @@ var KeyLogger = function(keyData, clickData, timedData){
 
 	timeline.on('select', function (properties) {
 		var currItem = properties.items;
-		// var title = currItem.start;
-		// var text = "";
-		// if(currItem.annotation){
-		// 	text = currItem.annotation;
-		// }
-		// prettyDisplay(title, text);
 	});
 
-	// function prettyDisplay(title, text){
-	// 	swal({
-	// 		title: title,
-	// 		text: text
-	// 	});
-	// }
-
-	function prettyAdd(title, callback){
+	function prettyEdit(title, item, callback){
+		var itemDateTime = new Date(item['start'].replace(/-/g, "/").replace(/T/, " "));
+		var itemDateString = itemDateTime.getMonth()+"/"+itemDateTime.getDate()+"/"+itemDateTime.getFullYear();
+		var itemDate = new Date(itemDateString);
+		var itemTimeHours = itemDateTime.getHours();
+		var itemTimeMinutes = itemDateTime.getMinutes();
+		var itemTimeSeconds = itemDateTime.getSeconds();
+		var form = "<div style='border:none'>";
+		form += "<label for='editStartDate'>Edit start date:</label>";
+		form += "<input type='text' id='editStartDate' name='editStartDate' value='"+itemDateString+"'/>";
+		form += "</div>";
+		form += "<div style='border:none'>";
+		form += "<label for='editStartHours'>Edit start time:</label>";
+		form += "<input type='number' id='editStartHours' name='editStartHours' value='"+itemTimeHours+"' min='0' max='23'/>";
+		form += "<input type='number' id='editStartMinutes' name='editStartMinutes' value='"+itemTimeMinutes+"' min='0' max='59'/>";
+		form += "<input type='number' id='editStartSeconds' name='editStartSeconds' value='"+itemTimeSeconds+"' min='0' max='59'/>";
+		form += "</div>";
+		// console.log(JSON.stringify(item));
+		// var form = "";
+		Object.keys(item).forEach(function(key){
+			if(key == "content"){
+				form += "<div style='border:none'>";
+				form += "<label for='editContent'>Edit Content:</label>";
+				form += "<input type='text' id='editContent' name='editContent' value='"+item[key]+"'/>";
+				form += "</div>";
+			}
+			else if(key == "title"){
+				form += "<div style='border:none'>";
+				form += "<label for='editTitle'>Edit Title:</label>";
+				form += "<input type='text' id='editTitle' name='editTitle' value='"+item[key]+"'/>";
+				form += "</div>";
+			}
+			else if(key == "comment"){
+				form += "<div style='border:none'>";
+				form += "<label for='editComment'>Edit Comment:</label>";
+				form += "<input type='text' id='editComment' name='editComment' value='"+item[key]+"'/>";
+				form += "</div>";
+			}
+		});
+		form += "<div style='border:none'>";
+		form += "<label for='editAnnotation'>Edit Annotation:</label>";
+		if(item['annotation'] == null){
+			form += "<input type='text' id='editAnnotation' name='editAnnotation'/>";
+		}
+		else{
+			form += "<input type='text' id='editAnnotation' name='editAnnotation' value='"+item['annotation']+"'/>";
+		}
+		form += "</div>";
 		swal({
 			title: title,
-			input: 'textarea',
-			showCancelButton: true
+			html: form,
+			showCancelButton: true,
+			preConfirm: function(result) {
+				return new Promise(function(resolve) {
+					if (result) {
+						resolve([
+							$('#editStartDate').val(),
+							$('#editStartHours').val(),
+							$('#editStartMinutes').val(),
+							$('#editStartSeconds').val(),
+							$('#editContent').val(),
+							$('#editTitle').val(),
+							$('#editComment').val(),
+							$('#editAnnotation').val()
+						])
+					}
+				})
+			}
 		}).then(callback);
+		var datePicker = $("#editStartDate").datepicker({
+			defaultDate: itemDate,
+			changeMonth: true,
+			changeYear: true,
+			maxDate: 0
+		});
 	}
 
-	function prettyEdit(title, text, inputValue, callback){
-		swal({
-			title: title,
-			text: text,
-			input: "textarea",
-			inputValue: inputValue,
-			showCancelButton: true
-		}).then(callback);
-	}
-
-	// function prettyAdd(title, callback){
-	// 	var form = "<div style='border: none'>";
-	// 	form += "<label for='addStart'>Select start date:</label>";
-	// 	form += "<input type='text' id='addEventDatePicker' name='addStart' size='30'/>";
-	// 	form += "</div><div style='border: none'>";
-	// 	form += "<label for='annotation'>Enter the annotation:</label>";
-	// 	form += "<input type='text' id='annotation' name='annotation'/>"
-	// 	form += "</div>";
-	// 	swal({
-	// 		title: title,
-	// 		html: form,
-	// 		preConfirm: function(result) {
-	// 			return new Promise(function(resolve) {
-	// 				if (result) {
-	// 					resolve([
-	// 						$('#addEventDatePicker').val(),
-	// 						$('#annotation').val()
-	// 					])
-	// 				}
-	// 			})
-	// 		}
-	// 	}).then(callback);
-	// 	var datePicker = $("#addEventDatePicker").datepicker({
-	// 		defaultDate:"+1w",
-	// 		changeMonth: true,
-	// 		changeYear: true,
-	// 		maxDate: 0
-	// 	});
-	// }
-
-	// function prettyEdit(title, text, )
 }

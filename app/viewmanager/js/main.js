@@ -102,3 +102,11 @@ function visualizeSnapshotData(snapData){
 	var snap = new Screenshot(snapData);
 }
 
+
+function prettyAdd(title, callback){
+	swal({
+		title: title,
+		input: 'textarea',
+		showCancelButton: true
+	}).then(callback);
+}
