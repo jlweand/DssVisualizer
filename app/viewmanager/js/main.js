@@ -30,14 +30,6 @@ $(document).on("click", "#dateInput", function(){
 	$.get(screenshotDataUrl);
 });
 
-$(document).ready(function() {
-    $('#keylogger').val($(this).is(':checked'));
-    $('#multiexclude').val($(this).is(':checked'));
-    $('#multiinclude').val($(this).is(':checked'));
-    $('#tshark').val($(this).is(':checked'));
-    $('#snapshots').val($(this).is(':checked'));
-});
-
 $(document).on("change", "#keylogger", function(){
     $('#keypressData').toggle();
 });
