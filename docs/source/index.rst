@@ -44,22 +44,50 @@ But to not keep you hanging here are some things to get you started!
    Datasource API <datasourceapi>
    Renderer API <rendererapi>
    Install a Plugin <plugininstall>
+   limitations
 
 
 How to run the DssVisualizer
 ============================
-* Copy your .json files into the dssvisualizer/app/json/<dataType> folders.  Check out the source code of :func:`DataImport <core.config.dataImport>` for where the application is looking for the json files.
+We now have command line functionality for DssVisualizer! Once you have the latest version of DssVisualizer from GitHub navigate to the `app` folder and run::
 
-* Until the UI is complete, in a `cmd` line, from within the `app` folder run the test_dataimport.py file::
+    > python3 dssviz.py -h
 
-    > python -m unittests.test_dataimport
+To start the app in a `cmd` line, from within the `app` folder run either::
 
-* To start the app: in a `cmd` line, from within the `app` folder run::
+    > python3 dssviz.py
+    > python3 dssviz.py start
 
-    > python -m viewmanager.dssvisualizer
+To import data::
 
+    usage: dssviz.py import [-h] [-dir DIRECTORY] [-e EVENTNAME] [-t TECHNAME]
+                            [-c COMMENTS] [-id IMPORTDATE] [-cp]
+    arguments:
+      -h, --help      Show this help message and exit
+      -dir DIRECTORY  The top level directory to search and import JSON files.
+      -e EVENTNAME    Name of the event to add as metadata to imported data.
+      -t TECHNAME     Name of the technician to add as metadata to imported
+                      data.
+      -c COMMENTS     Comments about data to add as metadata to imported data.
+      -id IMPORTDATE	Datetime the data was imported. If not specified,
+                      current datetime will be used.
+      -cp             Flag to copy the images on import. Images will be copied
+                      into DssVisualizers file structure
 
+To export data::
 
+    usage: dssviz.py export [-h] [-dir DIRECTORY] [-sd STARTDATE] [-ed ENDDATE]
+                            [-e EVENTNAME] [-t TECHNAME] [-cp]
+    optional arguments:
+      -h, --help      Show this help message and exit
+      -dir DIRECTORY  The destination for the exported data.
+      -sd STARTDATE   The start datetime to search on and return data to export.
+      -ed ENDDATE     The end datetime to search on and return data to export.
+      -e EVENTNAME    Name of the event to search on and return data to export.
+      -t TECHNAME     Name of the technician to search on and return data to
+                      export.
+      -cp             Flag to copy the images on export. Images will be copied
+                      to the export directory.
 
 Indices and tables
 ==================
