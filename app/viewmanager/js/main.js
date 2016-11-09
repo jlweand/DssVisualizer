@@ -1,3 +1,7 @@
+var windowRangeStart;
+var windowRangeEnd;
+var techExport;
+var eventExport;
 $(document).on("click", "#dateInput", function(){
 	$("#loading").removeClass("hidden");
 	$("#keypressData").html("");
@@ -8,6 +12,8 @@ $(document).on("click", "#dateInput", function(){
 
 	var start = $("#datepickerStart").val();
 	var end = $("#datepickerEnd").val();
+	windowRangeStart = start;
+	windowRangeEnd = end;
 	var techName = $("#techName").val();
 	var eventName = $("#eventName").val();
 	if(start == ""){
@@ -50,7 +56,9 @@ $(document).on("change", "#snapshots", function(){
     $('#screenshotData').toggle();
 });
 
-
+var keylogger;
+var pcapData;
+var snap;
 function visualizeKeyData(keyData, clickData, timedData){
 	keyData.forEach(function(obj){
 		obj['type'] = ['box'];
@@ -61,7 +69,7 @@ function visualizeKeyData(keyData, clickData, timedData){
 	timedData.forEach(function(obj){
 		obj['type'] = ['box'];
 	});
-	var keylogger = new KeyLogger(keyData, clickData, timedData);
+	keylogger = new KeyLogger(keyData, clickData, timedData);
 }
 
 function visualizePCAPData(meXY, meAll, miXY, miAll, tsXY, tsAll){
@@ -92,14 +100,14 @@ function visualizePCAPData(meXY, meAll, miXY, miAll, tsXY, tsAll){
 			}
 		});
 	});
-	var pcapData = new PCAPData(meXY, meAll, miXY, miAll, tsXY, tsAll);
+	pcapData = new PCAPData(meXY, meAll, miXY, miAll, tsXY, tsAll);
 }
 
 function visualizeSnapshotData(snapData){
 	snapData.forEach(function(obj){
 		obj['type'] = ['box'];
 	});
-	var snap = new Screenshot(snapData);
+	snap = new Screenshot(snapData);
 }
 
 
@@ -109,4 +117,39 @@ function prettyAdd(title, callback){
 		input: 'textarea',
 		showCancelButton: true
 	}).then(callback);
+}
+
+
+function getRangeChanged(properties){
+	windowRangeStart = properties.start;
+	windowRangeEnd = properties.end;
+	//alert('start:' + properties.start + ' end:' + properties.end)
+	//start = properties.start
+	//end = properties.end
+	keylogger.setTimelineWindow(windowRangeStart,windowRangeEnd);
+	pcapData.setPcapWindows(windowRangeStart,windowRangeEnd);
+	snap.setTimelineWindow(windowRangeStart,windowRangeEnd);
+}
+
+function exportData(){
+	techExport = $("#techName").val();
+	eventExport = $("#eventName").val();
+		if(windowRangeStart == null || windowRangeEnd == null){
+			alert(' time range is undefined');
+		}
+		else if(techExport == ""){
+			alert('tech name is undefined');
+		}
+		else if(eventExport == ""){
+			alert(' event name is undefined')
+		}
+		else{
+			//alert('start: ' + windowRangeStart + ' end: ' + windowRangeEnd);
+			
+			$(document).ready(function(){
+
+					$.get("http://dssvisualizer.py/exportData",{start:windowRangeStart,end:windowRangeEnd,techName:techExport,eventName:eventExport});
+
+			});
+		}
 }

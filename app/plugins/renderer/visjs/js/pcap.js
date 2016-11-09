@@ -13,9 +13,11 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
 		height: "150px"
 	};
 
-	var graph2dME = new vis.Graph2d(containerME, datasetME, options);
-	var graph2dMI = new vis.Graph2d(containerMI, datasetMI, options);
-	var graph2dTS = new vis.Graph2d(containerTS, datasetTS, options);
+
+	this.graph2dME = new vis.Graph2d(containerME, datasetME, options);
+	this.graph2dMI = new vis.Graph2d(containerMI, datasetMI, options);
+	this.graph2dTS = new vis.Graph2d(containerTS, datasetTS, options);
+
 
 	$("#loading").addClass("hidden");
 	$("#multiExcludeData").removeClass("hidden");
@@ -26,7 +28,7 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
 	var yBuffer = 5;
 
 	// alert("before select");
-	graph2dME.on('click', function(properties){
+	this.graph2dME.on('click', function(properties){
 		var currTime = new Date(properties.time);
 		var currY = properties.value;
 		console.log(currY);
@@ -46,7 +48,7 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
 			}
 		});
 	});
-	graph2dMI.on('click', function(properties){
+	this.graph2dMI.on('click', function(properties){
 		var currTime = new Date(properties.time);
 		var currY = properties.value;
 		console.log(currY);
@@ -65,7 +67,7 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
 			}
 		});
 	});
-	graph2dTS.on('click', function(properties){
+	this.graph2dTS.on('click', function(properties){
 		var currTime = new Date(properties.time);
 		var currY = properties.value;
 		console.log(currY);
@@ -84,6 +86,9 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
 			}
 		});
 	});
+	this.graph2dME.on('rangechanged', getRangeChanged);
+	this.graph2dMI.on('rangechanged', getRangeChanged);
+	this.graph2dTS.on('rangechanged', getRangeChanged);
 }
 
 function prettyPrompt(title, text) {
@@ -100,4 +105,13 @@ function replaceNewLines(text){
 	newText += text.replace(/\n/g, "</td></tr><tr><td>");
 	newText += "</td></tr></table><div>";
 	return newText;
+}
+
+PCAPData.prototype.setPcapWindows = function (start,end){
+	this.graph2dME.setWindow(start,end);
+	this.graph2dMI.setWindow(start,end);
+	this.graph2dTS.setWindow(start,end);
+	//this.graph2dTS.redraw();
+	//this.graph2dME.redraw();
+	//this.graph2dMI.redraw();
 }

@@ -62,18 +62,19 @@ var Screenshot = function(snapData){
 	};
 
 	// Create a Timeline
-	var timeline = new vis.Timeline(container, items, groups, options);
+	this.timeline = new vis.Timeline(container, items, groups, options);
 
 	$("#loading").addClass("hidden");
 	$("#screenshotData").removeClass("hidden");
 
-	timeline.on('doubleClick', function(properties){
+	this.timeline.on('doubleClick', function(properties){
 		var currItem = properties.items;
 	});
 
-	timeline.on('select', function (properties) {
+	this.timeline.on('select', function (properties) {
 		var currItem = properties.items;
 	});
+	this.timeline.on('rangechanged', getRangeChanged);
 
 	function prettyAdd(title, callback){
 		swal({
@@ -92,4 +93,12 @@ var Screenshot = function(snapData){
 			showCancelButton: true
 		}).then(callback);
 	}
+}
+
+
+
+
+Screenshot.prototype.setTimelineWindow = function(start,end){
+this.timeline.setWindow(start,end);
+//this.timeline.redraw();
 }

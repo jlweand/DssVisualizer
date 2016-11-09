@@ -30,6 +30,9 @@ from core.apis.datasource.pyTimed import PyTimed
 from core.apis.renderer.pluginImporter import PluginImporter
 from core.config.configDatasources import ConfigDatasources
 from core.config.configRenderers import ConfigRenderers
+from core.config.dataExport import DataExport
+from core.config.dataImport import DataImport
+from viewmanager.exportPopup import ExportPopup
 from core.apis.datasource.multiExcludeThroughput import MultiExcludeThroughput
 from core.apis.datasource.multiIncludeThroughput import MultiIncludeThroughput
 from core.apis.datasource.tsharkThroughput import TsharkThroughput
@@ -58,21 +61,33 @@ def handle(web_view, web_frame, web_resource, request, response):
 
     if 'importData' in _uri:
         importInfo = parse_qs(query)
-        print("Technician:" + importInfo['tech'][0])
-        print("Move to workspace:" + importInfo['moveFiles'][0])
+        print (importInfo)
+        #DataImport.importAllDataFromFiles(file,tech,event,comments,importDate,moveImages)
+        techI = importInfo['tech'][0]
+        moveFilesI = False
+        if 'moveImages' in importInfo:
+            moveFilesI = True
+
+        locationI = importInfo['location'][0]
+        commentI = importInfo['comment'][0]
+        eventI = importInfo['event'][0]
+        dateI = importInfo['date'][0]
+        #print("Move to workspace:" + importInfo['moveFiles'][0])
         print("Import files from:" + importInfo['location'][0])
         print("Comments:" + importInfo['comment'][0])
         print("Event name:" + importInfo['event'][0])
         print("Date:" + importInfo['date'][0])
+        importer = DataImport()
+        importer.importAllDataFromFiles(locationI,techI,eventI,commentI,"2016-11-9 4:34:12",moveFilesI)
     # print (parse_qs(query))
 
     if 'exportData' in _uri:
-        exportInfo = parse_qs(query)
-        print("Technician:" + exportInfo['tech'][0])
-        print("Move images:" + exportInfo['moveImages'][0])
-        print("Import files from:" + exportInfo['location'][0])
-        print("Event name:" + exportInfo['event'][0])
-        print("Date:" + exportInfo['date'][0])
+        print ("hello")
+        if query:
+            exportInfo = parse_qs(query)
+            print (exportInfo)
+            print ("exporting...")
+        ExportPopup(exportInfo)
     # print (parse_qs(query))
 
 

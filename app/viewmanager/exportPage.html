@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <script src="js/jquery-3.1.0.min.js"></script>
+    <script>
+    function exportClicked(){
+
+        $(document).ready(function(){
+
+            $.get("http://exportPopup.py/exportData", $( '#export' ).serialize());
+
+        });
+
+    }
+    </script>
+  </head>
+  <body>
+    <div id="exportPanel" align="center"><br>
+			<form id="export">
+				<table align="center">
+					<tr>
+						<td>Destination: </td>
+						<td><input id="location" type="text" name="location" ></td>
+					</tr>
+				</table>
+				<br>
+				<input id="moveImages" type="checkbox" name="moveImages" value="moveImages"> Export Images<br><br>
+        <button onClick="exportClicked()">Export</button>
+        <!--<button onClick="closeWindow()">Close</button>-->
+			</form>
+		</div>
+  </body>
+</html>

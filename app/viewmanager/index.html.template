@@ -68,7 +68,9 @@
     			<button id="dateInput" name="dateInput">Go</button>
     		</div>
     	</div>
-
+      <div id="exportData">
+        <button id="exportVisData" onClick="exportData()">Export Visible Data</button>
+      </div>
     	<div class="clear"></div>
     	<hr>
     	<div id="checkboxes">
