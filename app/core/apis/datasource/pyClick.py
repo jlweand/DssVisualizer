@@ -194,4 +194,14 @@ class PyClick:
          """
 
         pyClick = self.getPlugin()
-        return pyClick.addAnnotationToClickTimeline(Common().formatDateStringToUTC(startTime), annotationText, techName, eventName)
+        metadata = Common().createMetadataForTimelineAnnotations(techName, eventName)
+
+        click = {}
+        click["className"] = "annotation"
+        click["content"] = ""
+        click["type"] = ""
+        click["title"] = ""
+        click["start"] = Common().formatDateStringToUTC(startTime)
+        click["metadata"] = metadata
+
+        return pyClick.addAnnotationToClickTimeline(click, annotationText)

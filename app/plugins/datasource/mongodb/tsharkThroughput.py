@@ -89,15 +89,8 @@ class TsharkThroughput:
         return Annotations().deleteAllAnnotationsForData(collection, dataId)
 
     # add an annotation to the timeline, not a datapoint
-    def addAnnotationToTsharkThroughputTimeline(self, startTime, annotationText, techName, eventName):
+    def addAnnotationToTsharkThroughputTimeline(self, tshark, annotationText):
         collection = self.getTsharkThroughputCollection()
-        metadata = Common().createMetadataForTimelineAnnotations(techName, eventName)
-
-        tshark = {}
-        tshark["x"] = startTime
-        tshark["y"] = ""
-        tshark["metadata"] = metadata
-
         return Annotations().addAnnotationToTimeline(collection, tshark, annotationText)
 
     def getDistinctTechNames(self):

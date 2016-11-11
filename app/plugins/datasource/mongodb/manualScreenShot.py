@@ -92,18 +92,8 @@ class ManualScreenShot:
         return Annotations().deleteAllAnnotationsForData(collection, dataId)
 
     # add an annotation to the timeline, not a datapoint
-    def addAnnotationToManualScreenShotTimeline(self, startTime, annotationText, techName, eventName):
+    def addAnnotationToManualScreenShotTimeline(self, manualScreenShot, annotationText):
         collection = self.getManualScreenShotCollection()
-        metadata = Common().createMetadataForTimelineAnnotations(techName, eventName)
-
-        manualScreenShot = {}
-        manualScreenShot["className"] = ""
-        manualScreenShot["content"] = ""
-        manualScreenShot["type"] = ""
-        manualScreenShot["title"] = ""
-        manualScreenShot["start"] = startTime
-        manualScreenShot["metadata"] = metadata
-
         return Annotations().addAnnotationToTimeline(collection, manualScreenShot, annotationText)
 
     def getDistinctTechNames(self):

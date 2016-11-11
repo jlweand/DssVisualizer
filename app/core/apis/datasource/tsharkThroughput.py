@@ -176,7 +176,15 @@ class TsharkThroughput:
          """
 
         tsharkPlugin = self.getPlugin()
-        return tsharkPlugin.addAnnotationToTsharkThroughputTimeline(Common().formatDateStringToUTC(x), annotationText, techName, eventName)
+        metadata = Common().createMetadataForTimelineAnnotations(techName, eventName)
+
+        tshark = {}
+        tshark["className"] = "annotation"
+        tshark["x"] = Common().formatDateStringToUTC(x)
+        tshark["y"] = ""
+        tshark["metadata"] = metadata
+
+        return tsharkPlugin.addAnnotationToTsharkThroughputTimeline(tshark, annotationText)
 
     def getDistinctTechNames(self):
         """Override: Get a list of distinct technician names. used for the UI when searching by technician name.

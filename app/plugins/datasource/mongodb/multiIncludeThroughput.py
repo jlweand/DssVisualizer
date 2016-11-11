@@ -89,15 +89,8 @@ class MultiIncludeThroughput:
         return Annotations().deleteAllAnnotationsForData(collection, dataId)
 
     # add an annotation to the timeline, not a datapoint
-    def addAnnotationToMultiIncludeThroughputTimeline(self, startTime, annotationText, techName, eventName):
+    def addAnnotationToMultiIncludeThroughputTimeline(self, multiInclude, annotationText):
         collection = self.getMultiIncludeThroughputCollection()
-        metadata = Common().createMetadataForTimelineAnnotations(techName, eventName)
-
-        multiInclude = {}
-        multiInclude["x"] = startTime
-        multiInclude["y"] = ""
-        multiInclude["metadata"] = metadata
-
         return Annotations().addAnnotationToTimeline(collection, multiInclude, annotationText)
 
     def getDistinctTechNames(self):

@@ -94,16 +94,6 @@ class MultiExcludeProtocol:
         return Annotations().deleteAllAnnotationsForData(collection, dataId)
 
     # add an annotation to the timeline, not a datapoint
-    def addAnnotationToMultiExcludeProtocolTimeline(self, startTime, annotationText, techName, eventName):
+    def addAnnotationToMultiExcludeProtocolTimeline(self, multiExclude, annotationText):
         collection = self.getMultiExcludeProtocolCollection()
-        metadata = Common().createMetadataForTimelineAnnotations(techName, eventName)
-
-        multiExclude = {}
-        multiExclude["className"] = ""
-        multiExclude["content"] = ""
-        multiExclude["type"] = ""
-        multiExclude["title"] = ""
-        multiExclude["start"] = startTime
-        multiExclude["metadata"] = metadata
-
         return Annotations().addAnnotationToTimeline(collection, multiExclude, annotationText)

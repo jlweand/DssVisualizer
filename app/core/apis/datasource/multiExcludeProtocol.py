@@ -172,7 +172,7 @@ class MultiExcludeProtocol:
         """Override: Ands an annotation to the timeline (not a data point)
 
         :param startDate: The datetime to add the annotation to
-        :type startDate: datetime
+        :type startDate: str
         :param annotationText: The annotation text to add.
         :type annotationText: str
         :param techName: The technician name to add to the metadata
@@ -183,5 +183,14 @@ class MultiExcludeProtocol:
          """
 
         multiExcludePlugin = self.getPlugin()
-        return multiExcludePlugin.addAnnotationToMultiExcludeProtocolTimeline(Common().formatDateStringToUTC(startDate),
-                                                                              annotationText, techName, eventName)
+        metadata = Common().createMetadataForTimelineAnnotations(techName, eventName)
+
+        multiExclude = {}
+        multiExclude["className"] = "annotation"
+        multiExclude["content"] = ""
+        multiExclude["type"] = ""
+        multiExclude["title"] = ""
+        multiExclude["start"] = Common().formatDateStringToUTC(startDate)
+        multiExclude["metadata"] = metadata
+
+        return multiExcludePlugin.addAnnotationToMultiExcludeProtocolTimeline(multiExclude, annotationText)

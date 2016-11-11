@@ -94,16 +94,6 @@ class TsharkProtocol:
         return Annotations().deleteAllAnnotationsForData(collection, dataId)
 
     # add an annotation to the timeline, not a datapoint
-    def addAnnotationToTsharkProtocolTimeline(self, startTime, annotationText, techName, eventName):
+    def addAnnotationToTsharkProtocolTimeline(self, tshark, annotationText):
         collection = self.getTsharkProtocolCollection()
-        metadata = Common().createMetadataForTimelineAnnotations(techName, eventName)
-
-        tshark = {}
-        tshark["className"] = ""
-        tshark["content"] = ""
-        tshark["type"] = ""
-        tshark["title"] = ""
-        tshark["start"] = startTime
-        tshark["metadata"] = metadata
-
         return Annotations().addAnnotationToTimeline(collection, tshark, annotationText)

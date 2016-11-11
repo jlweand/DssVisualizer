@@ -168,7 +168,7 @@ class MultiIncludeProtocol:
         """Override: Ands an annotation to the timeline (not a data point)
 
         :param startTime: The datetime to add the annotation to
-        :type startTime: datetime
+        :type startTime: str
         :param annotationText: The annotation text to add.
         :type annotationText: str
         :param techName: The technician name to add to the metadata
@@ -179,5 +179,14 @@ class MultiIncludeProtocol:
          """
 
         multiIncludePlugin = self.getPlugin()
-        return multiIncludePlugin.addAnnotationToMultiIncludeProtocolTimeline(Common().formatDateStringToUTC(startTime),
-                                                                              annotationText, techName, eventName)
+        metadata = Common().createMetadataForTimelineAnnotations(techName, eventName)
+
+        multiInclude = {}
+        multiInclude["className"] = "annotation"
+        multiInclude["content"] = ""
+        multiInclude["type"] = ""
+        multiInclude["title"] = ""
+        multiInclude["start"] = Common().formatDateStringToUTC(startTime)
+        multiInclude["metadata"] = metadata
+
+        return multiIncludePlugin.addAnnotationToMultiIncludeProtocolTimeline(multiInclude, annotationText)

@@ -168,7 +168,7 @@ class TsharkProtocol:
         """Override: Ands an annotation to the timeline (not a data point)
 
         :param startTime: The datetime to add the annotation to
-        :type startTime: datetime
+        :type startTime: str
         :param annotationText: The annotation text to add.
         :type annotationText: str
         :param techName: The technician name to add to the metadata
@@ -179,5 +179,14 @@ class TsharkProtocol:
          """
 
         tsharkPlugin = self.getPlugin()
-        return tsharkPlugin.addAnnotationToTsharkProtocolTimeline(Common().formatDateStringToUTC(startTime),
-                                                                  annotationText, techName, eventName)
+        metadata = Common().createMetadataForTimelineAnnotations(techName, eventName)
+
+        tshark = {}
+        tshark["className"] = "annotation"
+        tshark["content"] = ""
+        tshark["type"] = ""
+        tshark["title"] = ""
+        tshark["start"] = Common().formatDateStringToUTC(startTime)
+        tshark["metadata"] = metadata
+
+        return tsharkPlugin.addAnnotationToTsharkProtocolTimeline(tshark, annotationText)

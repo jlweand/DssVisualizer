@@ -188,8 +188,18 @@ class ManualScreenShot:
         :type eventName: str
         :returns: The modified count.
          """
-        manualScreenShot = self.getPlugin()
-        return manualScreenShot.addAnnotationToManualScreenShotTimeline(Common().formatDateStringToUTC(startTime), annotationText, techName, eventName)
+        manualScreenShotPlugin = self.getPlugin()
+        metadata = Common().createMetadataForTimelineAnnotations(techName, eventName)
+
+        manualScreenShot = {}
+        manualScreenShot["className"] = "annotation"
+        manualScreenShot["content"] = ""
+        manualScreenShot["type"] = ""
+        manualScreenShot["title"] = ""
+        manualScreenShot["start"] = Common().formatDateStringToUTC(startTime)
+        manualScreenShot["metadata"] = metadata
+
+        return manualScreenShotPlugin.addAnnotationToManualScreenShotTimeline(manualScreenShot, annotationText)
 
     def getDistinctTechNames(self):
         """Override: Get a list of distinct technician names. used for the UI when searching by technician name.

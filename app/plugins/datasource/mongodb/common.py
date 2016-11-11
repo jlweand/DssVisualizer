@@ -76,24 +76,6 @@ class Common:
         bsonResult = dumps(cursor)
         return ujson.loads(bsonResult)
 
-    def createMetadataForTimelineAnnotations(self, techName, eventName):
-        """Creates the generic metadata for the object when adding an annotation to just the timeline
-
-        :returns: a metadata object.
-        """
-        metadata = {}
-        metadata["techName"] = techName
-        metadata["eventName"] = eventName
-        metadata["comments"] = ""
-
-        _date = datetime.now()
-        local_tz = get_localzone()
-        local_dt = local_tz.localize(_date)
-        datimeNow = local_dt.astimezone(pytz.utc)
-        metadata["importDate"] = datimeNow
-
-        return metadata
-
     def updateTechAndEventNames(self, startDate, endDate, techName, eventName, hasStartDate, hasXdate):
         """Updates tech name and event name depending on what is found in the database
 

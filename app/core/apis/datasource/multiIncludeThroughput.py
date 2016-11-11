@@ -177,8 +177,15 @@ class MultiIncludeThroughput:
          """
 
         multiIncludePlugin = self.getPlugin()
-        return multiIncludePlugin.addAnnotationToMultiIncludeThroughputTimeline(Common().formatDateStringToUTC(x),
-                                                                                annotationText, techName, eventName)
+        metadata = Common().createMetadataForTimelineAnnotations(techName, eventName)
+
+        multiInclude = {}
+        multiInclude["className"] = "annotation"
+        multiInclude["x"] = Common().formatDateStringToUTC(x)
+        multiInclude["y"] = ""
+        multiInclude["metadata"] = metadata
+
+        return multiIncludePlugin.addAnnotationToMultiIncludeThroughputTimeline(multiInclude, annotationText)
 
     def getDistinctTechNames(self):
         """Override: Get a list of distinct technician names. used for the UI when searching by technician name.

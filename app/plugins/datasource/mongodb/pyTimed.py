@@ -90,16 +90,6 @@ class PyTimed:
         return Annotations().deleteAllAnnotationsForData(collection, dataId)
 
     # add an annotation to the timeline, not a datapoint
-    def addAnnotationToTimedTimeline(self, startTime, annotationText, techName, eventName):
+    def addAnnotationToTimedTimeline(self, timed, annotationText):
         collection = self.getTimedCollection()
-        metadata = Common().createMetadataForTimelineAnnotations(techName, eventName)
-
-        timed = {}
-        timed["className"] = ""
-        timed["content"] = ""
-        timed["type"] = ""
-        timed["title"] = ""
-        timed["start"] = startTime
-        timed["metadata"] = metadata
-
         return Annotations().addAnnotationToTimeline(collection, timed, annotationText)

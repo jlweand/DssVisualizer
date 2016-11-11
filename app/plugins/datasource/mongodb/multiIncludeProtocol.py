@@ -94,16 +94,6 @@ class MultiIncludeProtocol:
         return Annotations().deleteAllAnnotationsForData(collection, dataId)
 
     # add an annotation to the timeline, not a datapoint
-    def addAnnotationToMultiIncludeProtocolTimeline(self, startTime, annotationText, techName, eventName):
+    def addAnnotationToMultiIncludeProtocolTimeline(self, multiInclude, annotationText):
         collection = self.getMultiIncludeProtocolCollection()
-        metadata = Common().createMetadataForTimelineAnnotations(techName, eventName)
-
-        multiInclude = {}
-        multiInclude["className"] = ""
-        multiInclude["content"] = ""
-        multiInclude["type"] = ""
-        multiInclude["title"] = ""
-        multiInclude["start"] = startTime
-        multiInclude["metadata"] = metadata
-
         return Annotations().addAnnotationToTimeline(collection, multiInclude, annotationText)

@@ -190,4 +190,14 @@ class PyTimed:
          """
 
         pyTimed = self.getPlugin()
-        return pyTimed.addAnnotationToTimedTimeline(Common().formatDateStringToUTC(startTime), annotationText, techName, eventName)
+        metadata = Common().createMetadataForTimelineAnnotations(techName, eventName)
+
+        timed = {}
+        timed["className"] = "annotation"
+        timed["content"] = ""
+        timed["type"] = ""
+        timed["title"] = ""
+        timed["start"] = Common().formatDateStringToUTC(startTime)
+        timed["metadata"] = metadata
+
+        return pyTimed.addAnnotationToTimedTimeline(timed, annotationText)

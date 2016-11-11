@@ -177,8 +177,15 @@ class MultiExcludeThroughput:
          """
 
         multiExcludePlugin = self.getPlugin()
-        return multiExcludePlugin.addAnnotationToMultiExcludeThroughputTimeline(Common().formatDateStringToUTC(x),
-                                                                                annotationText, techName, eventName)
+        metadata = Common().createMetadataForTimelineAnnotations(techName, eventName)
+
+        multiExclude = {}
+        multiExclude["className"] = "annotation"
+        multiExclude["x"] = Common().formatDateStringToUTC(x)
+        multiExclude["y"] = ""
+        multiExclude["metadata"] = metadata
+
+        return multiExcludePlugin.addAnnotationToMultiExcludeThroughputTimeline(multiExclude, annotationText)
 
     def getDistinctTechNames(self):
         """Override: Get a list of distinct technician names. used for the UI when searching by technician name.

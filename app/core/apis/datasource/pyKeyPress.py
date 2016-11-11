@@ -184,8 +184,16 @@ class PyKeyPress:
         :type eventName: str
         :returns: The modified count.
          """
-        pyKeyPress = self.getPlugin()
-        return pyKeyPress.addAnnotationToKeyPressTimeline(Common().formatDateStringToUTC(startTime), annotationText, techName, eventName)
+        pyKeyPressPlugin = self.getPlugin()
+        metadata = Common().createMetadataForTimelineAnnotations(techName, eventName)
+
+        keyPress = {}
+        keyPress["className"] = "annotation"
+        keyPress["content"] = ""
+        keyPress["start"] = Common().formatDateStringToUTC(startTime)
+        keyPress["metadata"] = metadata
+
+        return pyKeyPressPlugin.addAnnotationToKeyPressTimeline(keyPress, annotationText)
 
     def getDistinctTechNames(self):
         """Override: Get a list of distinct technician names. used for the UI when searching by technician name.
