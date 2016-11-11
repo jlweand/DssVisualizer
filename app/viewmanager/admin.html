@@ -16,120 +16,130 @@
   along with DssVisualizer.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <html>
-	<head>
-		<title>DSS Admin</title>
-		<link rel="stylesheet" type="text/css" href="css/admin.css"/>
-		<script src="js/jquery-3.1.0.min.js"></script>
-		<script src="js/admin.js"></script>
-	</head>
-	<body>
-		<h1>DSS Admin</h1>
-    	<div id="visualizer">
-    		<a href="index.html">Back to Visualizer</a>
-    	</div>
-		<div class="mainContainer">
-			<div class="outerTitle">
-				<h2>Plug-in Options</h2>
-			</div>
-			<div class="formContainer">
-				<form>
-					<div class="visOption">
-						<div class="title">
-							<h3>Visualization Options</h3>
-						</div>
-						<div id="pcapDataProtocol"><h4>PCAP Data Protocol</h4></div>
-						<div id="pcapThroughput"><h4>PCAP Throughput</h4></div>
-						<div id="pyKeyLogger"><h4>Keylogger</h4></div>
-						<div id="screenshots"><h4>Screenshots</h4></div>
-					</div>
-					<div class="dbOption">
-						<div class="title">
-							<h3>Database Options</h3>
-						</div>
-						<div id="database">
-							<h4>Database</h4>
-						</div>
-					</div>
+<head>
+    <title>DSS Admin</title>
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/admin.css"/>
+    <script src="js/jquery-3.1.0.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/admin.js"></script>
+    <script>
+		$( function() {
+		$( "#tabs" ).tabs();
+		} );
 
-					<div class="submitContainer">
-						<button type="cancel" onclick="window.location='./index.html';return false;">Cancel</button>
-						<input id="submit" type="submit" value="Submit Changes"/>
-					</div>
-				</form>
-			</div>
-		</div>
-		<div class="mainContainer">
-			<div class="outerTitle">
-				<h2>Upload New Plug-In</h2>
-			</div>
-			<div class="formContainer">
-				<form>
-				</form>
-				<h3>Uninstalled Renderers</h3>
-				<select id='installRends' name="uninstalls">
-					<!--dssvisualizer will add uninstalled rendererPlugins here -->
-				</select>
-				<button id='rendInstall' >Install</button>
-				<script>
-					$(document).ready(function(){
-							$.get("http://dssvisualizer.py/adminset");
-							$("#rendInstall").click(function(){
-								$.get("http://dssvisualizer.py/installRends", $( "#installRends" ).val());
-							});
-						});
-				</script>
-				<h3>Uninstalled Datasources</h3>
-				<select id='installDatasources' name="uninstalls">
-				</select>
-				<button id='dsInstall'>Install</button>
-				<script>
-					$(document).ready(function(){
-							$.get("http://dssvisualizer.py/adminset");
-							$("#dsInstall").click(function(){
-								$.get("http://dssvisualizer.py/installDatasources", $( "#installDatasources" ).val());
-							});
-						});
-				</script>
-			</div>
-		</div>
-		<!-- Import Data -->
-		<div id="importSlide"><b>Import Data</b></div>
-		<div id="importPanel"><br>
-			<form id='import'>
-				<table align='center'>
-					<tr>
-						<td>File Location: </td>
-						<td><input id='location' type='text' name='location' align='center'></td>
-					</tr>
-					<tr>
-						<td>Technician:</td>
-						<td><input id='tech' type='text' name='tech' align='center'></td>
-					</tr>
-					<tr>
-						<td>Event:</td>
-						<td><input id='event' type='text' name='event'align='center'></td>
-					</tr>
-					<tr>
-						<td>Comments:</td>
-						<td><input id='comment' type='text' name='comment'align='center'></td>
-					</tr>
-					<tr>
-						<td>Date:</td>
-						<td><input id='date' type='text' name='date'align='center'></td>
-					</tr>
-					</table>
-					<br>
-					<input id='moveFiles' type="checkbox" name="moveFiles" value="moveFiles"> Move Files To Workspace<br><br>
-					<input type='submit'>
+    </script>
+</head>
+<body>
+<h1>DSS Admin</h1>
+<div id="visualizer">
+    <a href="index.html">Back to Visualizer</a>
+</div>
+<div id="tabs">
+    <ul>
+        <li><a href="#tabs-1">Import Data</a></li>
+        <li><a href="#tabs-2">Activate Plugin</a></li>
+        <li><a href="#tabs-3">Install Plugin</a></li>
+    </ul>
+    <div id="tabs-1">
+        <!-- Import Data -->
+        <b>Import Data</b>
+        <div id="importPanel"><br>
+            <form id='import'>
+                <table align='center'>
+                    <tr>
+                        <td>File Location:</td>
+                        <td><input id='location' type='text' name='location' align='center'></td>
+                    </tr>
+                    <tr>
+                        <td>Technician:</td>
+                        <td><input id='tech' type='text' name='tech' align='center'></td>
+                    </tr>
+                    <tr>
+                        <td>Event:</td>
+                        <td><input id='event' type='text' name='event' align='center'></td>
+                    </tr>
+                    <tr>
+                        <td>Comments:</td>
+                        <td><input id='comment' type='text' name='comment' align='center'></td>
+                    </tr>
+                    <tr>
+                        <td>Date:</td>
+                        <td><input id='date' type='text' name='date' align='center'></td>
+                    </tr>
+                </table>
+                <br>
+                <input id='moveFiles' type="checkbox" name="moveFiles" value="moveFiles"> Move Files To
+                Workspace<br><br>
+                <input type='submit'>
 
-			</form>
-		</div>
+            </form>
+        </div>
+    </div>
+    <div id="tabs-2">
+        <form>
+            <div class="visOption">
+                <div class="title">
+                    <h3>Visualization Options</h3>
+                </div>
+                <div id="pcapDataProtocol"><h4>PCAP Data Protocol</h4></div>
+                <div id="pcapThroughput"><h4>PCAP Throughput</h4></div>
+                <div id="pyKeyLogger"><h4>Keylogger</h4></div>
+                <div id="screenshots"><h4>Screenshots</h4></div>
+            </div>
+            <div class="dbOption">
+                <div class="title">
+                    <h3>Database Options</h3>
+                </div>
+                <div id="database"></div>
+            </div>
+            <div class="clear"></div>
+            <div class="submitContainer">
+                <button type="cancel" onclick="window.location='./index.html';return false;">Cancel</button>
+                <input id="submit" type="submit" value="Submit Changes"/>
+            </div>
+        </form>
+    </div>
+    <div id="tabs-3">
+        <b>Upload New Plug-In</b>
+        <div class="formContainer">
+            <h3>Uninstalled Renderers</h3>
+            <select id='installRends' name="uninstalls">
+                <!--dssvisualizer will add uninstalled rendererPlugins here -->
+            </select>
+            <button id='rendInstall'>Install</button>
+            <script>
+                $(document).ready(function(){
+                        $.get("http://dssvisualizer.py/adminset");
+                        $("#rendInstall").click(function(){
+                            $.get("http://dssvisualizer.py/installRends", $( "#installRends" ).val());
+                        });
+                    });
 
-		<br>
-		<!-- Export Data -->
+            </script>
+            <h3>Uninstalled Datasources</h3>
+            <select id='installDatasources' name="uninstalls">
+            </select>
+            <button id='dsInstall'>Install</button>
+            <script>
+                $(document).ready(function(){
+                        $.get("http://dssvisualizer.py/adminset");
+                        $("#dsInstall").click(function(){
+                            $.get("http://dssvisualizer.py/installDatasources", $( "#installDatasources" ).val());
+                        });
+                    });
 
-		<div id="footer">Code licensed under the <a href="https://www.gnu.org/licenses/gpl-3.0-standalone.html">GPLv3</a></div>
+            </script>
+        </div>
+    </div>
+</div>
+</div>
+
+<br>
+<!-- Export Data -->
+
+<div id="footer">Code licensed under the <a href="https://www.gnu.org/licenses/gpl-3.0-standalone.html">GPLv3</a></div>
 
 
-	</body>
+</body>
 </html>

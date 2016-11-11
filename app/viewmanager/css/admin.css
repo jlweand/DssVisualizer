@@ -1,3 +1,4 @@
+
 html, body{
 	font-family: sans-serif;
 }
@@ -5,6 +6,18 @@ h1, h2, h3{
 	padding-top: 0px;
 	margin-top: 0px;
 }
+table {
+	font-size: 1em;
+}
+
+.clear{
+	clear: both;
+}
+
+.ui-draggable, .ui-droppable {
+	background-position: top;
+}
+
 .mainContainer{
 	padding-bottom: 30px;
 	position: relative;
@@ -15,17 +28,7 @@ h1, h2, h3{
 	padding: 30px 5px 5px;
 	position: relative;
 }
-.outerTitle{
-	position: absolute;
-	top: -15;
-	left: 20;
-	z-index: 1;
-	background-color: #fff;
-}
 
-.outerTitle h2{
-	margin: 0px 5px;
-}
 .title{
 	position: absolute;
 	top: -12;
@@ -43,20 +46,19 @@ h1, h2, h3{
 	border-radius: 5px;
 	padding: 20px 5px 5px;
 	position: relative;
+    width:45%;
+    height: 450px;
+    float:left;
 }
 
-.dbOption{
-	margin: 20px 0px;
-}
-
-select{
+select {
 	min-width: 100px;
 }
-label{
+label {
 	display: block;
 }
 
-.submitContainer{
+.submitContainer {
 	text-align: center;
 }
 
@@ -77,7 +79,6 @@ label{
 
 #importPanel {
 	padding: 5px;
-	display: none;
 }
 #exportPanel {
 	padding: 5px;
