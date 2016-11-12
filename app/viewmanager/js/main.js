@@ -145,7 +145,7 @@ function exportData(){
 		}
 		else{
 			//alert('start: ' + windowRangeStart + ' end: ' + windowRangeEnd);
-			
+
 			$(document).ready(function(){
 
 					$.get("http://dssvisualizer.py/exportData",{start:windowRangeStart,end:windowRangeEnd,techName:techExport,eventName:eventExport});
@@ -153,3 +153,18 @@ function exportData(){
 			});
 		}
 }
+function populateTechDropdown(techList) {
+  for(var i=0; i<techList.length; i++) {
+		console.log(techList[i]);
+    $("#techOptions").append('<option value='+techList[i]+'>'+techList[i]+'</option>')
+  }
+	$("#techOptions").trigger("chosen:updated");
+}
+
+// Add populateEventDropdown method here
+
+$(document).ready(function() {
+  var getTechNames = "http://localhost?populateDropdown=availableTechNames";
+  $.get(getTechNames);
+	//get the event names here
+});

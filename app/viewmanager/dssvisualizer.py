@@ -40,6 +40,7 @@ from core.apis.datasource.multiExcludeProtocol import MultiExcludeProtocol
 from core.apis.datasource.multiIncludeProtocol import MultiIncludeProtocol
 from core.apis.datasource.tsharkProtocol import TsharkProtocol
 from core.apis.datasource.manualScreenShot import ManualScreenShot
+from core.apis.datasource.techAndEventNames import TechAndEventNames
 
 gi.require_version("Gtk", "3.0")
 gi.require_version("WebKit", "3.0")
@@ -176,8 +177,13 @@ def handle(web_view, web_frame, web_resource, request, response):
                 ConfigRenderers().setDefaultRenderer("pcapThroughput", pcapThroughput, scriptFile)
                 ConfigRenderers().setDefaultRenderer("pyKeyLogger", pyKeyLogger, scriptFile)
                 ConfigRenderers().setDefaultRenderer("screenshots", screenshots, scriptFile)
-
-                print("updating plugin")
+        elif 'populateDropdown' in queryDict:
+            if queryDict['populateDropdown'][0] == 'availableTechNames':
+                techList= TechAndEventNames().getDistinctTechNames()
+                # js = "populateTechDropdown("+techList+")" #BAD
+                js = "populateTechDropdown(%s)" % techList  #GOOD
+                webKitWebView.execute_script(js)
+            #add elif for availableEventNames
     return
 
 
