@@ -60,7 +60,6 @@ class Common:
         :returns: Python object (list)
         """
         objects = self.getPythonObjects(cursor)
-
         for obj in objects:
             obj["id"] = obj["_id"]["$oid"]
             obj["metadata"]["importDate"] = self.formatEpochDatetime(obj["metadata"]["importDate"]["$date"])
@@ -76,34 +75,50 @@ class Common:
         bsonResult = dumps(cursor)
         return ujson.loads(bsonResult)
 
-    def updateTechAndEventNames(self, startDate, endDate, techName, eventName, hasStartDate, hasXdate):
+    def updateTechAndEventNames(self, startDate, endDate, techNames, eventNames, hasStartDate, hasXdate):
         """Updates tech name and event name depending on what is found in the database
 
-        :param starDate: Start of date range
+        :param startDate: Start of date range
         :type startDate: datetime
         :param endDate: End of date range
         :type endDate: datetime
-        :param techName: Name of technician
-        :type techName: string
-        :param eventName: Name of event where data was gathered
-        :type eventName: string
+        :param techNames: A list of technicians
+        :type techNames: list
+        :param eventNames: A list of event names where data was gathered
+        :type eventNames: list
         :param hasStartDate: If json file has start field
         :type hasStartDate: boolean
         :param hasXdate: If json file has x field instead of start field
         :type hasXdate: boolean
         :returns: mongoDB command with updated variables
         """
+
+        findJson = {}
+        findJson["$and"] = []
+
         if hasStartDate:
-            findJson = {"start": {"$gte" : startDate, "$lte": endDate}}
+            startJson = {"start": {"$gte" : startDate, "$lte": endDate}}
 
         if hasXdate:
-            findJson = {"x": {"$gte" : startDate, "$lte": endDate}}
+            startJson = {"x": {"$gte" : startDate, "$lte": endDate}}
+        findJson["$and"].append(startJson)
 
-        if len(techName) > 0 :
-            findJson["metadata.techName"] = techName
-        if len(eventName) > 0:
-            findJson["metadata.eventName"] = eventName
+        techOr = []
+        if len(techNames) > 0 :
+            for name in techNames:
+                techOr.append({"metadata.techName": name})
+            techJson = { "$or" : techOr }
+            findJson["$and"].append(techJson)
+
+        eventOr = []
+        if len(eventNames) > 0:
+            for name in eventNames:
+                eventOr.append({"metadata.eventName": name})
+            eventJson = {"$or": eventOr}
+            findJson["$and"].append(eventJson)
+
         return findJson
+
 
     def addIndex(self, collection, hasStart):
         """Adds an index to the collection if it does not already exist

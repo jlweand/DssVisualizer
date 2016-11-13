@@ -46,10 +46,10 @@ class MultiIncludeProtocol:
         :type startDate: datetime
         :param endDate: The datatime to return data
         :type endDate: datetime
-        :param techName: The technician name to return data
-        :type techName: str
-        :param eventName: The name of the event to return data
-        :type eventName: str
+        :param techName: A list of technician names to return data
+        :type techName: list
+        :param eventName: A list of event names to return data
+        :type eventName: list
         :returns: JSON object
         """
         multiIncludePlugin = self.getPlugin()

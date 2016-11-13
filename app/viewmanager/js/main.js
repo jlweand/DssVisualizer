@@ -123,9 +123,6 @@ function prettyAdd(title, callback){
 function getRangeChanged(properties){
 	windowRangeStart = properties.start;
 	windowRangeEnd = properties.end;
-	//alert('start:' + properties.start + ' end:' + properties.end)
-	//start = properties.start
-	//end = properties.end
 	keylogger.setTimelineWindow(windowRangeStart,windowRangeEnd);
 	pcapData.setPcapWindows(windowRangeStart,windowRangeEnd);
 	snap.setTimelineWindow(windowRangeStart,windowRangeEnd);
@@ -134,46 +131,48 @@ function getRangeChanged(properties){
 function exportData(){
 	techExport = $("#techName").val();
 	eventExport = $("#eventName").val();
-		if(windowRangeStart == null || windowRangeEnd == null){
-			alert(' time range is undefined');
-		}
-		else if(techExport == ""){
-			alert('tech name is undefined');
-		}
-		else if(eventExport == ""){
-			alert(' event name is undefined')
-		}
-		else{
-			//alert('start: ' + windowRangeStart + ' end: ' + windowRangeEnd);
-
-			$(document).ready(function(){
-
-					$.get("http://dssvisualizer.py/exportData",{start:windowRangeStart,end:windowRangeEnd,techName:techExport,eventName:eventExport});
-
-			});
-		}
+    if(windowRangeStart == null || windowRangeEnd == null){
+        alert(' time range is undefined');
+    }
+    else if(techExport == ""){
+        alert('tech name is undefined');
+    }
+    else if(eventExport == ""){
+        alert(' event name is undefined')
+    }
+    else{
+        $(document).ready(function(){
+            $.get("http://dssvisualizer.py/exportData",{start:windowRangeStart,end:windowRangeEnd,techName:techExport,eventName:eventExport});
+        });
+    }
 }
+
 function populateTechDropdown(techList) {
-  for(var i=0; i<techList.length; i++) {
-		console.log(techList[i]);
-    $("#techOptions").append('<option value='+techList[i]+'>'+techList[i]+'</option>')
-  }
-	$("#techOptions").trigger("chosen:updated");
+    for(var i=0; i<techList.length; i++) {
+        $("#techOptions").append('<option value="'+techList[i]+'">'+techList[i]+'</option>')
+    }
+    $("#techOptions").trigger("chosen:updated");
 }
 
-// Add populateEventDropdown method here
 function populateEventDropdown(eventList) {
-  for(var i=0; i<eventList.length; i++) {
-		// console.log(eventList[i]);
-    $("#eventOptions").append('<option value='+eventList[i]+'>'+eventList[i]+'</option>')
-  }
-	$("#eventOptions").trigger("chosen:updated");
+    for(var i=0; i<eventList.length; i++) {
+        $("#eventOptions").append('<option value="'+eventList[i]+'">'+eventList[i]+'</option>')
+    }
+    $("#eventOptions").trigger("chosen:updated");
+}
+
+function populateTechAndEventDropdown(techEventList) {
+    for(var i=0; i<techEventList.length; i++) {
+        $("#techAndEventOptions").append('<option value="'+techEventList[i]+'">'+techEventList[i]+'</option>')
+    }
+    $("#techAndEventOptions").trigger("chosen:updated");
 }
 
 $(document).ready(function() {
-  var getTechNames = "http://localhost?populateDropdown=availableTechNames";
-  $.get(getTechNames);
-	var getEventNames = "http://localhost?populateEventDropdown=availableEvents";
-	$.get(getEventNames)
-	//get the event names here
+    var getTechNames = "http://localhost?populateDropdown=availableTechNames";
+    $.get(getTechNames);
+    var getEventNames = "http://localhost?populateDropdown=availableEventNames";
+    $.get(getEventNames)
+    var getEventTechNames = "http://localhost?populateDropdown=availableTechAndEventNames";
+    $.get(getEventTechNames)
 });

@@ -18,7 +18,7 @@
 from bson import ObjectId
 from plugins.datasource.mongodb.annotations import Annotations
 from plugins.datasource.mongodb.common import Common
-
+from plugins.datasource.mongodb.techAndEventNames import TechAndEventNames
 
 class ManualScreenShot:
     def getManualScreenShotCollection(self):
@@ -98,10 +98,12 @@ class ManualScreenShot:
 
     def getDistinctTechNames(self):
         collection = self.getManualScreenShotCollection()
-        cursor = collection.find().distinct("metadata.techName")
-        return Common().getPythonObjects(cursor)
+        return TechAndEventNames().getDistinctTechNames(collection)
 
     def getDistinctEventNames(self):
         collection = self.getManualScreenShotCollection()
-        cursor = collection.find().distinct("metadata.eventName")
-        return Common().getPythonObjects(cursor)
+        return TechAndEventNames().getDistinctEventNames(collection)
+
+    def getDistinctTechAndEventNames(self):
+        collection = self.getManualScreenShotCollection()
+        return TechAndEventNames().getDistinctTechAndEventNames(collection)

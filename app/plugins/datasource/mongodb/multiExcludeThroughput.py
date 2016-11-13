@@ -18,6 +18,7 @@
 from bson import ObjectId
 from plugins.datasource.mongodb.annotations import Annotations
 from plugins.datasource.mongodb.common import Common
+from plugins.datasource.mongodb.techAndEventNames import TechAndEventNames
 
 
 class MultiExcludeThroughput:
@@ -95,10 +96,12 @@ class MultiExcludeThroughput:
 
     def getDistinctTechNames(self):
         collection = self.getMultiExcludeThroughputCollection()
-        cursor = collection.find().distinct("metadata.techName")
-        return Common().getPythonObjects(cursor)
+        return TechAndEventNames().getDistinctTechNames(collection)
 
     def getDistinctEventNames(self):
         collection = self.getMultiExcludeThroughputCollection()
-        cursor = collection.find().distinct("metadata.eventName")
-        return Common().getPythonObjects(cursor)
+        return TechAndEventNames().getDistinctEventNames(collection)
+
+    def getDistinctTechAndEventNames(self):
+        collection = self.getMultiExcludeThroughputCollection()
+        return TechAndEventNames().getDistinctTechAndEventNames(collection)

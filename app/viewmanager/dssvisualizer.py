@@ -102,33 +102,40 @@ def handle(web_view, web_frame, web_resource, request, response):
             endDate = queryDict['endDate'][0]
             try:
                 techNames = queryDict['techNames']
+                techList = techNames[0].split(",")
             except KeyError:
-                techNames = ""
+                techList = ""
             try:
                 eventNames = queryDict['eventNames']
+                eventList = eventNames[0].split(",")
             except KeyError:
-                eventNames = ""
+                eventList = ""
+            try:
+                eventTechNames = queryDict['eventNames']
+                eventTechList = eventTechNames[0].split(",")
+            except KeyError:
+                eventTechList = ""
 
             if queryDict['request'][0] == 'keypressData':
-                keyData = PyKeyPress().selectKeyPressData(startDate, endDate, techNames, eventNames)
-                clickData = PyClick().selectClickData(startDate, endDate, techNames, eventNames)
-                timedData = PyTimed().selectTimedData(startDate, endDate, techNames, eventNames)
+                keyData = PyKeyPress().selectKeyPressData(startDate, endDate, techList, eventList)
+                clickData = PyClick().selectClickData(startDate, endDate, techList, eventList)
+                timedData = PyTimed().selectTimedData(startDate, endDate, techList, eventList)
                 js = "visualizeKeyData(%s, %s, %s);" % (keyData, clickData, timedData)
                 webKitWebView.execute_script(js)
 
             elif queryDict['request'][0] == 'pcapData':
-                multiEx = MultiExcludeThroughput().selectMultiExcludeThroughputData(startDate, endDate, techNames, eventNames)
-                multiInc = MultiIncludeThroughput().selectMultiIncludeThroughputData(startDate, endDate, techNames, eventNames)
-                tshark = TsharkThroughput().selectTsharkThroughputData(startDate, endDate, techNames, eventNames)
-                multiExProt = MultiExcludeProtocol().selectMultiExcludeProtocolData(startDate, endDate, techNames, eventNames)
-                multiIncProt = MultiIncludeProtocol().selectMultiIncludeProtocolData(startDate, endDate, techNames, eventNames)
-                tsharkProt = TsharkProtocol().selectTsharkProtocolData(startDate, endDate, techNames, eventNames)
+                multiEx = MultiExcludeThroughput().selectMultiExcludeThroughputData(startDate, endDate, techList, eventList)
+                multiInc = MultiIncludeThroughput().selectMultiIncludeThroughputData(startDate, endDate, techList, eventList)
+                tshark = TsharkThroughput().selectTsharkThroughputData(startDate, endDate, techList, eventList)
+                multiExProt = MultiExcludeProtocol().selectMultiExcludeProtocolData(startDate, endDate, techList, eventList)
+                multiIncProt = MultiIncludeProtocol().selectMultiIncludeProtocolData(startDate, endDate, techList, eventList)
+                tsharkProt = TsharkProtocol().selectTsharkProtocolData(startDate, endDate, techList, eventList)
                 js = "visualizePCAPData(%s, %s, %s, %s, %s, %s);" % (
                     multiEx, multiExProt, multiInc, multiIncProt, tshark, tsharkProt)
                 webKitWebView.execute_script(js)
 
             elif queryDict['request'][0] == 'screenshotData':
-                snap = ManualScreenShot().selectManualScreenShotData(startDate, endDate, techNames, eventNames)
+                snap = ManualScreenShot().selectManualScreenShotData(startDate, endDate, techList, eventList)
                 js = "visualizeSnapshotData(%s);" % (snap)
                 webKitWebView.execute_script(js)
 
@@ -163,12 +170,15 @@ def handle(web_view, web_frame, web_resource, request, response):
         elif 'populateDropdown' in queryDict:
             if queryDict['populateDropdown'][0] == 'availableTechNames':
                 techList = TechAndEventNames().getDistinctTechNames()
-                js = "populateTechDropdown(%s)" % techList  #GOOD
+                js = "populateTechDropdown(%s)" % techList
                 webKitWebView.execute_script(js)
-        elif 'populateEventDropdown' in queryDict:
-            if queryDict['populateEventDropdown'][0] == 'availableEvents':
+            elif queryDict['populateDropdown'][0] == 'availableEventNames':
                 eventList = TechAndEventNames().getDistinctEventNames()
                 js = "populateEventDropdown(%s)" % eventList
+                webKitWebView.execute_script(js)
+            elif queryDict['populateDropdown'][0] == 'availableTechAndEventNames':
+                techEventList = TechAndEventNames().getDistinctTechAndEventNames()
+                js = "populateTechAndEventDropdown(%s)" % techEventList
                 webKitWebView.execute_script(js)
     return
 

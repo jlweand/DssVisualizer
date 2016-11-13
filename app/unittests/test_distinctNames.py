@@ -24,8 +24,12 @@ class DistinctNamesTest(unittest.TestCase):
     def test_getDistinctNames(self):
         techNames = TechAndEventNames().getDistinctTechNames()
         eventNames = TechAndEventNames().getDistinctEventNames()
+        techAndEventNames = TechAndEventNames().getDistinctTechAndEventNames()
         pprint(techNames)
+        pprint("")
         pprint(eventNames)
+        pprint("")
+        pprint(techAndEventNames)
 
 if __name__ == '__main__':
     unittest.main()

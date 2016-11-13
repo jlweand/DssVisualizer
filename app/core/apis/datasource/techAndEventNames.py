@@ -54,6 +54,21 @@ class TechAndEventNames:
 
         return self.getDistinctValues(keyPressEventNames, multiExcludeEventNames, multiInludeEventNames, tsharkEventNames, screenshotEventNames)
 
+    def getDistinctTechAndEventNames(self):
+        keyPressPlugin = ConfigReader().getInstanceOfDatasourcePlugin("PyKeyPress")
+        multiExcludePlugin = ConfigReader().getInstanceOfDatasourcePlugin("MultiExcludeThroughput")
+        multiIncludePlugin = ConfigReader().getInstanceOfDatasourcePlugin("MultiIncludeThroughput")
+        tsharkPlugin = ConfigReader().getInstanceOfDatasourcePlugin("TsharkThroughput")
+        screenshotPlugin = ConfigReader().getInstanceOfDatasourcePlugin("ManualScreenShot")
+
+        keyPressEventNames = keyPressPlugin.getDistinctTechAndEventNames()
+        multiExcludeEventNames = multiExcludePlugin.getDistinctTechAndEventNames()
+        multiInludeEventNames = multiIncludePlugin.getDistinctTechAndEventNames()
+        tsharkEventNames = tsharkPlugin.getDistinctTechAndEventNames()
+        screenshotEventNames = screenshotPlugin.getDistinctTechAndEventNames()
+
+        return self.getDistinctValues(keyPressEventNames, multiExcludeEventNames, multiInludeEventNames, tsharkEventNames, screenshotEventNames)
+
     def getDistinctValues(self, keyPressNames, multiExcludeNames, multiInludeNames, tsharkNames, screenshotNames):
         distinctNames = keyPressNames
 

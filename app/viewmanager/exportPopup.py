@@ -57,7 +57,7 @@ class ExportPopup:
 
         ## date format -> %Y-%m-%d %H:%M:%S
         exporter = DataExport()
-        exporter.exportAllData(startDate, endDate, self.exportInfo['techName'][0], self.exportInfo['eventName'][0], moveImages, location)
+        exporter.exportAllData(startDate, endDate, self.exportInfo['techNames'], self.exportInfo['eventNames'], moveImages, location)
 
 
     def prepareDate(self,rawDate):

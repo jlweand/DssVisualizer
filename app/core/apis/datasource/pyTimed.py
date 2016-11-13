@@ -45,10 +45,10 @@ class PyTimed:
         :type startDate: str
         :param endDate: The a string value of the local datetime to end search on
         :type endDate: str
-        :param techName: The technician name to add to the metadata
-        :type techName: str
-        :param eventName: The name of the event to add to the metadata
-        :type eventName: str
+        :param techName: A list of technician names to return data
+        :type techName: list
+        :param eventName: A list of event names to return data
+        :type eventName: list
         :returns: JSON object
         """
         pyTimed = self.getPlugin()
