@@ -14,8 +14,8 @@ $(document).on("click", "#dateInput", function(){
 	var end = $("#datepickerEnd").val();
 	windowRangeStart = start;
 	windowRangeEnd = end;
-	var techName = $("#techName").val();
-	var eventName = $("#eventName").val();
+	var techNames = $("#techOptions").val();
+	var eventNames = $("#eventOptions").val();
 	if(start == ""){
 		start = '2000-01-01 00:00:00';
 	}
@@ -28,11 +28,11 @@ $(document).on("click", "#dateInput", function(){
 	else{
 		end = end + " 23:59:59";
 	}
-	var keypressDataUrl = "http://localhost?request=keypressData&startDate="+start+"&endDate="+end+"&techName="+techName+"&eventName="+eventName;
+	var keypressDataUrl = "http://localhost?request=keypressData&startDate="+start+"&endDate="+end+"&techNames="+techNames+"&eventNames="+eventNames;
 	$.get(keypressDataUrl);
-	var pcapDataUrl = "http://localhost?request=pcapData&startDate="+start+"&endDate="+end+"&techName="+techName+"&eventName="+eventName;
+	var pcapDataUrl = "http://localhost?request=pcapData&startDate="+start+"&endDate="+end+"&techNames="+techNames+"&eventNames="+eventNames;
 	$.get(pcapDataUrl);
-	var screenshotDataUrl = "http://localhost?request=screenshotData&startDate="+start+"&endDate="+end+"&techName="+techName+"&eventName="+eventName;
+	var screenshotDataUrl = "http://localhost?request=screenshotData&startDate="+start+"&endDate="+end+"&techNames="+techNames+"&eventNames="+eventNames;
 	$.get(screenshotDataUrl);
 });
 

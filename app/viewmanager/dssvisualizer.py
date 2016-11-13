@@ -98,54 +98,37 @@ def handle(web_view, web_frame, web_resource, request, response):
     else:
         queryDict = parse_qs(query)
         if 'request' in queryDict:
+            startDate = queryDict['startDate'][0]
+            endDate = queryDict['endDate'][0]
+            try:
+                techNames = queryDict['techNames']
+            except KeyError:
+                techNames = ""
+            try:
+                eventNames = queryDict['eventNames']
+            except KeyError:
+                eventNames = ""
+
             if queryDict['request'][0] == 'keypressData':
-                startDate = queryDict['startDate'][0]
-                endDate = queryDict['endDate'][0]
-                try:
-                    techName = queryDict['techName'][0]
-                except KeyError:
-                    techName = ""
-                try:
-                    eventName = queryDict['eventName'][0]
-                except KeyError:
-                    eventName = ""
-                keyData = PyKeyPress().selectKeyPressData(startDate, endDate, techName, eventName)
-                clickData = PyClick().selectClickData(startDate, endDate, techName, eventName)
-                timedData = PyTimed().selectTimedData(startDate, endDate, techName, eventName)
+                keyData = PyKeyPress().selectKeyPressData(startDate, endDate, techNames, eventNames)
+                clickData = PyClick().selectClickData(startDate, endDate, techNames, eventNames)
+                timedData = PyTimed().selectTimedData(startDate, endDate, techNames, eventNames)
                 js = "visualizeKeyData(%s, %s, %s);" % (keyData, clickData, timedData)
                 webKitWebView.execute_script(js)
+
             elif queryDict['request'][0] == 'pcapData':
-                startDate = queryDict['startDate'][0]
-                endDate = queryDict['endDate'][0]
-                try:
-                    techName = queryDict['techName'][0]
-                except KeyError:
-                    techName = ""
-                try:
-                    eventName = queryDict['eventName'][0]
-                except KeyError:
-                    eventName = ""
-                multiEx = MultiExcludeThroughput().selectMultiExcludeThroughputData(startDate, endDate, techName, eventName)
-                multiInc = MultiIncludeThroughput().selectMultiIncludeThroughputData(startDate, endDate, techName, eventName)
-                tshark = TsharkThroughput().selectTsharkThroughputData(startDate, endDate, techName, eventName)
-                multiExProt = MultiExcludeProtocol().selectMultiExcludeProtocolData(startDate, endDate, techName, eventName)
-                multiIncProt = MultiIncludeProtocol().selectMultiIncludeProtocolData(startDate, endDate, techName, eventName)
-                tsharkProt = TsharkProtocol().selectTsharkProtocolData(startDate, endDate, techName, eventName)
+                multiEx = MultiExcludeThroughput().selectMultiExcludeThroughputData(startDate, endDate, techNames, eventNames)
+                multiInc = MultiIncludeThroughput().selectMultiIncludeThroughputData(startDate, endDate, techNames, eventNames)
+                tshark = TsharkThroughput().selectTsharkThroughputData(startDate, endDate, techNames, eventNames)
+                multiExProt = MultiExcludeProtocol().selectMultiExcludeProtocolData(startDate, endDate, techNames, eventNames)
+                multiIncProt = MultiIncludeProtocol().selectMultiIncludeProtocolData(startDate, endDate, techNames, eventNames)
+                tsharkProt = TsharkProtocol().selectTsharkProtocolData(startDate, endDate, techNames, eventNames)
                 js = "visualizePCAPData(%s, %s, %s, %s, %s, %s);" % (
                     multiEx, multiExProt, multiInc, multiIncProt, tshark, tsharkProt)
                 webKitWebView.execute_script(js)
+
             elif queryDict['request'][0] == 'screenshotData':
-                startDate = queryDict['startDate'][0]
-                endDate = queryDict['endDate'][0]
-                try:
-                    techName = queryDict['techName'][0]
-                except KeyError:
-                    techName = ""
-                try:
-                    eventName = queryDict['eventName'][0]
-                except KeyError:
-                    eventName = ""
-                snap = ManualScreenShot().selectManualScreenShotData(startDate, endDate, techName, eventName)
+                snap = ManualScreenShot().selectManualScreenShotData(startDate, endDate, techNames, eventNames)
                 js = "visualizeSnapshotData(%s);" % (snap)
                 webKitWebView.execute_script(js)
 
