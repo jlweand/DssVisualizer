@@ -94,9 +94,9 @@ class PyKeyPress:
         return Annotations().addAnnotationToTimeline(collection, keyPress, annotationText)
 
 
-    def getDistinctTechNames(self):
+    def getDistinctTechNamesForEvents(self, eventNames):
         collection = self.getKeyPressCollection()
-        return TechAndEventNames().getDistinctTechNames(collection)
+        return TechAndEventNames().getDistinctTechNamesForEvents(collection, eventNames)
 
     def getDistinctEventNames(self):
         collection = self.getKeyPressCollection()

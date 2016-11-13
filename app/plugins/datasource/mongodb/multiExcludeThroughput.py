@@ -20,8 +20,8 @@ from plugins.datasource.mongodb.annotations import Annotations
 from plugins.datasource.mongodb.common import Common
 from plugins.datasource.mongodb.techAndEventNames import TechAndEventNames
 
-
 class MultiExcludeThroughput:
+
     def getMultiExcludeThroughputCollection(self):
         return Common().getDatabase().multiExcludeThroughput
 
@@ -94,9 +94,10 @@ class MultiExcludeThroughput:
         collection = self.getMultiExcludeThroughputCollection()
         return Annotations().addAnnotationToTimeline(collection, multiExclude, annotationText)
 
-    def getDistinctTechNames(self):
+
+    def getDistinctTechNamesForEvents(self, eventNames):
         collection = self.getMultiExcludeThroughputCollection()
-        return TechAndEventNames().getDistinctTechNames(collection)
+        return TechAndEventNames().getDistinctTechNamesForEvents(collection, eventNames)
 
     def getDistinctEventNames(self):
         collection = self.getMultiExcludeThroughputCollection()

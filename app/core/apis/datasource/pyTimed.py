@@ -38,21 +38,21 @@ class PyTimed:
         insertedCount = pyTimed.importTimed(jsonData)
         return insertedCount
 
-    def selectTimedData(self, startDate, endDate, techName, eventName):
+    def selectTimedData(self, startDate, endDate, techNames, eventNames):
         """Override: Select the timed data by start and end date. The input here will be strings, datetimes will be passed to the plugin.
 
         :param startDate: The a string value of the local datetime to begin search on
         :type startDate: str
         :param endDate: The a string value of the local datetime to end search on
         :type endDate: str
-        :param techName: A list of technician names to return data
-        :type techName: list
-        :param eventName: A list of event names to return data
-        :type eventName: list
+        :param techNames: A list of technician names to return data
+        :type techNames: list
+        :param eventNames: A list of event names to return data
+        :type eventNames: list
         :returns: JSON object
         """
         pyTimed = self.getPlugin()
-        jsonData = pyTimed.selectTimedData(Common().formatDateStringToUTC(startDate), Common().formatDateStringToUTC(endDate), techName, eventName)
+        jsonData = pyTimed.selectTimedData(Common().formatDateStringToUTC(startDate), Common().formatDateStringToUTC(endDate), techNames, eventNames)
         return jsonData
 
     def selectTimedDataById(self, dataId):

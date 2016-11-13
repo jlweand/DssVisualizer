@@ -22,12 +22,12 @@ from pprint import pprint
 
 class DistinctNamesTest(unittest.TestCase):
     def test_getDistinctNames(self):
-        techNames = TechAndEventNames().getDistinctTechNames()
         eventNames = TechAndEventNames().getDistinctEventNames()
+        techNames = TechAndEventNames().getDistinctTechNamesForEvents(eventNames[1:2])
         techAndEventNames = TechAndEventNames().getDistinctTechAndEventNames()
-        pprint(techNames)
-        pprint("")
         pprint(eventNames)
+        pprint("")
+        pprint(techNames)
         pprint("")
         pprint(techAndEventNames)
 

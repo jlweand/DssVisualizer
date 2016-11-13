@@ -27,9 +27,20 @@ class TechAndEventNames:
             distinctList.append(obj["_id"]["metadata.eventName"] + " by " + obj["_id"]["metadata.techName"])
         return sorted(distinctList, key=str.lower)
 
-    def getDistinctTechNames(self, collection):
-        cursor = collection.find().distinct("metadata.techName")
-        distinctList = Common().getPythonObjects(cursor)
+    def getDistinctTechNamesForEvents(self, collection, eventNames):
+
+        eventOr = []
+        if len(eventNames) > 0:
+            for name in eventNames:
+                eventOr.append({"metadata.eventName": name})
+            eventJson = { "$or": eventOr }
+
+        match = [ { "$match": eventJson }, { "$group": {"_id": {"metadata.techName": "$metadata.techName"}}} ]
+        cursor = collection.aggregate(match)
+        pyObjects = Common().getPythonObjects(cursor)
+        distinctList = []
+        for obj in pyObjects:
+            distinctList.append(obj["_id"]["metadata.techName"])
         return sorted(distinctList, key=str.lower)
 
     def getDistinctEventNames(self, collection):

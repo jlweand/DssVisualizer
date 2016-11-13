@@ -39,23 +39,23 @@ class MultiExcludeThroughput:
         insertedCount = multiExcludeThroughput.importMultiExcludeThroughputData(jsonData)
         return insertedCount
 
-    def selectMultiExcludeThroughputData(self, startDate, endDate, techName, eventName):
+    def selectMultiExcludeThroughputData(self, startDate, endDate, techNames, eventNames):
         """Override: Select the timed data by start and end date. The input here will be strings, datetimes will be passed to the plugin.
 
         :param startDate: The a string value of the local datetime to begin search on
         :type startDate: str
         :param endDate: The a string value of the local datetime to end search on
         :type endDate: str
-        :param techName: A list of technician names to return data
-        :type techName: list
-        :param eventName: A list of event names to return data
-        :type eventName: list
+        :param techNames: A list of technician names to return data
+        :type techNames: list
+        :param eventNames: A list of event names to return data
+        :type eventNames: list
         :returns: JSON object
         """
         multiExcludePlugin = self.getPlugin()
         jsonData = multiExcludePlugin.selectMultiExcludeThroughputData(Common().formatDateStringToUTC(startDate),
                                                                        Common().formatDateStringToUTC(endDate),
-                                                                       techName, eventName)
+                                                                       techNames, eventNames)
         return jsonData
 
     def selectMultiExcludeThroughputDataById(self, dataId):

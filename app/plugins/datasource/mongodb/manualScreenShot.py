@@ -21,6 +21,7 @@ from plugins.datasource.mongodb.common import Common
 from plugins.datasource.mongodb.techAndEventNames import TechAndEventNames
 
 class ManualScreenShot:
+
     def getManualScreenShotCollection(self):
         return Common().getDatabase().manualScreenShot
 
@@ -96,9 +97,10 @@ class ManualScreenShot:
         collection = self.getManualScreenShotCollection()
         return Annotations().addAnnotationToTimeline(collection, manualScreenShot, annotationText)
 
-    def getDistinctTechNames(self):
+
+    def getDistinctTechNamesForEvents(self, eventNames):
         collection = self.getManualScreenShotCollection()
-        return TechAndEventNames().getDistinctTechNames(collection)
+        return TechAndEventNames().getDistinctTechNamesForEvents(collection, eventNames)
 
     def getDistinctEventNames(self):
         collection = self.getManualScreenShotCollection()

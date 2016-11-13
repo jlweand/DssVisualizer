@@ -104,17 +104,17 @@ def handle(web_view, web_frame, web_resource, request, response):
                 techNames = queryDict['techNames']
                 techList = techNames[0].split(",")
             except KeyError:
-                techList = ""
+                techList = []
             try:
                 eventNames = queryDict['eventNames']
                 eventList = eventNames[0].split(",")
             except KeyError:
-                eventList = ""
+                eventList = []
             try:
                 eventTechNames = queryDict['eventNames']
                 eventTechList = eventTechNames[0].split(",")
             except KeyError:
-                eventTechList = ""
+                eventTechList = []
 
             if queryDict['request'][0] == 'keypressData':
                 keyData = PyKeyPress().selectKeyPressData(startDate, endDate, techList, eventList)
@@ -167,15 +167,24 @@ def handle(web_view, web_frame, web_resource, request, response):
                 ConfigRenderers().setDefaultRenderer("pcapThroughput", pcapThroughput, scriptFile)
                 ConfigRenderers().setDefaultRenderer("pyKeyLogger", pyKeyLogger, scriptFile)
                 ConfigRenderers().setDefaultRenderer("screenshots", screenshots, scriptFile)
+
         elif 'populateDropdown' in queryDict:
             if queryDict['populateDropdown'][0] == 'availableTechNames':
-                techList = TechAndEventNames().getDistinctTechNames()
+                try:
+                    eventTechNames = queryDict['eventNames']
+                    eventTechList = eventTechNames[0].split(",")
+                except KeyError:
+                    eventTechList = []
+
+                techList = TechAndEventNames().getDistinctTechNamesForEvents(eventTechList)
                 js = "populateTechDropdown(%s)" % techList
                 webKitWebView.execute_script(js)
+
             elif queryDict['populateDropdown'][0] == 'availableEventNames':
                 eventList = TechAndEventNames().getDistinctEventNames()
                 js = "populateEventDropdown(%s)" % eventList
                 webKitWebView.execute_script(js)
+
             elif queryDict['populateDropdown'][0] == 'availableTechAndEventNames':
                 techEventList = TechAndEventNames().getDistinctTechAndEventNames()
                 js = "populateTechAndEventDropdown(%s)" % techEventList

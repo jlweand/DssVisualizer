@@ -40,23 +40,23 @@ class MultiExcludeProtocol:
         insertedCount = multiExcludeProtocol.importMultiExcludeProtocolData(jsonData)
         return insertedCount
 
-    def selectMultiExcludeProtocolData(self, startDate, endDate, techName, eventName):
+    def selectMultiExcludeProtocolData(self, startDate, endDate, techNames, eventNames):
         """Override: Select the data by start and end date.
 
         :param startDate: The datetime to return data
         :type startDate: datetime
         :param endDate: The datatime to return data
         :type endDate: datetime
-        :param techName: A list of technician names to return data
-        :type techName: list
-        :param eventName: A list of event names to return data
-        :type eventName: list
+        :param techNames: A list of technician names to return data
+        :type techNames: list
+        :param eventNames: A list of event names to return data
+        :type eventNames: list
         :returns: JSON object
         """
         multiExcludePlugin = self.getPlugin()
         jsonData = multiExcludePlugin.selectMultiExcludeProtocolData(Common().formatDateStringToUTC(startDate),
-                                                                     Common().formatDateStringToUTC(endDate), techName,
-                                                                     eventName)
+                                                                     Common().formatDateStringToUTC(endDate), techNames,
+                                                                     eventNames)
         return jsonData
 
     def selectMultiExcludeProtocolDataById(self, dataId):

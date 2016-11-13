@@ -39,22 +39,22 @@ class ManualScreenShot:
         insertedCount = manualscreenshot.importManualScreenShot(jsonData)
         return insertedCount
 
-    def selectManualScreenShotData(self, startDate, endDate, techName, eventName):
+    def selectManualScreenShotData(self, startDate, endDate, techNames, eventNames):
         """Override: Select the ManualScreenShot data by start and end date. The input here will be strings, datetimes will be passed to the plugin.
 
         :param startDate: The a string value of the local datetime to begin search on
         :type startDate: str
         :param endDate: The a string value of the local datetime to end search on
         :type endDate: str
-        :param techName: A list of technician names to return data
-        :type techName: list
-        :param eventName: A list of event names to return data
-        :type eventName: list
+        :param techNames: A list of technician names to return data
+        :type techNames: list
+        :param eventNames: A list of event names to return data
+        :type eventNames: list
         :returns: JSON object
         """
         manualScreenShot = self.getPlugin()
         jsonData = manualScreenShot.selectManualScreenShotData(Common().formatDateStringToUTC(startDate),
-                                           Common().formatDateStringToUTC(endDate), techName, eventName)
+                                           Common().formatDateStringToUTC(endDate), techNames, eventNames)
         return jsonData
 
     def selectManualScreenShotDataById(self, dataId):

@@ -168,9 +168,21 @@ function populateTechAndEventDropdown(techEventList) {
     $("#techAndEventOptions").trigger("chosen:updated");
 }
 
+// also need to enable/disable tech dropdown in this method
+// enable when eventNames > 0, otherwise disable.
+$(document).on("change", "#eventOptions", function(evt, params){
+    $('#techOptions').empty()
+    var eventNames = $("#eventOptions").val();
+    if(eventNames.length > 0) {
+        var getTechNames = "http://localhost?populateDropdown=availableTechNames&eventNames="+eventNames;
+        $.get(getTechNames);
+    } else {
+        $("#techOptions").trigger("chosen:updated");
+    }
+});
+
+
 $(document).ready(function() {
-    var getTechNames = "http://localhost?populateDropdown=availableTechNames";
-    $.get(getTechNames);
     var getEventNames = "http://localhost?populateDropdown=availableEventNames";
     $.get(getEventNames)
     var getEventTechNames = "http://localhost?populateDropdown=availableTechAndEventNames";

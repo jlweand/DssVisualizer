@@ -20,8 +20,8 @@ from plugins.datasource.mongodb.annotations import Annotations
 from plugins.datasource.mongodb.common import Common
 from plugins.datasource.mongodb.techAndEventNames import TechAndEventNames
 
-
 class TsharkThroughput:
+
     def getTsharkThroughputCollection(self):
         return Common().getDatabase().tsharkThroughput
 
@@ -94,9 +94,10 @@ class TsharkThroughput:
         collection = self.getTsharkThroughputCollection()
         return Annotations().addAnnotationToTimeline(collection, tshark, annotationText)
 
-    def getDistinctTechNames(self):
+
+    def getDistinctTechNamesForEvents(self, eventNames):
         collection = self.getTsharkThroughputCollection()
-        return TechAndEventNames().getDistinctTechNames(collection)
+        return TechAndEventNames().getDistinctTechNamesForEvents(collection, eventNames)
 
     def getDistinctEventNames(self):
         collection = self.getTsharkThroughputCollection()
