@@ -179,11 +179,14 @@ def handle(web_view, web_frame, web_resource, request, response):
                 ConfigRenderers().setDefaultRenderer("screenshots", screenshots, scriptFile)
         elif 'populateDropdown' in queryDict:
             if queryDict['populateDropdown'][0] == 'availableTechNames':
-                techList= TechAndEventNames().getDistinctTechNames()
-                # js = "populateTechDropdown("+techList+")" #BAD
+                techList = TechAndEventNames().getDistinctTechNames()
                 js = "populateTechDropdown(%s)" % techList  #GOOD
                 webKitWebView.execute_script(js)
-            #add elif for availableEventNames
+        elif 'populateEventDropdown' in queryDict:
+            if queryDict['populateEventDropdown'][0] == 'availableEvents':
+                eventList = TechAndEventNames().getDistinctEventNames()
+                js = "populateEventDropdown(%s)" % eventList
+                webKitWebView.execute_script(js)
     return
 
 

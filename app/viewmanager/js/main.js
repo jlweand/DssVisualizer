@@ -162,9 +162,18 @@ function populateTechDropdown(techList) {
 }
 
 // Add populateEventDropdown method here
+function populateEventDropdown(eventList) {
+  for(var i=0; i<eventList.length; i++) {
+		// console.log(eventList[i]);
+    $("#eventOptions").append('<option value='+eventList[i]+'>'+eventList[i]+'</option>')
+  }
+	$("#eventOptions").trigger("chosen:updated");
+}
 
 $(document).ready(function() {
   var getTechNames = "http://localhost?populateDropdown=availableTechNames";
   $.get(getTechNames);
+	var getEventNames = "http://localhost?populateEventDropdown=availableEvents";
+	$.get(getEventNames)
 	//get the event names here
 });
