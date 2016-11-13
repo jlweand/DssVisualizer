@@ -33,9 +33,9 @@ class MultiExcludeProtocol:
         return len(result.inserted_ids)
 
     # select data by date range of the 'start' column
-    def selectMultiExcludeProtocolData(self, startDate, endDate, techName, eventName):  # add two parameters
+    def selectMultiExcludeProtocolData(self, startDate, endDate, techName, eventName, eventTechList):
         collection = self.getMultiExcludeProtocolCollection()
-        findJson = Common().updateTechAndEventNames(startDate, endDate, techName, eventName, True, False)
+        findJson = Common().getSelectJsonQuery(startDate, endDate, techName, eventName, eventTechList, True, False)
         cursor = collection.find(findJson)
         return Common().formatOutput(cursor)
 

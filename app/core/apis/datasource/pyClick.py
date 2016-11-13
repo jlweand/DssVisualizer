@@ -39,7 +39,7 @@ class PyClick:
         insertedCount = pyClick.importClick(jsonData)
         return insertedCount
 
-    def selectClickData(self, startDate, endDate, techNames, eventNames):
+    def selectClickData(self, startDate, endDate, techNames, eventNames, eventTechList):
         """Override: Select the click data by start and end date. The input here will be strings, datetimes will be passed to the plugin.
 
         :param startDate: The a string value of the local datetime to begin search on
@@ -50,11 +50,13 @@ class PyClick:
         :type techNames: list
         :param eventNames: A list of event names to return data
         :type eventNames: list
+        :param eventTechList: A list of a combination of event and tech names to return data
+        :type eventTechList: list
         :returns: JSON object
         """
         pyClick = self.getPlugin()
         jsonData = pyClick.selectClickData(Common().formatDateStringToUTC(startDate),
-                                           Common().formatDateStringToUTC(endDate), techNames, eventNamse)
+                                           Common().formatDateStringToUTC(endDate), techNames, eventNames, eventTechList)
         return jsonData
 
     def selectClickDataById(self, dataId):

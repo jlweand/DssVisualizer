@@ -111,31 +111,31 @@ def handle(web_view, web_frame, web_resource, request, response):
             except KeyError:
                 eventList = []
             try:
-                eventTechNames = queryDict['eventNames']
+                eventTechNames = queryDict['eventTechNames']
                 eventTechList = eventTechNames[0].split(",")
             except KeyError:
                 eventTechList = []
 
             if queryDict['request'][0] == 'keypressData':
-                keyData = PyKeyPress().selectKeyPressData(startDate, endDate, techList, eventList)
-                clickData = PyClick().selectClickData(startDate, endDate, techList, eventList)
-                timedData = PyTimed().selectTimedData(startDate, endDate, techList, eventList)
+                keyData = PyKeyPress().selectKeyPressData(startDate, endDate, techList, eventList, eventTechList)
+                clickData = PyClick().selectClickData(startDate, endDate, techList, eventList, eventTechList)
+                timedData = PyTimed().selectTimedData(startDate, endDate, techList, eventList, eventTechList)
                 js = "visualizeKeyData(%s, %s, %s);" % (keyData, clickData, timedData)
                 webKitWebView.execute_script(js)
 
             elif queryDict['request'][0] == 'pcapData':
-                multiEx = MultiExcludeThroughput().selectMultiExcludeThroughputData(startDate, endDate, techList, eventList)
-                multiInc = MultiIncludeThroughput().selectMultiIncludeThroughputData(startDate, endDate, techList, eventList)
-                tshark = TsharkThroughput().selectTsharkThroughputData(startDate, endDate, techList, eventList)
-                multiExProt = MultiExcludeProtocol().selectMultiExcludeProtocolData(startDate, endDate, techList, eventList)
-                multiIncProt = MultiIncludeProtocol().selectMultiIncludeProtocolData(startDate, endDate, techList, eventList)
-                tsharkProt = TsharkProtocol().selectTsharkProtocolData(startDate, endDate, techList, eventList)
+                multiEx = MultiExcludeThroughput().selectMultiExcludeThroughputData(startDate, endDate, techList, eventList, eventTechList)
+                multiInc = MultiIncludeThroughput().selectMultiIncludeThroughputData(startDate, endDate, techList, eventList, eventTechList)
+                tshark = TsharkThroughput().selectTsharkThroughputData(startDate, endDate, techList, eventList, eventTechList)
+                multiExProt = MultiExcludeProtocol().selectMultiExcludeProtocolData(startDate, endDate, techList, eventList, eventTechList)
+                multiIncProt = MultiIncludeProtocol().selectMultiIncludeProtocolData(startDate, endDate, techList, eventList, eventTechList)
+                tsharkProt = TsharkProtocol().selectTsharkProtocolData(startDate, endDate, techList, eventList, eventTechList)
                 js = "visualizePCAPData(%s, %s, %s, %s, %s, %s);" % (
                     multiEx, multiExProt, multiInc, multiIncProt, tshark, tsharkProt)
                 webKitWebView.execute_script(js)
 
             elif queryDict['request'][0] == 'screenshotData':
-                snap = ManualScreenShot().selectManualScreenShotData(startDate, endDate, techList, eventList)
+                snap = ManualScreenShot().selectManualScreenShotData(startDate, endDate, techList, eventList, eventTechList)
                 js = "visualizeSnapshotData(%s);" % (snap)
                 webKitWebView.execute_script(js)
 

@@ -75,17 +75,19 @@ class Common:
         bsonResult = dumps(cursor)
         return ujson.loads(bsonResult)
 
-    def updateTechAndEventNames(self, startDate, endDate, techNames, eventNames, hasStartDate, hasXdate):
+    def getSelectJsonQuery(self, startDate, endDate, techNames, eventNames, eventTechList, hasStartDate, hasXdate):
         """Updates tech name and event name depending on what is found in the database
 
         :param startDate: Start of date range
         :type startDate: datetime
         :param endDate: End of date range
         :type endDate: datetime
-        :param techNames: A list of technicians
+        :param techNames: A list of technician names to search on
         :type techNames: list
-        :param eventNames: A list of event names where data was gathered
+        :param eventNames: A list of event names to search on
         :type eventNames: list
+        :param eventTechList: A list of a combination of event and tech names to return data
+        :type eventTechList: list
         :param hasStartDate: If json file has start field
         :type hasStartDate: boolean
         :param hasXdate: If json file has x field instead of start field
@@ -95,29 +97,51 @@ class Common:
 
         findJson = {}
         findJson["$and"] = []
+        findJson["$and"].append(self.getStartJson(startDate, endDate, hasStartDate, hasXdate))
 
+
+        if len(eventTechList) > 0:
+            findJson["$and"].append(self.getComboEventTechJson(eventTechList))
+
+        else:
+            if len(techNames) > 0:
+                findJson["$and"].append(self.getEventTechNamesJson(techNames, "metadata.techName"))
+            if len(eventNames) > 0:
+                findJson["$and"].append(self.getEventTechNamesJson(eventNames, "metadata.eventName"))
+
+
+        return findJson
+
+
+    def getStartJson(self, startDate, endDate, hasStartDate, hasXdate):
         if hasStartDate:
             startJson = {"start": {"$gte" : startDate, "$lte": endDate}}
 
         if hasXdate:
             startJson = {"x": {"$gte" : startDate, "$lte": endDate}}
-        findJson["$and"].append(startJson)
 
-        techOr = []
-        if len(techNames) > 0 :
-            for name in techNames:
-                techOr.append({"metadata.techName": name})
-            techJson = { "$or" : techOr }
-            findJson["$and"].append(techJson)
+        return startJson
 
-        eventOr = []
-        if len(eventNames) > 0:
-            for name in eventNames:
-                eventOr.append({"metadata.eventName": name})
-            eventJson = {"$or": eventOr}
-            findJson["$and"].append(eventJson)
+    def getComboEventTechJson(self, eventTechList):
+        theOr = {}
+        theOr["$or"] = []
+        for eventTech in eventTechList:
+            etl = eventTech.split(" by ")
+            theAnd = {}
+            theAnd["$and"] = []
+            theAnd["$and"].append({"metadata.eventName": etl[0]})
+            theAnd["$and"].append({"metadata.techName": etl[1]})
+            theOr["$or"].append(theAnd)
 
-        return findJson
+        return theOr
+
+    def getEventTechNamesJson(self, names, searchAttribute):
+        theOr = []
+        for name in names:
+            theOr.append({searchAttribute: name})
+            json = {"$or": theOr }
+
+        return json
 
 
     def addIndex(self, collection, hasStart):

@@ -39,7 +39,7 @@ class TsharkProtocol:
         insertedCount = tsharkProtocol.importTsharkProtocolData(jsonData)
         return insertedCount
 
-    def selectTsharkProtocolData(self, startDate, endDate, techNames, eventNames):
+    def selectTsharkProtocolData(self, startDate, endDate, techNames, eventNames, eventTechList):
         """Override: Select the data by start and end date.
 
         :param startDate: The datetime to return data
@@ -50,12 +50,14 @@ class TsharkProtocol:
         :type techNames: list
         :param eventNames: A list of event names to return data
         :type eventNames: list
+        :param eventTechList: A list of a combination of event and tech names to return data
+        :type eventTechList: list
         :returns: JSON object
         """
         tsharkProtocolPlugin = self.getPlugin()
         jsonData = tsharkProtocolPlugin.selectTsharkProtocolData(Common().formatDateStringToUTC(startDate),
                                                                  Common().formatDateStringToUTC(endDate), techNames,
-                                                                 eventNames)
+                                                                 eventNames, eventTechList)
         return jsonData
 
     def selectTsharkProtocolDataById(self, dataId):

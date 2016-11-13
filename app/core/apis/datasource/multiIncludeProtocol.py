@@ -39,7 +39,7 @@ class MultiIncludeProtocol:
         insertedCount = multiIncludeProtocol.importMultiIncludeProtocolData(jsonData)
         return insertedCount
 
-    def selectMultiIncludeProtocolData(self, startDate, endDate, techNames, eventNames):
+    def selectMultiIncludeProtocolData(self, startDate, endDate, techNames, eventNames, eventTechList):
         """Override: Select the data by start and end date.
 
         :param startDate: The datetime to return data
@@ -50,12 +50,14 @@ class MultiIncludeProtocol:
         :type techNames: list
         :param eventNames: A list of event names to return data
         :type eventNames: list
+        :param eventTechList: A list of a combination of event and tech names to return data
+        :type eventTechList: list
         :returns: JSON object
         """
         multiIncludePlugin = self.getPlugin()
         jsonData = multiIncludePlugin.selectMultiIncludeProtocolData(Common().formatDateStringToUTC(startDate),
                                                                      Common().formatDateStringToUTC(endDate), techNames,
-                                                                     eventNames)
+                                                                     eventNames, eventTechList)
         return jsonData
 
     def selectMultiIncludeProtocolDataById(self, dataId):

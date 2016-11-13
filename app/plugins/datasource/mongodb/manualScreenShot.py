@@ -32,9 +32,9 @@ class ManualScreenShot:
         return len(result.inserted_ids)
 
     # select data by date range of the 'start' column
-    def selectManualScreenShotData(self, startDate, endDate, techName, eventName):
+    def selectManualScreenShotData(self, startDate, endDate, techName, eventName, eventTechList):
         collection = self.getManualScreenShotCollection()
-        findJson = Common().updateTechAndEventNames(startDate, endDate, techName, eventName, True, False)
+        findJson = Common().getSelectJsonQuery(startDate, endDate, techName, eventName, eventTechList, True, False)
         cursor = collection.find(findJson)
         return Common().formatOutput(cursor)
 
