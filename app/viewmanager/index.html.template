@@ -62,7 +62,7 @@
     		</div>
     		<div id="end-container">
     			<label for="techOptions">Choose Tech(s):</label>
-          <select data-placeholder="Choose technicians..." id="techOptions" class= "chosen-select" multiple style= "width: 200px">
+          <select data-placeholder="Choose tech(s)..." id="techOptions" class= "chosen-select" multiple style= "width: 200px">
           </select>
     		</div>
     		<div id="end-container">
