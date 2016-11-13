@@ -139,9 +139,8 @@ class Common:
         theOr = []
         for name in names:
             theOr.append({searchAttribute: name})
-            json = {"$or": theOr }
 
-        return json
+        return {"$or": theOr }
 
 
     def addIndex(self, collection, hasStart):
