@@ -61,13 +61,13 @@
     			<input type="text" id="datepickerEnd" name="end" size="20" value="2016-10-18" />
     		</div>
     		<div id="end-container">
-    			<label for="techOptions">Choose Tech(s):</label>
-                <select data-placeholder="Choose tech(s)..." id="techOptions" class= "chosen-select" multiple style= "width: 200px">
+    			<label for="eventOptions">Choose Event(s):</label>
+                <select data-placeholder="Choose event(s)..." id="eventOptions" class= "chosen-select" multiple style= "width: 200px">
                 </select>
     		</div>
     		<div id="end-container">
-    			<label for="eventOptions">Choose Event(s):</label>
-                <select data-placeholder="Choose event(s)..." id="eventOptions" class= "chosen-select" multiple style= "width: 200px">
+    			<label for="techOptions">Choose Tech(s):</label>
+                <select data-placeholder="Choose tech(s)..." id="techOptions" class= "chosen-select" multiple style= "width: 200px">
                 </select>
     		</div>
     		<div id="end-container">
