@@ -44,10 +44,26 @@ unittests.test_dataimport module
     :undoc-members:
     :show-inheritance:
 
+unittests.test_distinctNames module
+-----------------------------------
+
+.. automodule:: unittests.test_distinctNames
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 unittests.test_generateHtml module
 ----------------------------------
 
 .. automodule:: unittests.test_generateHtml
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+unittests.test_manualScreenShot module
+--------------------------------------
+
+.. automodule:: unittests.test_manualScreenShot
     :members:
     :undoc-members:
     :show-inheritance:

@@ -12,6 +12,14 @@ core.apis.datasource.common module
     :undoc-members:
     :show-inheritance:
 
+core.apis.datasource.manualScreenShot module
+--------------------------------------------
+
+.. automodule:: core.apis.datasource.manualScreenShot
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 core.apis.datasource.multiExcludeProtocol module
 ------------------------------------------------
 
@@ -64,6 +72,14 @@ core.apis.datasource.pyTimed module
 -----------------------------------
 
 .. automodule:: core.apis.datasource.pyTimed
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+core.apis.datasource.techAndEventNames module
+---------------------------------------------
+
+.. automodule:: core.apis.datasource.techAndEventNames
     :members:
     :undoc-members:
     :show-inheritance:

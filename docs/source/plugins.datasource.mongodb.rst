@@ -20,6 +20,14 @@ plugins.datasource.mongodb.common module
     :undoc-members:
     :show-inheritance:
 
+plugins.datasource.mongodb.manualScreenShot module
+--------------------------------------------------
+
+.. automodule:: plugins.datasource.mongodb.manualScreenShot
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 plugins.datasource.mongodb.multiExcludeProtocol module
 ------------------------------------------------------
 
@@ -72,6 +80,14 @@ plugins.datasource.mongodb.pyTimed module
 -----------------------------------------
 
 .. automodule:: plugins.datasource.mongodb.pyTimed
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+plugins.datasource.mongodb.techAndEventNames module
+---------------------------------------------------
+
+.. automodule:: plugins.datasource.mongodb.techAndEventNames
     :members:
     :undoc-members:
     :show-inheritance:

@@ -202,7 +202,6 @@ class Common:
         :type collection: MongoDB collection
         :param hasStart: True if the date to search by is 'start' otherwise it's assumed to be 'x'
         :type hasStart: boolean
-        :return:
         """
 
         if hasStart:

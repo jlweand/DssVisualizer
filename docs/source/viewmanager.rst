@@ -12,10 +12,10 @@ viewmanager.dssvisualizer module
     :undoc-members:
     :show-inheritance:
 
-viewmanager.pyReturn module
----------------------------
+viewmanager.exportPopup module
+------------------------------
 
-.. automodule:: viewmanager.pyReturn
+.. automodule:: viewmanager.exportPopup
     :members:
     :undoc-members:
     :show-inheritance:
