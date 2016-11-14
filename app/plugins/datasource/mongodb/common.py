@@ -17,9 +17,7 @@
 
 import pymongo
 import ujson
-import pytz
 from datetime import datetime
-from tzlocal import get_localzone
 from bson.json_util import dumps
 
 class Common:
@@ -99,7 +97,6 @@ class Common:
         findJson["$and"] = []
         findJson["$and"].append(self.getStartJson(startDate, endDate, hasStartDate, hasXdate))
 
-
         if len(eventTechList) > 0:
             findJson["$and"].append(self.getComboEventTechJson(eventTechList))
 
@@ -109,11 +106,28 @@ class Common:
             if len(eventNames) > 0:
                 findJson["$and"].append(self.getEventTechNamesJson(eventNames, "metadata.eventName"))
 
-
         return findJson
 
 
     def getStartJson(self, startDate, endDate, hasStartDate, hasXdate):
+        """Get the json for the search dates.
+        looks something like:
+        {
+          "start": {
+            "$gte": datetime.datetime(2016, 10, 18, 6, 0, tzinfo=<UTC>)
+            "$lte": datetime.datetime(2016, 10, 19, 5, 59, 59, tzinfo=<UTC>)
+          }
+        }
+
+        :param startDate: Start of date range
+        :type startDate: datetime
+        :param endDate: End of date range
+        :param hasStartDate: If json file has start field
+        :type hasStartDate: boolean
+        :param hasXdate: If json file has x field instead of start field
+        :type hasXdate: boolean
+        :return: the json for searching by date range
+        """
         if hasStartDate:
             startJson = {"start": {"$gte" : startDate, "$lte": endDate}}
 
@@ -123,6 +137,29 @@ class Common:
         return startJson
 
     def getComboEventTechJson(self, eventTechList):
+        """Get the json for searching for the combinations of event/tech names.
+        Looks something like:
+        {
+          $or: [
+            {
+              $and: [
+                {"metadata.eventName":"Another Event"},
+                {"metadata.techName":"Alex"}
+              ]
+            },
+            {
+              $and: [
+                {"metadata.eventName":"Super Summer Event"},
+                {"metadata.techName":"Tom"}
+              ]
+            }
+          ]
+        }
+
+        :param eventTechList: A list of a combination of event and tech names to return data
+        :type eventTechList: list
+        :return: the json for searching on event/tech combinations
+        """
         theOr = {}
         theOr["$or"] = []
         for eventTech in eventTechList:
@@ -136,6 +173,21 @@ class Common:
         return theOr
 
     def getEventTechNamesJson(self, names, searchAttribute):
+        """For a given list, creates the json for searching on all values.
+        looks something like:
+        {
+          "$or": [
+            {"metadata.eventName": "Another Event"},
+            {"metadata.eventName": "Super Summer Event"}
+          ]
+        }
+
+        :param names: A list of names (tech or event) to search on
+        :type names: list
+        :param searchAttribute: The attribute that we're searching on. 'metadata.techName' for example
+        :type searchAttribute: string
+        :return: the json for searching on all values of the name
+        """
         theOr = []
         for name in names:
             theOr.append({searchAttribute: name})
