@@ -64,6 +64,12 @@ class DataImport:
         :returns: The JSON object with metadata and datetime dates
         """
 
+        # ' by ' is used to concatenate the event and tech name together for the search dropdown
+        # it is therefore used to split the string as well when it's being used again back here.
+        # so we don't want an extra ' by ' in either name to mess that up later on down the line.
+        techName = techName.replace(" by ", " ")
+        eventName = eventName.replace(" by ", " ")
+
         for data in json:
 
             #create the metadata
