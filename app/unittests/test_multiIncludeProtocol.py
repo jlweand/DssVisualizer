@@ -23,29 +23,29 @@ from core.apis.datasource.multiIncludeProtocol import MultiIncludeProtocol
 class MultiIncludeProtocolTest(unittest.TestCase):
     def test_monolithicTestCase(self):
         # select by date
-        jsonData = MultiIncludeProtocol().selectMultiIncludeProtocolData('2016-10-15 11:57:18', '2016-10-15 11:57:18',
-                                                                         "", "")
+        jsonData = MultiIncludeProtocol().selectMultiIncludeProtocolData('2016-10-15 11:57:18', '2016-10-15 11:57:18', [], [], [])
         pprint(jsonData)
+        self.assertEqual(5, len(jsonData))
         dataId = jsonData[0]["id"]
-        self.assertEqual(1, len(jsonData))
 
         # select by Id
         jsonData = MultiIncludeProtocol().selectMultiIncludeProtocolDataById(dataId)
         self.assertEqual(1, len(jsonData))
 
         # select by Tech name
-        jsonData = MultiIncludeProtocol().selectMultiIncludeProtocolData('2016-10-15 11:59:27', '2016-10-15 11:59:27',
-                                                                         "Alex", "")
-        self.assertEqual(1, len(jsonData))
+        jsonData = MultiIncludeProtocol().selectMultiIncludeProtocolData('2016-10-15 11:59:27', '2016-10-15 11:59:27', ["Alex"], [], [])
+        self.assertEqual(2, len(jsonData))
 
         # select by event name
-        jsonData = MultiIncludeProtocol().selectMultiIncludeProtocolData('2016-10-15 11:59:27', '2016-10-15 11:59:27',
-                                                                         "", "Super Summer Event")
-        self.assertEqual(1, len(jsonData))
+        jsonData = MultiIncludeProtocol().selectMultiIncludeProtocolData('2016-10-15 11:59:27', '2016-10-15 11:59:27', [], ["Super Summer Event"], [])
+        self.assertEqual(2, len(jsonData))
 
         # select by tech name AND event name
-        jsonData = MultiIncludeProtocol().selectMultiIncludeProtocolData('2016-10-15 11:59:27', '2016-10-15 11:59:27',
-                                                                         "Alex", "Super Summer Event")
+        jsonData = MultiIncludeProtocol().selectMultiIncludeProtocolData('2016-10-15 11:59:27', '2016-10-15 11:59:27', ["Alex"], ["Super Summer Event"], [])
+        self.assertEqual(1, len(jsonData))
+
+        # select by event/tech combo
+        jsonData = MultiIncludeProtocol().selectMultiIncludeProtocolData('2016-10-15 11:59:27', '2016-10-15 11:59:27', [], [], ["Another Event by Julie"])
         self.assertEqual(1, len(jsonData))
 
         # test Annotations

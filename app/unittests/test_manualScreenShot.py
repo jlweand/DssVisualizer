@@ -23,9 +23,9 @@ from pprint import pprint
 class ManualScreenShotTest(unittest.TestCase):
     def test_monolithicTestCase(self):
         # select by date
-        jsonData = ManualScreenShot().selectManualScreenShotData('2016-10-12 17:37:00', '2016-10-12 17:37:02', "", "")
+        jsonData = ManualScreenShot().selectManualScreenShotData('2016-10-12 17:37:00', '2016-10-12 17:37:02', [], [], [])
+        self.assertEqual(5, len(jsonData))
         dataId = jsonData[0]["id"]
-        self.assertEqual(1, len(jsonData))
 
         # select by Id
         jsonData = ManualScreenShot().selectManualScreenShotDataById(dataId)
@@ -33,15 +33,19 @@ class ManualScreenShotTest(unittest.TestCase):
         self.assertEqual(1, len(jsonData))
 
         # select by Tech name
-        jsonData = ManualScreenShot().selectManualScreenShotData('2016-10-12 17:37:00', '2016-10-12 17:37:02', "Alex", "")
-        self.assertEqual(1, len(jsonData))
+        jsonData = ManualScreenShot().selectManualScreenShotData('2016-10-12 17:37:00', '2016-10-12 17:37:02', ["Alex"], [], [])
+        self.assertEqual(2, len(jsonData))
 
         # select by event name
-        jsonData = ManualScreenShot().selectManualScreenShotData('2016-10-12 17:37:00', '2016-10-12 17:37:02', "", "Super Summer Event")
-        self.assertEqual(1, len(jsonData))
+        jsonData = ManualScreenShot().selectManualScreenShotData('2016-10-12 17:37:00', '2016-10-12 17:37:02', [], ["Super Summer Event"], [])
+        self.assertEqual(2, len(jsonData))
 
         # select by tech name AND event name
-        jsonData = ManualScreenShot().selectManualScreenShotData('2016-10-12 17:37:00', '2016-10-12 17:37:02', "Alex", "Super Summer Event")
+        jsonData = ManualScreenShot().selectManualScreenShotData('2016-10-12 17:37:00', '2016-10-12 17:37:02', ["Alex"], ["Super Summer Event"], [])
+        self.assertEqual(1, len(jsonData))
+
+        # select by event/tech combo
+        jsonData = ManualScreenShot().selectManualScreenShotData('2016-10-12 17:37:00', '2016-10-12 17:37:02', [], [], ["Another Event by Julie"])
         self.assertEqual(1, len(jsonData))
 
         # test Annotations

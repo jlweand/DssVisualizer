@@ -23,9 +23,9 @@ from pprint import pprint
 class PyKeyLoggerTest(unittest.TestCase):
     def test_monolithicTestCase(self):
         # select by date
-        jsonData = PyKeyPress().selectKeyPressData('2016-10-15 11:59:34', '2016-10-15 11:59:34', "", "")
+        jsonData = PyKeyPress().selectKeyPressData('2016-10-15 11:59:34', '2016-10-15 11:59:34', [], [], [])
+        self.assertEqual(5, len(jsonData))
         dataId = jsonData[0]["id"]
-        self.assertEqual(1, len(jsonData))
 
         # select by Id
         jsonData = PyKeyPress().selectKeyPressDataById(dataId)
@@ -33,17 +33,19 @@ class PyKeyLoggerTest(unittest.TestCase):
         self.assertEqual(1, len(jsonData))
 
         # select by Tech name
-        jsonData = PyKeyPress().selectKeyPressData('2016-10-15 11:59:34', '2016-10-15 11:59:34', "Alex", "")
-        self.assertEqual(1, len(jsonData))
+        jsonData = PyKeyPress().selectKeyPressData('2016-10-15 11:59:34', '2016-10-15 11:59:34', ["Alex"], [], [])
+        self.assertEqual(2, len(jsonData))
 
         # select by event name
-        jsonData = PyKeyPress().selectKeyPressData('2016-10-15 11:59:34', '2016-10-15 11:59:34', "",
-                                                   "Super Summer Event")
-        self.assertEqual(1, len(jsonData))
+        jsonData = PyKeyPress().selectKeyPressData('2016-10-15 11:59:34', '2016-10-15 11:59:34', [], ["Super Summer Event"], [])
+        self.assertEqual(2, len(jsonData))
 
         # select by tech name AND event name
-        jsonData = PyKeyPress().selectKeyPressData('2016-10-15 11:59:34', '2016-10-15 11:59:34', "Alex",
-                                                   "Super Summer Event")
+        jsonData = PyKeyPress().selectKeyPressData('2016-10-15 11:59:34', '2016-10-15 11:59:34', ["Alex"], ["Super Summer Event"], [])
+        self.assertEqual(1, len(jsonData))
+
+        # select by event/tech combo
+        jsonData = PyKeyPress().selectKeyPressData('2016-10-15 11:59:34', '2016-10-15 11:59:34', [], [], ["Another Event by Julie"])
         self.assertEqual(1, len(jsonData))
 
         # test Annotations

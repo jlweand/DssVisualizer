@@ -23,29 +23,29 @@ from pprint import pprint
 class MultiExcludeProtocolTest(unittest.TestCase):
     def test_monolithicTestCase(self):
         # select by date
-        jsonData = MultiExcludeProtocol().selectMultiExcludeProtocolData('2016-10-15 11:59:27', '2016-10-15 11:59:27',
-                                                                         "", "")
+        jsonData = MultiExcludeProtocol().selectMultiExcludeProtocolData('2016-10-15 11:59:27', '2016-10-15 11:59:27', [], [], [])
         pprint(jsonData)
+        self.assertEqual(5, len(jsonData))
         dataId = jsonData[0]["id"]
-        self.assertEqual(1, len(jsonData))
 
         # select by Id
         jsonData = MultiExcludeProtocol().selectMultiExcludeProtocolDataById(dataId)
         self.assertEqual(1, len(jsonData))
 
         # select by Tech name
-        jsonData = MultiExcludeProtocol().selectMultiExcludeProtocolData('2016-10-15 11:59:27', '2016-10-15 11:59:27',
-                                                                         "Alex", "")
-        self.assertEqual(1, len(jsonData))
+        jsonData = MultiExcludeProtocol().selectMultiExcludeProtocolData('2016-10-15 11:59:27', '2016-10-15 11:59:27', ["Alex"], [], [])
+        self.assertEqual(2, len(jsonData))
 
         # select by event name
-        jsonData = MultiExcludeProtocol().selectMultiExcludeProtocolData('2016-10-15 11:59:27', '2016-10-15 11:59:27',
-                                                                         "", "Super Summer Event")
-        self.assertEqual(1, len(jsonData))
+        jsonData = MultiExcludeProtocol().selectMultiExcludeProtocolData('2016-10-15 11:59:27', '2016-10-15 11:59:27', [], ["Super Summer Event"], [])
+        self.assertEqual(2, len(jsonData))
 
         # select by tech name AND event name
-        jsonData = MultiExcludeProtocol().selectMultiExcludeProtocolData('2016-10-15 11:59:27', '2016-10-15 11:59:27',
-                                                                         "Alex", "Super Summer Event")
+        jsonData = MultiExcludeProtocol().selectMultiExcludeProtocolData('2016-10-15 11:59:27', '2016-10-15 11:59:27', ["Alex"], ["Super Summer Event"], [])
+        self.assertEqual(1, len(jsonData))
+
+        # select by event/tech combo
+        jsonData = MultiExcludeProtocol().selectMultiExcludeProtocolData('2016-10-15 11:59:27', '2016-10-15 11:59:27', [], [], ["Another Event by Julie"])
         self.assertEqual(1, len(jsonData))
 
         # test Annotations

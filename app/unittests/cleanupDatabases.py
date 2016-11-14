@@ -36,8 +36,8 @@ class CleanupDatabases(unittest.TestCase):
     def test_cleanEverythingUp(self):
         now = datetime.now()
         rightNow = datetime.strftime(now, '%Y-%m-%d %H:%M:%S')
-        techName = "Alex"
-        eventName = "Super Summer Event"
+        # techName = "Alex"
+        # eventName = "Super Summer Event"
         comments = "here are some comments"
 
         keypress = PyKeyPress().getKeyPressCollection()
@@ -70,10 +70,15 @@ class CleanupDatabases(unittest.TestCase):
         manualScreenShot = ManualScreenShot().getManualScreenShotCollection()
         manualScreenShot.delete_many({})
 
-        DataImport().importAllDataFromFiles("json", techName, eventName, comments, rightNow, True)
+        DataImport().importAllDataFromFiles("json/superSummerAlex", "Alex", "Super Summer Event", comments, rightNow, False)
+        DataImport().importAllDataFromFiles("json/superSummerTom", "Tom", "Super Summer Event", comments, rightNow, False)
+        DataImport().importAllDataFromFiles("json/anotherJulie", "Julie", "Another Event", comments, rightNow, False)
+        DataImport().importAllDataFromFiles("json/anotherAlex", "Alex", "Another Event", comments, rightNow, False)
+        DataImport().importAllDataFromFiles("json/unicornWillow", "Willow", "Unicorns and more!", comments, rightNow, False)
 
-        jsonData = TsharkThroughput().selectTsharkThroughputData(Common().formatDateStringToUTC('2016-10-15 11:57:19'),
-                                                                 Common().formatDateStringToUTC('2016-10-15 11:57:19'), '', '')
+        jsonData = PyKeyPress().selectKeyPressData(Common().formatDateStringToUTC('2016-10-18 18:26:36'),
+                                                   Common().formatDateStringToUTC('2016-10-18 18:26:36'),
+                                                   ['Willow'], ['Unicorns and more!'], [])
         pprint(jsonData)
 
 if __name__ == '__main__':

@@ -23,27 +23,29 @@ from core.apis.datasource.tsharkProtocol import TsharkProtocol
 class TsharkProtocolTest(unittest.TestCase):
     def test_monolithicTestCase(self):
         # select by date
-        jsonData = TsharkProtocol().selectTsharkProtocolData('2016-10-15 11:57:25', '2016-10-15 11:57:25', "", "")
+        jsonData = TsharkProtocol().selectTsharkProtocolData('2016-10-15 11:57:25', '2016-10-15 11:57:25', [], [], [])
         pprint(jsonData)
+        self.assertEqual(5, len(jsonData))
         dataId = jsonData[0]["id"]
-        self.assertEqual(1, len(jsonData))
 
         # select by Id
         jsonData = TsharkProtocol().selectTsharkProtocolDataById(dataId)
         self.assertEqual(1, len(jsonData))
 
         # select by Tech name
-        jsonData = TsharkProtocol().selectTsharkProtocolData('2016-10-15 11:59:27', '2016-10-15 11:59:27', "Alex", "")
-        self.assertEqual(1, len(jsonData))
+        jsonData = TsharkProtocol().selectTsharkProtocolData('2016-10-15 11:59:27', '2016-10-15 11:59:27', ["Alex"], [], [])
+        self.assertEqual(2, len(jsonData))
 
         # select by event name
-        jsonData = TsharkProtocol().selectTsharkProtocolData('2016-10-15 11:59:27', '2016-10-15 11:59:27', "",
-                                                             "Super Summer Event")
-        self.assertEqual(1, len(jsonData))
+        jsonData = TsharkProtocol().selectTsharkProtocolData('2016-10-15 11:59:27', '2016-10-15 11:59:27', [], ["Super Summer Event"], [])
+        self.assertEqual(2, len(jsonData))
 
         # select by tech name AND event name
-        jsonData = TsharkProtocol().selectTsharkProtocolData('2016-10-15 11:59:27', '2016-10-15 11:59:27', "Alex",
-                                                             "Super Summer Event")
+        jsonData = TsharkProtocol().selectTsharkProtocolData('2016-10-15 11:59:27', '2016-10-15 11:59:27', ["Alex"], ["Super Summer Event"], [])
+        self.assertEqual(1, len(jsonData))
+
+        # select by event/tech combo
+        jsonData = TsharkProtocol().selectTsharkProtocolData('2016-10-15 11:59:27', '2016-10-15 11:59:27', [], [], ["Another Event by Julie"])
         self.assertEqual(1, len(jsonData))
 
         # test Annotations

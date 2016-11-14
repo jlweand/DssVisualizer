@@ -24,10 +24,10 @@ class MultiExcludeThroughputTest(unittest.TestCase):
     def test_monolithicTestCase(self):
         # select by date
         jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputData('2016-10-15 11:57:19',
-                                                                             '2016-10-15 11:57:19', "", "")
+                                                                             '2016-10-15 11:57:19', [], [], [])
         pprint(jsonData)
+        self.assertEqual(5, len(jsonData))
         dataId = jsonData[0]["id"]  # list index out of range ERROR
-        self.assertEqual(1, len(jsonData))
 
         # select by Id
         jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputDataById(dataId)
@@ -35,18 +35,19 @@ class MultiExcludeThroughputTest(unittest.TestCase):
 
         # select by Tech name
         jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputData('2016-10-15 11:59:27',
-                                                                             '2016-10-15 11:59:27', "Alex", "")
-        self.assertEqual(1, len(jsonData))
+                                                                             '2016-10-15 11:59:27', ["Alex"], [], [])
+        self.assertEqual(2, len(jsonData))
         # select by event name
         jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputData('2016-10-15 11:59:27',
-                                                                             '2016-10-15 11:59:27', "",
-                                                                             "Super Summer Event")
-        self.assertEqual(1, len(jsonData))
+                                                                             '2016-10-15 11:59:27', [], ["Super Summer Event"], [])
+        self.assertEqual(2, len(jsonData))
 
         # select by tech name AND event name
-        jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputData('2016-10-15 11:59:27',
-                                                                             '2016-10-15 11:59:27', "Alex",
-                                                                             "Super Summer Event")
+        jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputData('2016-10-15 11:59:27', '2016-10-15 11:59:27', ["Alex"], ["Super Summer Event"], [])
+        self.assertEqual(1, len(jsonData))
+
+        # select by event/tech combo
+        jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputData('2016-10-15 11:59:27', '2016-10-15 11:59:27', [], [], ["Another Event by Julie"])
         self.assertEqual(1, len(jsonData))
 
         # test Annotations
