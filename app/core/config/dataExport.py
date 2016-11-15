@@ -34,7 +34,7 @@ from core.apis.datasource.common import Common
 
 class DataExport:
 
-    def exportAllData(self, startDate, endDate, techName, eventName, copyImages, exportLocation):
+    def exportAllData(self, startDate, endDate, techName, eventName, techAndEventName, copyImages, exportLocation):
         """Selects and exports all data to the exportLocation based on the start and end dates, tech name, event name.  Will copy images to exportLocation if copyImages is True.
 
         :param startDate: The datetime to return data
@@ -45,83 +45,85 @@ class DataExport:
         :type techName: str
         :param eventName: The name of the event to return data
         :type eventName: str
+        :param techAndEventName: The name of the tech and event to return data
+        :type techAndEventName: str
         :param copyImages: Flag to indicate whether to copy images to exportLocation
         :type copyImages: bool
         :param exportLocation: Base path to copy all json and images (if requested).  Data will all be copied to their specific folders within exportLocation.
         :type exportLocation: str
         :return:
         """
-        self.exportClickData(startDate, endDate, techName, eventName, copyImages, exportLocation)
-        self.exportKeyPressData(startDate, endDate, techName, eventName, exportLocation)
-        self.exportTimedData(startDate, endDate, techName, eventName, copyImages, exportLocation)
-        self.exportMultiExcludeProtocolData(startDate, endDate, techName, eventName, exportLocation)
-        self.exportMultiExcludeThroughputData(startDate, endDate, techName, eventName, exportLocation)
-        self.exportMultiIncludeProtocolData(startDate, endDate, techName, eventName, exportLocation)
-        self.exportMultiIncludeThroughputData(startDate, endDate, techName, eventName, exportLocation)
-        self.exportTsharkProtocolData(startDate, endDate, techName, eventName, exportLocation)
-        self.exportTsharkThroughputData(startDate, endDate, techName, eventName, exportLocation)
-        self.exportManualScreenShotData(startDate, endDate, techName, eventName, copyImages, exportLocation)
+        self.exportClickData(startDate, endDate, techName, eventName, techAndEventName, copyImages, exportLocation)
+        self.exportKeyPressData(startDate, endDate, techName, eventName, techAndEventName, exportLocation)
+        self.exportTimedData(startDate, endDate, techName, eventName, techAndEventName, copyImages, exportLocation)
+        self.exportMultiExcludeProtocolData(startDate, endDate, techName, eventName, techAndEventName, exportLocation)
+        self.exportMultiExcludeThroughputData(startDate, endDate, techName, eventName, techAndEventName, exportLocation)
+        self.exportMultiIncludeProtocolData(startDate, endDate, techName, eventName, techAndEventName, exportLocation)
+        self.exportMultiIncludeThroughputData(startDate, endDate, techName, eventName, techAndEventName, exportLocation)
+        self.exportTsharkProtocolData(startDate, endDate, techName, eventName, techAndEventName, exportLocation)
+        self.exportTsharkThroughputData(startDate, endDate, techName, eventName, techAndEventName, exportLocation)
+        self.exportManualScreenShotData(startDate, endDate, techName, eventName, techAndEventName, copyImages, exportLocation)
 
-    def exportClickData(self, startDate, endDate, techName, eventName, copyImages, exportLocation):
-        pyClickData = PyClick().selectClickData(startDate, endDate, techName, eventName)
+    def exportClickData(self, startDate, endDate, techName, eventName, techAndEventName, copyImages, exportLocation):
+        pyClickData = PyClick().selectClickData(startDate, endDate, techName, eventName, techAndEventName)
         self.cleanupData(pyClickData, True, False)
         self.exportToFile(exportLocation + "\\pyKeyLogger", "click.json" , pyClickData)
         if copyImages and len(pyClickData) > 0:
             self.copyImages(exportLocation + "\\pyKeyLogger\\click_images", pyClickData)
         return len(pyClickData)
 
-    def exportKeyPressData(self, startDate, endDate, techName, eventName, exportLocation):
-        pyKeyPressData = PyKeyPress().selectKeyPressData(startDate, endDate, techName, eventName)
+    def exportKeyPressData(self, startDate, endDate, techName, eventName, techAndEventName, exportLocation):
+        pyKeyPressData = PyKeyPress().selectKeyPressData(startDate, endDate, techName, eventName, techAndEventName)
         self.cleanupData(pyKeyPressData, True, False)
         self.exportToFile(exportLocation + "\\pyKeyLogger", "keyPress.json", pyKeyPressData)
         return len(pyKeyPressData)
 
-    def exportTimedData(self, startDate, endDate, techName, eventName, copyImages, exportLocation):
-        pyTimedData = PyTimed().selectTimedData(startDate, endDate, techName, eventName)
+    def exportTimedData(self, startDate, endDate, techName, eventName, techAndEventName, copyImages, exportLocation):
+        pyTimedData = PyTimed().selectTimedData(startDate, endDate, techName, eventName, techAndEventName)
         self.cleanupData(pyTimedData, True, False)
         self.exportToFile(exportLocation + "\\pyKeyLogger", "timed.json", pyTimedData)
         if copyImages and len(pyTimedData) > 0:
             self.copyImages(exportLocation + "\\pyKeyLogger\\timed_images", pyTimedData)
         return len(pyTimedData)
 
-    def exportMultiExcludeProtocolData(self, startDate, endDate, techName, eventName, exportLocation):
-        multiExcludePrototcolData = MultiExcludeProtocol().selectMultiExcludeProtocolData(startDate, endDate, techName, eventName)
+    def exportMultiExcludeProtocolData(self, startDate, endDate, techName, eventName, techAndEventName, exportLocation):
+        multiExcludePrototcolData = MultiExcludeProtocol().selectMultiExcludeProtocolData(startDate, endDate, techName, eventName, techAndEventName)
         self.cleanupData(multiExcludePrototcolData, True, False)
         self.exportToFile(exportLocation + "\\multi_exec_tshark", "networkDataAll.json", multiExcludePrototcolData)
         return len(multiExcludePrototcolData)
 
-    def exportMultiExcludeThroughputData(self, startDate, endDate, techName, eventName, exportLocation):
-        multiExcludeThroughputData = MultiExcludeThroughput().selectMultiExcludeThroughputData(startDate, endDate, techName, eventName)
+    def exportMultiExcludeThroughputData(self, startDate, endDate, techName, eventName, techAndEventName, exportLocation):
+        multiExcludeThroughputData = MultiExcludeThroughput().selectMultiExcludeThroughputData(startDate, endDate, techName, eventName, techAndEventName)
         self.cleanupData(multiExcludeThroughputData, False, True)
         self.exportToFile(exportLocation + "\\multi_exec_tshark", "networkDataXY.json", multiExcludeThroughputData)
         return len(multiExcludeThroughputData)
 
-    def exportMultiIncludeProtocolData(self, startDate, endDate, techName, eventName, exportLocation):
-        multiIncludeProtocolData = MultiIncludeProtocol().selectMultiIncludeProtocolData(startDate, endDate, techName, eventName)
+    def exportMultiIncludeProtocolData(self, startDate, endDate, techName, eventName, techAndEventName, exportLocation):
+        multiIncludeProtocolData = MultiIncludeProtocol().selectMultiIncludeProtocolData(startDate, endDate, techName, eventName, techAndEventName)
         self.cleanupData(multiIncludeProtocolData, True, False)
         self.exportToFile(exportLocation + "\\multi_incl_tshark", "networkDataAll.json", multiIncludeProtocolData)
         return len(multiIncludeProtocolData)
 
-    def exportMultiIncludeThroughputData(self, startDate, endDate, techName, eventName, exportLocation):
-        multiIncludeThroughputData = MultiIncludeThroughput().selectMultiIncludeThroughputData(startDate, endDate, techName, eventName)
+    def exportMultiIncludeThroughputData(self, startDate, endDate, techName, eventName, techAndEventName, exportLocation):
+        multiIncludeThroughputData = MultiIncludeThroughput().selectMultiIncludeThroughputData(startDate, endDate, techName, eventName, techAndEventName)
         self.cleanupData(multiIncludeThroughputData, False, True)
         self.exportToFile(exportLocation + "\\multi_incl_tshark", "networkDataXY.json", multiIncludeThroughputData)
         return len(multiIncludeThroughputData)
 
-    def exportTsharkProtocolData(self, startDate, endDate, techName, eventName, exportLocation):
-        tsharkPrototcolData = TsharkProtocol().selectTsharkProtocolData(startDate, endDate, techName, eventName)
+    def exportTsharkProtocolData(self, startDate, endDate, techName, eventName, techAndEventName, exportLocation):
+        tsharkPrototcolData = TsharkProtocol().selectTsharkProtocolData(startDate, endDate, techName, eventName, techAndEventName)
         self.cleanupData(tsharkPrototcolData, True, False)
         self.exportToFile(exportLocation + "\\tshark", "networkDataAll.json", tsharkPrototcolData)
         return len(tsharkPrototcolData)
 
-    def exportTsharkThroughputData(self, startDate, endDate, techName, eventName, exportLocation):
-        tsharkThroughputData = TsharkThroughput().selectTsharkThroughputData(startDate, endDate, techName, eventName)
+    def exportTsharkThroughputData(self, startDate, endDate, techName, eventName, techAndEventName, exportLocation):
+        tsharkThroughputData = TsharkThroughput().selectTsharkThroughputData(startDate, endDate, techName, eventName, techAndEventName)
         self.cleanupData(tsharkThroughputData, False, True)
         self.exportToFile(exportLocation + "\\tshark", "networkDataXY.json", tsharkThroughputData)
         return len(tsharkThroughputData)
 
-    def exportManualScreenShotData(self, startDate, endDate, techName, eventName, copyImages, exportLocation):
-        manualScreenShotData = ManualScreenShot().selectManualScreenShotData(startDate, endDate, techName, eventName)
+    def exportManualScreenShotData(self, startDate, endDate, techName, eventName, techAndEventName, copyImages, exportLocation):
+        manualScreenShotData = ManualScreenShot().selectManualScreenShotData(startDate, endDate, techName, eventName, techAndEventName)
         self.cleanupData(manualScreenShotData, True, False)
         self.exportToFile(exportLocation + "\\manualscreenshot", "snap.json", manualScreenShotData)
         if copyImages and len(manualScreenShotData) > 0:
