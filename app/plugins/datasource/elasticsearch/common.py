@@ -105,42 +105,43 @@ class Common:
 
         return daterange
 
-    def getSearchStringJson(self, searchString, attributeName):
-        """Returns the techName, eventName search query formatted for ElasticSearch
-
-        :param searchString: The value to search for
-        :type searchString: string
-        :param attributeName: Name of attribute to search on
-        :type attributeName: string
-        :returns: ElasticSearch command for matching
-        """
-
-        match = { }
-        if len(searchString) > 0 :
-            match = {"match" : { attributeName: searchString[0]}}
-        return match
 
     def generateSelectQuery(self, startDate, endDate, techNames, eventNames, eventTechNames, hasStartDate, hasXdate):
         daterange = self.getDateRangeJson(startDate, endDate, hasStartDate, hasXdate)
-        techNameMatch = self.getSearchStringJson(techNames, "metadata.techName")
-        eventNameMatch = self.getSearchStringJson(eventNames, "metadata.eventName")
 
         jsonQuery = {}
         jsonQuery["query"] = {}
         jsonQuery["query"]["bool"] = {}
         jsonQuery["query"]["bool"]["filter"] = daterange
 
-        if len(techNameMatch) > 0 or len(eventNameMatch) > 0:
-            jsonQuery["query"]["bool"]["must"] = []
+        if len(eventTechNames) > 0:
+            do = "something here"
 
-            if len(techNameMatch) > 0:
-                jsonQuery["query"]["bool"]["must"].append(techNameMatch)
+        elif len(techNames) > 0 or len(eventNames) > 0:
+            jsonQuery["query"]["bool"]["should"] = []
 
-            if len(eventNameMatch) > 0:
-                jsonQuery["query"]["bool"]["must"].append(eventNameMatch)
+            if len(techNames) > 0:
+                for techName in techNames:
+                    techNameMatch = {"match_phrase" : { "metadata.techName": techName }}
+                    jsonQuery["query"]["bool"]["should"].append(techNameMatch)
 
-        # pprint(jsonQuery)
+            if len(eventNames) > 0:
+                for eventName in eventNames:
+                    eventNameMatch = {"match_phrase" : { "metadata.eventName": eventName }}
+                    jsonQuery["query"]["bool"]["should"].append(eventNameMatch)
+
+            if len(techNames) > 0 and len(eventNames) > 0:
+                jsonQuery["query"]["bool"]["minimum_should_match"] = 2
+            else:
+                jsonQuery["query"]["bool"]["minimum_should_match"] = 1
+
         return jsonQuery
+        # {"query": {"bool": {
+        #             "minimum_should_match": 3,
+        #             "should": [{"match": {"metadata.techName": "Alex"}},
+        #                        {"match": {"metadata.techName": "Tom"}},
+        #                        {"match": {"metadata.eventName": "Super Summer Event"}},
+        #                        {"match": {"metadata.eventName": "Another Event"}}]}}}
 
     def getModfiedCount(self, result):
         """Parse through the result from elasticsearch and return how many records were modified.
