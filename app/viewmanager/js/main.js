@@ -190,3 +190,33 @@ $(document).ready(function() {
     var getEventTechNames = "http://localhost?populateDropdown=availableTechAndEventNames";
     $.get(getEventTechNames)
 });
+
+//Disables dropdown menu for events. Kept the plugin id updates ($("#techAndEventOptions").prop("disabled", false);)
+//seperate from the on.change (for #eventOptions) function above and the #techAndEventOptions on.change below
+//to prevent overwriting each other
+$(document).on("change", "#eventOptions", function(evt, params){
+	var eventNames = $("#eventOptions").val();
+	if(eventNames.length>0){
+		$("#techAndEventOptions").prop("disabled", true);
+	}
+	else{
+		$("#techAndEventOptions").prop("disabled", false);
+	}
+	$("#techAndEventOptions").trigger("chosen:updated");
+});
+
+
+$(document).on("change", "#techAndEventOptions", function(evt, params){
+	var techAndEventNames = $("#techAndEventOptions").val();
+	if(techAndEventNames.length>0){
+		$("#eventOptions").prop("disabled", true);
+		$("#techOptions").prop("disabled", true);
+	}
+	else{
+		$("#eventOptions").prop("disabled", false);
+		$("#techOptions").prop("disabled", false);
+	}
+	$("#eventOptions").trigger("chosen:updated");
+	$("#techOptions").trigger("chosen:updated");
+
+});
