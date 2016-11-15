@@ -83,24 +83,6 @@ class Common:
         return local_now.strftime('%Y-%m-%d %H:%M:%S')
 
 
-    def createMetadataForTimelineAnnotations(self, techName, eventName):
-        """Creates the generic metadata for the object when adding an annotation to just the timeline
-
-        :returns: a metadata object.
-        """
-        metadata = {}
-        metadata["techName"] = techName
-        metadata["eventName"] = eventName
-        metadata["comments"] = ""
-
-        _date = datetime.now()
-        local_tz = get_localzone()
-        local_dt = local_tz.localize(_date)
-        datimeNow = local_dt.astimezone(pytz.utc)
-        metadata["importDate"] = datimeNow
-
-        return metadata
-
     def getDateRangeJson(self, startDate, endDate, hasStartDate, hasXDate):
         """Returns the start or x date search query formatted for ElasticSearch
 

@@ -24,9 +24,9 @@ from pprint import pprint
 class PyClick:
 
     def __init__(self):
-        self.size = Common().getSizeToReturn()
-        self.clickDocType = "click"
         self.esIndex = Common().getIndexName()
+        self.clickDocType = "click"
+        self.resultSize = Common().getSizeToReturn()
 
     def importClick(self, jsonObjects):
         es = Elasticsearch()
@@ -39,8 +39,8 @@ class PyClick:
 
     # select data by date range of the 'start' column
     def selectClickData(self, startDate, endDate, techNames, eventNames, eventTechNames):
-        selectJson = Common().generateSelectQuery(startDate, endDate, techNames, eventNames, eventTechNames, True, False)
-        data = Elasticsearch().search(index=self.esIndex, doc_type=self.clickDocType, size=self.size, body=selectJson)
+        select = Common().generateSelectQuery(startDate, endDate, techNames, eventNames, eventTechNames, True, False)
+        data = Elasticsearch().search(index=self.esIndex, doc_type=self.clickDocType, size=self.resultSize, body=select)
         return Common().fixAllTheData(data)
 
     # select single data point
@@ -50,24 +50,24 @@ class PyClick:
 
     # add a fixedData record to this data point
     def insertFixedClickData(self, dataId, clicks_id, content, className, start, title, typeClick):
-        body = {"doc": {
+        insertFixed = {"doc": {
             "fixedData": {"clicks_id": clicks_id, "content": content, "className": className, "start": start,
                           "title": title, "type": typeClick}}}
-        result = Elasticsearch().update(index=self.esIndex, doc_type=self.clickDocType, body=body, id = dataId)
+        result = Elasticsearch().update(index=self.esIndex, doc_type=self.clickDocType, body=insertFixed, id = dataId)
         return Common().getModfiedCount(result)
 
     # update a previously 'fixed' record.
     def updateFixedClickData(self, dataId, clicks_id, content, className, start, title, typeClick):
-        body = {"doc": {
+        updateFixed = {"doc": {
             "fixedData": {"clicks_id": clicks_id, "content": content, "className": className, "start": start,
                           "title": title, "type": typeClick}}}
-        result = Elasticsearch().update(index=self.esIndex, doc_type=self.clickDocType, body=body, id = dataId)
+        result = Elasticsearch().update(index=self.esIndex, doc_type=self.clickDocType, body=updateFixed, id = dataId)
         return Common().getModfiedCount(result)
 
     # delete the fixedData
     def deleteFixedClickData(self, dataId):
-        body = {"script" : "ctx._source.remove(\"fixedData\")"}
-        result = Elasticsearch().update(index=self.esIndex, doc_type=self.clickDocType, body=body, id = dataId)
+        deleteFixed = {"script" : "ctx._source.remove(\"fixedData\")"}
+        result = Elasticsearch().update(index=self.esIndex, doc_type=self.clickDocType, body=deleteFixed, id = dataId)
         return Common().getModfiedCount(result)
 
     # add an annotation for the dataId
@@ -76,20 +76,16 @@ class PyClick:
 
     # # edit an annotation for the dataId
     # def editAnnotationClick(self, dataId, oldAnnotationText, newAnnotationText):
-    #     collection = self.getClickCollection()
-    #     return Annotations().editAnnotation(collection, dataId, oldAnnotationText, newAnnotationText)
+    #     return Annotations().editAnnotation(self.clickDocType, dataId, oldAnnotationText, newAnnotationText)
 
     # # delete an annotation for the dataId
     # def deleteAnnotationClick(self, dataId, annotationText):
-    #     collection = self.getClickCollection()
-    #     return Annotations().deleteAnnotation(collection, dataId, annotationText)
+    #     return Annotations().deleteAnnotation(self.clickDocType, dataId, annotationText)
 
     # # deletes all annotations for the dataId
     # def deleteAllAnnotationsForClick(self, dataId):
-    #     collection = self.getClickCollection()
-    #     return Annotations().deleteAllAnnotationsForData(collection, dataId)
+    #     return Annotations().deleteAllAnnotationsForData(self.clickDocType, dataId)
 
     # # add an annotation to the timeline, not a datapoint
     # def addAnnotationToClickTimeline(self, click, annotationText):
-    #     collection = self.getClickCollection()
-    #     return Annotations().addAnnotationToTimeline(collection, click, annotationText)
+    #     return Annotations().addAnnotationToTimeline(self.clickDocType, click, annotationText)
