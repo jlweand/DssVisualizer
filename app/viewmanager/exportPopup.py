@@ -7,6 +7,7 @@ gi.require_version("WebKit", "3.0")
 from gi.repository import Gtk
 from gi.repository import WebKit
 from core.config.dataExport import DataExport
+from viewmanager.folderExplorer import FolderExplorer
 
 class ExportPopup:
 
@@ -38,26 +39,46 @@ class ExportPopup:
     def handle(self,web_view, web_frame, web_resource, request, response):
         query = request.get_message().get_uri().get_query()
         uri = request.get_uri()
+        if 'explore' in uri:
+
+            ## get string path for folder from Explorer GUI
+            folderPathPy = FolderExplorer(Gtk.Window()).findFolder()
+
+            if folderPathPy != None:
+                folderPathHTML = list(folderPathPy)
+
+                ## replace backslashes with forwardslashes so html doesn't complain
+                ## ...and so user can see string version of selected folder path
+                for i,char in enumerate(folderPathHTML):
+                    if char == '\\':
+                        folderPathHTML[i] = '/'
+
+                folderPathHTML = ''.join(folderPathHTML)
+                folderChange = "document.getElementById('chosenFolder').setAttribute('value','"+folderPathHTML+"');"
+                self.webKitWebView.execute_script(folderChange)
+
         moreExportInfo = parse_qs(query)
         if not moreExportInfo:
             return
-        ##print (moreExportInfo)
+
         location = moreExportInfo['location'][0]
-        ##print("Import files from:" + location)
-        ##print("Move images:" + moreExportInfo['moveImages'][0])
+
         moveImages = False
         if 'moveImages' in moreExportInfo:
             moveImages = True
 
-        ##print (self.exportInfo['start'][0])
-        ##print(self.exportInfo['end'][0])
-        #startDate = self.exportInfo['start'][0].split()
+        ## date format -> %Y-%m-%d %H:%M:%S
         startDate = self.prepareDate(self.exportInfo['start'][0])
         endDate = self.prepareDate(self.exportInfo['end'][0])
 
-        ## date format -> %Y-%m-%d %H:%M:%S
         exporter = DataExport()
-        exporter.exportAllData(startDate, endDate, self.exportInfo['techNames'], self.exportInfo['eventNames'], moveImages, location)
+        if 'techAndEvent[]' in self.exportInfo:
+            exporter.exportAllData(startDate, endDate, list(), list(), self.exportInfo['techAndEvent[]'], moveImages, location)
+            self.close(self.gtkWindow,None)
+        else:
+            exporter.exportAllData(startDate, endDate, self.exportInfo['techName[]'], self.exportInfo['eventName[]'], list(), moveImages, location)
+            self.close(self.gtkWindow,None)
+
 
 
     def prepareDate(self,rawDate):
@@ -80,4 +101,5 @@ class ExportPopup:
         return processedDate
 
     def close(self, widget, event):
-        self.gtkWindow.destroy()
+        widget.remove(self.webKitWebView)
+        widget.destroy()

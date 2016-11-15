@@ -12,6 +12,9 @@
         });
 
     }
+    function explore(){
+    	$.get("http://dssvisualizer.py/explore");
+    }
     </script>
   </head>
   <body>
@@ -20,7 +23,7 @@
 				<table align="center">
 					<tr>
 						<td>Destination: </td>
-						<td><input id="location" type="text" name="location" ></td>
+						<td><input id="chosenFolder" onClick = 'explore()' type="text" name="location" value="" readonly></td>
 					</tr>
 				</table>
 				<br>

@@ -98,3 +98,7 @@ $(document).ready(function(){
 		$.get("http://dssvisualizer.py/exportData", $( '#export' ).serialize());
  });
 });
+
+function explore(){
+	$.get("http://dssvisualizer.py/explore");
+}

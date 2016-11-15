@@ -18,26 +18,25 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>DSS Visualizer</title>
+	<title>DSS Visualizer</title>
 
-    <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
-    <link rel="stylesheet" type="text/css" href="css/jquery-ui.structure.min.css">
-    <link rel="stylesheet" type="text/css" href="css/jquery-ui.theme.min.css">
-    <link rel="stylesheet" type="text/css" href="css/sweetalert2.min.css">
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-    <link rel="stylesheet" type="text/css" href="chosen/chosen.css">
+	<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
+	<link rel="stylesheet" type="text/css" href="css/jquery-ui.structure.min.css">
+	<link rel="stylesheet" type="text/css" href="css/jquery-ui.theme.min.css">
+	<link rel="stylesheet" type="text/css" href="css/sweetalert2.min.css">
+  <link rel="stylesheet" type="text/css" href="css/main.css">
+  <link rel="stylesheet" type="text/css" href="chosen/chosen.css">
 
-    <!-- Load jquery for ajax support -->
-    <script src="js/jquery-3.1.0.min.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
-    <script src="js/underscore-min.js"></script>
-    <script src="js/es6-promise.auto.min.js"></script>
-    <script src="js/sweetalert2.min.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/annotation.js"></script>
-    <script src="js/datepicker.js"></script>
-    <script src="chosen/chosen.jquery.js" type="text/javascript"></script>
-    <script src="chosen/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
+	<!-- Load jquery for ajax support -->
+  <script src="js/jquery-3.1.0.min.js"></script>
+  <script src="js/jquery-ui.min.js"></script>
+  <script src="js/es6-promise.auto.min.js"></script>
+  <script src="js/sweetalert2.min.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/annotation.js"></script>
+  <script src="js/datepicker.js"></script>
+  <script src="chosen/chosen.jquery.js" type="text/javascript"></script>
+  <script src="chosen/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
 
 	<script>
 		$(window).resize(function(){

@@ -20,6 +20,7 @@ import os
 import ujson
 #import subprocess
 from urllib.parse import parse_qs
+from time import strftime
 #from sys import platform as _platform
 
 # Only use files from core.  DO NOT use files from plugins.
@@ -41,6 +42,7 @@ from core.apis.datasource.multiIncludeProtocol import MultiIncludeProtocol
 from core.apis.datasource.tsharkProtocol import TsharkProtocol
 from core.apis.datasource.manualScreenShot import ManualScreenShot
 from core.apis.datasource.techAndEventNames import TechAndEventNames
+from viewmanager.folderExplorer import FolderExplorer
 
 gi.require_version("Gtk", "3.0")
 gi.require_version("WebKit", "3.0")
@@ -72,14 +74,15 @@ def handle(web_view, web_frame, web_resource, request, response):
         locationI = importInfo['location'][0]
         commentI = importInfo['comment'][0]
         eventI = importInfo['event'][0]
-        dateI = importInfo['date'][0]
+        dateI = strftime("%Y-%m-%d %H:%M:%S")
         #print("Move to workspace:" + importInfo['moveFiles'][0])
         print("Import files from:" + importInfo['location'][0])
         print("Comments:" + importInfo['comment'][0])
         print("Event name:" + importInfo['event'][0])
-        print("Date:" + importInfo['date'][0])
+        print("Date:" + dateI)
         importer = DataImport()
-        importer.importAllDataFromFiles(locationI,techI,eventI,commentI,"2016-11-9 4:34:12",moveFilesI)
+        importer.importAllDataFromFiles(locationI,techI,eventI,commentI,dateI,moveFilesI)
+
     # print (parse_qs(query))
 
     if 'exportData' in _uri:
@@ -90,6 +93,25 @@ def handle(web_view, web_frame, web_resource, request, response):
             print ("exporting...")
         ExportPopup(exportInfo)
     # print (parse_qs(query))
+
+    if 'explore' in _uri:
+
+        ## get string path for folder from Explorer GUI
+        folderPathPy = FolderExplorer(Gtk.Window()).findFolder()
+
+        if folderPathPy != None:
+            folderPathHTML = list(folderPathPy)
+
+            ## replace backslashes with forwardslashes so html doesn't complain
+            ## ...and so user can see string version of selected folder path
+            for i,char in enumerate(folderPathHTML):
+                if char == '\\':
+                    folderPathHTML[i] = '/'
+
+            folderPathHTML = ''.join(folderPathHTML)
+            folderChange = "document.getElementById('chosenFolder').setAttribute('value','"+folderPathHTML+"');"
+            webKitWebView.execute_script(folderChange)
+
 
 
 
