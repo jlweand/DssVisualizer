@@ -67,6 +67,14 @@ class Common:
             except KeyError:
                 obj["x"] = self.formatEpochDatetime(obj["x"]["$date"])
 
+            try:
+                obj["fixedData"]["start"] = self.formatEpochDatetime(obj["fixedData"]["start"]["$date"])
+            except KeyError:
+                try:
+                    obj["fixedData"]["x"] = self.formatEpochDatetime(obj["fixedData"]["x"]["$date"])
+                except KeyError:
+                    pass
+
         return objects
 
     def getPythonObjects(self, cursor):
@@ -74,7 +82,7 @@ class Common:
         return ujson.loads(bsonResult)
 
     def getSelectJsonQuery(self, startDate, endDate, techNames, eventNames, eventTechList, hasStartDate, hasXdate):
-        """Updates tech name and event name depending on what is found in the database
+        """Generates the select query for searching on date, tech, and event names.
 
         :param startDate: Start of date range
         :type startDate: datetime
@@ -90,7 +98,7 @@ class Common:
         :type hasStartDate: boolean
         :param hasXdate: If json file has x field instead of start field
         :type hasXdate: boolean
-        :returns: mongoDB command with updated variables
+        :returns: mongoDB search command
         """
 
         findJson = {}

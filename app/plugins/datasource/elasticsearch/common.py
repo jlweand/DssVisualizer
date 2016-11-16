@@ -19,7 +19,6 @@ import pytz
 from datetime import datetime
 from tzlocal import get_localzone
 from dateutil.parser import parse
-from pprint import pprint
 
 class Common:
     """Here lies some common functions so they don't have to continue to be written over and over again."""
@@ -74,6 +73,14 @@ class Common:
         except KeyError:
             data["x"] = self.formateDateStringUTCtoStringLocalTime(data["x"])
 
+        try:
+            data["fixedData"]["start"] = self.formateDateStringUTCtoStringLocalTime(data["fixedData"]["start"])
+        except KeyError:
+            try:
+                data["fixedData"]["x"] = self.formateDateStringUTCtoStringLocalTime(data["fixedData"]["x"])
+            except KeyError:
+                pass
+
         return data
 
     def formateDateStringUTCtoStringLocalTime(self, utcDateString):
@@ -107,6 +114,25 @@ class Common:
 
 
     def generateSelectQuery(self, startDate, endDate, techNames, eventNames, eventTechNames, hasStartDate, hasXdate):
+        """Generates the select query for searching on date, tech, and event names.
+
+        :param startDate: Start of date range
+        :type startDate: datetime
+        :param endDate: End of date range
+        :type endDate: datetime
+        :param techNames: A list of technician names to search on
+        :type techNames: list
+        :param eventNames: A list of event names to search on
+        :type eventNames: list
+        :param eventTechNames: A list of a combination of event and tech names to return data
+        :type eventTechNames: list
+        :param hasStartDate: If json file has start field
+        :type hasStartDate: boolean
+        :param hasXdate: If json file has x field instead of start field
+        :type hasXdate: boolean
+        :returns: elasticsearch search command
+        """
+
         daterange = self.getDateRangeJson(startDate, endDate, hasStartDate, hasXdate)
 
         jsonQuery = {}
@@ -115,7 +141,16 @@ class Common:
         jsonQuery["query"]["bool"]["filter"] = daterange
 
         if len(eventTechNames) > 0:
-            do = "something here"
+            jsonQuery["query"]["bool"]["should"] = []
+
+            for eventTech in eventTechNames:
+                etl = eventTech.split(" by ")
+                theBool = { "bool" : { "must" : [] } }
+                theBool["bool"]["must"].append({"match_phrase": {"metadata.eventName": etl[0]}})
+                theBool["bool"]["must"].append({"match_phrase": {"metadata.techName": etl[1]}})
+                jsonQuery["query"]["bool"]["should"].append(theBool)
+
+            jsonQuery["query"]["bool"]["minimum_should_match"] = 1
 
         elif len(techNames) > 0 or len(eventNames) > 0:
             jsonQuery["query"]["bool"]["should"] = []
@@ -136,12 +171,6 @@ class Common:
                 jsonQuery["query"]["bool"]["minimum_should_match"] = 1
 
         return jsonQuery
-        # {"query": {"bool": {
-        #             "minimum_should_match": 3,
-        #             "should": [{"match": {"metadata.techName": "Alex"}},
-        #                        {"match": {"metadata.techName": "Tom"}},
-        #                        {"match": {"metadata.eventName": "Super Summer Event"}},
-        #                        {"match": {"metadata.eventName": "Another Event"}}]}}}
 
     def getModfiedCount(self, result):
         """Parse through the result from elasticsearch and return how many records were modified.
