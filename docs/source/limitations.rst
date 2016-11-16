@@ -8,7 +8,9 @@ Limitations we've found with the application
 
 * Mark has come across HTML5 functionally that works in Chrome, but not the Webkit.  I don’t remember the specifics of what though.
 
-*window.open does not work with Webkit
+* window.open does not work with Webkit
+
+* You cannot change the Renderer plugins on the fly.  You must restart the application so the index.html can be recreated with the new plugin scripts.  You can, however, change the DB on the fly.
 
 Things that may seem weird
 --------------------------
@@ -17,3 +19,5 @@ Things that may seem weird
 
 Issues we know about
 --------------------
+
+* I think the plugin management should be more robust.  The Datasource plugin works fine because it's just a folder, but the renderers need more information.  So I'm rigging it together right now to work with specific files.  So if you add a new plugin you need to make sure the structure is the same as it is for the visjs plugin.  Meaning you need to have a /plugins/renderer/xxx/importScripts/ folder with a scripts.txt file that has all the scripts needed for that specific js. You also need keyloggerScript.txt, pcapScript.txt, and screenshotScript.txt files that have the JS script for that specific plugin.  Then all will work well.

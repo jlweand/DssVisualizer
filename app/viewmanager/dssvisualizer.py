@@ -179,16 +179,13 @@ def handle(web_view, web_frame, web_resource, request, response):
         elif 'adminSubmission' in queryDict:
             if queryDict['adminSubmission'][0] == 'pluginChanges':
                 database = queryDict['database'][0]
-                pcapDataProtocol = queryDict['pcapDataProtocol'][0]
-                pcapThroughput = queryDict['pcapThroughput'][0]
+                pcap = queryDict['pcap'][0]
                 pyKeyLogger = queryDict['pyKeyLogger'][0]
                 screenshots = queryDict['screenshots'][0]
-                scriptFile = "scripts.txt"
                 ConfigDatasources().setDefaultDatasource(database)
-                ConfigRenderers().setDefaultRenderer("pcapDataProtocol", pcapDataProtocol, scriptFile)
-                ConfigRenderers().setDefaultRenderer("pcapThroughput", pcapThroughput, scriptFile)
-                ConfigRenderers().setDefaultRenderer("pyKeyLogger", pyKeyLogger, scriptFile)
-                ConfigRenderers().setDefaultRenderer("screenshots", screenshots, scriptFile)
+                ConfigRenderers().setDefaultRenderer("pcap", pcap)
+                ConfigRenderers().setDefaultRenderer("pyKeyLogger", pyKeyLogger)
+                ConfigRenderers().setDefaultRenderer("screenshots", screenshots)
 
         elif 'populateDropdown' in queryDict:
             if queryDict['populateDropdown'][0] == 'availableTechNames':
@@ -269,7 +266,7 @@ gtkScrolledWindow.add(webKitWebView)
 gtkWindow.add(gtkScrolledWindow)
 gtkWindow.connect("delete-event", Gtk.main_quit)
 
-gtkWindow.set_size_request(1200, 1000)
+gtkWindow.set_default_size(1200, 1000)
 
 # generate the index.html page based on the renderer plugin
 GenerateHtml().generateHtml()

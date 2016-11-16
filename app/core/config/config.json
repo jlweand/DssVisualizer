@@ -1,25 +1,17 @@
 {
   "activeDatasourcePlugin": "MongoDB",
   "activeRendererPlugins": {
-    "pcapDataProtocol": {
+    "pcap": {
       "location": "plugins.renderer.visjs",
-      "plugin": "vis.js",
-      "scripts": "scripts.txt"
-    },
-    "pcapThroughput": {
-      "location": "plugins.renderer.visjs",
-      "plugin": "vis.js",
-      "scripts": "scripts.txt"
+      "plugin": "vis.js"
     },
     "pyKeyLogger": {
       "location": "plugins.renderer.visjs",
-      "plugin": "vis.js",
-      "scripts": "visjsScripts.txt"
+      "plugin": "vis.js"
     },
     "screenshots": {
       "location": "plugins.renderer.visjs",
-      "plugin": "visjs.js",
-      "scripts": "visjsScripts.txt"
+      "plugin": "vis.js"
     }
   },
   "datasourcePlugins": [

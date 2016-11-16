@@ -63,19 +63,12 @@ class ConfigReader:
         """
         return self.getRendererPlugin("pyKeyLogger")
 
-    def getRedererPluginForPcapThroughput(self):
-        """ Gets the locations of the active PcapThroughput renderer plugin
+    def getRedererPluginForPcap(self):
+        """ Gets the locations of the active Pcap renderer plugin
 
-        :return: relative path to the active PcapThroughput renderer plugin
+        :return: relative path to the active Pcap renderer plugin
         """
-        return self.getRendererPlugin("pcapThroughput")
-
-    def getRedererPluginForPcapDataProcol(self):
-        """ Gets the locations of the active PcapDataProcol renderer plugin
-
-        :return: relative path to the active PcapDataProcol renderer plugin
-        """
-        return self.getRendererPlugin("pcapDataProcol")
+        return self.getRendererPlugin("pcap")
 
     def getRedererPluginForScreenshots(self):
         """ Gets the locations of the active Screenshots renderer plugin
@@ -96,8 +89,20 @@ class ConfigReader:
         activePlugin = activePlugins[datatype]
         for plugin in self.getListOfRenderers():
             if plugin["name"] == activePlugin["plugin"]:
-                return activePlugin
+                return activePlugin["location"].replace('.', '/') + "/"
         return "No Renderer found"
+
+    def getDistinctListOfActiveRenderers(self):
+        config = self.importConfigJson()
+        activePlugins = config["activeRendererPlugins"]
+        distinctRends = []
+        if activePlugins["pcap"]["plugin"] not in distinctRends:
+            distinctRends.append(activePlugins["pcap"]["plugin"])
+        if activePlugins["pyKeyLogger"]["plugin"] not in distinctRends:
+            distinctRends.append(activePlugins["pyKeyLogger"]["plugin"])
+        if activePlugins["screenshots"]["plugin"] not in distinctRends:
+            distinctRends.append(activePlugins["screenshots"]["plugin"])
+        return distinctRends
 
     def getInstanceOfDatasourcePlugin(self, classname):
         """ Returns an instance of the class of the active data source plugin. This is used to call the methods inside the class.

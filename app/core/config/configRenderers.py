@@ -65,7 +65,7 @@ class ConfigRenderers:
 
         return "Failed to find renderer plugin named " + name
 
-    def setDefaultRenderer(self, pluginDataType, defaultPluginName, scriptFile):
+    def setDefaultRenderer(self, pluginDataType, defaultPluginName):
         config = self.importConfigJson()
         rendererPlugins = config["rendererPlugins"]
 
@@ -77,7 +77,6 @@ class ConfigRenderers:
 
                 activePlugin["location"] = rend["location"]
                 activePlugin["plugin"] = defaultPluginName
-                activePlugin["scripts"] = scriptFile
                 self.writeToConfigJson(config)
                 return defaultPluginName
 

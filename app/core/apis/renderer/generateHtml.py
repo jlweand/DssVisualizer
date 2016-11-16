@@ -19,12 +19,26 @@ from core.config.configReader import ConfigReader
 
 class GenerateHtml:
 
-    def getPluginFile(self):
+    def getPluginFile(self, filelocation):
         """Get the file where the scripts for the current active renderer plugin live."""
-        plugin = ConfigReader().getRedererPluginForPyKeyLogger()
-        location = plugin["location"].replace('.', '/') + "/"
-        thefile = location + plugin["scripts"]
-        return thefile
+        with open(filelocation, 'r') as scriptFile:
+            scripts = scriptFile.read()
+            return scripts
+
+
+    def compileScriptsForRenderers(self):
+        distinctActiveRends = ConfigReader().getDistinctListOfActiveRenderers()
+        installedRends = ConfigReader().getListOfRenderers()
+        rendScripts = ""
+        for drend in distinctActiveRends:
+            for rend in installedRends:
+                if rend["name"] == drend:
+                    rendScripts += self.getPluginFile(rend["location"].replace('.', '/') + "/importScripts/scripts.txt")
+
+        rendScripts += self.getPluginFile(ConfigReader().getRedererPluginForPyKeyLogger()+ "/importScripts/keyloggerScript.txt")
+        rendScripts += self.getPluginFile(ConfigReader().getRedererPluginForPcap()+ "/importScripts/pcapScript.txt")
+        rendScripts += self.getPluginFile(ConfigReader().getRedererPluginForScreenshots()+ "/importScripts/screenshotScript.txt")
+        return rendScripts
 
     def generateHtml(self):
         """This method generates the index.html page based on the current active renderer plugin."""
@@ -33,13 +47,11 @@ class GenerateHtml:
         with open('viewmanager/index.html.template', 'r') as htmlFile:
             html = htmlFile.read()
 
-        # get the scripts file
-        scriptPlugin = self.getPluginFile()
-        with open(scriptPlugin, 'r') as scriptFile:
-            scripts = scriptFile.read()
+        # get the scripts file(s)
+        pluginScripts = self.compileScriptsForRenderers()
 
         # add the scripts to the HTML and dump it back into the file.
-        html = html.replace('<SCRIPTS GO HERE>', scripts)
+        html = html.replace('<SCRIPTS GO HERE>', pluginScripts)
         with open('viewmanager/index.html', 'w') as htmlFile:
             htmlFile.write(html)
             htmlFile.close()
