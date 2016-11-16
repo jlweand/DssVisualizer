@@ -43,9 +43,9 @@ class MultiIncludeProtocol:
         """Override: Select the data by start and end date.
 
         :param startDate: The datetime to return data
-        :type startDate: datetime
+        :type startDate: str
         :param endDate: The datatime to return data
-        :type endDate: datetime
+        :type endDate: str
         :param techNames: A list of technician names to return data
         :type techNames: list
         :param eventNames: A list of event names to return data

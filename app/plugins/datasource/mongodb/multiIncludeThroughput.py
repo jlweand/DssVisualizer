@@ -45,18 +45,18 @@ class MultiIncludeThroughput:
         return Common().formatOutput(cursor)
 
     # add a fixedData record to this data point
-    def insertFixedMultiIncludeThroughputData(self, dataId, x, y):
+    def insertFixedMultiIncludeThroughputData(self, dataId, traffic_xy_id, x, y):
         collection = self.getMultiIncludeThroughputCollection()
         updateId = {"_id": ObjectId(dataId)}
-        fixedData = {"$set": {"fixedData": {"x": x, "y": y}}}
+        fixedData = {"$set": {"fixedData": {"traffic_xy_id": traffic_xy_id, "x": x, "y": y}}}
         result = collection.update_one(updateId, fixedData)
         return result.modified_count
 
     # update a previously 'fixed' record.
-    def updateFixedMultiIncludeThroughputData(self, dataId, x, y):
+    def updateFixedMultiIncludeThroughputData(self, dataId, traffic_xy_id, x, y):
         collection = self.getMultiIncludeThroughputCollection()
         updateId = {"_id" : ObjectId(dataId)}
-        fixedData = {"$set": {"fixedData": {"x": x, "y": y}}}
+        fixedData = {"$set": {"fixedData": {"traffic_xy_id": traffic_xy_id, "x": x, "y": y}}}
 
         result = collection.update_one(updateId, fixedData)
         return result.modified_count
