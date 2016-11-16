@@ -32,12 +32,23 @@ var KeyLogger = function(keyData, clickData, timedData){
 		    	return '<div>' + item.content + '</div>';
 			}
 		},
-		editable: true,
+		editable: {
+			add: true,
+			updateTime: true,
+			updateGroup: true
+		},
+		stack: false,
 		onAdd: function(item, callback){
 			prettyAdd('Add Annotation', function(value) {
 				if (value) {
+					var isoDate = new Date(item.start);
+					var itemDateString = isoDate.getFullYear()+"-"+(isoDate.getMonth()+1)+"-"+isoDate.getDate();
+					var itemTimeHours = addLeadingZeroes(isoDate.getHours());
+					var itemTimeMinutes = addLeadingZeroes(isoDate.getMinutes());
+					var itemTimeSeconds = addLeadingZeroes(isoDate.getSeconds());
+					itemDateString += " "+itemTimeHours+":"+itemTimeMinutes+":"+itemTimeSeconds;
+					item.start = itemDateString;
 					item.content = "Annotation: "+value;
-					// 		  console.log(value);
 					item.annotation = value;
 					var currItem = item.id;
 					var groupName = dataNames[item.group];
@@ -50,32 +61,18 @@ var KeyLogger = function(keyData, clickData, timedData){
 			});
 		},
 		onUpdate: function(item, callback){
-			// prettyEdit('Edit Item', item.content, item.annotation, function(value){
-			// 	if (value) {
-			// 		item.content = "Annotation: "+value;
-			// 	  item.annotation = value;
-			// 	  console.log(JSON.stringify(item));
-			// 	  var currItem = item.id;
-			// 	  var groupName = dataNames[item.group];
 			// 	  $.get("http://localhost?submission=annotation&itemID="+currItem+"&type="+groupName+"&annotation="+value);
-		    //       callback(item); // send back adjusted new item
-		    //     }
-		    //     else {
-		    //       callback(null); // cancel item creation
-		    //     }
-			// });
 			prettyEdit("Edit item", item, function(value){
-				var startDate = value[0];
-				var startDateArr = startDate.split("/");
-				var startDateTime = new Date(value[0]+" "+value[1]+":"+value[2]+":"+value[3]);
-				var content = value[4];
-				var title = value[5];
-				var comment = value[6];
-				var annotation = value[7];
-				// console.log(startDateTime.toISOString());
-				item.content = content;
-				item.title = title;
-				item.start = startDateTime.toISOString();
+				var startHour = addLeadingZeroes(value['startHours']);
+				var startMinutes = addLeadingZeroes(value['startMinutes']);
+				var startSeconds = addLeadingZeroes(value['startSeconds']);
+				var startDateTime = value['startDate']+" "+startHour+":"+startMinutes+":"+startSeconds;
+				item['start'] = startDateTime;
+				Object.keys(value).forEach(function(key){
+					if(key != 'startDate' && key != 'startHours' && key != 'startMinutes' && key != 'startSeconds'){
+						item[key] = value[key];
+					}
+				});
 				callback(item);
 			});
 		}
@@ -87,18 +84,54 @@ var KeyLogger = function(keyData, clickData, timedData){
 	$("#loading").addClass("hidden");
 	$("#keypressData").removeClass("hidden");
 
-	this.timeline.on('doubleClick', function(properties){
-		var currItem = properties.items;
-	});
-
 	this.timeline.on('select', function (properties) {
 		var currItem = properties.items;
+		items.forEach(function(data){
+			if(data['id'] == currItem){
+				console.log(data);
+				prettyPrompt(data);
+			}
+		})
 	});
 	this.timeline.on('rangechanged', getRangeChanged);
 
+	function prettyPrompt(item){
+		var title = item.start;
+		var text = formatObjectForDisplay(item);
+		swal({
+			title: title,
+			html: text,
+			width: '90%'
+		});
+	}
+
+	function formatObjectForDisplay(item){
+		var text = "<div><table>";
+		Object.keys(item).forEach(function(key){
+			var isImage = item['classname'] != null && item['classname'] == 'imgPoint';
+			if(key != 'classname'){
+				if(key == 'title' && isImage){
+					text += "<tr>";
+					text += "<td>"+key+":</td>";
+					text += "<td>"+item[key]+"<br><img src='"+item[key]+"'/></td>";
+					text += "</tr>";
+				}
+				else{
+					text += "<tr>";
+					text += "<td>"+key+":</td>";
+					text += "<td>"+item[key]+"</td>";
+					text += "</tr>";
+				}
+			}
+		});
+		text += "</table></div>";
+		return text;
+	}
+
 	function prettyEdit(title, item, callback){
+		var dateFormat = "yy-mm-dd";
 		var itemDateTime = new Date(item['start'].replace(/-/g, "/").replace(/T/, " "));
-		var itemDateString = itemDateTime.getMonth()+"/"+itemDateTime.getDate()+"/"+itemDateTime.getFullYear();
+		var itemDateString = itemDateTime.getFullYear()+"-"+(itemDateTime.getMonth()+1)+"-"+itemDateTime.getDate();
 		var itemDate = new Date(itemDateString);
 		var itemTimeHours = itemDateTime.getHours();
 		var itemTimeMinutes = itemDateTime.getMinutes();
@@ -109,58 +142,63 @@ var KeyLogger = function(keyData, clickData, timedData){
 		form += "</div>";
 		form += "<div style='border:none'>";
 		form += "<label for='editStartHours'>Edit start time:</label>";
-		form += "<input type='number' id='editStartHours' name='editStartHours' value='"+itemTimeHours+"' min='0' max='23'/>";
-		form += "<input type='number' id='editStartMinutes' name='editStartMinutes' value='"+itemTimeMinutes+"' min='0' max='59'/>";
-		form += "<input type='number' id='editStartSeconds' name='editStartSeconds' value='"+itemTimeSeconds+"' min='0' max='59'/>";
+		form += "<input type='number' id='editStartHours' name='editStartHours' value='"+itemTimeHours+"' min='0' max='23'/>h ";
+		form += "<input type='number' id='editStartMinutes' name='editStartMinutes' value='"+itemTimeMinutes+"' min='0' max='59'/>m ";
+		form += "<input type='number' id='editStartSeconds' name='editStartSeconds' value='"+itemTimeSeconds+"' min='0' max='59'/>s";
 		form += "</div>";
-		// console.log(JSON.stringify(item));
-		// var form = "";
+
 		Object.keys(item).forEach(function(key){
-			if(key == "content"){
-				form += "<div style='border:none'>";
-				form += "<label for='editContent'>Edit Content:</label>";
-				form += "<input type='text' id='editContent' name='editContent' value='"+item[key]+"'/>";
-				form += "</div>";
-			}
-			else if(key == "title"){
-				form += "<div style='border:none'>";
-				form += "<label for='editTitle'>Edit Title:</label>";
-				form += "<input type='text' id='editTitle' name='editTitle' value='"+item[key]+"'/>";
-				form += "</div>";
-			}
-			else if(key == "comment"){
-				form += "<div style='border:none'>";
-				form += "<label for='editComment'>Edit Comment:</label>";
-				form += "<input type='text' id='editComment' name='editComment' value='"+item[key]+"'/>";
-				form += "</div>";
+			if(key != "classname" && key != "className"){
+				// if(item['classname'] != "imgPoint"){
+				if(key != 'start' && key != 'annotation' && key != 'group' && key != 'id' && key != 'fixed' && key != 'type' && key != '_id' && key != 'timed_id' && key != 'keypress_id' && key != 'clicks_id'  && key != 'metadata'){
+					if(key == 'content' && (item['content'] != ' ' || item['content'] != '')){
+						form += "<div style='border:none'>";
+						form += "<label for='edit"+key+"'>Edit "+key+":</label>";
+						form += "<textarea id='edit"+key+"' name='edit"+key+"'>"+item[key]+"</textarea>";
+						form += "</div>";
+					}
+					else{
+						form += "<div style='border:none'>";
+						form += "<label for='edit"+key+"'>Edit "+key+":</label>";
+						form += "<input type='text' id='edit"+key+"' name='edit"+key+"' value='"+item[key]+"'/>";
+						form += "</div>";
+					}
+				}
 			}
 		});
 		form += "<div style='border:none'>";
 		form += "<label for='editAnnotation'>Edit Annotation:</label>";
 		if(item['annotation'] == null){
-			form += "<input type='text' id='editAnnotation' name='editAnnotation'/>";
+			form += "<textarea id='editAnnotation' name='editAnnotation'></textarea>";
 		}
 		else{
-			form += "<input type='text' id='editAnnotation' name='editAnnotation' value='"+item['annotation']+"'/>";
+			form += "<textarea id='editAnnotation' name='editAnnotation'>"+item['annotation']+"</textarea>";
 		}
 		form += "</div>";
 		swal({
 			title: title,
 			html: form,
 			showCancelButton: true,
+			width: '90%',
 			preConfirm: function(result) {
 				return new Promise(function(resolve) {
 					if (result) {
-						resolve([
-							$('#editStartDate').val(),
-							$('#editStartHours').val(),
-							$('#editStartMinutes').val(),
-							$('#editStartSeconds').val(),
-							$('#editContent').val(),
-							$('#editTitle').val(),
-							$('#editComment').val(),
-							$('#editAnnotation').val()
-						])
+						var jsonResults = {
+							"startDate": $('#editStartDate').val(),
+							"startHours": $('#editStartHours').val(),
+							"startMinutes": $('#editStartMinutes').val(),
+							"startSeconds": $('#editStartSeconds').val(),
+							"annotation": $('#editAnnotation').val()
+						};
+						Object.keys(item).forEach(function(key){
+							if(key != "classname" && key != "className"){
+								// if(item['classname'] != "imgPoint"){
+								if(key != 'start' && key != 'annotation' && key != 'group' && key != 'id'){
+									jsonResults[key] = $('#edit'+key).val();
+								}
+							}
+						});
+						resolve(jsonResults);
 					}
 				})
 			}
@@ -169,7 +207,8 @@ var KeyLogger = function(keyData, clickData, timedData){
 			defaultDate: itemDate,
 			changeMonth: true,
 			changeYear: true,
-			maxDate: 0
+			maxDate: 0,
+			dateFormat: dateFormat
 		});
 	}
 

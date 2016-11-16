@@ -2,6 +2,9 @@ var windowRangeStart;
 var windowRangeEnd;
 var techExport;
 var eventExport;
+var filter;
+var search;
+
 $(document).on("click", "#dateInput", function(){
 	$("#loading").removeClass("hidden");
 	$("#keypressData").html("");
@@ -62,11 +65,14 @@ var keylogger;
 var pcapData;
 var snap;
 function visualizeKeyData(keyData, clickData, timedData, count){
+	filter = $("#filter").val();
     eventTechNames = getArrayOfEventTechNames();
     // if eventTechNames.length > 0 then we know we have multiple datasets to work with.
     if(eventTechNames.length > 0) {
         keyDataArrays = splitDataForMultipleDataSetManagement(eventTechNames, keyData);
+		fixedKeyDataArrays = [];
         _.each(keyDataArrays, function(keyDataArray) {
+			console.log(JSON.stringify(keyDataArray));
             _.each(keyDataArray['data'], function(obj) {
                 obj['type'] = ['box'];
             });
@@ -94,17 +100,21 @@ function visualizeKeyData(keyData, clickData, timedData, count){
 
     } else {
         // otherwise we have just one dataset
-        _.each(keyData, function(obj) {
-            obj['type'] = ['box'];
-        });
-        _.each(clickData, function(obj) {
-            obj['type'] = ['box'];
-        });
-        _.each(timedData, function(obj) {
-            obj['type'] = ['box'];
-        });
+		var keyDataFiltered = filterTheData(keyData, 'content');
+		var clickDataFiltered = filterTheData(clickData, 'title');
+		var timedDataFiltered = filterTheData(timedData, 'title');
 
-        keylogger = new KeyLogger(keyData, clickData, timedData);
+		keyDataFiltered.forEach(function(obj){
+			obj['type'] = ['box'];
+		});
+		clickDataFiltered.forEach(function(obj){
+			obj['type'] = ['box'];
+		});
+		timedDataFiltered.forEach(function(obj){
+			obj['type'] = ['box'];
+		});
+
+		keylogger = new KeyLogger(keyDataFiltered, clickDataFiltered, timedDataFiltered);
 	}
 
 }
@@ -174,9 +184,12 @@ function visualizePCAPData(meXY, meAll, miXY, miAll, tsXY, tsAll){
 
     } else {
         // otherwise we have just one dataset
+		var meAllFiltered = filterTheData(meAll, 'title');
+		var miAllFiltered = filterTheData(miAll, 'title');
+		var tsAllFiltered = filterTheData(tsAll, 'title');
         _.each(meXY, function(xyObj) {
             var xyTime = xyObj['x'];
-            _.each(meAll, function(allObj) {
+            _.each(meAllFiltered, function(allObj) {
                 var allTime = allObj['start'];
                 if(allTime == xyTime){
                     xyObj['label'] = {"content": allObj['content']};
@@ -186,7 +199,7 @@ function visualizePCAPData(meXY, meAll, miXY, miAll, tsXY, tsAll){
 
         _.each(miXY, function(xyObj) {
             var xyTime = xyObj['x'];
-            _.each(miAll, function(allObj) {
+            _.each(miAllFiltered, function(allObj) {
                 var allTime = allObj['start'];
                 if(allTime == xyTime){
                     xyObj['label'] = {"content": allObj['content']};
@@ -195,14 +208,14 @@ function visualizePCAPData(meXY, meAll, miXY, miAll, tsXY, tsAll){
         });
         _.each(tsXY, function(xyObj) {
             var xyTime = xyObj['x'];
-            _.each(tsAll, function(allObj) {
+            _.each(tsAllFiltered, function(allObj) {
                 var allTime = allObj['start'];
                 if(allTime == xyTime){
                     xyObj['label'] = {"content": allObj['content']};
                 }
             });
         });
-        pcapData = new PCAPData(meXY, meAll, miXY, miAll, tsXY, tsAll);
+        pcapData = new PCAPData(meXY, meAllFiltered, miXY, miAllFiltered, tsXY, tsAllFiltered);
 	}
 }
 
@@ -221,13 +234,71 @@ function visualizeSnapshotData(snapData){
     	});
     } else {
         // otherwise we have just one dataset
-        _.each(snapData, function(obj) {
+		var snapDataFiltered = filterTheData(snapData, 'title');
+        _.each(snapDataFiltered, function(obj) {
             obj['type'] = ['box'];
         });
 
-    	snap = new Screenshot(snapData);
+    	snap = new Screenshot(snapDataFiltered);
 	}
 
+}
+
+function filterTheData(dataArray, attributeToFilter){
+	var dataArrayFiltered = [];
+	var dataArrayKeys = Object.keys(dataArray);
+
+	var filteredIndex = 0;
+	dataArrayKeys.forEach(function(index){
+		if(filter == ''){
+			if(dataArray[index]['fixed'] != null){
+				var fixedKeys = Object.keys(dataArray[index]['fixed']);
+				var originalKeys = Object.keys(dataArray[index]);
+				dataArrayFiltered[index] = {};
+				originalKeys.forEach(function(key){
+					if(key != "fixed"){
+						if(fixedKeys.indexOf(key)>-1){
+							dataArrayFiltered[index][key] = dataArray[index]['fixed'][key];
+						}
+						else{
+							dataArrayFiltered[index][key] = dataArray[index][key];
+						}
+					}
+				});
+			}
+			else{
+				dataArrayFiltered[index] = dataArray[index];
+			}
+		}
+		else{
+			var attributeExists = dataArray[index][attributeToFilter] != null;
+			var filterInAttribute = attributeExists && dataArray[index][attributeToFilter].indexOf(filter) > -1;
+			var fixedExists = dataArray[index]['fixed'] != null;
+			var fixedAttributeExists = fixedExists && dataArray[index]['fixed'][attributeToFilter] != null;
+			var filterInFixedAttribute = fixedAttributeExists && dataArray[index]['fixed'][attributeToFilter].indexOf(filter) > -1;
+			if(filterInAttribute && !fixedExists){
+				dataArrayFiltered[filteredIndex] = dataArray[index];
+				filteredIndex++;
+			}
+			else if(filterInFixedAttribute){
+				var fixedKeys = Object.keys(dataArray[index]['fixed']);
+				var originalKeys = Object.keys(dataArray[index]);
+				dataArrayFiltered[filteredIndex] = {};
+				originalKeys.forEach(function(key){
+					if(key != "fixed"){
+						if(fixedKeys.indexOf(key)>-1){
+							dataArrayFiltered[filteredIndex][key] = dataArray[index]['fixed'][key];
+						}
+						else{
+							dataArrayFiltered[filteredIndex][key] = dataArray[index][key];
+						}
+					}
+				});
+				filteredIndex++;
+			}
+		}
+	});
+	return dataArrayFiltered;
 }
 
 function splitDataForMultipleDataSetManagement(eventTechNames, jsonObjects) {
@@ -290,6 +361,14 @@ function prettyAdd(title, callback){
 	}).then(callback);
 }
 
+function addLeadingZeroes(num){
+	if(num<10){
+		return "0"+num;
+	}
+	else{
+		return num;
+	}
+}
 
 function getRangeChanged(properties){
 	windowRangeStart = properties.start;

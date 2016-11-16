@@ -71,14 +71,23 @@ body, html {
 	display: none;
 }
 
-.swal2-content div{
-	overflow-y: scroll;
+.swal2-content{
+	overflow-y: auto;
 	max-height: 500px;
-	border: 1px solid #999;
+	font-size: 1em;
+}
+.swal2-content div{
+	text-align: left;
+	width: 100%;
+}
+.swal2-content div label, .swal2-content div input[type='text'],.swal2-content div textarea{
+	display:block;
+	width: 95%;
 }
 
 .swal2-content div table{
 	border-collapse: collapse;
+	width: 100%;
 }
 
 .swal2-content div table td{
@@ -101,7 +110,7 @@ body, html {
 	height: 20px;
 }
 
-.dateSelect {
+.dateSelect, .filterSearch {
 	float: left;
 	position: static;
 	padding-left: 15px;
@@ -128,5 +137,5 @@ body, html {
 
 .textInput {
 	border-radius: 0px;
-	
+
 }
