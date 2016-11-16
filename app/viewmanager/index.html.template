@@ -107,16 +107,18 @@
     	<hr>
 
     	<div class="clear"></div>
+      <div class="background" id="background">
     	<h3>Keypress Data</h3>
-    	<div id="keypressData"></div>
+    	<div id="keypressData" class="timeline"></div>
     	<h3>Multi Exclude Data</h3>
-    	<div id="multiExcludeData"></div>
+    	<div id="multiExcludeData" class="timeline"></div>
     	<h3>Multi Include Data</h3>
-    	<div id="multiIncludeData"></div>
+    	<div id="multiIncludeData" class="timeline"></div>
     	<h3>TShark Data</h3>
-    	<div id="tsharkData"></div>
+    	<div id="tsharkData" class="timeline"></div>
     	<h3>Manual Screenshot Data</h3>
-    	<div id="screenshotData"></div>
+    	<div id="screenshotData" class="timeline"></div>
+      </div>
     	<div id="loading" class="hidden">
     		<img src="img/ripple.gif"/>
     	</div>
