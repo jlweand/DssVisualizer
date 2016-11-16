@@ -53,6 +53,8 @@ class ExportPopup:
                     if char == '\\':
                         folderPathHTML[i] = '/'
 
+                
+                folderPathHTML.append('/')
                 folderPathHTML = ''.join(folderPathHTML)
                 folderChange = "document.getElementById('chosenFolder').setAttribute('value','"+folderPathHTML+"');"
                 self.webKitWebView.execute_script(folderChange)

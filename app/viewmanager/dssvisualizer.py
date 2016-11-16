@@ -100,6 +100,7 @@ def handle(web_view, web_frame, web_resource, request, response):
                 if char == '\\':
                     folderPathHTML[i] = '/'
 
+            folderPathHTML.append('/')
             folderPathHTML = ''.join(folderPathHTML)
             folderChange = "document.getElementById('chosenFolder').setAttribute('value','"+folderPathHTML+"');"
             webKitWebView.execute_script(folderChange)
