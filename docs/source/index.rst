@@ -48,7 +48,6 @@ But to not keep you hanging here are some things to get you started!
    limitations
 
 
-
 How to run the DssVisualizer
 ============================
 We now have command line functionality for DssVisualizer! Once you have the latest version of DssVisualizer from GitHub navigate to the `app` folder and run::
@@ -99,3 +98,5 @@ Check out all the code!  You can view everything by method (Index) or view it by
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+This documentation was last updated |today|
