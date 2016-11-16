@@ -23,30 +23,46 @@ from pprint import pprint
 class PyClickTest(unittest.TestCase):
 
     def test_searching(self):
-        # select by date
-        jsonData = PyClick().selectClickData('2016-10-18 18:26:43', '2016-10-18 18:26:43', [], [], [])
+        # select by only date
+        jsonData = PyClick().selectClickData('2016-10-18 18:26:43', '2016-10-18 18:26:43',[], [], [])
         self.assertEqual(5, len(jsonData))
 
-        # select by Tech name
-        jsonData = PyClick().selectClickData('2016-10-18 18:26:43', '2016-10-18 18:26:43', ["Alex", "Julie"], [], [])
+        # select by one Tech name
+        jsonData = PyClick().selectClickData('2016-10-18 18:26:43', '2016-10-18 18:26:43',["Alex"], [], [])
+        self.assertEqual(2, len(jsonData))
+
+        # select by two Tech names
+        jsonData = PyClick().selectClickData('2016-10-18 18:26:43', '2016-10-18 18:26:43',["Alex", "Julie"], [], [])
         self.assertEqual(3, len(jsonData))
 
-        # select by event name
+        # select by one event name
+        jsonData = PyClick().selectClickData('2016-10-18 18:26:43', '2016-10-18 18:26:43', [], ["Super Summer Event"], [])
+        self.assertEqual(2, len(jsonData))
+
+        # select by two event names
         jsonData = PyClick().selectClickData('2016-10-18 18:26:43', '2016-10-18 18:26:43', [], ["Super Summer Event", "Another Event"], [])
         self.assertEqual(4, len(jsonData))
 
-        # select by tech name AND event name
+        # select by one tech name and one event name
+        jsonData = PyClick().selectClickData('2016-10-18 18:26:43', '2016-10-18 18:26:43', ["Alex"], ["Super Summer Event"], [])
+        self.assertEqual(1, len(jsonData))
+
+        # select by two tech names and tow event names
         jsonData = PyClick().selectClickData('2016-10-18 18:26:43', '2016-10-18 18:26:43', ["Alex", "Tom"], ["Super Summer Event", "Another Event"], [])
         self.assertEqual(3, len(jsonData))
 
-        # select by event/tech combo
+        # select by one event/tech combo
+        jsonData = PyClick().selectClickData('2016-10-18 18:26:43', '2016-10-18 18:26:43', [], [], ["Another Event by Julie"])
+        self.assertEqual(1, len(jsonData))
+
+        # select by two event/tech combos
         jsonData = PyClick().selectClickData('2016-10-18 18:26:43', '2016-10-18 18:26:43', [], [], ["Another Event by Julie", "Unicorns and more! by Willow"])
         self.assertEqual(2, len(jsonData))
 
-        # select by date
+        # select by one event/tech combo for a full day
         jsonData = PyClick().selectClickData('2016-10-18 00:00:01', '2016-10-18 23:59:59', [], [], ["Another Event by Alex"])
-        dataId = jsonData[0]["id"]
         self.assertEqual(8, len(jsonData))
+        dataId = jsonData[0]["id"]
 
         # select by Id
         jsonData = PyClick().selectClickDataById(dataId)
@@ -63,7 +79,6 @@ class PyClickTest(unittest.TestCase):
                                                        'point')
         self.assertEqual(1, modifiedCount)
         jsonData = PyClick().selectClickDataById(dataId)
-        pprint(jsonData)
         self.assertEqual(jsonData[0]["fixedData"]["clicks_id"], '2222')
         self.assertEqual(jsonData[0]["fixedData"]["content"], '[New Content Added]')
         self.assertEqual(jsonData[0]["fixedData"]["className"], 'imgPoint')
@@ -78,7 +93,6 @@ class PyClickTest(unittest.TestCase):
                                                        'point123')
         self.assertEqual(1, modifiedCount)
         jsonData = PyClick().selectClickDataById(dataId)
-        pprint(jsonData)
         self.assertEqual(jsonData[0]["fixedData"]["clicks_id"], '1111')
         self.assertEqual(jsonData[0]["fixedData"]["content"], '[EDITED UNITTEST Content Added]')
         self.assertEqual(jsonData[0]["fixedData"]["className"], 'imgPoint123')
