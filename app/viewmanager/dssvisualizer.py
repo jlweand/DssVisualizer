@@ -269,7 +269,7 @@ gtkScrolledWindow.add(webKitWebView)
 gtkWindow.add(gtkScrolledWindow)
 gtkWindow.connect("delete-event", Gtk.main_quit)
 
-gtkWindow.set_size_request(1000, 800)
+gtkWindow.set_size_request(1200, 1000)
 
 # generate the index.html page based on the renderer plugin
 GenerateHtml().generateHtml()

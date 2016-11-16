@@ -19,7 +19,8 @@
 <html>
 <head>
 	<title>DSS Visualizer</title>
-
+  <img src= "img/ARL_logo.png" style="float:left;width:120px;height:40px;"/>
+  <h1 style="color:rgb(80, 80, 80);margin-left:150px;">DSS Visualizer</h1>
 	<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
 	<link rel="stylesheet" type="text/css" href="css/jquery-ui.structure.min.css">
 	<link rel="stylesheet" type="text/css" href="css/jquery-ui.theme.min.css">
@@ -51,19 +52,21 @@
     	<div id="admin">
     		<a href="admin.html">Administration</a>
     	</div>
-    	<div id="dateSelect">
+    	 <div id="dateSelect" class="dateSelect">
     		<div id="start-container">
     			<label for="start">Select start date:</label>
-    			<input type="text" id="datepickerStart" name="start" size="20" value="2016-10-18" />
+    			<input type="text" class="testInput" id="datepickerStart" name="start" size="20" value="2016-10-18" />
     		</div>
 
     		<div id="end-container">
     			<label for="end">Select end date:</label>
     			<input type="text" id="datepickerEnd" name="end" size="20" value="2016-10-18" />
     		</div>
+      </div>
+      <div id="tech-eventBoxes" class="tech-eventBoxes">
     		<div id="end-container">
     			<label for="eventOptions">Choose Event(s):</label>
-                <select data-placeholder="Choose event(s)..." id="eventOptions" class= "chosen-select" multiple style= "width: 200px">
+              <select data-placeholder="Choose event(s)..." id="eventOptions" class= "chosen-select" multiple style= "width: 200px">
                 </select>
     		</div>
     		<div id="end-container">
@@ -76,12 +79,14 @@
                 <select data-placeholder="Choose event/tech(s)..." id="techAndEventOptions" class= "chosen-select" multiple style= "width: 200px">
                 </select>
     		</div>
+      </div>
+      <div class="go-exportButtons">
     		<div id="end-container">
-    			<button id="dateInput" name="dateInput">Go</button>
+    			<button id="dateInput" class="button" name="dateInput">Go</button>
     		</div>
-    	</div>
-      <div id="exportData">
-        <button id="exportVisData" onClick="exportData()">Export Visible Data</button>
+        <div id="exportData">
+          <button id="exportVisData" class="button" onClick="exportData()">Export Visible Data</button>
+        </div>
       </div>
     	<div class="clear"></div>
     	<hr>
