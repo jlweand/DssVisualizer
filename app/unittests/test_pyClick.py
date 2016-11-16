@@ -123,6 +123,7 @@ class PyClickTest(unittest.TestCase):
 
         PyClick().editAnnotationClick(dataId, 'test test', 'updated annotation!!')
         changedAnn = PyClick().selectClickDataById(dataId)
+        self.assertEqual(3, len(addedAnns[0]["annotations"]))
         self.assertEqual('updated annotation!!', changedAnn[0]["annotations"][1]["annotation"])
 
         PyClick().deleteAnnotationClick(dataId, 'updated annotation!!')

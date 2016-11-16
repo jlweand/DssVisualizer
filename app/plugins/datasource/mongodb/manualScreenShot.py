@@ -45,21 +45,21 @@ class ManualScreenShot:
         return Common().formatOutput(cursor)
 
     # add a fixedData record to this data point
-    def insertFixedManualScreenShotData(self, dataId, manualScreenShot_id, content, className, start, title, typeManualScreenShot):
+    def insertFixedManualScreenShotData(self, dataId, manualscreen_id, content, className, start, title, typeManualScreenShot):
         collection = self.getManualScreenShotCollection()
         insertId = {"_id": ObjectId(dataId)}
         push = {"$set": {
-            "fixedData": {"manualScreenShot_id": manualScreenShot_id, "content": content, "className": className, "start": start,
+            "fixedData": {"manualscreen_id": manualscreen_id, "content": content, "className": className, "start": start,
                           "title": title, "type": typeManualScreenShot}}}
         result = collection.update_one(insertId, push)
         return result.modified_count
 
     # update a previously 'fixed' record.
-    def updateFixedManualScreenShotData(self, dataId, manualScreenShot_id, content, className, start, title, typeManualScreenShot):
+    def updateFixedManualScreenShotData(self, dataId, manualscreen_id, content, className, start, title, typeManualScreenShot):
         collection = self.getManualScreenShotCollection()
         updateId = {"_id": ObjectId(dataId)}
         push = {"$set": {
-            "fixedData": {"manualScreenShot_id": manualScreenShot_id, "content": content, "className": className, "start": start,
+            "fixedData": {"manualscreen_id": manualscreen_id, "content": content, "className": className, "start": start,
                           "title": title, "type": typeManualScreenShot}}}
         result = collection.update_one(updateId, push)
         return result.modified_count

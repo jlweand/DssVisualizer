@@ -70,7 +70,7 @@ class ManualScreenShot:
         jsonData = manualScreenShot.selectManualScreenShotDataById(dataId)
         return jsonData
 
-    def insertFixedManualScreenShotData(self, dataId, manualScreenShot_id, content, className, start, title, typeManualScreenShot):
+    def insertFixedManualScreenShotData(self, dataId, manualscreen_id, content, className, start, title, typeManualScreenShot):
         """Override: Inserts a new record of the data.
 
         :param oldDataId: The key of the original ManualScreenShot data
@@ -88,11 +88,11 @@ class ManualScreenShot:
         :returns: newly created id.
         """
         manualScreenShot = self.getPlugin()
-        result = manualScreenShot.insertFixedManualScreenShotData(dataId, manualScreenShot_id, content, className,
+        result = manualScreenShot.insertFixedManualScreenShotData(dataId, manualscreen_id, content, className,
                                               Common().formatDateStringToUTC(start), title, typeManualScreenShot)
         return result
 
-    def updateFixedManualScreenShotData(self, dataId, manualScreenShot_id, content, className, start, title, typeManualScreenShot):
+    def updateFixedManualScreenShotData(self, dataId, manualscreen_id, content, className, start, title, typeManualScreenShot):
         """Override: Updates the record of the 'fixed' ManualScreenShot data.
 
         :param dataId: The ID of the 'fixed' ManualScreenShot data to edit.
@@ -110,7 +110,7 @@ class ManualScreenShot:
         :returns: The modified count.
         """
         manualScreenShot = self.getPlugin()
-        result = manualScreenShot.updateFixedManualScreenShotData(dataId, manualScreenShot_id, content, className,
+        result = manualScreenShot.updateFixedManualScreenShotData(dataId, manualscreen_id, content, className,
                                               Common().formatDateStringToUTC(start), title, typeManualScreenShot)
         return result
 
