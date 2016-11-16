@@ -64,8 +64,6 @@ def handle(web_view, web_frame, web_resource, request, response):
 
     if 'importData' in _uri:
         importInfo = parse_qs(query)
-        print (importInfo)
-        #DataImport.importAllDataFromFiles(file,tech,event,comments,importDate,moveImages)
         techI = importInfo['tech'][0]
         moveFilesI = False
         if 'moveImages' in importInfo:
@@ -75,24 +73,13 @@ def handle(web_view, web_frame, web_resource, request, response):
         commentI = importInfo['comment'][0]
         eventI = importInfo['event'][0]
         dateI = strftime("%Y-%m-%d %H:%M:%S")
-        #print("Move to workspace:" + importInfo['moveFiles'][0])
-        print("Import files from:" + importInfo['location'][0])
-        print("Comments:" + importInfo['comment'][0])
-        print("Event name:" + importInfo['event'][0])
-        print("Date:" + dateI)
         importer = DataImport()
         importer.importAllDataFromFiles(locationI,techI,eventI,commentI,dateI,moveFilesI)
 
-    # print (parse_qs(query))
-
     if 'exportData' in _uri:
-        print ("hello")
         if query:
             exportInfo = parse_qs(query)
-            print (exportInfo)
-            print ("exporting...")
         ExportPopup(exportInfo)
-    # print (parse_qs(query))
 
     if 'explore' in _uri:
 
