@@ -99,7 +99,7 @@ def handle(web_view, web_frame, web_resource, request, response):
             for i,char in enumerate(folderPathHTML):
                 if char == '\\':
                     folderPathHTML[i] = '/'
-
+				## for linux
             folderPathHTML.append('/')
             folderPathHTML = ''.join(folderPathHTML)
             folderChange = "document.getElementById('chosenFolder').setAttribute('value','"+folderPathHTML+"');"
