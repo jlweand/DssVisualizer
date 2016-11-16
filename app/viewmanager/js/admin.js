@@ -68,8 +68,28 @@ $(document).ready(function(){
     $('#export').submit(function(){
         $.get("http://dssvisualizer.py/exportData", $( '#export' ).serialize());
     });
+
+    //$('#date').val(getCurrentDate());
 });
+
+function getCurrentDate() {
+    var rightNow = new Date();
+    var curr_date = zeroPadNumber(rightNow.getDate());
+    var curr_month = zeroPadNumber(rightNow.getMonth() + 1);
+    var curr_year = rightNow.getFullYear();
+    var curr_hour = zeroPadNumber(rightNow.getHours());
+    var curr_min = zeroPadNumber(rightNow.getMinutes());
+    var curr_sec = zeroPadNumber(rightNow.getSeconds());
+    return curr_year + "-" + curr_month + "-" + curr_date + " " + curr_hour + ":" + curr_min + ":" + curr_sec
+}
+function zeroPadNumber (number) {
+    if (number == 1) {
+        number = "0" + number;
+    }
+    return number;
+}
 
 function explore(){
 	$.get("http://dssvisualizer.py/explore");
 }
+

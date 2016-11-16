@@ -65,16 +65,21 @@ def handle(web_view, web_frame, web_resource, request, response):
     if 'importData' in _uri:
         importInfo = parse_qs(query)
         techI = importInfo['tech'][0]
-        moveFilesI = False
-        if 'moveImages' in importInfo:
-            moveFilesI = True
-
         locationI = importInfo['location'][0]
         commentI = importInfo['comment'][0]
         eventI = importInfo['event'][0]
-        dateI = strftime("%Y-%m-%d %H:%M:%S")
+
+        copyImagesI = False
+        if 'copyImages' in importInfo:
+            copyImagesI = True
+
+        if 'date' in importInfo:
+            dateI = importInfo['date'][0]
+        else:
+            dateI = strftime("%Y-%m-%d %H:%M:%S")
+
         importer = DataImport()
-        importer.importAllDataFromFiles(locationI,techI,eventI,commentI,dateI,moveFilesI)
+        importer.importAllDataFromFiles(locationI,techI,eventI,commentI,dateI,copyImagesI)
 
     if 'exportData' in _uri:
         if query:
@@ -222,7 +227,8 @@ def load_uninstalled_plugins(query, _type):
     newPlugins = importer.getUninstalledPlugins()
     if not query:
         for plugin in newPlugins:
-            modify_uninstalled_plugin_html(plugin, tagID)
+            if "__" not in plugin:
+                modify_uninstalled_plugin_html(plugin, tagID)
     else:
         importer.importPlugin(query)
         script = 'document.getElementById("' + tagID + '").innerHTML = "";'  # diff

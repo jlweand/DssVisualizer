@@ -10,6 +10,8 @@ Limitations we've found with the application
 
 * window.open does not work with Webkit
 
+* WebKit does not support 'includes' function, use 'indexOf' instead.
+
 * You cannot change the Renderer plugins on the fly.  You must restart the application so the index.html can be recreated with the new plugin scripts.  You can, however, change the DB on the fly.
 
 Things that may seem weird
