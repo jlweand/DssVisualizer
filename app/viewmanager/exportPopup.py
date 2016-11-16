@@ -53,7 +53,7 @@ class ExportPopup:
                     if char == '\\':
                         folderPathHTML[i] = '/'
 
-                ## for linux
+                ##for linux
                 folderPathHTML.append('/')
                 folderPathHTML = ''.join(folderPathHTML)
                 folderChange = "document.getElementById('chosenFolder').setAttribute('value','"+folderPathHTML+"');"
