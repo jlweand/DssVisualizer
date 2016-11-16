@@ -21,32 +21,96 @@ from pprint import pprint
 
 
 class TsharkThroughputTest(unittest.TestCase):
-    def test_monolithicTestCase(self):
-        # select by date
-        jsonData = TsharkThroughput().selectTsharkThroughputData('2016-10-18 18:29:15', '2016-10-18 18:29:15', [], [], [])
-        pprint(jsonData)
-        dataId = jsonData[0]["id"]
+
+    def test_searching(self):
+        # select by only date
+        jsonData = TsharkThroughput().selectTsharkThroughputData('2016-10-18 18:27:57', '2016-10-18 18:27:57', [], [],
+                                                                 [])
         self.assertEqual(5, len(jsonData))
+
+        # select by one Tech name
+        jsonData = TsharkThroughput().selectTsharkThroughputData('2016-10-18 18:27:57', '2016-10-18 18:27:57', ["Alex"],
+                                                                 [], [])
+        self.assertEqual(2, len(jsonData))
+
+        # select by two Tech names
+        jsonData = TsharkThroughput().selectTsharkThroughputData('2016-10-18 18:27:57', '2016-10-18 18:27:57',
+                                                                 ["Alex", "Julie"], [], [])
+        self.assertEqual(3, len(jsonData))
+
+        # select by one event name
+        jsonData = TsharkThroughput().selectTsharkThroughputData('2016-10-18 18:27:57', '2016-10-18 18:27:57', [],
+                                                                 ["Super Summer Event"], [])
+        self.assertEqual(2, len(jsonData))
+
+        # select by two event names
+        jsonData = TsharkThroughput().selectTsharkThroughputData('2016-10-18 18:27:57', '2016-10-18 18:27:57', [],
+                                                                 ["Super Summer Event", "Another Event"], [])
+        self.assertEqual(4, len(jsonData))
+
+        # select by one tech name and one event name
+        jsonData = TsharkThroughput().selectTsharkThroughputData('2016-10-18 18:27:57', '2016-10-18 18:27:57', ["Alex"],
+                                                                 ["Super Summer Event"], [])
+        self.assertEqual(1, len(jsonData))
+
+        # select by two tech names and tow event names
+        jsonData = TsharkThroughput().selectTsharkThroughputData('2016-10-18 18:27:57', '2016-10-18 18:27:57',
+                                                                 ["Alex", "Tom"],
+                                                                 ["Super Summer Event", "Another Event"], [])
+        self.assertEqual(3, len(jsonData))
+
+        # select by one event/tech combo
+        jsonData = TsharkThroughput().selectTsharkThroughputData('2016-10-18 18:27:57', '2016-10-18 18:27:57', [], [],
+                                                                 ["Another Event by Julie"])
+        self.assertEqual(1, len(jsonData))
+
+        # select by two event/tech combos
+        jsonData = TsharkThroughput().selectTsharkThroughputData('2016-10-18 18:27:57', '2016-10-18 18:27:57', [], [],
+                                                                 ["Another Event by Julie",
+                                                                  "Unicorns and more! by Willow"])
+        self.assertEqual(2, len(jsonData))
+
+        # select by one event/tech combo for a full day
+        jsonData = TsharkThroughput().selectTsharkThroughputData('2016-10-18 00:00:01', '2016-10-18 23:59:59', [], [],
+                                                                 ["Another Event by Alex"])
+        self.assertEqual(79, len(jsonData))
+        dataId = jsonData[0]["id"]
 
         # select by Id
         jsonData = TsharkThroughput().selectTsharkThroughputDataById(dataId)
         self.assertEqual(1, len(jsonData))
 
-        # select by Tech name
-        jsonData = TsharkThroughput().selectTsharkThroughputData('2015-10-29 04:22:25', '2015-10-29 04:22:25', ["Alex"], [], [])
-        self.assertEqual(2, len(jsonData))
+    def test_fixedData(self):
+        jsonData = TsharkThroughput().selectTsharkThroughputData('2016-10-18 18:27:57', '2016-10-18 18:27:57', [], [],
+                                                                 ["Another Event by Alex"])
+        dataId = jsonData[0]["id"]
 
-        # select by event name
-        jsonData = TsharkThroughput().selectTsharkThroughputData('2015-10-29 04:22:25', '2015-10-29 04:22:25', [], ["Super Summer Event"], [])
-        self.assertEqual(2, len(jsonData))
+        # insert Fixed MultiExcludeThroughput Data
+        modifiedCount = TsharkThroughput().insertFixedTsharkThroughputData(dataId, 1111, '2016-10-02 18:28:00', 111)
+        self.assertEqual(1, modifiedCount)
+        jsonData = TsharkThroughput().selectTsharkThroughputDataById(dataId)
+        self.assertEqual(jsonData[0]["fixedData"]["traffic_xy_id"], 1111)
+        self.assertEqual(jsonData[0]["fixedData"]["x"], '2016-10-02 18:28:00')
+        self.assertEqual(jsonData[0]["fixedData"]["y"], 111)
 
-        # select by tech name AND event name
-        jsonData = TsharkThroughput().selectTsharkThroughputData('2015-10-29 04:22:25', '2015-10-29 04:22:25', ["Alex"], ["Super Summer Event"], [])
-        self.assertEqual(1, len(jsonData))
+        # update Fixed MultiExcludeThroughput Data
+        modifiedCount = TsharkThroughput().updateFixedTsharkThroughputData(dataId, 2222, '2017-01-02 18:28:00', 99999)
+        self.assertEqual(1, modifiedCount)
+        jsonData = TsharkThroughput().selectTsharkThroughputDataById(dataId)
+        self.assertEqual(jsonData[0]["fixedData"]["traffic_xy_id"], 2222)
+        self.assertEqual(jsonData[0]["fixedData"]["x"], '2017-01-02 18:28:00')
+        self.assertEqual(jsonData[0]["fixedData"]["y"], 99999)
 
-        # select by event/tech combo
-        jsonData = TsharkThroughput().selectTsharkThroughputData('2015-10-29 04:22:25', '2015-10-29 04:22:25', [], [], ["Another Event by Julie"])
-        self.assertEqual(1, len(jsonData))
+        # delete Fixed MultiExcludeThroughput Data
+        modifiedCount = TsharkThroughput().deleteFixedTsharkThroughputData(dataId)
+        self.assertEqual(1, modifiedCount)
+        jsonData = TsharkThroughput().selectTsharkThroughputDataById(dataId)
+        self.assertRaises(KeyError, lambda: jsonData[0]["fixedData"])
+
+    def test_annotations(self):
+        jsonData = TsharkThroughput().selectTsharkThroughputData('2016-10-18 18:27:57', '2016-10-18 18:27:57', [], [],
+                                                                 ["Another Event by Alex"])
+        dataId = jsonData[0]["id"]
 
         # test Annotations
         TsharkThroughput().addAnnotationTsharkThroughput(dataId, 'test')
@@ -54,38 +118,34 @@ class TsharkThroughputTest(unittest.TestCase):
         TsharkThroughput().addAnnotationTsharkThroughput(dataId, 'test test test')
         TsharkThroughput().addAnnotationTsharkThroughput(dataId, 'test test test')
         addedAnns = TsharkThroughput().selectTsharkThroughputDataById(dataId)
+        self.assertEqual(3, len(addedAnns[0]["annotations"]))
+        self.assertEqual('test', addedAnns[0]["annotations"][0]["annotation"])
+        self.assertEqual('test test', addedAnns[0]["annotations"][1]["annotation"])
+        self.assertEqual('test test test', addedAnns[0]["annotations"][2]["annotation"])
 
         TsharkThroughput().editAnnotationTsharkThroughput(dataId, 'test test', 'updated annotation!!')
         changedAnn = TsharkThroughput().selectTsharkThroughputDataById(dataId)
+        self.assertEqual(3, len(addedAnns[0]["annotations"]))
+        self.assertEqual('updated annotation!!', changedAnn[0]["annotations"][1]["annotation"])
 
         TsharkThroughput().deleteAnnotationTsharkThroughput(dataId, 'updated annotation!!')
         deletedChanged = TsharkThroughput().selectTsharkThroughputDataById(dataId)
+        self.assertEqual(2, len(deletedChanged[0]["annotations"]))
 
         TsharkThroughput().deleteAllAnnotationsForTsharkThroughput(dataId)
         deletedAll = TsharkThroughput().selectTsharkThroughputDataById(dataId)
-
-        self.assertEqual(3, len(addedAnns[0]["annotations"]))
-        self.assertEqual(2, len(deletedChanged[0]["annotations"]))
         self.assertRaises(KeyError, lambda: deletedAll[0]["annotations"])
-
-        # insert Fixed MultiExcludeThroughput Data
-        modifiedCount = TsharkThroughput().insertFixedTsharkThroughputData(dataId, '2016-10-02 18:28:00', 1111)
-        self.assertEqual(1, modifiedCount)
-
-        # update Fixed MultiExcludeThroughput Data
-        modifiedCount = TsharkThroughput().updateFixedTsharkThroughputData(dataId, '2017-01-02 18:28:00', 99999)
-        self.assertEqual(1, modifiedCount)
-
-        # delete Fixed MultiExcludeThroughput Data
-        modifiedCount = TsharkThroughput().deleteFixedTsharkThroughputData(dataId)
-        self.assertEqual(1, modifiedCount)
 
         # add Annotation To MultiExcludeThroughput Timeline
         objectId = TsharkThroughput().addAnnotationToTsharkThroughputTimeline('2016-08-01 10:00:00',
                                                                               "here's a timeline annotation", "Alex", "Super Summer Event")
         addtimelineAnnotation = TsharkThroughput().selectTsharkThroughputDataById(objectId)
         pprint(addtimelineAnnotation)
-        self.assertIsNotNone(addtimelineAnnotation)
+        self.assertEqual(addtimelineAnnotation[0]["className"], 'annotation')
+        self.assertEqual(addtimelineAnnotation[0]["x"], '2016-08-01 10:00:00')
+        self.assertEqual(addtimelineAnnotation[0]["annotations"]["annotation"], "here's a timeline annotation")
+        self.assertEqual(addtimelineAnnotation[0]["metadata"]["techName"], 'Alex')
+        self.assertEqual(addtimelineAnnotation[0]["metadata"]["eventName"], 'Super Summer Event')
 
 
 if __name__ == '__main__':

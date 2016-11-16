@@ -70,11 +70,13 @@ class TsharkThroughput:
         jsonData = tsharkPlugin.selectTsharkThroughputDataById(dataId)
         return jsonData
 
-    def insertFixedTsharkThroughputData(self, dataId, x, y):
+    def insertFixedTsharkThroughputData(self, dataId, traffic_xy_id, x, y):
         """Override: Inserts a fixedData attribute.
 
         :param dataId: The key of the original data
         :type dataId: str
+        :param traffic_xy_id: the traffic_xy_id.
+        :type traffic_xy_id: int
         :param x: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
         :type x: str
         :param y: The number of protocols being used
@@ -82,14 +84,16 @@ class TsharkThroughput:
         :returns: The modified count.
         """
         tsharkPlugin = self.getPlugin()
-        result = tsharkPlugin.insertFixedTsharkThroughputData(dataId, Common().formatDateStringToUTC(x), y)
+        result = tsharkPlugin.insertFixedTsharkThroughputData(dataId, traffic_xy_id, Common().formatDateStringToUTC(x), y)
         return result
 
-    def updateFixedTsharkThroughputData(self, dataId, x, y):
+    def updateFixedTsharkThroughputData(self, dataId, traffic_xy_id, x, y):
         """Override: Updates the fixedData attribute.
 
         :param dataId: The key of the original data
         :type dataId: str
+        :param traffic_xy_id: the traffic_xy_id.
+        :type traffic_xy_id: int
         :param x: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
         :type x: str
         :param y: The number of protocols being used
@@ -97,7 +101,7 @@ class TsharkThroughput:
         :returns: The modified count.
         """
         tsharkPlugin = self.getPlugin()
-        result = tsharkPlugin.updateFixedTsharkThroughputData(dataId, Common().formatDateStringToUTC(x), y)
+        result = tsharkPlugin.updateFixedTsharkThroughputData(dataId, traffic_xy_id, Common().formatDateStringToUTC(x), y)
         return result
 
     def deleteFixedTsharkThroughputData(self, dataId):

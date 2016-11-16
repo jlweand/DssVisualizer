@@ -45,18 +45,18 @@ class TsharkThroughput:
         return Common().formatOutput(cursor)
 
     # add a fixedData record to this data point
-    def insertFixedTsharkThroughputData(self, dataId, x, y):
+    def insertFixedTsharkThroughputData(self, dataId, traffic_xy_id, x, y):
         collection = self.getTsharkThroughputCollection()
         updateId = {"_id": ObjectId(dataId)}
-        fixedData = {"$set": {"fixedData": {"x": x, "y": y}}}
+        fixedData = {"$set": {"fixedData": {"traffic_xy_id": traffic_xy_id, "x": x, "y": y}}}
         result = collection.update_one(updateId, fixedData)
         return result.modified_count
 
     # update a previously 'fixed' record.
-    def updateFixedTsharkThroughputData(self, dataId, x, y):
+    def updateFixedTsharkThroughputData(self, dataId, traffic_xy_id, x, y):
         collection = self.getTsharkThroughputCollection()
         updateId = {"_id": ObjectId(dataId)}
-        fixedData = {"$set": {"fixedData": {"x": x, "y": y}}}
+        fixedData = {"$set": {"fixedData": {"traffic_xy_id": traffic_xy_id, "x": x, "y": y}}}
 
         result = collection.update_one(updateId, fixedData)
         return result.modified_count
