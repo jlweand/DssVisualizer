@@ -21,34 +21,82 @@ from pprint import pprint
 
 
 class MultiExcludeThroughputTest(unittest.TestCase):
-    def test_monolithicTestCase(self):
-        # select by date
-        jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputData('2016-10-15 11:57:19',
-                                                                             '2016-10-15 11:57:19', [], [], [])
-        pprint(jsonData)
+    def test_searching(self):
+        # select by only date
+        jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputData('2016-10-15 11:57:19', '2016-10-15 11:57:19', [], [], [])
         self.assertEqual(5, len(jsonData))
-        dataId = jsonData[0]["id"]  # list index out of range ERROR
+
+        # select by one Tech name
+        jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputData('2016-10-15 11:57:19', '2016-10-15 11:57:19', ["Alex"], [], [])
+        self.assertEqual(2, len(jsonData))
+
+        # select by two Tech names
+        jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputData('2016-10-15 11:57:19', '2016-10-15 11:57:19', ["Alex", "Julie"], [], [])
+        self.assertEqual(3, len(jsonData))
+
+        # select by one event name
+        jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputData('2016-10-15 11:57:19', '2016-10-15 11:57:19', [], ["Super Summer Event"], [])
+        self.assertEqual(2, len(jsonData))
+
+        # select by two event names
+        jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputData('2016-10-15 11:57:19', '2016-10-15 11:57:19', [], ["Super Summer Event", "Another Event"], [])
+        self.assertEqual(4, len(jsonData))
+
+        # select by one tech name and one event name
+        jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputData('2016-10-15 11:57:19', '2016-10-15 11:57:19', ["Alex"], ["Super Summer Event"], [])
+        self.assertEqual(1, len(jsonData))
+
+        # select by two tech names and tow event names
+        jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputData('2016-10-15 11:57:19', '2016-10-15 11:57:19', ["Alex", "Tom"], ["Super Summer Event", "Another Event"], [])
+        self.assertEqual(3, len(jsonData))
+
+        # select by one event/tech combo
+        jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputData('2016-10-15 11:57:19', '2016-10-15 11:57:19', [], [], ["Another Event by Julie"])
+        self.assertEqual(1, len(jsonData))
+
+        # select by two event/tech combos
+        jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputData('2016-10-15 11:57:19', '2016-10-15 11:57:19', [], [], ["Another Event by Julie", "Unicorns and more! by Willow"])
+        self.assertEqual(2, len(jsonData))
+
+        # select by one event/tech combo for a full day
+        jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputData('2016-10-18 00:00:01', '2016-10-18 23:59:59', [], [], ["Another Event by Alex"])
+        self.assertEqual(77, len(jsonData))
+        dataId = jsonData[0]["id"]
 
         # select by Id
         jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputDataById(dataId)
         self.assertEqual(1, len(jsonData))
 
-        # select by Tech name
-        jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputData('2016-10-15 11:59:27',
-                                                                             '2016-10-15 11:59:27', ["Alex"], [], [])
-        self.assertEqual(2, len(jsonData))
-        # select by event name
-        jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputData('2016-10-15 11:59:27',
-                                                                             '2016-10-15 11:59:27', [], ["Super Summer Event"], [])
-        self.assertEqual(2, len(jsonData))
+    def test_fixedData(self):
+        jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputData('2016-10-15 11:57:19', '2016-10-15 11:57:19', [], [], ["Another Event by Alex"])
+        dataId = jsonData[0]["id"]
 
-        # select by tech name AND event name
-        jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputData('2016-10-15 11:59:27', '2016-10-15 11:59:27', ["Alex"], ["Super Summer Event"], [])
-        self.assertEqual(1, len(jsonData))
+        # insert Fixed MultiExcludeThroughput Data
+        modifiedCount = MultiExcludeThroughput().insertFixedMultiExcludeThroughputData(dataId, 123, '2016-10-02 18:28:00', 1111)
+        self.assertEqual(1, modifiedCount)
+        jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputDataById(dataId)
+        self.assertEqual(jsonData[0]["fixedData"]["traffic_xy_id"], 123)
+        self.assertEqual(jsonData[0]["fixedData"]["x"], '2016-10-02 18:28:00')
+        self.assertEqual(jsonData[0]["fixedData"]["y"], 1111)
 
-        # select by event/tech combo
-        jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputData('2016-10-15 11:59:27', '2016-10-15 11:59:27', [], [], ["Another Event by Julie"])
-        self.assertEqual(1, len(jsonData))
+        # update Fixed MultiExcludeThroughput Data
+        modifiedCount = MultiExcludeThroughput().updateFixedMultiExcludeThroughputData(dataId, 456, '2017-01-02 18:28:00', 99999)
+        self.assertEqual(1, modifiedCount)
+        jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputDataById(dataId)
+        self.assertEqual(jsonData[0]["fixedData"]["traffic_xy_id"], 456)
+        self.assertEqual(jsonData[0]["fixedData"]["x"], '2017-01-02 18:28:00')
+        self.assertEqual(jsonData[0]["fixedData"]["y"], 99999)
+
+        # delete Fixed MultiExcludeThroughput Data
+        modifiedCount = MultiExcludeThroughput().deleteFixedMultiExcludeThroughputData(dataId)
+        self.assertEqual(1, modifiedCount)
+        jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputDataById(dataId)
+        self.assertRaises(KeyError, lambda: jsonData[0]["fixedData"])
+
+
+    def test_annotations(self):
+        jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputData('2016-10-15 11:57:19', '2016-10-15 11:57:19', [], [], ["Another Event by Alex"])
+        dataId = jsonData[0]["id"]
 
         # test Annotations
         MultiExcludeThroughput().addAnnotationMultiExcludeThroughput(dataId, 'test')
@@ -56,40 +104,34 @@ class MultiExcludeThroughputTest(unittest.TestCase):
         MultiExcludeThroughput().addAnnotationMultiExcludeThroughput(dataId, 'test test test')
         MultiExcludeThroughput().addAnnotationMultiExcludeThroughput(dataId, 'test test test')
         addedAnns = MultiExcludeThroughput().selectMultiExcludeThroughputDataById(dataId)
+        self.assertEqual(3, len(addedAnns[0]["annotations"]))
+        self.assertEqual('test', addedAnns[0]["annotations"][0]["annotation"])
+        self.assertEqual('test test', addedAnns[0]["annotations"][1]["annotation"])
+        self.assertEqual('test test test', addedAnns[0]["annotations"][2]["annotation"])
 
         MultiExcludeThroughput().editAnnotationMultiExcludeThroughput(dataId, 'test test', 'updated annotation!!')
         changedAnn = MultiExcludeThroughput().selectMultiExcludeThroughputDataById(dataId)
+        self.assertEqual(3, len(addedAnns[0]["annotations"]))
+        self.assertEqual('updated annotation!!', changedAnn[0]["annotations"][1]["annotation"])
 
         MultiExcludeThroughput().deleteAnnotationMultiExcludeThroughput(dataId, 'updated annotation!!')
         deletedChanged = MultiExcludeThroughput().selectMultiExcludeThroughputDataById(dataId)
+        self.assertEqual(2, len(deletedChanged[0]["annotations"]))
 
         MultiExcludeThroughput().deleteAllAnnotationsForMultiExcludeThroughput(dataId)
         deletedAll = MultiExcludeThroughput().selectMultiExcludeThroughputDataById(dataId)
-
-        self.assertEqual(3, len(addedAnns[0]["annotations"]))
-        self.assertEqual(2, len(deletedChanged[0]["annotations"]))
         self.assertRaises(KeyError, lambda: deletedAll[0]["annotations"])
-
-        # insert Fixed MultiExcludeThroughput Data
-        modifiedCount = MultiExcludeThroughput().insertFixedMultiExcludeThroughputData(dataId, '2016-10-02 18:28:00',
-                                                                                       1111)
-        self.assertEqual(1, modifiedCount)
-
-        # update Fixed MultiExcludeThroughput Data
-        modifiedCount = MultiExcludeThroughput().updateFixedMultiExcludeThroughputData(dataId, '2017-01-02 18:28:00',
-                                                                                       99999)
-        self.assertEqual(1, modifiedCount)
-
-        # delete Fixed MultiExcludeThroughput Data
-        modifiedCount = MultiExcludeThroughput().deleteFixedMultiExcludeThroughputData(dataId)
-        self.assertEqual(1, modifiedCount)
 
         # add Annotation To MultiExcludeThroughput Timeline
         objectId = MultiExcludeThroughput().addAnnotationToMultiExcludeThroughputTimeline('2016-08-01 10:00:00',
                                                                                           "here's a timeline annotation", "Alex", "Super Summer Event")
         addtimelineAnnotation = MultiExcludeThroughput().selectMultiExcludeThroughputDataById(objectId)
         pprint(addtimelineAnnotation)
-        self.assertIsNotNone(addtimelineAnnotation)
+        self.assertEqual(addtimelineAnnotation[0]["className"], 'annotation')
+        self.assertEqual(addtimelineAnnotation[0]["x"], '2016-08-01 10:00:00')
+        self.assertEqual(addtimelineAnnotation[0]["annotations"]["annotation"], "here's a timeline annotation")
+        self.assertEqual(addtimelineAnnotation[0]["metadata"]["techName"], 'Alex')
+        self.assertEqual(addtimelineAnnotation[0]["metadata"]["eventName"], 'Super Summer Event')
 
 
 if __name__ == '__main__':

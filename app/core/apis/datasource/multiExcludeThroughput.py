@@ -71,11 +71,13 @@ class MultiExcludeThroughput:
         jsonData = multiExcludePlugin.selectMultiExcludeThroughputDataById(dataId)
         return jsonData
 
-    def insertFixedMultiExcludeThroughputData(self, dataId, x, y):
+    def insertFixedMultiExcludeThroughputData(self, dataId, traffic_xy_id, x, y):
         """Override: Inserts a fixedData attribute.
 
         :param dataId: The key of the original data
         :type dataId: str
+        :param traffic_xy_id: the traffic_xy_id.
+        :type traffic_xy_id: int
         :param x: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
         :type x: str
         :param y: The number of protocols being used
@@ -83,14 +85,16 @@ class MultiExcludeThroughput:
         :returns: The modified count.
         """
         multiExcludePlugin = self.getPlugin()
-        result = multiExcludePlugin.insertFixedMultiExcludeThroughputData(dataId, Common().formatDateStringToUTC(x), y)
+        result = multiExcludePlugin.insertFixedMultiExcludeThroughputData(dataId, traffic_xy_id, Common().formatDateStringToUTC(x), y)
         return result
 
-    def updateFixedMultiExcludeThroughputData(self, dataId, x, y):
+    def updateFixedMultiExcludeThroughputData(self, dataId, traffic_xy_id, x, y):
         """Override: Updates the fixedData attribute.
 
         :param dataId: The key of the original data
         :type dataId: str
+        :param traffic_xy_id: the traffic_xy_id.
+        :type traffic_xy_id: int
         :param x: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
         :type x: str
         :param y: The number of protocols being used
@@ -98,7 +102,7 @@ class MultiExcludeThroughput:
         :returns: The modified count.
         """
         multiExcludePlugin = self.getPlugin()
-        result = multiExcludePlugin.updateFixedMultiExcludeThroughputData(dataId, Common().formatDateStringToUTC(x), y)
+        result = multiExcludePlugin.updateFixedMultiExcludeThroughputData(dataId, traffic_xy_id, Common().formatDateStringToUTC(x), y)
         return result
 
     def deleteFixedMultiExcludeThroughputData(self, dataId):
