@@ -74,18 +74,18 @@ class PyClick:
     def addAnnotationClick(self, dataId, annotationText):
         return Annotations().addAnnotation(self.clickDocType, dataId, annotationText)
 
-    # # edit an annotation for the dataId
-    # def editAnnotationClick(self, dataId, oldAnnotationText, newAnnotationText):
-    #     return Annotations().editAnnotation(self.clickDocType, dataId, oldAnnotationText, newAnnotationText)
+    # edit an annotation for the dataId
+    def editAnnotationClick(self, dataId, oldAnnotationText, newAnnotationText):
+        return Annotations().editAnnotation(self.clickDocType, dataId, oldAnnotationText, newAnnotationText)
 
-    # # delete an annotation for the dataId
-    # def deleteAnnotationClick(self, dataId, annotationText):
-    #     return Annotations().deleteAnnotation(self.clickDocType, dataId, annotationText)
+    # delete an annotation for the dataId
+    def deleteAnnotationClick(self, dataId, annotationText):
+        return Annotations().deleteAnnotation(self.clickDocType, dataId, annotationText)
 
-    # # deletes all annotations for the dataId
-    # def deleteAllAnnotationsForClick(self, dataId):
-    #     return Annotations().deleteAllAnnotationsForData(self.clickDocType, dataId)
+    # deletes all annotations for the dataId
+    def deleteAllAnnotationsForClick(self, dataId):
+        return Annotations().deleteAllAnnotationsForData(self.clickDocType, dataId)
 
-    # # add an annotation to the timeline, not a datapoint
-    # def addAnnotationToClickTimeline(self, click, annotationText):
-    #     return Annotations().addAnnotationToTimeline(self.clickDocType, click, annotationText)
+    # add an annotation to the timeline, not a datapoint
+    def addAnnotationToClickTimeline(self, click, annotationText):
+        return Annotations().addAnnotationToTimeline(self.clickDocType, click, annotationText)
