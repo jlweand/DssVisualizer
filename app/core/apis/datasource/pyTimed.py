@@ -68,7 +68,7 @@ class PyTimed:
         jsonData = pyTimed.selectTimedDataById(dataId)
         return jsonData
 
-    def insertFixedTimedData(self,dataId, timed_id, content, className, startDate, title, typeTimed):
+    def insertFixedTimedData(self,dataId, timed_id, content, className, startDate, title, typeTimed, isDeleted):
         """Override: Inserts a new record of the data. Does not overwrite the original key press.
 
         :param dataId: The ID of the 'fixed' timed data to edit.
@@ -85,13 +85,15 @@ class PyTimed:
         :type title: str
         :param startDate: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
         :type startDate: str
-        :returns: newly created id.
+        :param isDeleted: indicator if this data point should never be shown on the screen
+        :type isDeleted: bool
+        :returns: The modified count.
         """
         pyTimed = self.getPlugin()
-        result = pyTimed.insertFixedTimedData(dataId, timed_id, content, className, Common().formatDateStringToUTC(startDate), title, typeTimed)
+        result = pyTimed.insertFixedTimedData(dataId, timed_id, content, className, Common().formatDateStringToUTC(startDate), title, typeTimed, isDeleted)
         return result
 
-    def updateFixedTimedData(self, dataId, timed_id, content, className, startDate, title, typeTimed):
+    def updateFixedTimedData(self, dataId, timed_id, content, className, startDate, title, typeTimed, isDeleted):
         """Override: Updates the record of the 'fixed' timed data.
 
         :param dataId: The ID of the 'fixed' timed data to edit.
@@ -108,10 +110,12 @@ class PyTimed:
         :type title: str
         :param startDate: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
         :type startDate: str
-        :returns: newly created id.
+        :param isDeleted: indicator if this data point should never be shown on the screen
+        :type isDeleted: bool
+        :returns: The modified count.
         """
         pyTimed = self.getPlugin()
-        result = pyTimed.updateFixedTimedData(dataId, timed_id, content, className, Common().formatDateStringToUTC(startDate), title, typeTimed)
+        result = pyTimed.updateFixedTimedData(dataId, timed_id, content, className, Common().formatDateStringToUTC(startDate), title, typeTimed, isDeleted)
         return result
 
     def deleteFixedTimedData(self, dataId):

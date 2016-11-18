@@ -70,7 +70,7 @@ class TsharkThroughput:
         jsonData = tsharkPlugin.selectTsharkThroughputDataById(dataId)
         return jsonData
 
-    def insertFixedTsharkThroughputData(self, dataId, traffic_xy_id, x, y):
+    def insertFixedTsharkThroughputData(self, dataId, traffic_xy_id, x, y, isDeleted):
         """Override: Inserts a fixedData attribute.
 
         :param dataId: The key of the original data
@@ -81,13 +81,15 @@ class TsharkThroughput:
         :type x: str
         :param y: The number of protocols being used
         :type y: int
+        :param isDeleted: indicator if this data point should never be shown on the screen
+        :type isDeleted: bool
         :returns: The modified count.
         """
         tsharkPlugin = self.getPlugin()
-        result = tsharkPlugin.insertFixedTsharkThroughputData(dataId, traffic_xy_id, Common().formatDateStringToUTC(x), y)
+        result = tsharkPlugin.insertFixedTsharkThroughputData(dataId, traffic_xy_id, Common().formatDateStringToUTC(x), y, isDeleted)
         return result
 
-    def updateFixedTsharkThroughputData(self, dataId, traffic_xy_id, x, y):
+    def updateFixedTsharkThroughputData(self, dataId, traffic_xy_id, x, y, isDeleted):
         """Override: Updates the fixedData attribute.
 
         :param dataId: The key of the original data
@@ -98,10 +100,12 @@ class TsharkThroughput:
         :type x: str
         :param y: The number of protocols being used
         :type y: int
+        :param isDeleted: indicator if this data point should never be shown on the screen
+        :type isDeleted: bool
         :returns: The modified count.
         """
         tsharkPlugin = self.getPlugin()
-        result = tsharkPlugin.updateFixedTsharkThroughputData(dataId, traffic_xy_id, Common().formatDateStringToUTC(x), y)
+        result = tsharkPlugin.updateFixedTsharkThroughputData(dataId, traffic_xy_id, Common().formatDateStringToUTC(x), y, isDeleted)
         return result
 
     def deleteFixedTsharkThroughputData(self, dataId):

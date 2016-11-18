@@ -71,7 +71,7 @@ class TsharkProtocol:
         jsonData = tsharkProtocolPlugin.selectTsharkProtocolDataById(dataId)
         return jsonData
 
-    def insertFixedTsharkProtocolData(self, dataId, oldDataId, content, className, title, startDate):
+    def insertFixedTsharkProtocolData(self, dataId, oldDataId, content, className, title, startDate, isDeleted):
         """Override: Inserts a fixedData attribute.
 
         :param dataId: The key of the original data
@@ -80,14 +80,16 @@ class TsharkProtocol:
         :type x: datetime
         :param y: The number of protocols being used
         :type y: str
+        :param isDeleted: indicator if this data point should never be shown on the screen
+        :type isDeleted: bool
         :returns: The modified count.
         """
         tsharkProtocolPlugin = self.getPlugin()
         result = tsharkProtocolPlugin.insertFixedTsharkProtocolData(dataId, oldDataId, content, className, title,
-                                                                    Common().formatDateStringToUTC(startDate))
+                                                                    Common().formatDateStringToUTC(startDate), isDeleted)
         return result
 
-    def updateFixedTsharkProtocolData(self, dataId, oldDataId, content, className, title, startDate):
+    def updateFixedTsharkProtocolData(self, dataId, oldDataId, content, className, title, startDate, isDeleted):
         """Override: Updates the fixedData attribute.
 
         :param dataId: The key of the original data
@@ -96,11 +98,13 @@ class TsharkProtocol:
         :type x: datetime
         :param y: The number of protocols being used
         :type y: str
+        :param isDeleted: indicator if this data point should never be shown on the screen
+        :type isDeleted: bool
         :returns: The modified count.
         """
         tsharkProtocolPlugin = self.getPlugin()
         result = tsharkProtocolPlugin.updateFixedTsharkProtocolData(dataId, oldDataId, content, className, title,
-                                                                    Common().formatDateStringToUTC(startDate))
+                                                                    Common().formatDateStringToUTC(startDate), isDeleted)
         return result
 
     def deleteFixedTsharkProtocolData(self, dataId):

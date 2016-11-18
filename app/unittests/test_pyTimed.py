@@ -77,7 +77,7 @@ class PyTimedTest(unittest.TestCase):
         modifiedCount = PyTimed().insertFixedTimedData(dataId, '11111', '[New Content Added]', 'imgPoint',
                                                        '2016-09-16 15:16:35',
                                                        '/new/path/1465515528.8_screenshotTIMED_TESTING.png',
-                                                       'point')
+                                                       'point', True)
         self.assertEqual(1, modifiedCount)
         jsonData = PyTimed().selectTimedDataById(dataId)
         self.assertEqual(jsonData[0]["fixedData"]["timed_id"], '11111')
@@ -86,12 +86,13 @@ class PyTimedTest(unittest.TestCase):
         self.assertEqual(jsonData[0]["fixedData"]["start"], '2016-09-16 15:16:35')
         self.assertEqual(jsonData[0]["fixedData"]["title"], '/new/path/1465515528.8_screenshotTIMED_TESTING.png')
         self.assertEqual(jsonData[0]["fixedData"]["type"], 'point')
+        self.assertTrue(jsonData[0]["fixedData"]["isDeleted"])
 
         # update Fixed Data
         modifiedCount = PyTimed().updateFixedTimedData(dataId, '22222', '[EDITED UNITTEST Content Added]', 'imgPoint123',
                                                        '2016-10-03 18:38:48',
                                                        '/newpath/click_images/1474038815.78_TESTING_UPDATE.png',
-                                                       'point123')
+                                                       'point123', False)
         self.assertEqual(1, modifiedCount)
         jsonData = PyTimed().selectTimedDataById(dataId)
         self.assertEqual(jsonData[0]["fixedData"]["timed_id"], '22222')
@@ -100,6 +101,7 @@ class PyTimedTest(unittest.TestCase):
         self.assertEqual(jsonData[0]["fixedData"]["start"], '2016-10-03 18:38:48')
         self.assertEqual(jsonData[0]["fixedData"]["title"], '/newpath/click_images/1474038815.78_TESTING_UPDATE.png')
         self.assertEqual(jsonData[0]["fixedData"]["type"], 'point123')
+        self.assertFalse(jsonData[0]["fixedData"]["isDeleted"])
 
         # delete Fixed Data
         modifiedCount = PyTimed().deleteFixedTimedData(dataId)

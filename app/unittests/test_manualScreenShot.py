@@ -77,7 +77,7 @@ class ManualScreenShotTest(unittest.TestCase):
                                                                            'imgPoint',
                                                                            '2016-10-29 15:07:00',
                                                                            '/new/path/1474038815.78_TESTING.png',
-                                                                           'point')
+                                                                           'point', True)
         self.assertEqual(1, modifiedCount)
         jsonData = ManualScreenShot().selectManualScreenShotDataById(dataId)
         self.assertEqual(jsonData[0]["fixedData"]["manualscreen_id"], '2222')
@@ -86,13 +86,14 @@ class ManualScreenShotTest(unittest.TestCase):
         self.assertEqual(jsonData[0]["fixedData"]["start"], '2016-10-29 15:07:00')
         self.assertEqual(jsonData[0]["fixedData"]["title"], '/new/path/1474038815.78_TESTING.png')
         self.assertEqual(jsonData[0]["fixedData"]["type"], 'point')
+        self.assertTrue(jsonData[0]["fixedData"]["isDeleted"])
 
         # update Fixed Data
         modifiedCount = ManualScreenShot().updateFixedManualScreenShotData(dataId, '1111',
                                                                            '[EDITED UNITTEST Content Added]', 'imgPoint123',
                                                                            '2016-10-02 19:35:51',
                                                                            '/newpath/manualscreenshot/1474038815.78_TESTING_UPDATE.png',
-                                                                           'point123')
+                                                                           'point123', False)
         self.assertEqual(1, modifiedCount)
         jsonData = ManualScreenShot().selectManualScreenShotDataById(dataId)
         self.assertEqual(jsonData[0]["fixedData"]["manualscreen_id"], '1111')
@@ -101,6 +102,7 @@ class ManualScreenShotTest(unittest.TestCase):
         self.assertEqual(jsonData[0]["fixedData"]["start"], '2016-10-02 19:35:51')
         self.assertEqual(jsonData[0]["fixedData"]["title"], '/newpath/manualscreenshot/1474038815.78_TESTING_UPDATE.png')
         self.assertEqual(jsonData[0]["fixedData"]["type"], 'point123')
+        self.assertFalse(jsonData[0]["fixedData"]["isDeleted"])
 
         # delete Fixed Data
         modifiedCount = ManualScreenShot().deleteFixedManualScreenShotData(dataId)

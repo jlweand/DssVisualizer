@@ -45,18 +45,18 @@ class PyKeyPress:
         return Common().formatOutput(cursor)
 
     # add a fixedData record to this data point
-    def insertFixedKeyPressData(self, dataId, keypress_id, content, className, start):
+    def insertFixedKeyPressData(self, dataId, keypress_id, content, className, start, isDeleted):
         collection = self.getKeyPressCollection()
         insertId = {"_id" : ObjectId(dataId)}
-        push = { "$set": {"fixedData": {"keypress_id": keypress_id, "content": content, "className": className,"start": start}}}
+        push = { "$set": {"fixedData": {"keypress_id": keypress_id, "content": content, "className": className,"start": start, "isDeleted": isDeleted}}}
         result = collection.update_one(insertId, push)
         return result.modified_count
 
     # update a previously 'fixed' record.
-    def updateFixedKeyPressData(self, dataId, keypress_id, content, className, start):
+    def updateFixedKeyPressData(self, dataId, keypress_id, content, className, start, isDeleted):
         collection = self.getKeyPressCollection()
         updateId = {"_id" : ObjectId(dataId)}
-        push = { "$set": {"fixedData": {"keypress_id": keypress_id, "content": content, "className": className,"start": start}}}
+        push = { "$set": {"fixedData": {"keypress_id": keypress_id, "content": content, "className": className,"start": start, "isDeleted": isDeleted}}}
         result = collection.update_one(updateId, push)
         return result.modified_count
 

@@ -70,7 +70,7 @@ class ManualScreenShot:
         jsonData = manualScreenShot.selectManualScreenShotDataById(dataId)
         return jsonData
 
-    def insertFixedManualScreenShotData(self, dataId, manualscreen_id, content, className, start, title, typeManualScreenShot):
+    def insertFixedManualScreenShotData(self, dataId, manualscreen_id, content, className, start, title, typeManualScreenShot, isDeleted):
         """Override: Inserts a new record of the data.
 
         :param oldDataId: The key of the original ManualScreenShot data
@@ -85,14 +85,16 @@ class ManualScreenShot:
         :type title: str
         :param start: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
         :type start: str
-        :returns: newly created id.
+        :param isDeleted: indicator if this data point should never be shown on the screen
+        :type isDeleted: bool
+        :returns: The modified count.
         """
         manualScreenShot = self.getPlugin()
         result = manualScreenShot.insertFixedManualScreenShotData(dataId, manualscreen_id, content, className,
-                                              Common().formatDateStringToUTC(start), title, typeManualScreenShot)
+                                              Common().formatDateStringToUTC(start), title, typeManualScreenShot, isDeleted)
         return result
 
-    def updateFixedManualScreenShotData(self, dataId, manualscreen_id, content, className, start, title, typeManualScreenShot):
+    def updateFixedManualScreenShotData(self, dataId, manualscreen_id, content, className, start, title, typeManualScreenShot, isDeleted):
         """Override: Updates the record of the 'fixed' ManualScreenShot data.
 
         :param dataId: The ID of the 'fixed' ManualScreenShot data to edit.
@@ -107,11 +109,13 @@ class ManualScreenShot:
         :type title: str
         :param start: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
         :type start: str
+        :param isDeleted: indicator if this data point should never be shown on the screen
+        :type isDeleted: bool
         :returns: The modified count.
         """
         manualScreenShot = self.getPlugin()
         result = manualScreenShot.updateFixedManualScreenShotData(dataId, manualscreen_id, content, className,
-                                              Common().formatDateStringToUTC(start), title, typeManualScreenShot)
+                                              Common().formatDateStringToUTC(start), title, typeManualScreenShot, isDeleted)
         return result
 
     def deleteFixedManualScreenShotData(self, dataId):

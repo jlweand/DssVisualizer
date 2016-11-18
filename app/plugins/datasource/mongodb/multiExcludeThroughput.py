@@ -45,18 +45,18 @@ class MultiExcludeThroughput:
         return Common().formatOutput(cursor)
 
     # add a fixedData record to this data point
-    def insertFixedMultiExcludeThroughputData(self, dataId, traffic_xy_id, x, y):
+    def insertFixedMultiExcludeThroughputData(self, dataId, traffic_xy_id, x, y, isDeleted):
         collection = self.getMultiExcludeThroughputCollection()
         updateId = {"_id": ObjectId(dataId)}
-        fixedData = {"$set": {"fixedData": {"traffic_xy_id": traffic_xy_id, "x": x, "y": y}}}
+        fixedData = {"$set": {"fixedData": {"traffic_xy_id": traffic_xy_id, "x": x, "y": y, "isDeleted": isDeleted}}}
         result = collection.update_one(updateId, fixedData)
         return result.modified_count
 
     # update a previously 'fixed' record.
-    def updateFixedMultiExcludeThroughputData(self, dataId, traffic_xy_id, x, y):
+    def updateFixedMultiExcludeThroughputData(self, dataId, traffic_xy_id, x, y, isDeleted):
         collection = self.getMultiExcludeThroughputCollection()
         updateId = {"_id": ObjectId(dataId)}
-        fixedData = {"$set": {"fixedData": {"traffic_xy_id": traffic_xy_id, "x": x, "y": y}}}
+        fixedData = {"$set": {"fixedData": {"traffic_xy_id": traffic_xy_id, "x": x, "y": y, "isDeleted": isDeleted}}}
 
         result = collection.update_one(updateId, fixedData)
         return result.modified_count

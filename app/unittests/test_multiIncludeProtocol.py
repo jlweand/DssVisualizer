@@ -75,7 +75,7 @@ class MultiIncludeProtocolTest(unittest.TestCase):
         # insert Fixed MultiExcludeProtocol Data
         modifiedCount = MultiIncludeProtocol().insertFixedMultiIncludeProtocolData(dataId, '1111', '111 p/s', 'traffic',
                                                                                    'new stuff',
-                                                                                   '2016-09-11 17:37:14')
+                                                                                   '2016-09-11 17:37:14', True)
         self.assertEqual(1, modifiedCount)
         jsonData = MultiIncludeProtocol().selectMultiIncludeProtocolDataById(dataId)
         self.assertEqual(jsonData[0]["fixedData"]["traffic_all_id"], '1111')
@@ -83,11 +83,12 @@ class MultiIncludeProtocolTest(unittest.TestCase):
         self.assertEqual(jsonData[0]["fixedData"]["className"], 'traffic')
         self.assertEqual(jsonData[0]["fixedData"]["start"], '2016-09-11 17:37:14')
         self.assertEqual(jsonData[0]["fixedData"]["title"], 'new stuff')
+        self.assertTrue(jsonData[0]["fixedData"]["isDeleted"])
 
         # update Fixed MultiExcludeProtocol Data
         modifiedCount = MultiIncludeProtocol().updateFixedMultiIncludeProtocolData(dataId, '7777', '2 p/s', 'traffic123',
                                                                                    'updated stuff',
-                                                                                   '2016-10-02 18:28:00')
+                                                                                   '2016-10-02 18:28:00', False)
         self.assertEqual(1, modifiedCount)
         jsonData = MultiIncludeProtocol().selectMultiIncludeProtocolDataById(dataId)
         self.assertEqual(jsonData[0]["fixedData"]["traffic_all_id"], '7777')
@@ -95,6 +96,7 @@ class MultiIncludeProtocolTest(unittest.TestCase):
         self.assertEqual(jsonData[0]["fixedData"]["className"], 'traffic123')
         self.assertEqual(jsonData[0]["fixedData"]["start"], '2016-10-02 18:28:00')
         self.assertEqual(jsonData[0]["fixedData"]["title"], 'updated stuff')
+        self.assertFalse(jsonData[0]["fixedData"]["isDeleted"])
 
         # delete Fixed MultiExcludeProtocol Data
         modifiedCount = MultiIncludeProtocol().deleteFixedMultiIncludeProtocolData(dataId)

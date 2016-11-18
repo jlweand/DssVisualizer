@@ -73,20 +73,22 @@ class MultiIncludeThroughputTest(unittest.TestCase):
         dataId = jsonData[0]["id"]
 
         # insert Fixed MultiExcludeThroughput Data
-        modifiedCount = MultiIncludeThroughput().insertFixedMultiIncludeThroughputData(dataId, 123, '2016-10-02 18:28:00', 1111)
+        modifiedCount = MultiIncludeThroughput().insertFixedMultiIncludeThroughputData(dataId, 123, '2016-10-02 18:28:00', 1111, True)
         self.assertEqual(1, modifiedCount)
         jsonData = MultiIncludeThroughput().selectMultiIncludeThroughputDataById(dataId)
         self.assertEqual(jsonData[0]["fixedData"]["traffic_xy_id"], 123)
         self.assertEqual(jsonData[0]["fixedData"]["x"], '2016-10-02 18:28:00')
         self.assertEqual(jsonData[0]["fixedData"]["y"], 1111)
+        self.assertTrue(jsonData[0]["fixedData"]["isDeleted"])
 
         # update Fixed MultiExcludeThroughput Data
-        modifiedCount = MultiIncludeThroughput().updateFixedMultiIncludeThroughputData(dataId, 456, '2017-01-02 18:28:00', 99999)
+        modifiedCount = MultiIncludeThroughput().updateFixedMultiIncludeThroughputData(dataId, 456, '2017-01-02 18:28:00', 99999, False)
         self.assertEqual(1, modifiedCount)
         jsonData = MultiIncludeThroughput().selectMultiIncludeThroughputDataById(dataId)
         self.assertEqual(jsonData[0]["fixedData"]["traffic_xy_id"], 456)
         self.assertEqual(jsonData[0]["fixedData"]["x"], '2017-01-02 18:28:00')
         self.assertEqual(jsonData[0]["fixedData"]["y"], 99999)
+        self.assertFalse(jsonData[0]["fixedData"]["isDeleted"])
 
         # delete Fixed MultiExcludeThroughput Data
         modifiedCount = MultiIncludeThroughput().deleteFixedMultiIncludeThroughputData(dataId)

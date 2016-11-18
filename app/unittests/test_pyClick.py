@@ -76,7 +76,7 @@ class PyClickTest(unittest.TestCase):
         modifiedCount = PyClick().insertFixedClickData(dataId, '2222', '[New Content Added]', 'imgPoint',
                                                        '2016-09-11 17:37:14',
                                                        '/new/path/1474038815.78_TESTING.png',
-                                                       'point')
+                                                       'point', True)
         self.assertEqual(1, modifiedCount)
         jsonData = PyClick().selectClickDataById(dataId)
         self.assertEqual(jsonData[0]["fixedData"]["clicks_id"], '2222')
@@ -85,12 +85,13 @@ class PyClickTest(unittest.TestCase):
         self.assertEqual(jsonData[0]["fixedData"]["start"], '2016-09-11 17:37:14')
         self.assertEqual(jsonData[0]["fixedData"]["title"], '/new/path/1474038815.78_TESTING.png')
         self.assertEqual(jsonData[0]["fixedData"]["type"], 'point')
+        self.assertTrue(jsonData[0]["fixedData"]["isDeleted"])
 
         # update Fixed Data
         modifiedCount = PyClick().updateFixedClickData(dataId, '1111', '[EDITED UNITTEST Content Added]', 'imgPoint123',
                                                        '2016-10-02 19:35:51',
                                                        '/newpath/click_images/1474038815.78_TESTING_UPDATE.png',
-                                                       'point123')
+                                                       'point123', False)
         self.assertEqual(1, modifiedCount)
         jsonData = PyClick().selectClickDataById(dataId)
         self.assertEqual(jsonData[0]["fixedData"]["clicks_id"], '1111')
@@ -99,6 +100,7 @@ class PyClickTest(unittest.TestCase):
         self.assertEqual(jsonData[0]["fixedData"]["start"], '2016-10-02 19:35:51')
         self.assertEqual(jsonData[0]["fixedData"]["title"], '/newpath/click_images/1474038815.78_TESTING_UPDATE.png')
         self.assertEqual(jsonData[0]["fixedData"]["type"], 'point123')
+        self.assertFalse(jsonData[0]["fixedData"]["isDeleted"])
 
         # delete Fixed Data
         modifiedCount = PyClick().deleteFixedClickData(dataId)

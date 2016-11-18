@@ -46,22 +46,22 @@ class TsharkProtocol:
         return Common().formatOutput(cursor)
 
     # add a fixedData record to this data point
-    def insertFixedTsharkProtocolData(self, dataId, traffic_all_id, content, className, title, startDate):
+    def insertFixedTsharkProtocolData(self, dataId, traffic_all_id, content, className, title, startDate, isDeleted):
         collection = self.getTsharkProtocolCollection()
         insertId = {"_id": ObjectId(dataId)}
         insertText = {"$set": {
             "fixedData": {"traffic_all_id": traffic_all_id, "content": content, "className": className, "title": title,
-                          "start": startDate}}}
+                          "start": startDate, "isDeleted": isDeleted}}}
         result = collection.update_one(insertId, insertText)
         return result.modified_count
 
     # update a previously 'fixed' record.
-    def updateFixedTsharkProtocolData(self, dataId, traffic_all_id, content, className, title, startDate):
+    def updateFixedTsharkProtocolData(self, dataId, traffic_all_id, content, className, title, startDate, isDeleted):
         collection = self.getTsharkProtocolCollection()
         updateId = {"_id": ObjectId(dataId)}
         updateText = {"$set": {
             "fixedData": {"traffic_all_id": traffic_all_id, "content": content, "className": className, "title": title,
-                          "start": startDate}}}
+                          "start": startDate, "isDeleted": isDeleted}}}
         result = collection.update_one(updateId, updateText)
         return result.modified_count
 

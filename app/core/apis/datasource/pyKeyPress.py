@@ -71,7 +71,7 @@ class PyKeyPress:
         jsonData = pyKeyPress.selectKeyPressDataById(dataId)
         return jsonData
 
-    def insertFixedKeyPressData(self, dataId, keypress_id, content, className, startDate):
+    def insertFixedKeyPressData(self, dataId, keypress_id, content, className, startDate, isDeleted):
         """Override: Inserts a new record of the data. Does not overrite the original key press.
 
         :param dataId: The ID of the Data point
@@ -84,14 +84,16 @@ class PyKeyPress:
         :type className: str
         :param startDate: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
         :type startDate: str
-        :returns: newly created id.
+        :param isDeleted: indicator if this data point should never be shown on the screen
+        :type isDeleted: bool
+        :returns: The modified count.
         """
         pyKeyPress = self.getPlugin()
         result = pyKeyPress.insertFixedKeyPressData(dataId, keypress_id, content, className,
-                                                    Common().formatDateStringToUTC(startDate))
+                                                    Common().formatDateStringToUTC(startDate), isDeleted)
         return result
 
-    def updateFixedKeyPressData(self, dataId, keypress_id, content, className, startDate):
+    def updateFixedKeyPressData(self, dataId, keypress_id, content, className, startDate, isDeleted):
         """Override: Updates the record of the 'fixed' key press data.
 
         :param dataId: The ID of the Data point
@@ -104,11 +106,13 @@ class PyKeyPress:
         :type className: str
         :param startDate: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
         :type startDate: str
-        :returns: newly created id.
+        :param isDeleted: indicator if this data point should never be shown on the screen
+        :type isDeleted: bool
+        :returns: The modified count.
         """
         pyKeyPress = self.getPlugin()
         result = pyKeyPress.updateFixedKeyPressData(dataId, keypress_id, content, className,
-                                                    Common().formatDateStringToUTC(startDate))
+                                                    Common().formatDateStringToUTC(startDate), isDeleted)
         return result
 
     def deleteFixedKeyPressData(self, dataId):

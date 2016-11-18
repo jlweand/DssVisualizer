@@ -71,7 +71,7 @@ class MultiExcludeThroughput:
         jsonData = multiExcludePlugin.selectMultiExcludeThroughputDataById(dataId)
         return jsonData
 
-    def insertFixedMultiExcludeThroughputData(self, dataId, traffic_xy_id, x, y):
+    def insertFixedMultiExcludeThroughputData(self, dataId, traffic_xy_id, x, y, isDeleted):
         """Override: Inserts a fixedData attribute.
 
         :param dataId: The key of the original data
@@ -82,13 +82,15 @@ class MultiExcludeThroughput:
         :type x: str
         :param y: The number of protocols being used
         :type y: int
+        :param isDeleted: indicator if this data point should never be shown on the screen
+        :type isDeleted: bool
         :returns: The modified count.
         """
         multiExcludePlugin = self.getPlugin()
-        result = multiExcludePlugin.insertFixedMultiExcludeThroughputData(dataId, traffic_xy_id, Common().formatDateStringToUTC(x), y)
+        result = multiExcludePlugin.insertFixedMultiExcludeThroughputData(dataId, traffic_xy_id, Common().formatDateStringToUTC(x), y, isDeleted)
         return result
 
-    def updateFixedMultiExcludeThroughputData(self, dataId, traffic_xy_id, x, y):
+    def updateFixedMultiExcludeThroughputData(self, dataId, traffic_xy_id, x, y, isDeleted):
         """Override: Updates the fixedData attribute.
 
         :param dataId: The key of the original data
@@ -99,10 +101,12 @@ class MultiExcludeThroughput:
         :type x: str
         :param y: The number of protocols being used
         :type y: int
+        :param isDeleted: indicator if this data point should never be shown on the screen
+        :type isDeleted: bool
         :returns: The modified count.
         """
         multiExcludePlugin = self.getPlugin()
-        result = multiExcludePlugin.updateFixedMultiExcludeThroughputData(dataId, traffic_xy_id, Common().formatDateStringToUTC(x), y)
+        result = multiExcludePlugin.updateFixedMultiExcludeThroughputData(dataId, traffic_xy_id, Common().formatDateStringToUTC(x), y, isDeleted)
         return result
 
     def deleteFixedMultiExcludeThroughputData(self, dataId):

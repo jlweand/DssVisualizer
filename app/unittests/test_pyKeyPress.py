@@ -74,22 +74,24 @@ class PyKeyPressTest(unittest.TestCase):
         dataId = jsonData[0]["id"]
 
         # insert Fixed Data
-        modifiedCount = PyKeyPress().insertFixedKeyPressData(dataId, '11111', '[New Content Added]', 'Keypresses', '2016-10-15 17:58:31')
+        modifiedCount = PyKeyPress().insertFixedKeyPressData(dataId, '11111', '[New Content Added]', 'Keypresses', '2016-10-15 17:58:31', True)
         self.assertEqual(1, modifiedCount)
         jsonData = PyKeyPress().selectKeyPressDataById(dataId)
         self.assertEqual(jsonData[0]["fixedData"]["keypress_id"], '11111')
         self.assertEqual(jsonData[0]["fixedData"]["content"], '[New Content Added]')
         self.assertEqual(jsonData[0]["fixedData"]["className"], 'Keypresses')
         self.assertEqual(jsonData[0]["fixedData"]["start"], '2016-10-15 17:58:31')
+        self.assertTrue(jsonData[0]["fixedData"]["isDeleted"])
 
         # update Fixed Data
-        modifiedCount = PyKeyPress().updateFixedKeyPressData(dataId, '222222', '[Edited Content Added]', 'Keypresses123', '2016-10-02 18:28:00')
+        modifiedCount = PyKeyPress().updateFixedKeyPressData(dataId, '222222', '[Edited Content Added]', 'Keypresses123', '2016-10-02 18:28:00', False)
         jsonData = PyKeyPress().selectKeyPressDataById(dataId)
         self.assertEqual(1, modifiedCount)
         self.assertEqual(jsonData[0]["fixedData"]["keypress_id"], '222222')
         self.assertEqual(jsonData[0]["fixedData"]["content"], '[Edited Content Added]')
         self.assertEqual(jsonData[0]["fixedData"]["className"], 'Keypresses123')
         self.assertEqual(jsonData[0]["fixedData"]["start"], '2016-10-02 18:28:00')
+        self.assertFalse(jsonData[0]["fixedData"]["isDeleted"])
 
         # delete Fixed Data
         modifiedCount = PyKeyPress().deleteFixedKeyPressData(dataId)

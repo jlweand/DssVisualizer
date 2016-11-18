@@ -71,7 +71,7 @@ class MultiIncludeThroughput:
         jsonData = multiIncludePlugin.selectMultiIncludeThroughputDataById(dataId)
         return jsonData
 
-    def insertFixedMultiIncludeThroughputData(self, dataId, traffic_xy_id, x, y):
+    def insertFixedMultiIncludeThroughputData(self, dataId, traffic_xy_id, x, y, isDeleted):
         """Override: Inserts a fixedData attribute.
 
         :param dataId: The key of the original data
@@ -82,13 +82,15 @@ class MultiIncludeThroughput:
         :type x: str
         :param y: The number of protocols being used
         :type y: int
+        :param isDeleted: indicator if this data point should never be shown on the screen
+        :type isDeleted: bool
         :returns: The modified count.
         """
         multiIncludePlugin = self.getPlugin()
-        result = multiIncludePlugin.insertFixedMultiIncludeThroughputData(dataId, traffic_xy_id, Common().formatDateStringToUTC(x), y)
+        result = multiIncludePlugin.insertFixedMultiIncludeThroughputData(dataId, traffic_xy_id, Common().formatDateStringToUTC(x), y, isDeleted)
         return result
 
-    def updateFixedMultiIncludeThroughputData(self, dataId, traffic_xy_id, x, y):
+    def updateFixedMultiIncludeThroughputData(self, dataId, traffic_xy_id, x, y, isDeleted):
         """Override: Updates the fixedData attribute.
 
         :param dataId: The key of the original data
@@ -99,10 +101,12 @@ class MultiIncludeThroughput:
         :type x: str
         :param y: The number of protocols being used
         :type y: int
+        :param isDeleted: indicator if this data point should never be shown on the screen
+        :type isDeleted: bool
         :returns: The modified count.
         """
         multiIncludePlugin = self.getPlugin()
-        result = multiIncludePlugin.updateFixedMultiIncludeThroughputData(dataId, traffic_xy_id, Common().formatDateStringToUTC(x), y)
+        result = multiIncludePlugin.updateFixedMultiIncludeThroughputData(dataId, traffic_xy_id, Common().formatDateStringToUTC(x), y, isDeleted)
         return result
 
     def deleteFixedMultiIncludeThroughputData(self, dataId):

@@ -44,20 +44,20 @@ class PyTimed:
         return Common().formatOutput(cursor)
 
     # add a fixedData record to this data point
-    def insertFixedTimedData(self, dataId, timed_id, content, className, start, title, typeTimed):
+    def insertFixedTimedData(self, dataId, timed_id, content, className, start, title, typeTimed, isDeleted):
         collection = self.getTimedCollection()
         insertId = {"_id": ObjectId(dataId)}
         push = {"$set": {"fixedData": {"timed_id": timed_id, "content": content, "className": className, "start": start,
-                                       "title": title, "type": typeTimed}}}
+                                       "title": title, "type": typeTimed, "isDeleted": isDeleted}}}
         result = collection.update_one(insertId, push)
         return result.modified_count
 
     # update a previously 'fixed' record.
-    def updateFixedTimedData(self, dataId, timed_id, content, className, start, title, typeTimed):
+    def updateFixedTimedData(self, dataId, timed_id, content, className, start, title, typeTimed, isDeleted):
         collection = self.getTimedCollection()
         updateId = {"_id": ObjectId(dataId)}
         push = {"$set": {"fixedData": {"timed_id": timed_id, "content": content, "className": className, "start": start,
-                                       "title": title, "type": typeTimed}}}
+                                       "title": title, "type": typeTimed, "isDeleted": isDeleted}}}
         result = collection.update_one(updateId, push)
         return result.modified_count
 

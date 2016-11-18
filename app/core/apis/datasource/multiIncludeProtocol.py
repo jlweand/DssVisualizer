@@ -71,7 +71,7 @@ class MultiIncludeProtocol:
         jsonData = multiIncludePlugin.selectMultiIncludeProtocolDataById(dataId)
         return jsonData
 
-    def insertFixedMultiIncludeProtocolData(self, dataId, oldDataId, content, className, title, startDate):
+    def insertFixedMultiIncludeProtocolData(self, dataId, oldDataId, content, className, title, startDate, isDeleted):
         """Override: Inserts a fixedData attribute.
 
         :param dataId: The key of the original data
@@ -80,14 +80,16 @@ class MultiIncludeProtocol:
         :type x: datetime
         :param y: The number of protocols being used
         :type y: str
+        :param isDeleted: indicator if this data point should never be shown on the screen
+        :type isDeleted: bool
         :returns: The modified count.
         """
         multiIncludePlugin = self.getPlugin()
         result = multiIncludePlugin.insertFixedMultiIncludeProtocolData(dataId, oldDataId, content, className, title,
-                                                                        Common().formatDateStringToUTC(startDate))
+                                                                        Common().formatDateStringToUTC(startDate), isDeleted)
         return result
 
-    def updateFixedMultiIncludeProtocolData(self, dataId, oldDataId, content, className, title, startDate):
+    def updateFixedMultiIncludeProtocolData(self, dataId, oldDataId, content, className, title, startDate, isDeleted):
         """Override: Updates the fixedData attribute.
 
         :param dataId: The key of the original data
@@ -96,11 +98,13 @@ class MultiIncludeProtocol:
         :type x: datetime
         :param y: The number of protocols being used
         :type y: str
+        :param isDeleted: indicator if this data point should never be shown on the screen
+        :type isDeleted: bool
         :returns: The modified count.
         """
         multiIncludePlugin = self.getPlugin()
         result = multiIncludePlugin.updateFixedMultiIncludeProtocolData(dataId, oldDataId, content, className, title,
-                                                                        Common().formatDateStringToUTC(startDate))
+                                                                        Common().formatDateStringToUTC(startDate), isDeleted)
         return result
 
     def deleteFixedMultiIncludeProtocolData(self, dataId):

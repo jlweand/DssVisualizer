@@ -70,7 +70,7 @@ class PyClick:
         jsonData = pyClick.selectClickDataById(dataId)
         return jsonData
 
-    def insertFixedClickData(self, dataId, clicks_id, content, className, startDate, title, typeClick):
+    def insertFixedClickData(self, dataId, clicks_id, content, className, startDate, title, typeClick, isDeleted):
         """Override: Inserts a new record of the data. Does not overwrite the original key press.
 
         :param dataId: The ID of the Data point
@@ -87,14 +87,16 @@ class PyClick:
         :type title: str
         :param startDate: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
         :type startDate: str
+        :param isDeleted: indicator if this data point should never be shown on the screen
+        :type isDeleted: bool
         :returns: newly created id.
         """
         pyClick = self.getPlugin()
         result = pyClick.insertFixedClickData(dataId, clicks_id, content, className,
-                                              Common().formatDateStringToUTC(startDate), title, typeClick)
+                                              Common().formatDateStringToUTC(startDate), title, typeClick, isDeleted)
         return result
 
-    def updateFixedClickData(self, dataId, clicks_id, content, className, startDate, title, typeClick):
+    def updateFixedClickData(self, dataId, clicks_id, content, className, startDate, title, typeClick, isDeleted):
         """Override: Updates the record of the 'fixed' click data.
 
         :param dataId: The ID of the Data point
@@ -111,11 +113,13 @@ class PyClick:
         :type title: str
         :param startDate: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
         :type startDate: str
+        :param isDeleted: indicator if this data point should never be shown on the screen
+        :type isDeleted: bool
         :returns: newly created id.
         """
         pyClick = self.getPlugin()
         result = pyClick.updateFixedClickData(dataId, clicks_id, content, className,
-                                              Common().formatDateStringToUTC(startDate), title, typeClick)
+                                              Common().formatDateStringToUTC(startDate), title, typeClick, isDeleted)
         return result
 
     def deleteFixedClickData(self, dataId):
