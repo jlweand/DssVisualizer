@@ -1,0 +1,29 @@
+[
+	{"manualscreen_id" : 0,
+	"content" : " ",
+	"type" : "point",
+	"classname" : "imgPoint",
+	"title" : "C:\\temp\\json2\\manualscreenshot\\images\\fjkdsahsdf-20161117-183233.png",
+	"comment" : "fjkdsahsdf",
+	"start" : "2016-11-18T01:32:33"
+	},
+
+	{"manualscreen_id" : 1,
+	"content" : " ",
+	"type" : "point",
+	"classname" : "imgPoint",
+	"title" : "C:\\temp\\json2\\manualscreenshot\\images\\Enter Commentfdasfdasf-20161117-182855.png",
+	"comment" : "Enter Commentfdasfdasf",
+	"start" : "2016-11-18T01:28:55"
+	},
+
+	{"manualscreen_id" : 2,
+	"content" : " ",
+	"type" : "point",
+	"classname" : "imgPoint",
+	"title" : "C:\\temp\\json2\\manualscreenshot\\images\\manuaklfdjsak;-20161117-182814.png",
+	"comment" : "manuaklfdjsak;",
+	"start" : "2016-11-18T01:28:14"
+	}
+
+]
