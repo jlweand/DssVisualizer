@@ -160,14 +160,14 @@ class DataImport:
                     elif "timed" in fullFileName.lower():
                         self.importTimedFile(fullFileName, techName, eventName, comments, importDate, copyImages)
 
-                    elif "multi_exec_tshark" in fullFileName.lower() and "networkdataall" in fullFileName.lower():
+                    elif "multi_exc_tshark" in fullFileName.lower() and "networkdataall" in fullFileName.lower():
                         self.importMultiExcludeProtocolFile(fullFileName, techName, eventName, comments, importDate)
-                    elif "multi_exec_tshark" in fullFileName.lower() and "networkdataxy" in fullFileName.lower():
+                    elif "multi_exc_tshark" in fullFileName.lower() and "networkdataxy" in fullFileName.lower():
                         self.importMultiExcludeThroughputFile(fullFileName, techName, eventName, comments, importDate)
 
-                    elif "multi_incl_tshark" in fullFileName.lower() and "networkdataall" in fullFileName.lower():
+                    elif "multi_inc_tshark" in fullFileName.lower() and "networkdataall" in fullFileName.lower():
                         self.importMultiIncludeProtocolFile(fullFileName, techName, eventName, comments, importDate)
-                    elif "multi_incl_tshark" in fullFileName.lower() and "networkdataxy" in fullFileName.lower():
+                    elif "multi_inc_tshark" in fullFileName.lower() and "networkdataxy" in fullFileName.lower():
                         self.importMultiIncludeThroughputFile(fullFileName, techName, eventName, comments, importDate)
 
                     elif "tshark" in fullFileName.lower() and "networkdataall" in fullFileName.lower():
