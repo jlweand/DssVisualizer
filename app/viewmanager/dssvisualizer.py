@@ -18,10 +18,8 @@
 import gi
 import os
 import ujson
-#import subprocess
 from urllib.parse import parse_qs
 from time import strftime
-#from sys import platform as _platform
 
 # Only use files from core.  DO NOT use files from plugins.
 from core.apis.renderer.generateHtml import GenerateHtml
@@ -31,7 +29,6 @@ from core.apis.datasource.pyTimed import PyTimed
 from core.apis.renderer.pluginImporter import PluginImporter
 from core.config.configDatasources import ConfigDatasources
 from core.config.configRenderers import ConfigRenderers
-from core.config.dataExport import DataExport
 from core.config.dataImport import DataImport
 from viewmanager.exportPopup import ExportPopup
 from core.apis.datasource.multiExcludeThroughput import MultiExcludeThroughput
@@ -84,7 +81,7 @@ def handle(web_view, web_frame, web_resource, request, response):
     if 'exportData' in _uri:
         if query:
             exportInfo = parse_qs(query)
-        ExportPopup(exportInfo)
+            ExportPopup(exportInfo)
 
     if 'explore' in _uri:
 
@@ -99,7 +96,7 @@ def handle(web_view, web_frame, web_resource, request, response):
             for i,char in enumerate(folderPathHTML):
                 if char == '\\':
                     folderPathHTML[i] = '/'
-				##for linux
+            ##for linux
             folderPathHTML.append('/')
             folderPathHTML = ''.join(folderPathHTML)
             folderChange = "document.getElementById('chosenFolder').setAttribute('value','"+folderPathHTML+"');"
@@ -246,12 +243,6 @@ def modify_uninstalled_plugin_html(plugin, tagID):
         script = 'document.getElementById("' + tagID + '").innerHTML = "";'
     webKitWebView.execute_script(script)
 
-# this causes the process to take over.  more research is needed.
-# and I have other homework I need to do at the moment.
-# put the python down and walk away...
-# if _platform == "linux" or _platform == "linux2":
-#     subprocess.call(["mongod", "--repair"], shell=True)
-#     subprocess.call(["mongod"], shell=True)
 
 gtkWindow = Gtk.Window()
 webKitWebView = WebKit.WebView()

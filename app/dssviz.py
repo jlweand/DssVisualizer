@@ -17,10 +17,12 @@
 
 import argparse
 import os
+import subprocess
 from sys import platform as _platform
 from datetime import datetime
 from core.config.dataImport import DataImport
 from core.config.dataExport import DataExport
+
 
 class CommandLine:
 
@@ -67,9 +69,14 @@ class CommandLine:
 
         elif args["command"] == "start" or args["command"] is None:
             if _platform == "linux" or _platform == "linux2":
+                subprocess.Popen(["gnome-terminal -e mongod --repair"], shell=True)
+                subprocess.Popen(["gnome-terminal -e mongod"], shell=True)
                 os.system('python3 -m viewmanager.dssvisualizer')
             elif _platform == "win32":
+                subprocess.call(["mongod", "--repair"], shell=True)
+                subprocess.Popen(["mongod"], shell=True)
                 os.system('python -m viewmanager.dssvisualizer')
+
 
     if __name__ == "__main__":
         main()
@@ -77,3 +84,5 @@ class CommandLine:
 # python dssviz.py import -t "Julie" -e "Julie's event" -dir "C:\temp\json" -c "someComments"
 # python dssviz.py export -sd "2016-10-18 00:00:00" -ed "2016-10-18 23:59:59" -t "Julie" -cp -dir "C:\temp\export"
 # python dssviz.py start
+
+# python dssviz.py import -t "Juan" -e "Linux Juan Event" -dir "C:\Users\janis\Desktop\json" -c "ugh.. work"
