@@ -70,11 +70,16 @@ class CleanupDatabases(unittest.TestCase):
         manualScreenShot = ManualScreenShot().getManualScreenShotCollection()
         manualScreenShot.delete_many({})
 
-        DataImport().importAllDataFromFiles("json/superSummerAlex", "Alex", "Super Summer Event", comments, rightNow, False)
-        DataImport().importAllDataFromFiles("json/superSummerTom", "Tom", "Super Summer Event", comments, rightNow, False)
-        DataImport().importAllDataFromFiles("json/anotherJulie", "Julie", "Another Event", comments, rightNow, False)
-        DataImport().importAllDataFromFiles("json/anotherAlex", "Alex", "Another Event", comments, rightNow, False)
-        DataImport().importAllDataFromFiles("json/unicornWillow", "Willow", "Unicorns and more!", comments, rightNow, False)
+        DataImport().importAllDataFromFiles("json/unittestDatasets/superSummerAlex", "Alex", "Super Summer Event", comments, rightNow, False)
+        DataImport().importAllDataFromFiles("json/unittestDatasets/superSummerTom", "Tom", "Super Summer Event", comments, rightNow, False)
+        DataImport().importAllDataFromFiles("json/unittestDatasets/anotherJulie", "Julie", "Another Event", comments, rightNow, False)
+        DataImport().importAllDataFromFiles("json/unittestDatasets/anotherAlex", "Alex", "Another Event", comments, rightNow, False)
+        DataImport().importAllDataFromFiles("json/unittestDatasets/unicornWillow", "Willow", "Unicorns and more!", comments, rightNow, False)
+
+        DataImport().importAllDataFromFiles("json/1very small", "Very Small", "Very Small", "Very Small", rightNow, False)
+        DataImport().importAllDataFromFiles("json/2small", "Small", "Small", "Small", rightNow, False)
+        DataImport().importAllDataFromFiles("json/3medium", "Medium", "Medium", "Medium", rightNow, False)
+        DataImport().importAllDataFromFiles("json/4large", "Large", "Large", "Large", rightNow, False)
 
         jsonData = PyKeyPress().selectKeyPressData(Common().formatDateStringToUTC('2016-10-18 18:26:36'),
                                                    Common().formatDateStringToUTC('2016-10-18 18:26:36'),
