@@ -38,6 +38,7 @@ Other python installations
 	pip3 install ujson
 	pip3 install pytz
 	pip3 install tzlocal
+	pip3 install python-dateutil
 
 * That’s it.
 
@@ -82,6 +83,7 @@ Other python installations
 	python -m pip install pymongo
 	python -m pip install pytz
 	python -m pip install tzlocal
+	python -m pip install python-dateutil
 
 * That’s it.
 

@@ -19,7 +19,7 @@ Structure
 ---------
 The application contains two primary elements visible to the user: the visualizer page, and the administrator page.
 
-.. image:: capture.png
+.. image:: UIelements.png
 
 Access access to the administrator page is not resctricted and navigation to either page is performed via a link on the
 top right corner labeled "Aministrator" or "Back to Visualizer".

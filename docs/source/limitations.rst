@@ -23,3 +23,11 @@ Issues we know about
 --------------------
 
 * I think the plugin management should be more robust.  The Datasource plugin works fine because it's just a folder, but the renderers need more information.  So I'm rigging it together right now to work with specific files.  So if you add a new plugin you need to make sure the structure is the same as it is for the visjs plugin.  Meaning you need to have a /plugins/renderer/xxx/importScripts/ folder with a scripts.txt file that has all the scripts needed for that specific js. You also need keyloggerScript.txt, pcapScript.txt, and screenshotScript.txt files that have the JS script for that specific plugin.  Then all will work well.
+
+* I think there's a way to return the date/times to the original local time instead of your current local time.  I don't have time to test it out before Wednesday, but check this `link <https://docs.mongodb.com/v3.2/tutorial/model-time-data/>`_ out.
+
+* Here are some ideas to help speed up the Mongo back end.  Right now we pull the data from Mongo and clean up the dates, and remap the '_id' to 'id'.
+
+  1. I think you can format the date on the way out of MongoDB and get rid of a bunch of datetime conversions to help speed things up.  Look `here <https://docs.mongodb.com/v3.2/reference/operator/aggregation/dateToString/>`_.
+
+  2. But you'll still have the Mongo '_id' issue that the JS won't pick up as the id of the data point.  Maybe there is someway to tell JS that the id of the object is '_id' and not 'id'.
