@@ -19,6 +19,7 @@ import pytz
 from datetime import datetime
 from tzlocal import get_localzone
 from dateutil.parser import parse
+from pprint import pprint
 
 class Common:
     """Here lies some common functions so they don't have to continue to be written over and over again."""
@@ -180,3 +181,11 @@ class Common:
         """
         shards = result["_shards"]
         return shards["successful"]
+
+    def getInsertedId(self, result):
+        """Parse through the result from elasticsearch and return id that was inserted.
+
+        :param result: the JSON result from the elasticsearch query
+        :return: id of inserted records
+        """
+        return result["_id"]

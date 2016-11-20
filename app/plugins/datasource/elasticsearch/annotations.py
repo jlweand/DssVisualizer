@@ -125,12 +125,12 @@ class Annotations:
         # check to see if there exists an attribute with the same text
         for annotation in annotations:
             if annotation["annotation"] == annotationText:
-                annotation["annotation"] = ""
+                doc["annotations"].remove({"annotation": annotationText})
                 hasSameAnnotation = True
                 break
 
         if hasSameAnnotation:
-            # update the document.
+            #update the document.
             updateDoc = { "doc": doc }
             result = Elasticsearch().update(index=self.esIndex, doc_type=doc_type, id=dataId, body=updateDoc)
             return Common().getModfiedCount(result)
@@ -165,29 +165,19 @@ class Annotations:
             # we did nothing to the data, so return 0 for modified count
             return 0
 
-    # # add an annotation to the timeline, not a datapoint
-    # def addAnnotationToTimeline(self, doc_type, annotationText):
-    #     """Adds an annotation to the collection as a new 'data point'.  This is not tied to any imported data.
+    # add an annotation to the timeline, not a datapoint
+    def addAnnotationToTimeline(self, doc_type, jsonObject, annotationText):
+        """Adds an annotation to the collection as a new 'data point'.  This is not tied to any imported data.
 
-    #     :param collection: The collection in which the data lives.
-    #     :type collection: MongoDb collection
-    #     :param jsonObject: The jsonObject to add the annotation to.
-    #     :type jsonObject: JSON string
-    #     :param annotationText: The text of the annotation.
-    #     :type annotationText: str
-    #     :returns: inserted_id
-    #     """
-    #     ##########################################################################################
-    #     # update the document.
-    #     jsonObject = {"annotation": annotationText}
+        :param collection: The collection in which the data lives.
+        :type collection: MongoDb collection
+        :param jsonObject: The jsonObject to add the annotation to.
+        :type jsonObject: JSON string
+        :param annotationText: The text of the annotation.
+        :type annotationText: str
+        :returns: inserted_id
+        """
+        jsonObject["annotations"] = {"annotation": annotationText}
 
-    #     # pprint("jsonObject")
-    #     # pprint(jsonObject)
-
-    #     result = Elasticsearch().index(index=self.esIndex, doc_type=doc_type, body=jsonObject)
-    #     return Common().getModfiedCount(result)
-    #     ##########################################################################################
-
-    #     # jsonObject["annotations"] = {"annotation": annotationText}
-    #     # result = collection.insert_one(jsonObject)
-    #     # return result.inserted_id
+        result = Elasticsearch().index(index=self.esIndex, doc_type=doc_type, body=jsonObject)
+        return Common().getInsertedId(result)

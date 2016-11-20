@@ -49,16 +49,16 @@ class PyKeyPress:
         return Common().fixOneData(data)
 
     # add a fixedData record to this data point
-    def insertFixedKeyPressData(self, dataId, keypress_id, content, className, start):
+    def insertFixedKeyPressData(self, dataId, keypress_id, content, className, start, isDeleted):
         insertFixed = {"doc": {
-            "fixedData": {"keypress_id": keypress_id, "content": content, "className": className, "start": start}}}
+            "fixedData": {"keypress_id": keypress_id, "content": content, "className": className, "start": start, "isDeleted": isDeleted}}}
         result = Elasticsearch().update(index=self.esIndex, doc_type=self.keyPressDocType, body=insertFixed, id = dataId)
         return Common().getModfiedCount(result)
 
     # update a previously 'fixed' record.
-    def updateFixedKeyPressData(self, dataId, keypress_id, content, className, start):
+    def updateFixedKeyPressData(self, dataId, keypress_id, content, className, start, isDeleted):
         updateFixed = {"doc": {
-            "fixedData": {"keypress_id": keypress_id, "content": content, "className": className, "start": start}}}
+            "fixedData": {"keypress_id": keypress_id, "content": content, "className": className, "start": start, "isDeleted": isDeleted}}}
         result = Elasticsearch().update(index=self.esIndex, doc_type=self.keyPressDocType, body=updateFixed, id = dataId)
         return Common().getModfiedCount(result)
 

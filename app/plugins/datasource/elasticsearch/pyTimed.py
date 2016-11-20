@@ -49,18 +49,18 @@ class PyTimed:
         return Common().fixOneData(data)
 
     # add a fixedData record to this data point
-    def insertFixedTimedData(self, dataId, timed_id, content, className, start, title, typeTimed):
+    def insertFixedTimedData(self, dataId, timed_id, content, className, start, title, typeTimed, isDeleted):
         insertFixed = {"doc": {
             "fixedData": {"timed_id": timed_id, "content": content, "className": className, "start": start,
-                          "title": title, "type": typeTimed}}}
+                          "title": title, "type": typeTimed, "isDeleted": isDeleted}}}
         result = Elasticsearch().update(index=self.esIndex, doc_type=self.timedDocType, body=insertFixed, id = dataId)
         return Common().getModfiedCount(result)
 
     # update a previously 'fixed' record.
-    def updateFixedTimedData(self, dataId, timed_id, content, className, start, title, typeTimed):
+    def updateFixedTimedData(self, dataId, timed_id, content, className, start, title, typeTimed, isDeleted):
         updateFixed = {"doc": {
             "fixedData": {"timed_id": timed_id, "content": content, "className": className, "start": start,
-                          "title": title, "type": typeTimed}}}
+                          "title": title, "type": typeTimed, "isDeleted": isDeleted}}}
         result = Elasticsearch().update(index=self.esIndex, doc_type=self.timedDocType, body=updateFixed, id = dataId)
         return Common().getModfiedCount(result)
 
@@ -88,4 +88,4 @@ class PyTimed:
 
     # add an annotation to the timeline, not a datapoint
     def addAnnotationToTimedTimeline(self, timed, annotationText):
-        return Annotations().addAnnotationToTimeline(self.timedDocType, click, annotationText)
+        return Annotations().addAnnotationToTimeline(self.timedDocType, timed, annotationText)
