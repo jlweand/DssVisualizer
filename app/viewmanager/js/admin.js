@@ -1,6 +1,7 @@
 $(document).ready(function(){
 	var pluginsUrl = "http://localhost?adminRequest=availablePlugins";
 	$.get(pluginsUrl);
+	$('#importedData').html("");
 });
 
 function createRadioButtons(plugins){

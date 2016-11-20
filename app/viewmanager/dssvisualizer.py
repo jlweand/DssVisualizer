@@ -45,6 +45,7 @@ gi.require_version("Gtk", "3.0")
 gi.require_version("WebKit", "3.0")
 from gi.repository import Gtk
 from gi.repository import WebKit
+from time import gmtime, strftime
 
 
 def handle(web_view, web_frame, web_resource, request, response):
@@ -76,7 +77,9 @@ def handle(web_view, web_frame, web_resource, request, response):
             dateI = strftime("%Y-%m-%d %H:%M:%S")
 
         importer = DataImport()
-        importer.importAllDataFromFiles(locationI,techI,eventI,commentI,dateI,copyImagesI)
+        importer.importAllDataFromFiles(locationI, techI, eventI, commentI, dateI, copyImagesI)
+        setLabel = "$('#importedData').html('Data imported!');"
+        webKitWebView.execute_script(setLabel)
 
     if 'exportData' in _uri:
         if query:
@@ -129,13 +132,18 @@ def handle(web_view, web_frame, web_resource, request, response):
                 eventTechList = []
 
             if queryDict['request'][0] == 'keypressData':
+                print("keypressData before getting data: " + strftime("%Y-%m-%d %H:%M:%S", gmtime()))
                 keyData = PyKeyPress().selectKeyPressData(startDate, endDate, techList, eventList, eventTechList)
                 clickData = PyClick().selectClickData(startDate, endDate, techList, eventList, eventTechList)
                 timedData = PyTimed().selectTimedData(startDate, endDate, techList, eventList, eventTechList)
+                print("keypressData data retrieved: " + strftime("%Y-%m-%d %H:%M:%S", gmtime()))
+                print("keypressData before visualizeKeyData: " + strftime("%Y-%m-%d %H:%M:%S", gmtime()))
                 js = "visualizeKeyData(%s, %s, %s);" % (keyData, clickData, timedData)
                 webKitWebView.execute_script(js)
+                print("keypressData after visualizeKeyData: " + strftime("%Y-%m-%d %H:%M:%S", gmtime()))
 
             elif queryDict['request'][0] == 'pcapData':
+                print("pcapData before getting data: " + strftime("%Y-%m-%d %H:%M:%S", gmtime()))
                 multiEx = MultiExcludeThroughput().selectMultiExcludeThroughputData(startDate, endDate, techList, eventList, eventTechList)
                 multiInc = MultiIncludeThroughput().selectMultiIncludeThroughputData(startDate, endDate, techList, eventList, eventTechList)
                 tshark = TsharkThroughput().selectTsharkThroughputData(startDate, endDate, techList, eventList, eventTechList)
@@ -144,12 +152,19 @@ def handle(web_view, web_frame, web_resource, request, response):
                 tsharkProt = TsharkProtocol().selectTsharkProtocolData(startDate, endDate, techList, eventList, eventTechList)
                 js = "visualizePCAPData(%s, %s, %s, %s, %s, %s);" % (
                     multiEx, multiExProt, multiInc, multiIncProt, tshark, tsharkProt)
+                print("pcapData data retrieved: " + strftime("%Y-%m-%d %H:%M:%S", gmtime()))
+                print("pcapData before visualizeKeyData: " + strftime("%Y-%m-%d %H:%M:%S", gmtime()))
                 webKitWebView.execute_script(js)
+                print("pcapData after visualizeKeyData: " + strftime("%Y-%m-%d %H:%M:%S", gmtime()))
 
             elif queryDict['request'][0] == 'screenshotData':
+                print("screenshotData before getting data: " + strftime("%Y-%m-%d %H:%M:%S", gmtime()))
                 snap = ManualScreenShot().selectManualScreenShotData(startDate, endDate, techList, eventList, eventTechList)
+                print("screenshotData data retrieved: " + strftime("%Y-%m-%d %H:%M:%S", gmtime()))
+                print("screenshotData before visualizeKeyData: " + strftime("%Y-%m-%d %H:%M:%S", gmtime()))
                 js = "visualizeSnapshotData(%s);" % (snap)
                 webKitWebView.execute_script(js)
+                print("screenshotData after visualizeKeyData: " + strftime("%Y-%m-%d %H:%M:%S", gmtime()))
 
         elif 'submission' in queryDict:
             if queryDict['submission'][0] == 'annotation':

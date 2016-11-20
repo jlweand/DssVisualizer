@@ -62,19 +62,10 @@ label {
 	text-align: center;
 }
 
-#importSlide, #importPanel{
+#importPanel{
 	padding: 5px;
 	text-align: center;
-
 	background-color: white;
-
-}
-#exportSlide, #exportPanel {
-	padding: 5px;
-	text-align: center;
-
-	background-color: #eeeeee;
-
 }
 
 #importPanel {
@@ -93,4 +84,7 @@ label {
 #visualizer a{
 	text-decoration: none;
 	color: white;
+}
+#importedData {
+    color: red;
 }
