@@ -69,7 +69,7 @@ class PyTimed:
         return jsonData
 
     def insertFixedTimedData(self,dataId, timed_id, content, className, startDate, title, typeTimed, isDeleted):
-        """Override: Inserts a new record of the data. Does not overwrite the original key press.
+        """Override: Inserts a new attribute called 'fixedData' which has all the attributes of the data. Does not overwrite the original data.
 
         :param dataId: The ID of the 'fixed' timed data to edit.
         :type dataId: str

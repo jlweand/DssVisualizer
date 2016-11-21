@@ -73,7 +73,7 @@ class MultiExcludeProtocol:
         return jsonData
 
     def insertFixedMultiExcludeProtocolData(self, dataId, oldDataId, content, className, title, startDate, isDeleted):
-        """Override: Inserts a fixedData attribute.
+        """Override: Inserts a new attribute called 'fixedData' which has all the attributes of the data. Does not overwrite the original data.
 
         :param dataId: The key of the original data
         :type dataId: str

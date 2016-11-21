@@ -71,7 +71,7 @@ class ManualScreenShot:
         return jsonData
 
     def insertFixedManualScreenShotData(self, dataId, manualscreen_id, content, className, start, title, typeManualScreenShot, isDeleted):
-        """Override: Inserts a new record of the data.
+        """Override: Inserts a new attribute called 'fixedData' which has all the attributes of the data. Does not overwrite the original data.
 
         :param oldDataId: The key of the original ManualScreenShot data
         :type oldDataId: str

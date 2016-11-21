@@ -14,6 +14,10 @@ Limitations we've found with the application
 
 * You cannot change the Renderer plugins on the fly.  You must restart the application so the index.html can be recreated with the new plugin scripts.  You can, however, change the DB on the fly.
 
+* It might not be a good idea without a lot more research to use ElasticSearch for the visualizer.
+  1. When researching on how to get the distinct event/tech names I tried `aggregation <https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-terms-aggregation.html>`_ and then ran into `this <https://www.elastic.co/guide/en/elasticsearch/reference/current/fielddata.html>`_
+  2. The annotation queries are weird. Maybe there's a way to do everything in one query but I couldn't figure out how to only add an annotation if the exact same annotation did not exist.  Mongo does it automatically, and to keep the same functionality in ES I had to select the object, check that the annotation does not already exist, update the object, and then resave it.
+
 Things that may seem weird
 --------------------------
 
@@ -27,7 +31,5 @@ Issues we know about
 * I think there's a way to return the date/times to the original local time instead of your current local time.  I don't have time to test it out before Wednesday, but check this `link <https://docs.mongodb.com/v3.2/tutorial/model-time-data/>`_ out.
 
 * Here are some ideas to help speed up the Mongo back end.  Right now we pull the data from Mongo and clean up the dates, and remap the '_id' to 'id'.
-
   1. I think you can format the date on the way out of MongoDB and get rid of a bunch of datetime conversions to help speed things up.  Look `here <https://docs.mongodb.com/v3.2/reference/operator/aggregation/dateToString/>`_.
-
   2. But you'll still have the Mongo '_id' issue that the JS won't pick up as the id of the data point.  Maybe there is someway to tell JS that the id of the object is '_id' and not 'id'.

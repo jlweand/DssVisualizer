@@ -6,6 +6,7 @@ Subpackages
 
 .. toctree::
 
+    plugins.datasource.elasticsearch
     plugins.datasource.mongodb
 
 Module contents

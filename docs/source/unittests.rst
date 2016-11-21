@@ -4,10 +4,18 @@ unittests package
 Submodules
 ----------
 
-unittests.cleanupDatabases module
----------------------------------
+unittests.test_AMongoDataSetTestSuite module
+--------------------------------------------
 
-.. automodule:: unittests.cleanupDatabases
+.. automodule:: unittests.test_AMongoDataSetTestSuite
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+unittests.test_AnElasticSearchDataSetTestSuite module
+-----------------------------------------------------
+
+.. automodule:: unittests.test_AnElasticSearchDataSetTestSuite
     :members:
     :undoc-members:
     :show-inheritance:
@@ -44,10 +52,10 @@ unittests.test_dataimport module
     :undoc-members:
     :show-inheritance:
 
-unittests.test_distinctNames module
------------------------------------
+unittests.test_distinctEventTechNames module
+--------------------------------------------
 
-.. automodule:: unittests.test_distinctNames
+.. automodule:: unittests.test_distinctEventTechNames
     :members:
     :undoc-members:
     :show-inheritance:
@@ -120,6 +128,22 @@ unittests.test_pyTimed module
 -----------------------------
 
 .. automodule:: unittests.test_pyTimed
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+unittests.test_setupElasticSearchDatasource module
+--------------------------------------------------
+
+.. automodule:: unittests.test_setupElasticSearchDatasource
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+unittests.test_setupMongoDatasource module
+------------------------------------------
+
+.. automodule:: unittests.test_setupMongoDatasource
     :members:
     :undoc-members:
     :show-inheritance:

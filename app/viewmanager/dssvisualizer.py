@@ -19,7 +19,7 @@ import gi
 import os
 import ujson
 from urllib.parse import parse_qs
-from time import strftime
+from datetime import datetime
 
 # Only use files from core.  DO NOT use files from plugins.
 from core.apis.renderer.generateHtml import GenerateHtml
@@ -46,7 +46,6 @@ gi.require_version("WebKit", "3.0")
 from gi.repository import Gtk
 from gi.repository import WebKit
 from time import gmtime, strftime
-
 
 def handle(web_view, web_frame, web_resource, request, response):
     ##'query' contains the data sent from the jquery.get method
@@ -132,18 +131,28 @@ def handle(web_view, web_frame, web_resource, request, response):
                 eventTechList = []
 
             if queryDict['request'][0] == 'keypressData':
-                print("keypressData before getting data: " + strftime("%Y-%m-%d %H:%M:%S", gmtime()))
+                print("keypressData before getting data: " + strftime("%Y-%m-%d %H:%M:%S"))
+                start1 = datetime.now()
                 keyData = PyKeyPress().selectKeyPressData(startDate, endDate, techList, eventList, eventTechList)
                 clickData = PyClick().selectClickData(startDate, endDate, techList, eventList, eventTechList)
                 timedData = PyTimed().selectTimedData(startDate, endDate, techList, eventList, eventTechList)
-                print("keypressData data retrieved: " + strftime("%Y-%m-%d %H:%M:%S", gmtime()))
-                print("keypressData before visualizeKeyData: " + strftime("%Y-%m-%d %H:%M:%S", gmtime()))
+                print("keypressData before visualizeKeyData: " + strftime("%Y-%m-%d %H:%M:%S"))
+                start2 = datetime.now()
                 js = "visualizeKeyData(%s, %s, %s);" % (keyData, clickData, timedData)
                 webKitWebView.execute_script(js)
-                print("keypressData after visualizeKeyData: " + strftime("%Y-%m-%d %H:%M:%S", gmtime()))
+                print("keypressData after visualizeKeyData: " + strftime("%Y-%m-%d %H:%M:%S"))
+                end = datetime.now()
+
+                data = start2 - start1
+                ui = end - start2
+                total = end - start1
+                print("keypressData data : " + str(data))
+                print("keypressData ui   : " + str(ui))
+                print("keypressData total: " + str(total))
 
             elif queryDict['request'][0] == 'pcapData':
-                print("pcapData before getting data: " + strftime("%Y-%m-%d %H:%M:%S", gmtime()))
+                print("pcapData before getting data: " + strftime("%Y-%m-%d %H:%M:%S"))
+                start1 = datetime.now()
                 multiEx = MultiExcludeThroughput().selectMultiExcludeThroughputData(startDate, endDate, techList, eventList, eventTechList)
                 multiInc = MultiIncludeThroughput().selectMultiIncludeThroughputData(startDate, endDate, techList, eventList, eventTechList)
                 tshark = TsharkThroughput().selectTsharkThroughputData(startDate, endDate, techList, eventList, eventTechList)
@@ -152,19 +161,36 @@ def handle(web_view, web_frame, web_resource, request, response):
                 tsharkProt = TsharkProtocol().selectTsharkProtocolData(startDate, endDate, techList, eventList, eventTechList)
                 js = "visualizePCAPData(%s, %s, %s, %s, %s, %s);" % (
                     multiEx, multiExProt, multiInc, multiIncProt, tshark, tsharkProt)
-                print("pcapData data retrieved: " + strftime("%Y-%m-%d %H:%M:%S", gmtime()))
-                print("pcapData before visualizeKeyData: " + strftime("%Y-%m-%d %H:%M:%S", gmtime()))
+                print("pcapData before visualizeKeyData: " + strftime("%Y-%m-%d %H:%M:%S"))
+                start2 = datetime.now()
                 webKitWebView.execute_script(js)
-                print("pcapData after visualizeKeyData: " + strftime("%Y-%m-%d %H:%M:%S", gmtime()))
+                print("pcapData after visualizeKeyData: " + strftime("%Y-%m-%d %H:%M:%S"))
+                end = datetime.now()
+
+                data = start2 - start1
+                ui = end - start2
+                total = end - start1
+                print("pcapData data : " + str(data))
+                print("pcapData ui   : " + str(ui))
+                print("pcapData total: " + str(total))
 
             elif queryDict['request'][0] == 'screenshotData':
-                print("screenshotData before getting data: " + strftime("%Y-%m-%d %H:%M:%S", gmtime()))
+                print("screenshotData before getting data: " + strftime("%Y-%m-%d %H:%M:%S"))
+                start1 = datetime.now()
                 snap = ManualScreenShot().selectManualScreenShotData(startDate, endDate, techList, eventList, eventTechList)
-                print("screenshotData data retrieved: " + strftime("%Y-%m-%d %H:%M:%S", gmtime()))
-                print("screenshotData before visualizeKeyData: " + strftime("%Y-%m-%d %H:%M:%S", gmtime()))
+                print("screenshotData before visualizeKeyData: " + strftime("%Y-%m-%d %H:%M:%S"))
+                start2 = datetime.now()
                 js = "visualizeSnapshotData(%s);" % (snap)
                 webKitWebView.execute_script(js)
-                print("screenshotData after visualizeKeyData: " + strftime("%Y-%m-%d %H:%M:%S", gmtime()))
+                print("screenshotData after visualizeKeyData: " + strftime("%Y-%m-%d %H:%M:%S"))
+                end = datetime.now()
+
+                data = start2 - start1
+                ui = end - start2
+                total = end - start1
+                print("screenshotData data : " + str(data))
+                print("screenshotData ui   : " + str(ui))
+                print("screenshotData total: " + str(total))
 
         elif 'submission' in queryDict:
             if queryDict['submission'][0] == 'annotation':

@@ -20,6 +20,14 @@ viewmanager.exportPopup module
     :undoc-members:
     :show-inheritance:
 
+viewmanager.folderExplorer module
+---------------------------------
+
+.. automodule:: viewmanager.folderExplorer
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------
