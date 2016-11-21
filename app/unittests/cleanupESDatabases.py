@@ -34,11 +34,11 @@ class CleanupDatabases(unittest.TestCase):
         es = Elasticsearch()
         es.indices.delete(index="dssvisualizer", ignore=[400, 404])
 
-        DataImport().importAllDataFromFiles("json/anotherAlex", "   Alex", "Another Event",         comments, rightNow, False)
-        DataImport().importAllDataFromFiles("json/unicornWillow",   "Willow", "Unicorns and more!", comments, rightNow, False)
-        DataImport().importAllDataFromFiles("json/superSummerAlex", "Alex", "Super Summer Event",   comments, rightNow, False)
-        DataImport().importAllDataFromFiles("json/superSummerTom",  "Tom", "Super Summer Event",    comments, rightNow, False)
-        DataImport().importAllDataFromFiles("json/anotherJulie",    "Julie", "Another Event",       comments, rightNow, False)
+        DataImport().importAllDataFromFiles("json/unittestDatasets/anotherAlex", "   Alex", "Another Event",         comments, rightNow, False)
+        DataImport().importAllDataFromFiles("json/unittestDatasets/unicornWillow",   "Willow", "Unicorns and more!", comments, rightNow, False)
+        DataImport().importAllDataFromFiles("json/unittestDatasets/superSummerAlex", "Alex", "Super Summer Event",   comments, rightNow, False)
+        DataImport().importAllDataFromFiles("json/unittestDatasets/superSummerTom",  "Tom", "Super Summer Event",    comments, rightNow, False)
+        DataImport().importAllDataFromFiles("json/unittestDatasets/anotherJulie",    "Julie", "Another Event",       comments, rightNow, False)
 
         time.sleep(5)
         jsonData = PyClick().selectClickData(Common().formatDateStringToUTC('2016-10-18 18:26:43'),
