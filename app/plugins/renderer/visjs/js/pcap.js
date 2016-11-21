@@ -72,9 +72,7 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
 	this.timelineMI = new vis.Timeline(containerMI, datasetMIAll, optionsAll);
 	this.graph2dTS = new vis.Graph2d(containerTS, datasetTSXY, optionsXY);
 	this.timelineTS = new vis.Timeline(containerTS, datasetTSAll, optionsAll);
-
-
-	$("#loading").addClass("hidden");
+	
 	$("#multiExcludeData").removeClass("hidden");
 	$("#multiIncludeData").removeClass("hidden");
 	$("#tsharkData").removeClass("hidden");

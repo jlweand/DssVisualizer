@@ -1,156 +1,166 @@
 <!-- Copyright (C) 2016  Jamie Acosta, Jennifer Weand, Juan Soto, Mark Eby, Mark Smith, Andres Olivas
 
-  This file is part of DssVisualizer.
+This file is part of DssVisualizer.
 
-  DssVisualizer is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
+DssVisualizer is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-  DssVisualizer is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
+DssVisualizer is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-  You should have received a copy of the GNU General Public License
-  along with DssVisualizer.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License
+along with DssVisualizer.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <!DOCTYPE HTML>
 <html>
 <head>
 	<title>DSS Visualizer</title>
-  <img src= "img/ARL_logo.png" style="float:left;width:120px;height:40px;"/>
-  <h1 style="color:rgb(80, 80, 80);margin-left:150px;">DSS Visualizer</h1>
+	<img src= "img/ARL_logo.png" style="float:left;width:120px;height:40px;"/>
+	<h1 style="color:rgb(80, 80, 80);margin-left:150px;">DSS Visualizer</h1>
+
 	<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
 	<link rel="stylesheet" type="text/css" href="css/jquery-ui.structure.min.css">
 	<link rel="stylesheet" type="text/css" href="css/jquery-ui.theme.min.css">
 	<link rel="stylesheet" type="text/css" href="css/sweetalert2.min.css">
-  <link rel="stylesheet" type="text/css" href="css/main.css">
-  <link rel="stylesheet" type="text/css" href="chosen/chosen.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="chosen/chosen.css">
 
 	<!-- Load jquery for ajax support -->
-  <script src="js/jquery-3.1.0.min.js"></script>
-  <script src="js/jquery-ui.min.js"></script>
-  <script src="js/underscore-min.js"></script>
-  <script src="js/es6-promise.auto.min.js"></script>
-  <script src="js/sweetalert2.min.js"></script>
-  <script src="js/main.js"></script>
-  <script src="js/annotation.js"></script>
-  <script src="js/datepicker.js"></script>
-  <script src="chosen/chosen.jquery.js" type="text/javascript"></script>
-  <script src="chosen/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery-3.1.0.min.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
+	<script src="js/underscore-min.js"></script>
+	<script src="js/es6-promise.auto.min.js"></script>
+	<script src="js/sweetalert2.min.js"></script>
+	<script src="js/main.js"></script>
+	<script src="js/exportData.js"></script>
+	<script src="js/filterAndSearch.js"></script>
+	<script src="js/multipleDatasetManager.js"></script>
+	<script src="js/prettyPopups.js"></script>
+	<script src="js/showFixedData.js"></script>
+	<script src="js/techAndEventDropdowns.js"></script>
+	<script src="js/annotation.js"></script>
+	<script src="js/datepicker.js"></script>
+	<script src="chosen/chosen.jquery.js" type="text/javascript"></script>
+	<script src="chosen/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
 
 	<script>
 		$(window).resize(function(){
 			$(".sweet-alert").css("margin-top",-$(".sweet-alert").outerHeight()/2);
 		});
 	</script>
-<SCRIPTS GO HERE>
+	<SCRIPTS GO HERE>
 </head>
 <body>
-    <div id="content">
-    	<div id="admin">
-    		<a href="admin.html">Administration</a>
-    	</div>
-    	 <div id="dateSelect" class="dateSelect">
-    		<div id="start-container">
-    			<label for="start">Select start date:</label>
-    			<input type="text" class="testInput" id="datepickerStart" name="start" size="20" value="2016-10-18" />
-    		</div>
+	<div id="content">
+	<div id="admin">
+		<a href="admin.html">Administration</a>
+	</div>
+	<div id="dateSelect" class="dateSelect">
+		<div id="start-container">
+			<label for="start">Select start date:</label>
+			<input type="text" class="testInput" id="datepickerStart" name="start" size="20" value="2016-10-18" />
+		</div>
 
-    		<div id="end-container">
-    			<label for="end">Select end date:</label>
-    			<input type="text" id="datepickerEnd" name="end" size="20" value="2016-10-18" />
-    		</div>
-      </div>
-      <div id="tech-eventBoxes" class="tech-eventBoxes">
-    		<div id="end-container">
-    			<label for="eventOptions">Choose Event(s):</label>
-              <select data-placeholder="Choose event(s)..." id="eventOptions" class= "chosen-select" multiple style= "width: 200px">
-                </select>
-    		</div>
-    		<div id="end-container">
-    			<label for="techOptions">Choose Tech(s):</label>
-                <select data-placeholder="Choose tech(s)..." id="techOptions" class= "chosen-select" multiple style= "width: 200px">
-                </select>
-    		</div>
-    		<div id="end-container">
-    			<label for="techAndEventOptions">Choose Event/Tech(s):</label>
-                <select data-placeholder="Choose event/tech(s)..." id="techAndEventOptions" class= "chosen-select" multiple style= "width: 200px">
-                </select>
-    		</div>
-      </div>
-      <div class="filterSearch">
-          <div id="end-container">
-              <label for="filter">Filter:</label>
-              <input type="text" id="filter" name="filter"/>
-          </div>
-      </div>
-      <div class="go-exportButtons">
-    		<div id="end-container">
-    			<button id="dateInput" class="button" name="dateInput">Go</button>
-    		</div>
-        <div id="exportData">
-          <button id="exportVisData" class="button" onClick="exportData()">Export Visible Data</button>
-        </div>
-      </div>
-    	<div class="clear"></div>
-    	<hr>
-    	<div id="checkboxes">
-    	    <div class="checkbox">Show: </div>
-			<div class="checkbox"><input type='checkbox' id='keylogger' checked> Key Logger</div>
-			<div class="checkbox"><input type='checkbox' id='multiexclude' checked>Multi Exclude Traffic</div>
-			<div class="checkbox"><input type='checkbox' id='multiinclude' checked>Multi Include Traffic</div>
-			<div class="checkbox"><input type='checkbox' id='tshark' checked>TShark Traffic</div>
-			<div class="checkbox"><input type='checkbox' id='snapshots' checked>Manual Snapshots</div>
-    	</div>
-    	<hr>
+		<div id="end-container">
+			<label for="end">Select end date:</label>
+			<input type="text" id="datepickerEnd" name="end" size="20" value="2016-10-18" />
+			</div>
+	</div>
+	<div id="tech-eventBoxes" class="tech-eventBoxes">
+		<div id="end-container">
+			<label for="eventOptions">Choose Event(s):</label>
+			<select data-placeholder="Choose event(s)..." id="eventOptions" class= "chosen-select" multiple style= "width: 200px">
+			</select>
+		</div>
+		<div id="end-container">
+			<label for="techOptions">Choose Tech(s):</label>
+			<select data-placeholder="Choose tech(s)..." id="techOptions" class= "chosen-select" multiple style= "width: 200px">
+			</select>
+		</div>
+		<div id="end-container">
+			<label for="techAndEventOptions">Choose Event/Tech(s):</label>
+			<select data-placeholder="Choose event/tech(s)..." id="techAndEventOptions" class= "chosen-select" multiple style= "width: 200px">
+			</select>
+		</div>
+	</div>
+	<div class="filterSearch">
+		<div id="end-container">
+			<label for="filter">Filter:</label>
+			<input type="text" id="filter" name="filter"/>
+		</div>
+	</div>
+	<div class="go-exportButtons">
+		<div id="end-container">
+			<button id="dateInput" class="button" name="dateInput">Go</button>
+		</div>
+		<div id="exportData">
+			<button id="exportVisData" class="button" onClick="exportData()">Export Visible Data</button>
+		</div>
+	</div>
+	<div class="clear"></div>
+	<hr>
+	<div id="checkboxes">
+		<div class="checkbox">
+			Show:
+		</div>
+		<div class="checkbox">
+			<input type='checkbox' id='keylogger' name='keylogger' checked>
+			<label for='keylogger'>Key Logger</label>
+		</div>
+		<div class="checkbox">
+			<input type='checkbox' id='multiexclude' name='multiexclude' checked>
+			<label for='multiexclude'>Multi Exclude Traffic</label>
+		</div>
+		<div class="checkbox">
+			<input type='checkbox' id='multiinclude' name='multiinclude' checked>
+			<label for='multiinclude'>Multi Include Traffic</label>
+		</div>
+		<div class="checkbox">
+			<input type='checkbox' id='tshark' name='tshark' checked>
+			<label for='tshark'>TShark Traffic</label>
+		</div>
+		<div class="checkbox">
+			<input type='checkbox' id='snapshots' name='snapshots' checked>
+			<label for='snapshots'>Manual Snapshots</label>
+		</div>
+	</div>
+	<hr>
 
-    	<div class="clear"></div>
-      <div class="background" id="background">
-    	<h3>Keypress Data</h3>
-    	<div id="keypressData" class="timeline"></div>
-    	<h3>Multi Exclude Data</h3>
-    	<div id="multiExcludeData" class="timeline"></div>
-    	<h3>Multi Include Data</h3>
-    	<div id="multiIncludeData" class="timeline"></div>
-    	<h3>TShark Data</h3>
-    	<div id="tsharkData" class="timeline"></div>
-    	<h3>Manual Screenshot Data</h3>
-    	<div id="screenshotData" class="timeline"></div>
-      </div>
-    	<div id="loading" class="hidden">
-    		<img src="img/ripple.gif"/>
-    	</div>
-    	<div id="currentItem"></div>
-    	<div id="oldAnnotations"></div>
-    	<!--
-    	<div id="dialog-form">
-    		<form id="annotationsForm">
-    			<div>
-    				<label id="annotationLabel" for="annotation">Please select an object first</label>
-    			</div>
-    			<div>
-    				<textarea id="annotation" name="annotation" rows="5"></textarea>
-    			</div>
-    			<input type="hidden" id="objID" name="objID" val=""/>
-    		</form>
-    	</div>
-    </div>
-	-->
-	<div id="footer">Code licensed under the <a href="https://www.gnu.org/licenses/gpl-3.0-standalone.html">GPLv3</a></div>
-  <script type="text/javascript">
-    var config = {
-      '.chosen-select'           : {},
-      '.chosen-select-deselect'  : {allow_single_deselect:true},
-      '.chosen-select-no-single' : {disable_search_threshold:10},
-      '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
-      '.chosen-select-width'     : {width:"95%"}
-    }
-    for (var selector in config) {
-      $(selector).chosen(config[selector]);
-    }
-  </script>
+	<div class="clear"></div>
+	<div id="loading" class="hidden">
+		<img src="img/ripple.gif"/>
+	</div>
+	<div class="background" id="background">
+		<h3>Keypress Data</h3>
+		<div id="keypressData" class="timeline"></div>
+		<h3>Multi Exclude Data</h3>
+		<div id="multiExcludeData" class="timeline"></div>
+		<h3>Multi Include Data</h3>
+		<div id="multiIncludeData" class="timeline"></div>
+		<h3>TShark Data</h3>
+		<div id="tsharkData" class="timeline"></div>
+		<h3>Manual Screenshot Data</h3>
+		<div id="screenshotData" class="timeline"></div>
+	</div>
+	<div id="footer">
+		Code licensed under the <a href="https://www.gnu.org/licenses/gpl-3.0-standalone.html">GPLv3</a>
+	</div>
+	<script type="text/javascript">
+		var config = {
+			'.chosen-select'           : {},
+			'.chosen-select-deselect'  : {allow_single_deselect:true},
+			'.chosen-select-no-single' : {disable_search_threshold:10},
+			'.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
+			'.chosen-select-width'     : {width:"95%"}
+		}
+		for (var selector in config) {
+			$(selector).chosen(config[selector]);
+		}
+	</script>
 
 </body>
 </html>

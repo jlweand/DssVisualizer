@@ -73,7 +73,6 @@ var Screenshot = function(snapData){
 	// Create a Timeline
 	this.timeline = new vis.Timeline(container, items, groups, options);
 
-	$("#loading").addClass("hidden");
 	$("#screenshotData").removeClass("hidden");
 
 	this.timeline.on('select', function (properties) {

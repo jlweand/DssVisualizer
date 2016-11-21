@@ -80,8 +80,6 @@ var KeyLogger = function(keyData, clickData, timedData){
 
 	// Create a Timeline
 	this.timeline = new vis.Timeline(container, items, groups, options);
-
-	$("#loading").addClass("hidden");
 	$("#keypressData").removeClass("hidden");
 
 	this.timeline.on('select', function (properties) {
