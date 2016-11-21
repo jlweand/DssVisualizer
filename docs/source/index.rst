@@ -15,15 +15,15 @@ This keeps it lightweight and portable.  It is written in Python and JavaScript 
 
 The Interrupt 0x22 developers are:
 
-* Jennifer Weand: In her free time, Jennifer spends her time playing with her four cats, officiating at local roller derby bouts, or (and this has been much too infrequent as of late) driving off into the sunset and camping.
+* **Jennifer Weand**: In her free time, Jennifer spends her time playing with her four cats, officiating at local roller derby bouts, or (and this has been much too infrequent as of late) driving off into the sunset and camping.
 
-* Juan Soto: One day Juan was looking for a proteomics class and accidently walked into the Advanced Object Oriented Programming class.  Now he's about to get a Master's in Software Engineering.  We turned another to the programming side!
+* **Juan Soto**: One day Juan was looking for a proteomics class and accidently walked into the Advanced Object Oriented Programming class.  Now he's about to get a Master's in Software Engineering.  We turned another to the programming side!
 
-* Mark Eby: Our GUI guru, we would be lost without him. He'll be changing his name to MarkEby.js after this semester. He spends his days deep in JavaScript to the delight of every other team member. When he's not cursing at JavaScript you might catch a glimpse of him flying down the highway to his next JavaScript adventure.
+* **Mark Eby**: Our GUI guru, we would be lost without him. He'll be changing his name to MarkEby.js after this semester. He spends his days deep in JavaScript to the delight of every other team member. When he's not cursing at JavaScript you might catch a glimpse of him flying down the highway to his next JavaScript adventure.
 
-* Mark Smith: A chemist by trade, Mark decided that computers were much more fun to play with than measuring the effects of chemical compounds in the chemistry lab.  He was right, programmers are much more fun than chemicals!
+* **Mark Smith**: A chemist by trade, Mark decided that computers were much more fun to play with than measuring the effects of chemical compounds in the chemistry lab.  He was right, programmers are much more fun than chemicals!
 
-* Andres Olivas: The enigma of the group, Andres saw the light and came to the programming side after realizing engineering electrons were not near as fun as engineering code.  When he's not stuck crossing the border, he enjoys long walks with MongoDB and working at HP.
+* **Andres Olivas**: The enigma of the group, Andres saw the light and came to the programming side after realizing engineering electrons were not near as fun as engineering code.  When he's not stuck crossing the border, he enjoys long walks with MongoDB and working at HP.
 
 DssVisualizer Code
 ==================
