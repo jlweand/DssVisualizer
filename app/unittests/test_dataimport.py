@@ -19,6 +19,8 @@ import unittest
 from datetime import datetime
 from core.config.dataImport import DataImport
 
+# these testcases aren't used anymore, but we're keeping them in here incase you want to test importing
+# on data type at a time in the future.
 
 class DataImportTest(unittest.TestCase):
     now = datetime.now()

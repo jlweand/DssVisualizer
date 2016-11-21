@@ -28,10 +28,6 @@ class ConfigDatasourcesTest(unittest.TestCase):
         output = ConfigDatasources().addDatasource("newName", "here's the location")
         self.assertEqual(output, "Duplicate datasource name. Unable to add this datasource plugin.")
 
-    def test_getListOfDatasources(self):
-        output = ConfigDatasources().getListOfDatasources()
-        self.assertEqual(len(output), 3)
-
     def test_removeDatasource(self):
         # test removing nonexistant datasource
         output = ConfigDatasources().removeDatasource("dummyName")

@@ -1,4 +1,5 @@
 import unittest
+from unittests.test_setupMongoDatasource import SetupMongoDatasource
 from unittests.test_manualScreenShot import ManualScreenShotTest
 from unittests.test_multiExcludeProtocol import MultiExcludeProtocolTest
 from unittests.test_multiExcludeThroughput import MultiExcludeThroughputTest
@@ -9,15 +10,16 @@ from unittests.test_pyKeyPress import PyKeyPress
 from unittests.test_pyTimed import PyTimed
 from unittests.test_tsharkProtocol import TsharkProtocolTest
 from unittests.test_tsharkThroughput import TsharkThroughputTest
-from unittests.test_distinctNames import DistinctNamesTest
+from unittests.test_distinctEventTechNames import DistinctEventTechNames
 
 if __name__ == '__main__':
-    test_classes_to_run = [ManualScreenShotTest,
+    test_classes_to_run = [SetupMongoDatasource,
+                           ManualScreenShotTest,
                            MultiExcludeProtocolTest, MultiExcludeThroughputTest,
                            MultiIncludeProtocolTest, MultiIncludeThroughputTest,
                            PyClick, PyKeyPress, PyTimed,
                            TsharkProtocolTest, TsharkThroughputTest,
-                           DistinctNamesTest]
+                           DistinctEventTechNames]
 
     loader = unittest.TestLoader()
 

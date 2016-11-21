@@ -31,7 +31,7 @@ from plugins.datasource.mongodb.manualScreenShot import ManualScreenShot
 from core.config.dataImport import DataImport
 from core.apis.datasource.common import Common
 
-class CleanupDatabases(unittest.TestCase):
+class SetupMongoDatasource(unittest.TestCase):
 
     def test_cleanEverythingUp(self):
         now = datetime.now()
@@ -76,15 +76,16 @@ class CleanupDatabases(unittest.TestCase):
         DataImport().importAllDataFromFiles("json/unittestDatasets/anotherAlex", "Alex", "Another Event", comments, rightNow, False)
         DataImport().importAllDataFromFiles("json/unittestDatasets/unicornWillow", "Willow", "Unicorns and more!", comments, rightNow, False)
 
-        DataImport().importAllDataFromFiles("json/1very small", "Very Small", "Very Small", "Very Small", rightNow, False)
-        DataImport().importAllDataFromFiles("json/2small", "Small", "Small", "Small", rightNow, False)
-        DataImport().importAllDataFromFiles("json/3medium", "Medium", "Medium", "Medium", rightNow, False)
-        DataImport().importAllDataFromFiles("json/4large", "Large", "Large", "Large", rightNow, False)
+        # DataImport().importAllDataFromFiles("json/1very small", "Very Small", "Very Small", "Very Small", rightNow, False)
+        # DataImport().importAllDataFromFiles("json/2small", "Small", "Small", "Small", rightNow, False)
+        # DataImport().importAllDataFromFiles("json/3medium", "Medium", "Medium", "Medium", rightNow, False)
+        # DataImport().importAllDataFromFiles("json/4large", "Large", "Large", "Large", rightNow, False)
 
         jsonData = PyKeyPress().selectKeyPressData(Common().formatDateStringToUTC('2016-10-18 18:26:36'),
                                                    Common().formatDateStringToUTC('2016-10-18 18:26:36'),
                                                    ['Willow'], ['Unicorns and more!'], [])
         pprint(jsonData)
+        self.assertIsNotNone(jsonData)
 
 if __name__ == '__main__':
     unittest.main()

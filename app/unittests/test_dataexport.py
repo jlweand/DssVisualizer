@@ -26,47 +26,47 @@ class DataImportTest(unittest.TestCase):
     eventName = "Super Summer Event"
 
     # def test_01ExportClick(self):
-    #     size = DataExport().exportClickData(self.startDate, self.endDate, self.techName, self.eventName, True, "C:\\temp\export")
+    #     size = DataExport().exportClickData(self.startDate, self.endDate, self.techName, self.eventName, "", True, "C:\\temp\export")
     #     self.assertEqual(size, 8)
     #
     # def test_02exportKeypressData(self):
-    #     size = DataExport().exportKeyPressData(self.startDate, self.endDate, self.techName, self.eventName, "C:\\temp\export")
+    #     size = DataExport().exportKeyPressData(self.startDate, self.endDate, self.techName, self.eventName, "", "C:\\temp\export")
     #     self.assertEqual(size, 6)
     #
     # def test_03exportTimed(self):
-    #     size = DataExport().exportTimedData(self.startDate, self.endDate, self.techName, self.eventName, True, "C:\\temp\export")
+    #     size = DataExport().exportTimedData(self.startDate, self.endDate, self.techName, self.eventName, "", True, "C:\\temp\export")
     #     self.assertEqual(size, 6)
     #
     # def test_04exportMultiExcludeThroughput(self):
-    #     size = DataExport().exportMultiExcludeThroughputData(self.startDate, self.endDate, self.techName, self.eventName, "C:\\temp\export")
+    #     size = DataExport().exportMultiExcludeThroughputData(self.startDate, self.endDate, self.techName, self.eventName, "", "C:\\temp\export")
     #     self.assertEqual(size, 77)
     #
     # def test_05exportMultiExcludeProtocol(self):
-    #     size = DataExport().exportMultiExcludeProtocolData(self.startDate, self.endDate, self.techName, self.eventName, "C:\\temp\export")
+    #     size = DataExport().exportMultiExcludeProtocolData(self.startDate, self.endDate, self.techName, self.eventName, "", "C:\\temp\export")
     #     self.assertEqual(size, 77)
     #
     # def test_06exportMultiIncludeThroughput(self):
-    #     size = DataExport().exportMultiIncludeThroughputData(self.startDate, self.endDate, self.techName, self.eventName, "C:\\temp\export")
+    #     size = DataExport().exportMultiIncludeThroughputData(self.startDate, self.endDate, self.techName, self.eventName, "", "C:\\temp\export")
     #     self.assertEqual(size, 77)
     #
     # def test_07exportMultiIncludeProtocol(self):
-    #     size = DataExport().exportMultiIncludeProtocolData(self.startDate, self.endDate, self.techName, self.eventName, "C:\\temp\export")
+    #     size = DataExport().exportMultiIncludeProtocolData(self.startDate, self.endDate, self.techName, self.eventName, "", "C:\\temp\export")
     #     self.assertEqual(size, 77)
     #
     # def test_08exportTsharkThroughput(self):
-    #     size = DataExport().exportTsharkThroughputData(self.startDate, self.endDate, self.techName, self.eventName, "C:\\temp\export")
+    #     size = DataExport().exportTsharkThroughputData(self.startDate, self.endDate, self.techName, self.eventName, "", "C:\\temp\export")
     #     self.assertEqual(size, 79)
     #
     # def test_09exportTsharkProtocol(self):
-    #     size = DataExport().exportTsharkProtocolData(self.startDate, self.endDate, self.techName, self.eventName, "C:\\temp\export")
+    #     size = DataExport().exportTsharkProtocolData(self.startDate, self.endDate, self.techName, self.eventName, "", "C:\\temp\export")
     #     self.assertEqual(size, 79)
     #
     # def test_10ExportManualScreenShot(self):
-    #     size = DataExport().exportManualScreenShotData(self.startDate, self.endDate, self.techName, self.eventName, True, "C:\\temp\export")
+    #     size = DataExport().exportManualScreenShotData(self.startDate, self.endDate, self.techName, self.eventName, "", True, "C:\\temp\export")
     #     self.assertEqual(size, 2)
 
     def test_11exportAllData(self):
-        DataExport().exportAllData(self.startDate, self.endDate, self.techName, self.eventName, True, "C:\\temp\export")
+        DataExport().exportAllData(self.startDate, self.endDate, self.techName, self.eventName, "", True, "C:\\temp\export")
 
 
 if __name__ == '__main__':

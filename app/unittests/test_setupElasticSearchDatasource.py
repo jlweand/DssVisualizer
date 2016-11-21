@@ -24,7 +24,7 @@ from core.config.dataImport import DataImport
 from core.apis.datasource.common import Common
 from elasticsearch import Elasticsearch
 
-class CleanupDatabases(unittest.TestCase):
+class SetupElasticSearchDatasource(unittest.TestCase):
 
     def test_cleanEverythingUp(self):
         now = datetime.now()
@@ -44,6 +44,7 @@ class CleanupDatabases(unittest.TestCase):
         jsonData = PyClick().selectClickData(Common().formatDateStringToUTC('2016-10-18 18:26:43'),
                                              Common().formatDateStringToUTC('2016-10-18 18:26:43'), [], [], [])
         pprint(jsonData)
+        self.assertIsNotNone(jsonData)
 
 if __name__ == '__main__':
     unittest.main(warnings='ignore')

@@ -45,13 +45,13 @@ class ConfigRenderersTest(unittest.TestCase):
         self.assertEqual(output3, "newName")
 
     def test_setDefaultRenderer(self):
-        output1 = ConfigRenderers().setDefaultRenderer("pyKeyLogger", "d3.js", "something.txt")
+        output1 = ConfigRenderers().setDefaultRenderer("pyKeyLogger", "d3.js")
 
         # test setting nonexistant default renderer
-        output2 = ConfigRenderers().setDefaultRenderer("pyKeyLogger", "dummyName", "dummyName")
+        output2 = ConfigRenderers().setDefaultRenderer("pyKeyLogger", "dummyName")
 
         # set it back to vis.js
-        output3 = ConfigRenderers().setDefaultRenderer("pyKeyLogger", "vis.js", "scripts.txt")
+        output3 = ConfigRenderers().setDefaultRenderer("pyKeyLogger", "vis.js")
 
         self.assertEqual(output1, "d3.js")
         self.assertEqual(output2, "No renderer plugin has been imported for dummyName")
