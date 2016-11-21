@@ -48,4 +48,4 @@ class DistinctEventTechNames(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main()
 
-# python -m unittests.test_distinctNames
+# python -m unittests.test_distinctEventTechNames

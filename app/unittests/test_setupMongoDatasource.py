@@ -90,4 +90,4 @@ class SetupMongoDatasource(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main()
 
-#python -m unittests.cleanupDatabases
+#python -m unittests.test_setupMongoDatasource

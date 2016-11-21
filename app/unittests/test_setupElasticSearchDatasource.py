@@ -50,4 +50,4 @@ if __name__ == '__main__':
     unittest.main(warnings='ignore')
     unittest.main()
 
-#python -m unittests.cleanupESDatabases
+#python -m unittests.test_setupElasticSearchDatasource
