@@ -177,7 +177,6 @@ class Annotations:
         :type annotationText: str
         :returns: inserted_id
         """
-        jsonObject["annotations"] = {"annotation": annotationText}
-
+        jsonObject["content"] = annotationText
         result = Elasticsearch().index(index=self.esIndex, doc_type=doc_type, body=jsonObject)
         return Common().getInsertedId(result)

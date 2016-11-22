@@ -104,6 +104,6 @@ class Annotations:
         :type annotationText: str
         :returns: inserted_id
         """
-        jsonObject["annotations"] = {"annotation": annotationText}
+        jsonObject["content"] = annotationText
         result = collection.insert_one(jsonObject)
         return result.inserted_id
