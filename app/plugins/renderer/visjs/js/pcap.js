@@ -20,6 +20,7 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
 	};
 	var optionsAll = {
 		stack: false,
+		dataAttributes: 'all',
 		editable: {
 			add: true,
 			updateTime: true,
@@ -28,6 +29,8 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
 		onAdd: function(item, callback){
 			prettyAdd('Add Annotation', function(value) {
 				if (value) {
+					var eventName = metaDataItem.metadata.eventName;
+					var techName = metaDataItem.metadata.techName;
 					var isoDate = new Date(item.start);
 					var itemDateString = isoDate.getFullYear()+"-"+(isoDate.getMonth()+1)+"-"+isoDate.getDate();
 					var itemTimeHours = addLeadingZeroes(isoDate.getHours());
@@ -35,11 +38,12 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
 					var itemTimeSeconds = addLeadingZeroes(isoDate.getSeconds());
 					itemDateString += " "+itemTimeHours+":"+itemTimeMinutes+":"+itemTimeSeconds;
 					item.start = itemDateString;
-					item.content = "Annotation: "+value;
+					item.content = value;
 					item.annotation = value;
+					item.className = "annotation";
 					var currItem = item.id;
-					var groupName = "";
-					// $.get("http://localhost?submission=annotation&itemID="+currItem+"&type="+groupName+"&annotation="+value);
+					var groupName = metaDataItem.group;
+					$.get("http://localhost?submission=annotation&itemID="+currItem+"&type="+groupName+"&annotation="+value+"&annotation="+value+"&eventName="+eventName+"&techName="+techName+"&start="+itemDateString);
 					callback(item); // send back adjusted new item
 				}
 				else {
@@ -102,6 +106,45 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
 			}
 		})
 	});
+
+	// this weird thing is to get the event/tech name to add to the timeline annotation.
+    var metaDataItem;
+    this.timelineME.on('doubleClick', function(properties){
+        var firstChildItemOfTimeline = properties.event.firstTarget.firstChild;
+        var firstChildId = firstChildItemOfTimeline.getAttribute("data-id");
+		datasetMEAll.forEach(function(data){
+			if(data['id'] == firstChildId){
+				metaDataItem = data;
+				metaDataItem.group = 'multi_exc';
+				return;
+			}
+		})
+    });
+	// this weird thing is to get the event/tech name to add to the timeline annotation.
+    this.timelineMI.on('doubleClick', function(properties){
+        var firstChildItemOfTimeline = properties.event.firstTarget.firstChild;
+        var firstChildId = firstChildItemOfTimeline.getAttribute("data-id");
+		datasetMIAll.forEach(function(data){
+			if(data['id'] == firstChildId){
+				metaDataItem = data;
+				metaDataItem.group = 'multi_inc';
+				return;
+			}
+		})
+    });
+	// this weird thing is to get the event/tech name to add to the timeline annotation.
+    this.timelineTS.on('doubleClick', function(properties){
+        var firstChildItemOfTimeline = properties.event.firstTarget.firstChild;
+        var firstChildId = firstChildItemOfTimeline.getAttribute("data-id");
+		datasetTSAll.forEach(function(data){
+			if(data['id'] == firstChildId){
+				metaDataItem = data;
+				metaDataItem.group = 'tshark';
+				return;
+			}
+		})
+    });
+
 }
 
 function replaceNewLines(text){

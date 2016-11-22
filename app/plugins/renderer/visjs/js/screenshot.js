@@ -33,6 +33,8 @@ var Screenshot = function(snapData){
 		onAdd: function(item, callback){
 			prettyAdd('Add Annotation', function(value) {
 				if (value) {
+					var eventName = metaDataItem.metadata.eventName;
+					var techName = metaDataItem.metadata.techName;
 					var isoDate = new Date(item.start);
 					var itemDateString = isoDate.getFullYear()+"-"+(isoDate.getMonth()+1)+"-"+isoDate.getDate();
 					var itemTimeHours = addLeadingZeroes(isoDate.getHours());
@@ -40,11 +42,11 @@ var Screenshot = function(snapData){
 					var itemTimeSeconds = addLeadingZeroes(isoDate.getSeconds());
 					itemDateString += " "+itemTimeHours+":"+itemTimeMinutes+":"+itemTimeSeconds;
 					item.start = itemDateString;
-					item.content = "Annotation: "+value;
+					item.content = value;
 					item.annotation = value;
+					item.className = "annotation";
 					var currItem = item.id;
-					// var groupName = dataNames[item.group];
-					// $.get("http://localhost?submission=annotation&itemID="+currItem+"&type="+groupName+"&annotation="+value);
+					$.get("http://localhost?submission=annotation&itemID="+currItem+"&type=snap&annotation="+value+"&annotation="+value+"&eventName="+eventName+"&techName="+techName+"&start="+itemDateString);
 					callback(item); // send back adjusted new item
 				}
 				else {
@@ -62,6 +64,20 @@ var Screenshot = function(snapData){
 	this.timeline = new vis.Timeline(container, items, groups, options);
 
 	$("#screenshotData").removeClass("hidden");
+
+	// this weird thing is to get the event/tech name to add to the timeline annotation.
+    var metaDataItem;
+    this.timeline.on('doubleClick', function(properties){
+        var firstChildItemOfTimeline = properties.event.firstTarget.firstChild;
+        var firstChildId = firstChildItemOfTimeline.getAttribute("data-id");
+		items.forEach(function(data){
+			if(data['id'] == firstChildId){
+				metaDataItem = data;
+				return;
+			}
+		})
+    });
+
 
 	this.timeline.on('select', function (properties) {
 		var currItem = properties.items;

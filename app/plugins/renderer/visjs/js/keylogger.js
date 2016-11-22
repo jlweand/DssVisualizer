@@ -7,7 +7,7 @@ var KeyLogger = function(keyData, clickData, timedData){
 	var container = document.getElementById("keypressData");
 
 	// Create a DataSet (allows two way data-binding)
-	var dataNames = ['Keypresses', 'Clicks ', 'Timed'];
+	var dataNames = ['Keypresses', 'Clicks', 'Timed'];
 	var groups = new vis.DataSet();
 	for(var g=0; g<3; g++){
 		groups.add({id: g, content: dataNames[g]});
@@ -37,6 +37,8 @@ var KeyLogger = function(keyData, clickData, timedData){
 		onAdd: function(item, callback){
 			prettyAdd('Add Annotation', function(value) {
 				if (value) {
+					var eventName = metaDataItem.metadata.eventName;
+					var techName = metaDataItem.metadata.techName;
 					var isoDate = new Date(item.start);
 					var itemDateString = isoDate.getFullYear()+"-"+(isoDate.getMonth()+1)+"-"+isoDate.getDate();
 					var itemTimeHours = addLeadingZeroes(isoDate.getHours());
@@ -44,11 +46,12 @@ var KeyLogger = function(keyData, clickData, timedData){
 					var itemTimeSeconds = addLeadingZeroes(isoDate.getSeconds());
 					itemDateString += " "+itemTimeHours+":"+itemTimeMinutes+":"+itemTimeSeconds;
 					item.start = itemDateString;
-					item.content = "Annotation: "+value;
+					item.content = value;
 					item.annotation = value;
+					item.className = "annotation";
 					var currItem = item.id;
 					var groupName = dataNames[item.group];
-					$.get("http://localhost?submission=annotation&itemID="+currItem+"&type="+groupName+"&annotation="+value);
+					$.get("http://localhost?submission=annotation&itemID="+currItem+"&type="+groupName+"&annotation="+value+"&eventName="+eventName+"&techName="+techName+"&start="+itemDateString);
 					callback(item); // send back adjusted new item
 				}
 				else {
@@ -75,11 +78,18 @@ var KeyLogger = function(keyData, clickData, timedData){
 	// 	});
 	// });
 
-	// this.timeline.on('doubleClick', function(properties){
-	// 	var firstChildItemOfTimeline = properties.event.firstTarget.firstChild;
-	// 	var firstChildMetadata = firstChildItemOfTimeline.getAttribute("data-id");
-	// 	console.log(firstChildMetadata);
-	// });
+	// this weird thing is to get the event/tech name to add to the timeline annotation.
+    var metaDataItem;
+    this.timeline.on('doubleClick', function(properties){
+        var firstChildItemOfTimeline = properties.event.firstTarget.firstChild;
+        var firstChildId = firstChildItemOfTimeline.getAttribute("data-id");
+		items.forEach(function(data){
+			if(data['id'] == firstChildId){
+				metaDataItem = data;
+				return;
+			}
+		})
+    });
 
 	this.timeline.on('rangechanged', getRangeChanged);
 
