@@ -7,7 +7,7 @@ var KeyLogger = function(keyData, clickData, timedData){
 	var container = document.getElementById("keypressData");
 
 	// Create a DataSet (allows two way data-binding)
-	var dataNames = ['Keypresses', 'Clicks', 'Timed'];
+	var dataNames = ['keypress', 'click', 'timed'];
 	var groups = new vis.DataSet();
 	for(var g=0; g<3; g++){
 		groups.add({id: g, content: dataNames[g]});

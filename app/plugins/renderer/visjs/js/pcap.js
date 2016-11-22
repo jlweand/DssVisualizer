@@ -115,7 +115,7 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
 		datasetMEAll.forEach(function(data){
 			if(data['id'] == firstChildId){
 				metaDataItem = data;
-				metaDataItem.group = 'multi_exc';
+				metaDataItem.group = 'multi_exclude';
 				return;
 			}
 		})
@@ -127,7 +127,7 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
 		datasetMIAll.forEach(function(data){
 			if(data['id'] == firstChildId){
 				metaDataItem = data;
-				metaDataItem.group = 'multi_inc';
+				metaDataItem.group = 'multi_include';
 				return;
 			}
 		})

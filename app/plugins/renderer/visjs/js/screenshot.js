@@ -46,7 +46,7 @@ var Screenshot = function(snapData){
 					item.annotation = value;
 					item.className = "annotation";
 					var currItem = item.id;
-					$.get("http://localhost?submission=annotation&itemID="+currItem+"&type=snap&annotation="+value+"&annotation="+value+"&eventName="+eventName+"&techName="+techName+"&start="+itemDateString);
+					$.get("http://localhost?submission=annotation&itemID="+currItem+"&type=screenshot&annotation="+value+"&annotation="+value+"&eventName="+eventName+"&techName="+techName+"&start="+itemDateString);
 					callback(item); // send back adjusted new item
 				}
 				else {
