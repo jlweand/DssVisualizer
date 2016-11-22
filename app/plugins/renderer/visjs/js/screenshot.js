@@ -25,11 +25,7 @@ var Screenshot = function(snapData){
 		    	return '<div>' + item.content + '</div>';
 			}
 		},
-		editable: {
-			add: true,
-			updateTime: true,
-			updateGroup: true
-		},
+		editable: true,
 		onAdd: function(item, callback){
 			prettyAdd('Add Annotation', function(value) {
 				if (value) {
@@ -57,6 +53,18 @@ var Screenshot = function(snapData){
 		onUpdate: function(item, callback){
 			// 	  $.get("http://localhost?submission=annotation&itemID="+currItem+"&type="+groupName+"&annotation="+value);
 			prettyPrompt(item, callback);
+		},
+		onRemove: function(item, callback) {
+            prettyConfirm('Remove item', 'Do you really want to remove item ' + item.content + '?', function (ok) {
+                 console.log(ok);
+                if (ok) {
+                    $.get("http://localhost?submission=delete&itemID="+item.id+"&type=screenshot&start="+item.start);
+                    callback(item); /* confirm deletion */
+                }
+                else {
+                    callback(null); /* cancel deletion */
+                }
+            });
 		}
 	};
 

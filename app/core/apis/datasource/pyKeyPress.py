@@ -58,7 +58,7 @@ class PyKeyPress:
         pyKeyPress = self.getPlugin()
         jsonData = pyKeyPress.selectKeyPressData(Common().formatDateStringToUTC(startDate),
                                                  Common().formatDateStringToUTC(endDate), techNames, eventNames, eventTechList)
-        return jsonData
+        return Common().removeDeletedData(jsonData)
 
     def selectKeyPressDataById(self, dataId):
         """Override: Select the key press data by its ID

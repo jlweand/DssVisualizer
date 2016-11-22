@@ -57,7 +57,7 @@ class TsharkThroughput:
         tsharkPlugin = self.getPlugin()
         jsonData = tsharkPlugin.selectTsharkThroughputData(Common().formatDateStringToUTC(startDate),
                                                            Common().formatDateStringToUTC(endDate), techNames, eventNames, eventTechList)
-        return jsonData
+        return Common().removeDeletedData(jsonData)
 
     def selectTsharkThroughputDataById(self, dataId):
         """Override: Select the TsharkThroughput data by its ID

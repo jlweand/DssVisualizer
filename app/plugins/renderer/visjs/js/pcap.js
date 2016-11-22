@@ -21,11 +21,7 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
 	var optionsAll = {
 		stack: false,
 		dataAttributes: 'all',
-		editable: {
-			add: true,
-			updateTime: true,
-			updateGroup: true
-		},
+		editable: true,
 		onAdd: function(item, callback){
 			prettyAdd('Add Annotation', function(value) {
 				if (value) {
@@ -54,6 +50,18 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
 		onUpdate: function(item, callback){
 			// 	  $.get("http://localhost?submission=annotation&itemID="+currItem+"&type="+groupName+"&annotation="+value);
 			prettyPrompt(item, callback);
+		},
+		onRemove: function(item, callback) {
+            prettyConfirm('Remove item', 'Do you really want to remove item ' + item.content + '?', function (ok) {
+                 console.log(ok);
+                if (ok) {
+                    $.get("http://localhost?submission=delete&itemID="+item.id+"&type="+groupName+"&start="+item.start);
+                    callback(item); /* confirm deletion */
+                }
+                else {
+                    callback(null); /* cancel deletion */
+                }
+            });
 		}
 	};
 
@@ -79,8 +87,10 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
 	this.graph2dTS.on('rangechanged', getRangeChanged);
 	this.timelineTS.on('rangechanged', getRangeChanged);
 
+    var groupName;
 	this.timelineME.on('select', function (properties) {
 		var currItem = properties.items;
+		groupName = 'multi_exclude';
 		datasetMEAll.forEach(function(data){
 			if(data['id'] == currItem){
 				// console.log(data);
@@ -90,6 +100,7 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
 	});
 	this.timelineMI.on('select', function (properties) {
 		var currItem = properties.items;
+		groupName = 'multi_include';
 		datasetMIAll.forEach(function(data){
 			if(data['id'] == currItem){
 				// console.log(data);
@@ -99,6 +110,7 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
 	});
 	this.timelineTS.on('select', function (properties) {
 		var currItem = properties.items;
+		groupName = 'tshark';
 		datasetTSAll.forEach(function(data){
 			if(data['id'] == currItem){
 				// console.log(data);

@@ -6,6 +6,16 @@ function prettyAdd(title, callback){
 	}).then(callback);
 }
 
+function prettyConfirm(title, text, callback) {
+    swal({
+      title: title,
+      text: text,
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55"
+    }).then(callback);
+}
+
 function prettyPrompt(item, callback){
 	var title = item.start;
 	var text = formatObjectForDisplay(item);

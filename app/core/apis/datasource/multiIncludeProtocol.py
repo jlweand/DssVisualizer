@@ -58,7 +58,7 @@ class MultiIncludeProtocol:
         jsonData = multiIncludePlugin.selectMultiIncludeProtocolData(Common().formatDateStringToUTC(startDate),
                                                                      Common().formatDateStringToUTC(endDate), techNames,
                                                                      eventNames, eventTechList)
-        return jsonData
+        return Common().removeDeletedData(jsonData)
 
     def selectMultiIncludeProtocolDataById(self, dataId):
         """Override: Select the MultiIncludeProtocol data by its ID

@@ -58,7 +58,7 @@ class MultiIncludeThroughput:
         jsonData = multiIncludePlugin.selectMultiIncludeThroughputData(Common().formatDateStringToUTC(startDate),
                                                                        Common().formatDateStringToUTC(endDate),
                                                                        techNames, eventNames, eventTechList)
-        return jsonData
+        return Common().removeDeletedData(jsonData)
 
     def selectMultiIncludeThroughputDataById(self, dataId):
         """Override: Select the MultiIncludeThroughput data by its ID

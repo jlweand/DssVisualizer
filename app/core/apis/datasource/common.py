@@ -79,3 +79,17 @@ class Common:
         metadata["importDate"] = datimeNow
 
         return metadata
+
+    def removeDeletedData(self, jsonData):
+        """ removes any data that has been marked as deleted.
+
+        :param jsonData: data returned from the data source
+        :return: the dictionary without any deleted data
+        """
+        for i, obj in enumerate(jsonData):
+            try:
+                if obj['fixedData']['isDeleted']:
+                    del jsonData[i]
+            except KeyError:
+                continue
+        return jsonData

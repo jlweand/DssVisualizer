@@ -61,7 +61,20 @@ var KeyLogger = function(keyData, clickData, timedData){
 		},
 		onUpdate: function(item, callback){
 			// 	  $.get("http://localhost?submission=annotation&itemID="+currItem+"&type="+groupName+"&annotation="+value);
-			prettyPrompt(item, callback);
+			(item, callback);
+		},
+		onRemove: function(item, callback) {
+            prettyConfirm('Remove item', 'Do you really want to remove item ' + item.content + '?', function (ok) {
+                 console.log(ok);
+                if (ok) {
+                    var groupName = dataNames[item.group];
+                    $.get("http://localhost?submission=delete&itemID="+item.id+"&type="+groupName+"&start="+item.start);
+                    callback(item); /* confirm deletion */
+                }
+                else {
+                    callback(null); /* cancel deletion */
+                }
+            });
 		}
 	};
 

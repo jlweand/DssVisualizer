@@ -57,7 +57,7 @@ class ManualScreenShot:
         manualScreenShot = self.getPlugin()
         jsonData = manualScreenShot.selectManualScreenShotData(Common().formatDateStringToUTC(startDate),
                                            Common().formatDateStringToUTC(endDate), techNames, eventNames, eventTechList)
-        return jsonData
+        return Common().removeDeletedData(jsonData)
 
     def selectManualScreenShotDataById(self, dataId):
         """Override: Select the ManualScreenShot data by its ID

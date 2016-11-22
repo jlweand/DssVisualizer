@@ -58,7 +58,7 @@ class MultiExcludeThroughput:
         jsonData = multiExcludePlugin.selectMultiExcludeThroughputData(Common().formatDateStringToUTC(startDate),
                                                                        Common().formatDateStringToUTC(endDate),
                                                                        techNames, eventNames, eventTechList)
-        return jsonData
+        return Common().removeDeletedData(jsonData)
 
     def selectMultiExcludeThroughputDataById(self, dataId):
         """Override: Select the MultiExcludeThroughput data by its ID

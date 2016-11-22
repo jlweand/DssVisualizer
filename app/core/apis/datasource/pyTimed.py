@@ -55,7 +55,7 @@ class PyTimed:
         """
         pyTimed = self.getPlugin()
         jsonData = pyTimed.selectTimedData(Common().formatDateStringToUTC(startDate), Common().formatDateStringToUTC(endDate), techNames, eventNames, eventTechList)
-        return jsonData
+        return Common().removeDeletedData(jsonData)
 
     def selectTimedDataById(self, dataId):
         """Override: Select the Timed data by its ID

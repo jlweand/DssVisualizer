@@ -58,7 +58,7 @@ class TsharkProtocol:
         jsonData = tsharkProtocolPlugin.selectTsharkProtocolData(Common().formatDateStringToUTC(startDate),
                                                                  Common().formatDateStringToUTC(endDate), techNames,
                                                                  eventNames, eventTechList)
-        return jsonData
+        return Common().removeDeletedData(jsonData)
 
     def selectTsharkProtocolDataById(self, dataId):
         """Override: Select the TsharkProtocol data by its ID

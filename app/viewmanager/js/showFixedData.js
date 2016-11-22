@@ -1,11 +1,13 @@
-function showFixedData(dataArray, attributeToFilter) {
+function showFixedData(dataArray) {
 	JSON.stringify(dataArray);
 	var dataArrayFiltered = [];
 	var dataArrayKeys = Object.keys(dataArray);
 
 	var filteredIndex = 0;
 	dataArrayKeys.forEach(function(index){
+	    console.log(dataArray[index]['fixed']);
         if(dataArray[index]['fixed'] != null && dataArray[index]['fixed']['isDeleted'] != true){
+            console.log(dataArray[index]['fixed']['isDeleted']);
             var fixedKeys = Object.keys(dataArray[index]['fixed']);
             var originalKeys = Object.keys(dataArray[index]);
             dataArrayFiltered[index] = {};
@@ -20,7 +22,7 @@ function showFixedData(dataArray, attributeToFilter) {
                 }
             });
         }
-        else{
+        else {
             dataArrayFiltered[index] = dataArray[index];
         }
 	});

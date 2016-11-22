@@ -59,7 +59,7 @@ class MultiExcludeProtocol:
         jsonData = multiExcludePlugin.selectMultiExcludeProtocolData(Common().formatDateStringToUTC(startDate),
                                                                      Common().formatDateStringToUTC(endDate), techNames,
                                                                      eventNames, eventTechList)
-        return jsonData
+        return Common().removeDeletedData(jsonData)
 
     def selectMultiExcludeProtocolDataById(self, dataId):
         """Override: Select the MultiExcludeProtocol data by its ID
