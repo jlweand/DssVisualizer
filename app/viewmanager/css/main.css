@@ -212,3 +212,9 @@ hr {
 	border-color: white;
 	color: white;
 }
+
+.vis-item.annotation {
+  color: white;
+  background-color: red;
+  border-color: darkred;
+}
