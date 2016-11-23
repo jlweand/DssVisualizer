@@ -65,7 +65,6 @@ var KeyLogger = function(keyData, clickData, timedData){
 		},
 		onRemove: function(item, callback) {
             prettyConfirm('Remove item', 'Do you really want to remove item ' + item.content + '?', function (ok) {
-                 console.log(ok);
                 if (ok) {
                     var groupName = dataNames[item.group];
                     $.get("http://localhost?submission=edit&editType=delete&itemID="+item.id+"&type="+groupName+"&start="+item.start);
