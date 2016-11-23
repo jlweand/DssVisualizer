@@ -86,10 +86,11 @@ class Common:
         :param jsonData: data returned from the data source
         :return: the dictionary without any deleted data
         """
+        nonDeletedData = []
         for i, obj in enumerate(jsonData):
             try:
-                if obj['fixedData']['isDeleted']:
-                    del jsonData[i]
+                if obj['fixedData']['isDeleted'] == False:
+                    nonDeletedData.append(obj)
             except KeyError:
-                continue
-        return jsonData
+                nonDeletedData.append(obj)
+        return nonDeletedData
