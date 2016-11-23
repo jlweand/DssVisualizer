@@ -89,36 +89,16 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
 	this.graph2dTS.on('rangechanged', getRangeChanged);
 	this.timelineTS.on('rangechanged', getRangeChanged);
 
+    // this weirdness sets the groupname (for the python) for deleting items.
     var groupName;
 	this.timelineME.on('select', function (properties) {
-		var currItem = properties.items;
 		groupName = 'multi_exclude';
-		datasetMEAll.forEach(function(data){
-			if(data['id'] == currItem){
-				// console.log(data);
-				// prettyPrompt(data);
-			}
-		})
 	});
 	this.timelineMI.on('select', function (properties) {
-		var currItem = properties.items;
 		groupName = 'multi_include';
-		datasetMIAll.forEach(function(data){
-			if(data['id'] == currItem){
-				// console.log(data);
-				// prettyPrompt(data);
-			}
-		})
 	});
 	this.timelineTS.on('select', function (properties) {
-		var currItem = properties.items;
 		groupName = 'tshark';
-		datasetTSAll.forEach(function(data){
-			if(data['id'] == currItem){
-				// console.log(data);
-				// prettyPrompt(data);
-			}
-		})
 	});
 
 	// this weird thing is to get the event/tech name to add to the timeline annotation.
