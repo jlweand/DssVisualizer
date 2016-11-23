@@ -26,16 +26,16 @@ body, html {
 }
 
 #checkboxes{
-    overflow: hidden;
-    padding: 5px;
+	overflow: hidden;
+	padding: 5px;
 		background-color: rgb(237, 195, 14);
 		border-radius: 3px;
 }
 
 .checkbox {
-    float: left;
-    padding: 5px;
-    margin-right: 5px;
+	float: left;
+	padding: 5px;
+	margin-right: 5px;
 }
 
 #start-container{
@@ -214,7 +214,15 @@ hr {
 }
 
 .vis-item.annotation {
-  color: white;
-  background-color: red;
-  border-color: darkred;
+	color: black;
+	background-color: #d5f6d5;
+	border-color: #96f896;
+}
+
+.filterHide{
+	display: none !important;
+}
+.search{
+	background-color: #f6ddd5 !important;
+	border-color: #f8ae96 !important;
 }

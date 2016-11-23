@@ -56,98 +56,119 @@ along with DssVisualizer.  If not, see <http://www.gnu.org/licenses/>.
 </head>
 <body>
 	<div id="content">
-	<div id="admin">
-		<a href="admin.html">Administration</a>
-	</div>
-	<div id="dateSelect" class="dateSelect">
-		<div id="start-container">
-			<label for="start">Select start date:</label>
-			<input type="text" class="testInput" id="datepickerStart" name="start" size="20" value="2016-10-18" />
+		<div id="admin">
+			<a href="admin.html">Administration</a>
 		</div>
-
-		<div id="end-container">
-			<label for="end">Select end date:</label>
-			<input type="text" id="datepickerEnd" name="end" size="20" value="2016-10-18" />
+		<div id="dateSelect" class="dateSelect">
+			<div id="start-container">
+				<label for="start">Select start date:</label>
+				<input type="text" class="testInput" id="datepickerStart" name="start" size="20" value="2016-10-18" />
 			</div>
-	</div>
-	<div id="tech-eventBoxes" class="tech-eventBoxes">
-		<div id="end-container">
-			<label for="eventOptions">Choose Event(s):</label>
-			<select data-placeholder="Choose event(s)..." id="eventOptions" class= "chosen-select" multiple style= "width: 200px">
-			</select>
-		</div>
-		<div id="end-container">
-			<label for="techOptions">Choose Tech(s):</label>
-			<select data-placeholder="Choose tech(s)..." id="techOptions" class= "chosen-select" multiple style= "width: 200px">
-			</select>
-		</div>
-		<div id="end-container">
-			<label for="techAndEventOptions">Choose Event/Tech(s):</label>
-			<select data-placeholder="Choose event/tech(s)..." id="techAndEventOptions" class= "chosen-select" multiple style= "width: 200px">
-			</select>
-		</div>
-	</div>
-	<div class="filterSearch">
-		<div id="end-container">
-			<label for="filter">Filter:</label>
-			<input type="text" id="filter" name="filter"/>
-		</div>
-	</div>
-	<div class="go-exportButtons">
-		<div id="end-container">
-			<button id="dateInput" class="button" name="dateInput">Go</button>
-		</div>
-		<div id="exportData">
-			<button id="exportVisData" class="button" onClick="exportData()">Export Visible Data</button>
-		</div>
-	</div>
-	<div class="clear"></div>
-	<hr>
-	<div id="checkboxes">
-		<div class="checkbox">
-			Show:
-		</div>
-		<div class="checkbox">
-			<input type='checkbox' id='keylogger' name='keylogger' checked>
-			<label for='keylogger'>Key Logger</label>
-		</div>
-		<div class="checkbox">
-			<input type='checkbox' id='multiexclude' name='multiexclude' checked>
-			<label for='multiexclude'>Multi Exclude Traffic</label>
-		</div>
-		<div class="checkbox">
-			<input type='checkbox' id='multiinclude' name='multiinclude' checked>
-			<label for='multiinclude'>Multi Include Traffic</label>
-		</div>
-		<div class="checkbox">
-			<input type='checkbox' id='tshark' name='tshark' checked>
-			<label for='tshark'>TShark Traffic</label>
-		</div>
-		<div class="checkbox">
-			<input type='checkbox' id='snapshots' name='snapshots' checked>
-			<label for='snapshots'>Manual Snapshots</label>
-		</div>
-	</div>
-	<hr>
 
-	<div class="clear"></div>
-	<div id="loading" class="hidden">
-		<img src="img/ripple.gif"/>
-	</div>
-	<div class="background" id="background">
-		<h3>Keypress Data</h3>
-		<div id="keypressData" class="timeline"></div>
-		<h3>Multi Exclude Data</h3>
-		<div id="multiExcludeData" class="timeline"></div>
-		<h3>Multi Include Data</h3>
-		<div id="multiIncludeData" class="timeline"></div>
-		<h3>TShark Data</h3>
-		<div id="tsharkData" class="timeline"></div>
-		<h3>Manual Screenshot Data</h3>
-		<div id="screenshotData" class="timeline"></div>
-	</div>
-	<div id="footer">
-		Code licensed under the <a href="https://www.gnu.org/licenses/gpl-3.0-standalone.html">GPLv3</a>
+			<div id="end-container">
+				<label for="end">Select end date:</label>
+				<input type="text" id="datepickerEnd" name="end" size="20" value="2016-10-18" />
+				</div>
+		</div>
+		<div id="tech-eventBoxes" class="tech-eventBoxes">
+			<div id="end-container">
+				<label for="eventOptions">Choose Event(s):</label>
+				<select data-placeholder="Choose event(s)..." id="eventOptions" class= "chosen-select" multiple style= "width: 200px">
+				</select>
+			</div>
+			<div id="end-container">
+				<label for="techOptions">Choose Tech(s):</label>
+				<select data-placeholder="Choose tech(s)..." id="techOptions" class= "chosen-select" multiple style= "width: 200px">
+				</select>
+			</div>
+			<div id="end-container">
+				<label for="techAndEventOptions">Choose Event/Tech(s):</label>
+				<select data-placeholder="Choose event/tech(s)..." id="techAndEventOptions" class= "chosen-select" multiple style= "width: 200px">
+				</select>
+			</div>
+		</div>
+		<div class="filterSearch">
+			<div id="end-container">
+				<label for="filter">Filter:</label>
+				<input type="text" id="filter" name="filter"/>
+			</div>
+		</div>
+		<div class="go-exportButtons">
+			<div id="end-container">
+				<button id="dateInput" class="button" name="dateInput">Go</button>
+			</div>
+			<div id="exportData">
+				<button id="exportVisData" class="button" onClick="exportData()">Export Visible Data</button>
+			</div>
+		</div>
+		<div class="clear"></div>
+		<hr>
+		<div id="checkboxes">
+			<div class="checkbox">
+				Show:
+			</div>
+			<div class="checkbox">
+				<input type='checkbox' id='keylogger' name='keylogger' checked>
+				<label for='keylogger'>Key Logger</label>
+			</div>
+			<div class="checkbox">
+				<input type='checkbox' id='multiexclude' name='multiexclude' checked>
+				<label for='multiexclude'>Multi Exclude Traffic</label>
+			</div>
+			<div class="checkbox">
+				<input type='checkbox' id='multiinclude' name='multiinclude' checked>
+				<label for='multiinclude'>Multi Include Traffic</label>
+			</div>
+			<div class="checkbox">
+				<input type='checkbox' id='tshark' name='tshark' checked>
+				<label for='tshark'>TShark Traffic</label>
+			</div>
+			<div class="checkbox">
+				<input type='checkbox' id='snapshots' name='snapshots' checked>
+				<label for='snapshots'>Manual Snapshots</label>
+			</div>
+		</div>
+		<hr>
+		<div class="filterAndSearch-container">
+			<div class="hidden" id="filterSearch">
+				<div class="filter-container" style="width: 100%">
+					<label for="filter">Filter:</label>
+					<input type="text" id="filter" name="filter"/>
+					<button id="goFilter" class="button" name="goFilter">Filter</button>
+					<button id="resetFilter" class="button" name="resetFilter">Reset Filter</button>
+				</div>
+				<div class="search-container" style="width: 100%">
+					<label for="search">Search:</label>
+					<input type="text" id="search" name="search"/>
+					<button id="goSearch" class="button" name="goSearch">Search</button>
+					<button id="resetSearch" class="button" name="resetSearch">Reset Search</button>
+				</div>
+			</div>
+			<div class="goReset">
+
+			</div>
+		</div>
+		<hr>
+
+		<div class="clear"></div>
+		<div id="loading" class="hidden">
+			<img src="img/ripple.gif"/>
+		</div>
+		<div class="background" id="background">
+			<h3>Keypress Data</h3>
+			<div id="keypressData" class="timeline"></div>
+			<h3>Multi Exclude Data</h3>
+			<div id="multiExcludeData" class="timeline"></div>
+			<h3>Multi Include Data</h3>
+			<div id="multiIncludeData" class="timeline"></div>
+			<h3>TShark Data</h3>
+			<div id="tsharkData" class="timeline"></div>
+			<h3>Manual Screenshot Data</h3>
+			<div id="screenshotData" class="timeline"></div>
+		</div>
+		<div id="footer">
+			Code licensed under the <a href="https://www.gnu.org/licenses/gpl-3.0-standalone.html">GPLv3</a>
+		</div>
 	</div>
 	<script type="text/javascript">
 		var config = {

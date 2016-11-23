@@ -4,6 +4,9 @@ var techExport;
 var eventExport;
 var filter;
 var search;
+var keylogger = [];
+var pcapData = [];
+var snap = [];
 
 $(document).on("click", "#dateInput", function(){
 	$("#loading").removeClass("hidden");
@@ -39,6 +42,7 @@ $(document).on("click", "#dateInput", function(){
 	setTimeout(getRequest, 5000, pcapDataUrl);
 	var screenshotDataUrl = "http://localhost?request=screenshotData&startDate="+start+"&endDate="+end+"&techNames="+techNames+"&eventNames="+eventNames+"&eventTechNames="+eventTechNames;
 	setTimeout(getRequest, 5000, screenshotDataUrl);
+	$("#filterSearch").removeClass("hidden");
 });
 
 function getRequest(url){
@@ -65,9 +69,22 @@ $(document).on("change", "#snapshots", function(){
 	$('#screenshotData').toggle();
 });
 
-var keylogger = [];
-var pcapData = [];
-var snap = [];
+$(document).on("click", "#goFilter", function(){
+	filterTheTimeline();
+});
+
+$(document).on("click", "#resetFilter", function(){
+	unFilterTheTimeline();
+});
+
+$(document).on("click", "#goSearch", function(){
+	searchTheTimeline();
+});
+
+$(document).on("click", "#resetSearch", function(){
+	unSearchTheTimeline();
+});
+
 function visualizeKeyData(keyData, clickData, timedData, count){
 	filter = $("#filter").val();
 	var eventTechNames = getArrayOfEventTechNames();

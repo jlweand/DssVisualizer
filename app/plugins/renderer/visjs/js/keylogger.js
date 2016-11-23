@@ -13,9 +13,9 @@ var KeyLogger = function(keyData, clickData, timedData){
 		groups.add({id: g, content: dataNames[g]});
 	}
 
-	var items = new vis.DataSet(keyData);
-	items.add(clickData);
-	items.add(timedData);
+	this.items = new vis.DataSet(keyData);
+	this.items.add(clickData);
+	this.items.add(timedData);
 
 	// Configuration for the Timeline
 	var options = {
@@ -78,17 +78,8 @@ var KeyLogger = function(keyData, clickData, timedData){
 	};
 
 	// Create a Timeline
-	this.timeline = new vis.Timeline(container, items, groups, options);
+	this.timeline = new vis.Timeline(container, this.items, groups, options);
 	$("#keypressData").removeClass("hidden");
-
-	// this.timeline.on('select', function (properties) {
-	// 	var currItem = properties.items;
-	// 	items.forEach(function(data){
-	// 		if(data['id'] == currItem){
-	// 			prettyPrompt(data);
-	// 		}
-	// 	});
-	// });
 
 	// this weird thing is to get the event/tech name to add to the timeline annotation.
     var metaDataItem;
@@ -96,7 +87,7 @@ var KeyLogger = function(keyData, clickData, timedData){
         var firstChildItemOfTimeline = properties.event.firstTarget.firstChild;
         try {
             var firstChildId = firstChildItemOfTimeline.getAttribute("data-id");
-            items.forEach(function(data){
+            this.items.forEach(function(data){
                 if(data['id'] == firstChildId){
                     metaDataItem = data;
                     return;
@@ -108,6 +99,11 @@ var KeyLogger = function(keyData, clickData, timedData){
 	this.timeline.on('rangechanged', getRangeChanged);
 
 }
+
+KeyLogger.prototype.getDataset = function(){
+	return this.items;
+}
+
 KeyLogger.prototype.setTimelineWindow = function(start,end){
 	this.timeline.setWindow(start,end);
 	//this.timeline.redraw();

@@ -6,9 +6,9 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
 	var datasetMEXY = new vis.DataSet(meXY);
 	var datasetMIXY = new vis.DataSet(miXY);
 	var datasetTSXY = new vis.DataSet(tsXY);
-	var datasetMEAll = new vis.DataSet(meAll);
-	var datasetMIAll = new vis.DataSet(miAll);
-	var datasetTSAll = new vis.DataSet(tsAll);
+	this.datasetMEAll = new vis.DataSet(meAll);
+	this.datasetMIAll = new vis.DataSet(miAll);
+	this.datasetTSAll = new vis.DataSet(tsAll);
 
 	var optionsXY = {
 		drawPoints: true,
@@ -66,11 +66,11 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
 
 
 	this.graph2dME = new vis.Graph2d(containerME, datasetMEXY, optionsXY);
-	this.timelineME = new vis.Timeline(containerME, datasetMEAll, optionsAll);
+	this.timelineME = new vis.Timeline(containerME, this.datasetMEAll, optionsAll);
 	this.graph2dMI = new vis.Graph2d(containerMI, datasetMIXY, optionsXY);
-	this.timelineMI = new vis.Timeline(containerMI, datasetMIAll, optionsAll);
+	this.timelineMI = new vis.Timeline(containerMI, this.datasetMIAll, optionsAll);
 	this.graph2dTS = new vis.Graph2d(containerTS, datasetTSXY, optionsXY);
-	this.timelineTS = new vis.Timeline(containerTS, datasetTSAll, optionsAll);
+	this.timelineTS = new vis.Timeline(containerTS, this.datasetTSAll, optionsAll);
 
 	$("#multiExcludeData").removeClass("hidden");
 	$("#multiIncludeData").removeClass("hidden");
@@ -166,6 +166,16 @@ function replaceNewLines(text){
 	newText += text.replace(/\n/g, "</td></tr><tr><td>");
 	newText += "</td></tr></table><div>";
 	return newText;
+}
+
+PCAPData.prototype.getMEDataset = function(){
+	return this.datasetMEAll;
+}
+PCAPData.prototype.getMIDataset = function(){
+	return this.datasetMIAll;
+}
+PCAPData.prototype.getTSDataset = function(){
+	return this.datasetTSAll;
 }
 
 PCAPData.prototype.setPcapWindows = function (start,end){

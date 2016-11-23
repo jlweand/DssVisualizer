@@ -8,7 +8,7 @@ var Screenshot = function(snapData){
 	var groups = new vis.DataSet();
 	groups.add({id: 0, content: 'Snap'});
 
-	var items = new vis.DataSet(snapData);
+	this.items = new vis.DataSet(snapData);
 
 	// Configuration for the Timeline
 	var options = {
@@ -68,7 +68,7 @@ var Screenshot = function(snapData){
 	};
 
 	// Create a Timeline
-	this.timeline = new vis.Timeline(container, items, groups, options);
+	this.timeline = new vis.Timeline(container, this.items, groups, options);
 
 	$("#screenshotData").removeClass("hidden");
 
@@ -78,7 +78,7 @@ var Screenshot = function(snapData){
         var firstChildItemOfTimeline = properties.event.firstTarget.firstChild;
         try {
             var firstChildId = firstChildItemOfTimeline.getAttribute("data-id");
-            items.forEach(function(data){
+            this.items.forEach(function(data){
                 if(data['id'] == firstChildId){
                     metaDataItem = data;
                     return;
@@ -87,19 +87,12 @@ var Screenshot = function(snapData){
         } catch(TypeError) {}
     });
 
-
-	this.timeline.on('select', function (properties) {
-		var currItem = properties.items;
-		items.forEach(function(data){
-			if(data['id'] == currItem){
-				// console.log(data);
-				// prettyPrompt(data);
-			}
-		})
-	});
 	this.timeline.on('rangechanged', getRangeChanged);
 }
 
+Screenshot.prototype.getDataset = function () {
+	return this.items;
+};
 
 Screenshot.prototype.setTimelineWindow = function(start,end){
 	this.timeline.setWindow(start,end);

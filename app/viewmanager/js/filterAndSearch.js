@@ -1,57 +1,111 @@
-function filterTheData(dataArray, attributeToFilter){
-	JSON.stringify(dataArray);
-	var dataArrayFiltered = [];
-	var dataArrayKeys = Object.keys(dataArray);
+var attributesToBeSearchedAndFiltered = ['title', 'content', 'annotation', 'comment'];
 
-	var filteredIndex = 0;
-	dataArrayKeys.forEach(function(index){
-		if(filter == ''){
-			if(dataArray[index]['fixed'] != null){
-				var fixedKeys = Object.keys(dataArray[index]['fixed']);
-				var originalKeys = Object.keys(dataArray[index]);
-				dataArrayFiltered[index] = {};
-				originalKeys.forEach(function(key){
-					if(key != "fixed"){
-						if(fixedKeys.indexOf(key)>-1){
-							dataArrayFiltered[index][key] = dataArray[index]['fixed'][key];
-						}
-						else{
-							dataArrayFiltered[index][key] = dataArray[index][key];
-						}
-					}
+function filterTheTimeline(){
+	unFilterTheTimeline();
+	var filter = $('#filter').val().trim().toLowerCase();
+	if(filter != ''){
+		if(keylogger != null){
+			if(keylogger.length > 0){
+				keylogger.forEach(function(timeline){
+					var data = timeline.getDataset();
+					filterTheData(data, filter);
 				});
-			}
-			else{
-				dataArrayFiltered[index] = dataArray[index];
 			}
 		}
-		else{
-			var attributeExists = dataArray[index][attributeToFilter] != null;
-			var filterInAttribute = attributeExists && dataArray[index][attributeToFilter].indexOf(filter) > -1;
-			var fixedExists = dataArray[index]['fixed'] != null;
-			var fixedAttributeExists = fixedExists && dataArray[index]['fixed'][attributeToFilter] != null;
-			var filterInFixedAttribute = fixedAttributeExists && dataArray[index]['fixed'][attributeToFilter].indexOf(filter) > -1;
-			if(filterInAttribute && !fixedExists){
-				dataArrayFiltered[filteredIndex] = dataArray[index];
-				filteredIndex++;
-			}
-			else if(filterInFixedAttribute){
-				var fixedKeys = Object.keys(dataArray[index]['fixed']);
-				var originalKeys = Object.keys(dataArray[index]);
-				dataArrayFiltered[filteredIndex] = {};
-				originalKeys.forEach(function(key){
-					if(key != "fixed"){
-						if(fixedKeys.indexOf(key)>-1){
-							dataArrayFiltered[filteredIndex][key] = dataArray[index]['fixed'][key];
-						}
-						else{
-							dataArrayFiltered[filteredIndex][key] = dataArray[index][key];
-						}
-					}
+		if(pcapData != null){
+			if(pcapData.length > 0){
+				pcapData.forEach(function(timeline){
+					var meData = timeline.getMEDataset();
+					filterTheData(meData, filter);
+					var miData = timeline.getMIDataset();
+					filterTheData(miData, filter);
+					var tsData = timeline.getTSDataset();
+					filterTheData(tsData, filter);
 				});
-				filteredIndex++;
 			}
+		}
+		if(snap != null){
+			if(snap.length > 0){
+				snap.forEach(function(timeline){
+					var data = timeline.getDataset();
+					filterTheData(data, filter);
+				});
+			}
+		}
+	}
+}
+function unFilterTheTimeline(){
+	$(".filterHide").removeClass("filterHide");
+}
+function filterTheData(data, filter){
+	data.forEach(function(dataObj){
+		var objectShouldBeHidden = true;
+		var itemID = dataObj['id'];
+		attributesToBeSearchedAndFiltered.forEach(function(attr){
+			if(dataObj[attr] != null){
+				var stringToLookIn = dataObj[attr].trim().toLowerCase();
+				if(stringToLookIn != '' && stringToLookIn.indexOf(filter) > -1){
+					objectShouldBeHidden = false;
+				}
+			}
+		});
+		if(objectShouldBeHidden){
+			$("[data-id='"+itemID+"']").addClass("filterHide");
 		}
 	});
-	return dataArrayFiltered;
+}
+
+function searchTheTimeline(){
+	unSearchTheTimeline();
+	var search = $('#search').val().trim().toLowerCase();
+	if(search != ''){
+		if(keylogger != null){
+			if(keylogger.length > 0){
+				keylogger.forEach(function(timeline){
+					var data = timeline.getDataset();
+					searchTheData(data, search);
+				});
+			}
+		}
+		if(pcapData != null){
+			if(pcapData.length > 0){
+				pcapData.forEach(function(timeline){
+					var meData = timeline.getMEDataset();
+					searchTheData(meData, search);
+					var miData = timeline.getMIDataset();
+					searchTheData(miData, search);
+					var tsData = timeline.getTSDataset();
+					searchTheData(tsData, search);
+				});
+			}
+		}
+		if(snap != null){
+			if(snap.length > 0){
+				snap.forEach(function(timeline){
+					var data = timeline.getDataset();
+					searchTheData(data, search);
+				});
+			}
+		}
+	}
+}
+function unSearchTheTimeline(){
+	$(".search").removeClass("search");
+}
+function searchTheData(data, search){
+	data.forEach(function(dataObj){
+		var objectShouldBeHighlighted = false;
+		var itemID = dataObj['id'];
+		attributesToBeSearchedAndFiltered.forEach(function(attr){
+			if(dataObj[attr] != null){
+				var stringToLookIn = dataObj[attr].trim().toLowerCase();
+				if(stringToLookIn != '' && stringToLookIn.indexOf(search) > -1){
+					objectShouldBeHighlighted = true;
+				}
+			}
+		});
+		if(objectShouldBeHighlighted){
+			$("[data-id='"+itemID+"']").addClass("search");
+		}
+	});
 }
