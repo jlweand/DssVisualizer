@@ -123,38 +123,41 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
     var metaDataItem;
     this.timelineME.on('doubleClick', function(properties){
         var firstChildItemOfTimeline = properties.event.firstTarget.firstChild;
-        var firstChildId = firstChildItemOfTimeline.getAttribute("data-id");
-		datasetMEAll.forEach(function(data){
-			if(data['id'] == firstChildId){
-				metaDataItem = data;
-				metaDataItem.group = 'multi_exclude';
-				return;
-			}
-		})
+        try {
+            var firstChildId = firstChildItemOfTimeline.getAttribute("data-id");
+            items.forEach(function(data){
+                if(data['id'] == firstChildId){
+                    metaDataItem = data;
+                    return;
+                }
+            })
+        } catch(TypeError) {}
     });
 	// this weird thing is to get the event/tech name to add to the timeline annotation.
     this.timelineMI.on('doubleClick', function(properties){
         var firstChildItemOfTimeline = properties.event.firstTarget.firstChild;
-        var firstChildId = firstChildItemOfTimeline.getAttribute("data-id");
-		datasetMIAll.forEach(function(data){
-			if(data['id'] == firstChildId){
-				metaDataItem = data;
-				metaDataItem.group = 'multi_include';
-				return;
-			}
-		})
+        try {
+            var firstChildId = firstChildItemOfTimeline.getAttribute("data-id");
+            items.forEach(function(data){
+                if(data['id'] == firstChildId){
+                    metaDataItem = data;
+                    return;
+                }
+            })
+        } catch(TypeError) {}
     });
 	// this weird thing is to get the event/tech name to add to the timeline annotation.
     this.timelineTS.on('doubleClick', function(properties){
         var firstChildItemOfTimeline = properties.event.firstTarget.firstChild;
-        var firstChildId = firstChildItemOfTimeline.getAttribute("data-id");
-		datasetTSAll.forEach(function(data){
-			if(data['id'] == firstChildId){
-				metaDataItem = data;
-				metaDataItem.group = 'tshark';
-				return;
-			}
-		})
+        try {
+            var firstChildId = firstChildItemOfTimeline.getAttribute("data-id");
+            items.forEach(function(data){
+                if(data['id'] == firstChildId){
+                    metaDataItem = data;
+                    return;
+                }
+            })
+        } catch(TypeError) {}
     });
 
 }

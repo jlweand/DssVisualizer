@@ -77,13 +77,15 @@ var Screenshot = function(snapData){
     var metaDataItem;
     this.timeline.on('doubleClick', function(properties){
         var firstChildItemOfTimeline = properties.event.firstTarget.firstChild;
-        var firstChildId = firstChildItemOfTimeline.getAttribute("data-id");
-		items.forEach(function(data){
-			if(data['id'] == firstChildId){
-				metaDataItem = data;
-				return;
-			}
-		})
+        try {
+            var firstChildId = firstChildItemOfTimeline.getAttribute("data-id");
+            items.forEach(function(data){
+                if(data['id'] == firstChildId){
+                    metaDataItem = data;
+                    return;
+                }
+            })
+        } catch(TypeError) {}
     });
 
 
