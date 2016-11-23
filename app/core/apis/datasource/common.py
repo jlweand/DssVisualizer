@@ -93,10 +93,10 @@ class Common:
         :return: the dictionary without any deleted data
         """
         nonDeletedData = []
-        for i, obj in enumerate(jsonData):
+        for obj in jsonData:
             try:
                 if obj['fixedData']['isDeleted'] == '':
                     nonDeletedData.append(obj)
-            except KeyError:
+            except (KeyError, TypeError):
                 nonDeletedData.append(obj)
         return nonDeletedData

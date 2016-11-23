@@ -69,7 +69,7 @@ class CommandLine:
 
         elif args["command"] == "start" or args["command"] is None:
             if _platform == "linux" or _platform == "linux2":
-                subprocess.Popen(["gnome-terminal -e mongod --repair"], shell=True)
+                subprocess.call(["mongod --repair"], shell=True)
                 subprocess.Popen(["gnome-terminal -e mongod"], shell=True)
                 os.system('python3 -m viewmanager.dssvisualizer')
             elif _platform == "win32":

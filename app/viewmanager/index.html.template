@@ -87,12 +87,6 @@ along with DssVisualizer.  If not, see <http://www.gnu.org/licenses/>.
 				</select>
 			</div>
 		</div>
-		<div class="filterSearch">
-			<div id="end-container">
-				<label for="filter">Filter:</label>
-				<input type="text" id="filter" name="filter"/>
-			</div>
-		</div>
 		<div class="go-exportButtons">
 			<div id="end-container">
 				<button id="dateInput" class="button" name="dateInput">Go</button>
