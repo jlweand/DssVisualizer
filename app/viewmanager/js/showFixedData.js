@@ -1,30 +1,24 @@
-function showFixedData(dataArray) {
-	JSON.stringify(dataArray);
-	var dataArrayFiltered = [];
-	var dataArrayKeys = Object.keys(dataArray);
+function getFixedDataPoint(dataPoint) {
+    var filteredData = dataPoint;
+    if(dataPoint['fixedData'] != null){
+        var fixedKeys = Object.keys(dataPoint['fixedData']);
+        var originalKeys = Object.keys(dataPoint);
 
-	var filteredIndex = 0;
-	dataArrayKeys.forEach(function(index){
-	    console.log(dataArray[index]['fixed']);
-        if(dataArray[index]['fixed'] != null && dataArray[index]['fixed']['isDeleted'] != true){
-            console.log(dataArray[index]['fixed']['isDeleted']);
-            var fixedKeys = Object.keys(dataArray[index]['fixed']);
-            var originalKeys = Object.keys(dataArray[index]);
-            dataArrayFiltered[index] = {};
-            originalKeys.forEach(function(key){
-                if(key != "fixed"){
-                    if(fixedKeys.indexOf(key)>-1){
-                        dataArrayFiltered[index][key] = dataArray[index]['fixed'][key];
-                    }
-                    else{
-                        dataArrayFiltered[index][key] = dataArray[index][key];
-                    }
+        originalKeys.forEach(function(key){
+            if(key != "fixedData") {
+                if(fixedKeys.indexOf(key)>-1){
+                    filteredData[key] = filteredData['fixedData'][key];
                 }
-            });
-        }
-        else {
-            dataArrayFiltered[index] = dataArray[index];
-        }
-	});
-	return dataArrayFiltered;
+            }
+        });
+    }
+    return filteredData;
+}
+
+function getFixedDataArray(dataArray) {
+	var dataArrayFiltered = [];
+	dataArray.forEach(function(dataPoint, index){
+        dataArrayFiltered[index] = getFixedDataPoint(dataPoint);
+    });
+    return dataArrayFiltered;
 }

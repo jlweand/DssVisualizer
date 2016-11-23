@@ -76,6 +76,7 @@ function visualizeKeyData(keyData, clickData, timedData, count){
 		keyDataArrays = splitDataForMultipleDataSetManagement(eventTechNames, keyData);
 		keyDataArrays.forEach(function(keyDataArray) {
 			keyDataArray['data'].forEach(function(obj) {
+				obj = getFixedDataPoint(obj);
 				obj['type'] = ['box'];
 			});
 		});
@@ -83,6 +84,7 @@ function visualizeKeyData(keyData, clickData, timedData, count){
 		clickDataArrays = splitDataForMultipleDataSetManagement(eventTechNames, clickData);
 		clickDataArrays.forEach(function(clickDataArray) {
 			clickDataArray['data'].forEach(function(obj) {
+				obj = getFixedDataPoint(obj);
 				obj['type'] = ['box'];
 			});
 		});
@@ -90,6 +92,7 @@ function visualizeKeyData(keyData, clickData, timedData, count){
 		timedDataArrays = splitDataForMultipleDataSetManagement(eventTechNames, timedData);
 		timedDataArrays.forEach(function(timedDataArray) {
 			timedDataArray['data'].forEach(function(obj) {
+				obj = getFixedDataPoint(obj);
 				obj['type'] = ['box'];
 			});
 		});
@@ -106,6 +109,10 @@ function visualizeKeyData(keyData, clickData, timedData, count){
 }
 
 function visualizePCAPData(meXY, meAll, miXY, miAll, tsXY, tsAll){
+    meAll = getFixedDataArray(meAll);
+    miAll = getFixedDataArray(miAll);
+    tsAll = getFixedDataArray(tsAll);
+
 	eventTechNames = getArrayOfEventTechNames();
 	// if eventTechNames.length > 0 then we know we have multiple datasets to work with.
 	if(eventTechNames.length > 0) {
@@ -160,6 +167,7 @@ function visualizeSnapshotData(snapData){
 		snapDataArrays = splitDataForMultipleDataSetManagement(eventTechNames, snapData);
 		snapDataArrays.forEach(function(snapDataArray) {
 			snapDataArray['data'].forEach(function(obj) {
+				obj = getFixedDataPoint(obj);
 				obj['type'] = ['box'];
 			});
 
