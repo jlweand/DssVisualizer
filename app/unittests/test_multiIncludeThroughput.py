@@ -73,7 +73,7 @@ class MultiIncludeThroughputTest(unittest.TestCase):
         dataId = jsonData[0]["id"]
 
         # insert Fixed MultiExcludeThroughput Data
-        modifiedCount = MultiIncludeThroughput().insertFixedMultiIncludeThroughputData(dataId, 123, '2016-10-02 18:28:00', 1111, True)
+        modifiedCount = MultiIncludeThroughput().insertFixedMultiIncludeThroughputData(dataId, 123, 'trafficThroughput', '2016-10-02 18:28:00', 1111, True)
         self.assertEqual(1, modifiedCount)
         jsonData = MultiIncludeThroughput().selectMultiIncludeThroughputDataById(dataId)
         self.assertEqual(jsonData[0]["fixedData"]["traffic_xy_id"], 123)
@@ -82,7 +82,7 @@ class MultiIncludeThroughputTest(unittest.TestCase):
         self.assertTrue(jsonData[0]["fixedData"]["isDeleted"])
 
         # update Fixed MultiExcludeThroughput Data
-        modifiedCount = MultiIncludeThroughput().updateFixedMultiIncludeThroughputData(dataId, 456, '2017-01-02 18:28:00', 99999, False)
+        modifiedCount = MultiIncludeThroughput().updateFixedMultiIncludeThroughputData(dataId, 456, 'trafficThroughput', '2017-01-02 18:28:00', 99999, False)
         self.assertEqual(1, modifiedCount)
         jsonData = MultiIncludeThroughput().selectMultiIncludeThroughputDataById(dataId)
         self.assertEqual(jsonData[0]["fixedData"]["traffic_xy_id"], 456)
@@ -136,6 +136,7 @@ class MultiIncludeThroughputTest(unittest.TestCase):
 
 
 if __name__ == '__main__':
+    unittest.main(warnings='ignore')
     unittest.main()
 
 # python -m unittests.test_multiIncludeThroughput

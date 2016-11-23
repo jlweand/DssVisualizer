@@ -70,13 +70,15 @@ class TsharkThroughput:
         jsonData = tsharkPlugin.selectTsharkThroughputDataById(dataId)
         return jsonData
 
-    def insertFixedTsharkThroughputData(self, dataId, traffic_xy_id, x, y, isDeleted):
+    def insertFixedTsharkThroughputData(self, dataId, traffic_xy_id, className, x, y, isDeleted):
         """Override: Inserts a new attribute called 'fixedData' which has all the attributes of the data. Does not overwrite the original data.
 
         :param dataId: The key of the original data
         :type dataId: str
         :param traffic_xy_id: the traffic_xy_id.
         :type traffic_xy_id: int
+        :param className: The updated class name
+        :type className: str
         :param x: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
         :type x: str
         :param y: The number of protocols being used
@@ -86,16 +88,18 @@ class TsharkThroughput:
         :returns: The modified count.
         """
         tsharkPlugin = self.getPlugin()
-        result = tsharkPlugin.insertFixedTsharkThroughputData(dataId, traffic_xy_id, Common().formatDateStringToUTC(x), y, isDeleted)
+        result = tsharkPlugin.insertFixedTsharkThroughputData(dataId, traffic_xy_id, className, Common().formatDateStringToUTC(x), y, isDeleted)
         return result
 
-    def updateFixedTsharkThroughputData(self, dataId, traffic_xy_id, x, y, isDeleted):
+    def updateFixedTsharkThroughputData(self, dataId, traffic_xy_id, className, x, y, isDeleted):
         """Override: Updates the fixedData attribute.
 
         :param dataId: The key of the original data
         :type dataId: str
         :param traffic_xy_id: the traffic_xy_id.
         :type traffic_xy_id: int
+        :param className: The updated class name
+        :type className: str
         :param x: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
         :type x: str
         :param y: The number of protocols being used
@@ -105,7 +109,7 @@ class TsharkThroughput:
         :returns: The modified count.
         """
         tsharkPlugin = self.getPlugin()
-        result = tsharkPlugin.updateFixedTsharkThroughputData(dataId, traffic_xy_id, Common().formatDateStringToUTC(x), y, isDeleted)
+        result = tsharkPlugin.updateFixedTsharkThroughputData(dataId, traffic_xy_id, className, Common().formatDateStringToUTC(x), y, isDeleted)
         return result
 
     def deleteFixedTsharkThroughputData(self, dataId):

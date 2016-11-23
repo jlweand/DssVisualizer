@@ -49,14 +49,14 @@ class MultiExcludeThroughput:
         return Common().fixOneData(data)
 
     # add a fixedData record to this data point
-    def insertFixedMultiExcludeThroughputData(self, dataId, traffic_xy_id, x, y, isDeleted):
-        insertFixed = {"doc": {"fixedData": {"traffic_xy_id": traffic_xy_id, "x": x, "y": y, "isDeleted": isDeleted}}}
+    def insertFixedMultiExcludeThroughputData(self, dataId, traffic_xy_id, className, x, y, isDeleted):
+        insertFixed = {"doc": {"fixedData": {"traffic_xy_id": traffic_xy_id, "className": className, "x": x, "y": y, "isDeleted": isDeleted}}}
         result = Elasticsearch().update(index=self.esIndex, doc_type=self.multiExcludeThroughputDocType, body=insertFixed, id = dataId)
         return Common().getModfiedCount(result)
 
     # update a previously 'fixed' record.
-    def updateFixedMultiExcludeThroughputData(self, dataId, traffic_xy_id, x, y, isDeleted):
-        updateFixed = {"doc": {"fixedData": {"traffic_xy_id": traffic_xy_id, "x": x, "y": y, "isDeleted": isDeleted}}}
+    def updateFixedMultiExcludeThroughputData(self, dataId, traffic_xy_id, className, x, y, isDeleted):
+        updateFixed = {"doc": {"fixedData": {"traffic_xy_id": traffic_xy_id, "className": className, "x": x, "y": y, "isDeleted": isDeleted}}}
         result = Elasticsearch().update(index=self.esIndex, doc_type=self.multiExcludeThroughputDocType, body=updateFixed, id = dataId)
         return Common().getModfiedCount(result)
 
