@@ -77,10 +77,16 @@ class MultiExcludeProtocol:
 
         :param dataId: The key of the original data
         :type dataId: str
-        :param x: x is the Datetime
-        :type x: datetime
-        :param y: The number of protocols being used
-        :type y: str
+        :param oldDataId: The key of the original ManualScreenShot data
+        :type oldDataId: str
+        :param content: The updated content
+        :type content: str
+        :param className: The updated class name
+        :type className: str
+        :param title: The updated title
+        :type title: str
+        :param startDate: The datetime to return data
+        :type startDate: str
         :param isDeleted: indicator if this data point should never be shown on the screen
         :type isDeleted: bool
         :returns: The modified count.
@@ -95,10 +101,16 @@ class MultiExcludeProtocol:
 
         :param dataId: The key of the original data
         :type dataId: str
-        :param x: x is the Datetime
-        :type x: datetime
-        :param y: The number of protocols being used
-        :type y: str
+        :param oldDataId: The key of the original ManualScreenShot data
+        :type oldDataId: str
+        :param content: The updated content
+        :type content: str
+        :param className: The updated class name
+        :type className: str
+        :param title: The updated title
+        :type title: str
+        :param startDate: The datetime to return data
+        :type startDate: str
         :param isDeleted: indicator if this data point should never be shown on the screen
         :type isDeleted: bool
         :returns: The modified count.

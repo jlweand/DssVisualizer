@@ -57,6 +57,8 @@ class Common:
     def getLocalStringDateAsUTCString(self, dateString):
         """Takes a Local date as a string, converts it to UTC, returns it as a string. Used for exporting data.
 
+        :param dateString: A date string in UTC time
+        :type dateString: str
         :returns: UTC ISO_8601 formatted string
         """
         dateDate = self.formatDateStringToUTC(dateString)
@@ -65,6 +67,10 @@ class Common:
     def createMetadataForTimelineAnnotations(self, techName, eventName):
         """Creates the generic metadata for the object when adding an annotation to just the timeline
 
+        :param techNames: A list of technician names to return data
+        :type techNames: list
+        :param eventNames: A list of event names to return data
+        :type eventNames: list
         :returns: a metadata object.
         """
         metadata = {}

@@ -73,10 +73,14 @@ class ManualScreenShot:
     def insertFixedManualScreenShotData(self, dataId, manualscreen_id, content, className, start, title, typeManualScreenShot, comment, isDeleted):
         """Override: Inserts a new attribute called 'fixedData' which has all the attributes of the data. Does not overwrite the original data.
 
-        :param oldDataId: The key of the original ManualScreenShot data
-        :type oldDataId: str
+        :param dataId: The ID of the Data point
+        :type dataId: str
+        :param manualscreen_id: The key of the original ManuelScreenShot data
+        :type manualscreen_id: str
         :param content: The updated content
         :type content: str
+        :param className: The updated class name
+        :type className: str
         :param _type: The updated type
         :type _type: str
         :param classname: The updated class name
@@ -85,8 +89,10 @@ class ManualScreenShot:
         :type title: str
         :param start: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
         :type start: str
-        :param comment: the comment
-        :type comment: str
+        :param typeManualScreenShot: The updated type
+        :type typeManualScreenShot: str
+        :param typeManualScreenShot: The updated type
+        :type typeManualScreenShot: str
         :param isDeleted: indicator if this data point should never be shown on the screen
         :type isDeleted: bool
         :returns: The modified count.
@@ -99,10 +105,14 @@ class ManualScreenShot:
     def updateFixedManualScreenShotData(self, dataId, manualscreen_id, content, className, start, title, typeManualScreenShot, isDeleted):
         """Override: Updates the record of the 'fixed' ManualScreenShot data.
 
-        :param dataId: The ID of the 'fixed' ManualScreenShot data to edit.
+        :param dataId: The ID of the Data point
         :type dataId: str
+        :param manualscreen_id: The key of the original ManuelScreenShot data
+        :type manualscreen_id: str
         :param content: The updated content
         :type content: str
+        :param className: The updated class name
+        :type className: str
         :param _type: The updated type
         :type _type: str
         :param classname: The updated class name
@@ -111,6 +121,8 @@ class ManualScreenShot:
         :type title: str
         :param start: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
         :type start: str
+        :param typeManualScreenShot: The updated type
+        :type typeManualScreenShot: str
         :param isDeleted: indicator if this data point should never be shown on the screen
         :type isDeleted: bool
         :returns: The modified count.
