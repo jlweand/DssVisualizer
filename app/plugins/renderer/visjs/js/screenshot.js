@@ -9,6 +9,7 @@ var Screenshot = function(snapData){
 	groups.add({id: 0, content: 'Snap'});
 
 	this.items = new vis.DataSet(snapData);
+    var theItems = this.items;
 
 	// Configuration for the Timeline
 	var options = {
@@ -78,7 +79,7 @@ var Screenshot = function(snapData){
         var firstChildItemOfTimeline = properties.event.firstTarget.firstChild;
         try {
             var firstChildId = firstChildItemOfTimeline.getAttribute("data-id");
-            this.items.forEach(function(data){
+            theItems.forEach(function(data){
                 if(data['id'] == firstChildId){
                     metaDataItem = data;
                     return;

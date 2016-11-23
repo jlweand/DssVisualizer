@@ -9,6 +9,9 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
 	this.datasetMEAll = new vis.DataSet(meAll);
 	this.datasetMIAll = new vis.DataSet(miAll);
 	this.datasetTSAll = new vis.DataSet(tsAll);
+    var theMEAllItems = this.datasetMEAll;
+    var theMIAllItems = this.datasetMIAll;
+    var theTSAllItems = this.datasetTSAll;
 
 	var optionsXY = {
 		drawPoints: true,
@@ -124,7 +127,7 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
         var firstChildItemOfTimeline = properties.event.firstTarget.firstChild;
         try {
             var firstChildId = firstChildItemOfTimeline.getAttribute("data-id");
-            items.forEach(function(data){
+            theMEAllItems.forEach(function(data){
                 if(data['id'] == firstChildId){
                     metaDataItem = data;
                     return;
@@ -137,7 +140,7 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
         var firstChildItemOfTimeline = properties.event.firstTarget.firstChild;
         try {
             var firstChildId = firstChildItemOfTimeline.getAttribute("data-id");
-            items.forEach(function(data){
+            theMIAllItems.forEach(function(data){
                 if(data['id'] == firstChildId){
                     metaDataItem = data;
                     return;
@@ -150,7 +153,7 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
         var firstChildItemOfTimeline = properties.event.firstTarget.firstChild;
         try {
             var firstChildId = firstChildItemOfTimeline.getAttribute("data-id");
-            items.forEach(function(data){
+            theTSAllItems.forEach(function(data){
                 if(data['id'] == firstChildId){
                     metaDataItem = data;
                     return;

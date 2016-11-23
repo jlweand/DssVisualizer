@@ -16,6 +16,7 @@ var KeyLogger = function(keyData, clickData, timedData){
 	this.items = new vis.DataSet(keyData);
 	this.items.add(clickData);
 	this.items.add(timedData);
+    var theItems = this.items;
 
 	// Configuration for the Timeline
 	var options = {
@@ -87,7 +88,11 @@ var KeyLogger = function(keyData, clickData, timedData){
         var firstChildItemOfTimeline = properties.event.firstTarget.firstChild;
         try {
             var firstChildId = firstChildItemOfTimeline.getAttribute("data-id");
-            this.items.forEach(function(data){
+//         	console.log(KeyLogger.items);
+//         	for (key in this.getVisibleItems){
+//         	console.log (key);
+//         	}
+            theItems.forEach(function(data){
                 if(data['id'] == firstChildId){
                     metaDataItem = data;
                     return;
