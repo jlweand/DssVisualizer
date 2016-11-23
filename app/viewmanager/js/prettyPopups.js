@@ -17,7 +17,7 @@ function prettyConfirm(title, text, callback) {
     }).then(callback);
 }
 
-function prettyPrompt(item, callback){
+function prettyPrompt(item, groupName, callback){
 	var title = item.start;
 	var text = formatObjectForDisplay(item);
 	var form = getEditForm(item);
@@ -61,19 +61,23 @@ function prettyPrompt(item, callback){
 		}
 	];
 
-	swal.queue(steps).then(function(){
-		var value = resultsFromForm;
-		var startHour = addLeadingZeroes(value['startHours']);
-		var startMinutes = addLeadingZeroes(value['startMinutes']);
-		var startSeconds = addLeadingZeroes(value['startSeconds']);
-		var startDateTime = value['startDate']+" "+startHour+":"+startMinutes+":"+startSeconds;
-		item['start'] = startDateTime;
-		Object.keys(value).forEach(function(key){
-			if(key != 'startDate' && key != 'startHours' && key != 'startMinutes' && key != 'startSeconds'){
-				item[key] = value[key];
-			}
-		});
-		callback(item);
+	swal.queue(steps).then(function(ok){
+            var value = resultsFromForm;
+            var startHour = addLeadingZeroes(value['startHours']);
+            var startMinutes = addLeadingZeroes(value['startMinutes']);
+            var startSeconds = addLeadingZeroes(value['startSeconds']);
+            var startDateTime = value['startDate']+" "+startHour+":"+startMinutes+":"+startSeconds;
+            item['start'] = startDateTime;
+
+            urlString = "http://localhost?submission=edit&editType=edit&itemID="+item.id+"&type="+groupName+"&start="+startDateTime;
+            Object.keys(value).forEach(function(key){
+                if(key != 'startDate' && key != 'startHours' && key != 'startMinutes' && key != 'startSeconds'){
+                    urlString = urlString + "&"+key+"="+value[key]
+                    item[key] = value[key];
+                }
+            });
+            $.get(urlString);
+            callback(item);
 	});
 }
 
@@ -131,7 +135,7 @@ function formatObjectForDisplay(item){
 	var text = "<div><table>";
 	Object.keys(item).forEach(function(key){
 		var isImage = item['classname'] != null && item['classname'] == 'imgPoint';
-		if(key != 'classname'){
+		if(key != 'classname' && typeof item[key] !== 'object'){
 			if(key == 'title' && isImage){
 				text += "<tr>";
 				text += "<td>"+key+":</td>";

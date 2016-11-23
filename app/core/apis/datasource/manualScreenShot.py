@@ -70,7 +70,7 @@ class ManualScreenShot:
         jsonData = manualScreenShot.selectManualScreenShotDataById(dataId)
         return jsonData
 
-    def insertFixedManualScreenShotData(self, dataId, manualscreen_id, content, className, start, title, typeManualScreenShot, isDeleted):
+    def insertFixedManualScreenShotData(self, dataId, manualscreen_id, content, className, start, title, typeManualScreenShot, comment, isDeleted):
         """Override: Inserts a new attribute called 'fixedData' which has all the attributes of the data. Does not overwrite the original data.
 
         :param oldDataId: The key of the original ManualScreenShot data
@@ -85,13 +85,15 @@ class ManualScreenShot:
         :type title: str
         :param start: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
         :type start: str
+        :param comment: the comment
+        :type comment: str
         :param isDeleted: indicator if this data point should never be shown on the screen
         :type isDeleted: bool
         :returns: The modified count.
         """
         manualScreenShot = self.getPlugin()
         result = manualScreenShot.insertFixedManualScreenShotData(dataId, manualscreen_id, content, className,
-                                              Common().formatDateStringToUTC(start), title, typeManualScreenShot, isDeleted)
+                                              Common().formatDateStringToUTC(start), title, typeManualScreenShot, comment, isDeleted)
         return result
 
     def updateFixedManualScreenShotData(self, dataId, manualscreen_id, content, className, start, title, typeManualScreenShot, isDeleted):

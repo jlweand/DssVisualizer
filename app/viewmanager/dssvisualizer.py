@@ -212,7 +212,7 @@ def handle(web_view, web_frame, web_resource, request, response):
                 elif itemType == 'multi_include':
                     MultiIncludeProtocol().addAnnotationToMultiIncludeProtocolTimeline(start, annotation, techName, eventName)
                 elif itemType == 'tshark':
-                    TsharkProtocol().addAnnotationToTsharkProtocolTimelineTsharkProtocol(start, annotation, techName, eventName)
+                    TsharkProtocol().addAnnotationToTsharkProtocolTimeline(start, annotation, techName, eventName)
                 elif itemType == 'screenshot':
                     ManualScreenShot().addAnnotationToManualScreenShotTimeline(start, annotation, techName, eventName)
             if queryDict['submission'][0] == 'edit':
@@ -221,36 +221,58 @@ def handle(web_view, web_frame, web_resource, request, response):
                 itemType = queryDict['type'][0]
                 editType = queryDict['editType'][0]  #delete for delete, edit for edit
                 start = queryDict['start'][0]
+                try:
+                    content = queryDict['content'][0]
+                except KeyError:
+                    content = ''
+
+                try:
+                    title = queryDict['title'][0]
+                except KeyError:
+                    title = ''
+                try:
+                    annotation = queryDict['annotation'][0]
+                except KeyError:
+                    annotation = ''
+                try:
+                    comment = queryDict['comment'][0]
+                except KeyError:
+                    comment = ''
+
                 if editType == 'delete':
-                    if itemType == 'keypress':
-                        PyKeyPress().insertFixedKeyPressData(itemID, '', '', '', start, True)
-                    elif itemType == 'click':
-                        PyClick().insertFixedClickData(itemID, '', '', '', start, '', '', True)
-                    elif itemType == 'timed':
-                        PyTimed().insertFixedTimedData(itemID, '', '', '', start, '', '', True)
-                    elif itemType == 'multi_exclude':
-                        MultiExcludeProtocol().insertFixedMultiExcludeProtocolData(itemID, '', '', '', '', start, True)
-                    elif itemType == 'multi_include':
-                        MultiIncludeProtocol().insertFixedMultiIncludeProtocolData(itemID, '', '', '', '', start, True)
-                    elif itemType == 'tshark':
-                        TsharkProtocol().insertFixedTsharkProtocolData(itemID, '', '', '', '', start, True)
-                    elif itemType == 'screenshot':
-                        ManualScreenShot().insertFixedManualScreenShotData(itemID, '', '', '', '', '', '', True)
+                    delete = True
                 else:
-                    if itemType == 'keypress':
-                        PyKeyPress().insertFixedKeyPressData(itemID, '', '', '', start, '')
-                    elif itemType == 'click':
-                        PyClick().insertFixedClickData(itemID, '', '', '', start, '', '', '')
-                    elif itemType == 'timed':
-                        PyTimed().insertFixedTimedData(itemID, '', '', '', start, '', '', '')
-                    elif itemType == 'multi_exclude':
-                        MultiExcludeProtocol().insertFixedMultiExcludeProtocolData(itemID, '', '', '', '', start, '')
-                    elif itemType == 'multi_include':
-                        MultiIncludeProtocol().insertFixedMultiIncludeProtocolData(itemID, '', '', '', '', start, '')
-                    elif itemType == 'tshark':
-                        TsharkProtocol().insertFixedTsharkProtocolData(itemID, '', '', '', '', start, '')
-                    elif itemType == 'screenshot':
-                        ManualScreenShot().insertFixedManualScreenShotData(itemID, '', '', '', '', '', '', '')
+                    delete = ''
+
+                if itemType == 'keypress':
+                    if annotation != '':
+                        PyKeyPress().addAnnotationKeyPress(itemID, annotation)
+                    PyKeyPress().insertFixedKeyPressData(itemID, '', content, '', start, delete)
+                elif itemType == 'click':
+                    if annotation != '':
+                        PyClick().addAnnotationClick(itemID, annotation)
+                    PyClick().insertFixedClickData(itemID, '', content, '', start, title, '', delete)
+                elif itemType == 'timed':
+                    if annotation != '':
+                        PyTimed().addAnnotationTimed(itemID, annotation)
+                    PyTimed().insertFixedTimedData(itemID, '', content, '', start, title, '', delete)
+                elif itemType == 'multi_exclude':
+                    if annotation != '':
+                        MultiExcludeProtocol().addAnnotationMultiExcludeProtocol(itemID, annotation)
+                    MultiExcludeProtocol().insertFixedMultiExcludeProtocolData(itemID, '', content, '', title, start, delete)
+                elif itemType == 'multi_include':
+                    if annotation != '':
+                        MultiIncludeProtocol().addAnnotationMultiIncludeProtocol(itemID, annotation)
+                    MultiIncludeProtocol().insertFixedMultiIncludeProtocolData(itemID, '', content, '', title, start, delete)
+                elif itemType == 'tshark':
+                    if annotation != '':
+                        TsharkProtocol().addAnnotationTsharkProtocol(itemID, annotation)
+                    TsharkProtocol().insertFixedTsharkProtocolData(itemID, '', content, '', title, start, delete)
+                elif itemType == 'screenshot':
+                    if annotation != '':
+                        ManualScreenShot().addAnnotationManualScreenShot(itemID, annotation)
+                    ManualScreenShot().insertFixedManualScreenShotData(itemID, '', content, '', start, title, '', comment, delete)
+
         elif 'adminRequest' in queryDict:
             if queryDict['adminRequest'][0] == 'availablePlugins':
                 load_available_renderers()

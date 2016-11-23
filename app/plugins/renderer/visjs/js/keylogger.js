@@ -61,7 +61,7 @@ var KeyLogger = function(keyData, clickData, timedData){
 		},
 		onUpdate: function(item, callback){
 			// 	  $.get("http://localhost?submission=annotation&itemID="+currItem+"&type="+groupName+"&annotation="+value);
-			prettyPrompt(item, callback);
+			prettyPrompt(item, dataNames[item.group], callback);
 		},
 		onRemove: function(item, callback) {
             prettyConfirm('Remove item', 'Do you really want to remove item ' + item.content + '?', function (ok) {

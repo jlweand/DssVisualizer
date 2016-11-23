@@ -89,7 +89,7 @@ class Common:
         nonDeletedData = []
         for i, obj in enumerate(jsonData):
             try:
-                if obj['fixedData']['isDeleted'] == False:
+                if obj['fixedData']['isDeleted'] == '':
                     nonDeletedData.append(obj)
             except KeyError:
                 nonDeletedData.append(obj)
