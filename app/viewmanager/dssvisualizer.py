@@ -198,12 +198,59 @@ def handle(web_view, web_frame, web_resource, request, response):
                 itemID = queryDict['itemID'][0]
                 itemType = queryDict['type'][0]
                 annotation = queryDict['annotation'][0]
+                eventName = queryDict['eventName'][0]
+                techName = queryDict['techName'][0]
+                start = queryDict['start'][0]
                 if itemType == 'keypress':
-                    PyKeyPress().addAnnotationKeyPress(itemID, annotation)
+                    PyKeyPress().addAnnotationToKeyPressTimeline(start, annotation, techName, eventName)
                 elif itemType == 'click':
-                    PyClick().addAnnotationClick(itemID, annotation)
+                    PyClick().addAnnotationToClickTimeline(start, annotation, techName, eventName)
                 elif itemType == 'timed':
-                    PyTimed().addAnnotationTimed(itemID, annotation)
+                    PyTimed().addAnnotationToTimedTimeline(start, annotation, techName, eventName)
+                elif itemType == 'multi_exclude':
+                    MultiExcludeProtocol().addAnnotationToMultiExcludeProtocolTimeline(start, annotation, techName, eventName)
+                elif itemType == 'multi_include':
+                    MultiIncludeProtocol().addAnnotationToMultiIncludeProtocolTimeline(start, annotation, techName, eventName)
+                elif itemType == 'tshark':
+                    TsharkProtocol().addAnnotationToTsharkProtocolTimelineTsharkProtocol(start, annotation, techName, eventName)
+                elif itemType == 'screenshot':
+                    ManualScreenShot().addAnnotationToManualScreenShotTimeline(start, annotation, techName, eventName)
+            if queryDict['submission'][0] == 'edit':
+                print("trying to submit"+query)
+                itemID = queryDict['itemID'][0]
+                itemType = queryDict['type'][0]
+                editType = queryDict['editType'][0]  #delete for delete, edit for edit
+                start = queryDict['start'][0]
+                if editType == 'delete':
+                    if itemType == 'keypress':
+                        PyKeyPress().insertFixedKeyPressData(itemID, '', '', '', start, True)
+                    elif itemType == 'click':
+                        PyClick().insertFixedClickData(itemID, '', '', '', start, '', '', True)
+                    elif itemType == 'timed':
+                        PyTimed().insertFixedTimedData(itemID, '', '', '', start, '', '', True)
+                    elif itemType == 'multi_exclude':
+                        MultiExcludeProtocol().insertFixedMultiExcludeProtocolData(itemID, '', '', '', '', start, True)
+                    elif itemType == 'multi_include':
+                        MultiIncludeProtocol().insertFixedMultiIncludeProtocolData(itemID, '', '', '', '', start, True)
+                    elif itemType == 'tshark':
+                        TsharkProtocol().insertFixedTsharkProtocolData(itemID, '', '', '', '', start, True)
+                    elif itemType == 'screenshot':
+                        ManualScreenShot().insertFixedManualScreenShotData(itemID, '', '', '', '', '', '', True)
+                else:
+                    if itemType == 'keypress':
+                        PyKeyPress().insertFixedKeyPressData(itemID, '', '', '', start, '')
+                    elif itemType == 'click':
+                        PyClick().insertFixedClickData(itemID, '', '', '', start, '', '', '')
+                    elif itemType == 'timed':
+                        PyTimed().insertFixedTimedData(itemID, '', '', '', start, '', '', '')
+                    elif itemType == 'multi_exclude':
+                        MultiExcludeProtocol().insertFixedMultiExcludeProtocolData(itemID, '', '', '', '', start, '')
+                    elif itemType == 'multi_include':
+                        MultiIncludeProtocol().insertFixedMultiIncludeProtocolData(itemID, '', '', '', '', start, '')
+                    elif itemType == 'tshark':
+                        TsharkProtocol().insertFixedTsharkProtocolData(itemID, '', '', '', '', start, '')
+                    elif itemType == 'screenshot':
+                        ManualScreenShot().insertFixedManualScreenShotData(itemID, '', '', '', '', '', '', '')
         elif 'adminRequest' in queryDict:
             if queryDict['adminRequest'][0] == 'availablePlugins':
                 load_available_renderers()
