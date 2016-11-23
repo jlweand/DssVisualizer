@@ -69,7 +69,7 @@ function prettyPrompt(item, groupName, callback){
             var startDateTime = value['startDate']+" "+startHour+":"+startMinutes+":"+startSeconds;
             item['start'] = startDateTime;
 
-            urlString = "http://localhost?submission=edit&editType=edit&itemID="+item.id+"&type="+groupName+"&start="+startDateTime;
+            urlString = "http://localhost?submission=edit&editType=edit&itemID="+item.id+"&type="+groupName+"&start="+startDateTime+"&className="+item['className']+"&dataType="+item['type'];
             Object.keys(value).forEach(function(key){
                 if(key != 'startDate' && key != 'startHours' && key != 'startMinutes' && key != 'startSeconds'){
                     urlString = urlString + "&"+key+"="+value[key]

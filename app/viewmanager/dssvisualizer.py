@@ -222,10 +222,13 @@ def handle(web_view, web_frame, web_resource, request, response):
                 editType = queryDict['editType'][0]  #delete for delete, edit for edit
                 start = queryDict['start'][0]
                 try:
+                    className = queryDict['className'][0]
+                except KeyError:
+                    className = ''
+                try:
                     content = queryDict['content'][0]
                 except KeyError:
                     content = ''
-
                 try:
                     title = queryDict['title'][0]
                 except KeyError:
@@ -238,6 +241,10 @@ def handle(web_view, web_frame, web_resource, request, response):
                     comment = queryDict['comment'][0]
                 except KeyError:
                     comment = ''
+                try:
+                    dataType = queryDict['dataType'][0]
+                except KeyError:
+                    dataType = ''
 
                 if editType == 'delete':
                     delete = True
@@ -247,31 +254,31 @@ def handle(web_view, web_frame, web_resource, request, response):
                 if itemType == 'keypress':
                     if annotation != '':
                         PyKeyPress().addAnnotationKeyPress(itemID, annotation)
-                    PyKeyPress().insertFixedKeyPressData(itemID, '', content, '', start, delete)
+                    PyKeyPress().insertFixedKeyPressData(itemID, className, content, dataType, start, delete)
                 elif itemType == 'click':
                     if annotation != '':
                         PyClick().addAnnotationClick(itemID, annotation)
-                    PyClick().insertFixedClickData(itemID, '', content, '', start, title, '', delete)
+                    PyClick().insertFixedClickData(itemID, '', content, className, start, title, dataType, delete)
                 elif itemType == 'timed':
                     if annotation != '':
                         PyTimed().addAnnotationTimed(itemID, annotation)
-                    PyTimed().insertFixedTimedData(itemID, '', content, '', start, title, '', delete)
+                    PyTimed().insertFixedTimedData(itemID, '', content, className, start, title, dataType, delete)
                 elif itemType == 'multi_exclude':
                     if annotation != '':
                         MultiExcludeProtocol().addAnnotationMultiExcludeProtocol(itemID, annotation)
-                    MultiExcludeProtocol().insertFixedMultiExcludeProtocolData(itemID, '', content, '', title, start, delete)
+                    MultiExcludeProtocol().insertFixedMultiExcludeProtocolData(itemID, '', content, className, title, start, delete)
                 elif itemType == 'multi_include':
                     if annotation != '':
                         MultiIncludeProtocol().addAnnotationMultiIncludeProtocol(itemID, annotation)
-                    MultiIncludeProtocol().insertFixedMultiIncludeProtocolData(itemID, '', content, '', title, start, delete)
+                    MultiIncludeProtocol().insertFixedMultiIncludeProtocolData(itemID, '', content, className, title, start, delete)
                 elif itemType == 'tshark':
                     if annotation != '':
                         TsharkProtocol().addAnnotationTsharkProtocol(itemID, annotation)
-                    TsharkProtocol().insertFixedTsharkProtocolData(itemID, '', content, '', title, start, delete)
+                    TsharkProtocol().insertFixedTsharkProtocolData(itemID, '', content, className, title, start, delete)
                 elif itemType == 'screenshot':
                     if annotation != '':
                         ManualScreenShot().addAnnotationManualScreenShot(itemID, annotation)
-                    ManualScreenShot().insertFixedManualScreenShotData(itemID, '', content, '', start, title, '', comment, delete)
+                    ManualScreenShot().insertFixedManualScreenShotData(itemID, '', content, className, start, title, dataType, comment, delete)
 
         elif 'adminRequest' in queryDict:
             if queryDict['adminRequest'][0] == 'availablePlugins':
