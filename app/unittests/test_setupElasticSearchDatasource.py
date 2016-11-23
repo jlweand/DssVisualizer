@@ -34,7 +34,7 @@ class SetupElasticSearchDatasource(unittest.TestCase):
         es = Elasticsearch()
         es.indices.delete(index="dssvisualizer", ignore=[400, 404])
 
-        DataImport().importAllDataFromFiles("json/unittestDatasets/anotherAlex", "   Alex", "Another Event",         comments, rightNow, False)
+        DataImport().importAllDataFromFiles("json/unittestDatasets/anotherAlex",     "Alex", "Another Event",         comments, rightNow, False)
         DataImport().importAllDataFromFiles("json/unittestDatasets/unicornWillow",   "Willow", "Unicorns and more!", comments, rightNow, False)
         DataImport().importAllDataFromFiles("json/unittestDatasets/superSummerAlex", "Alex", "Super Summer Event",   comments, rightNow, False)
         DataImport().importAllDataFromFiles("json/unittestDatasets/superSummerTom",  "Tom", "Super Summer Event",    comments, rightNow, False)

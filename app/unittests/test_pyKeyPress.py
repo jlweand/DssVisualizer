@@ -134,7 +134,7 @@ class PyKeyPressTest(unittest.TestCase):
         pprint(addtimelineAnnotation)
         self.assertEqual(addtimelineAnnotation[0]["className"], 'annotation')
         self.assertEqual(addtimelineAnnotation[0]["start"], '2016-09-16 09:13:57')
-        self.assertEqual(addtimelineAnnotation[0]["annotations"]["annotation"], "here's a Keypress timeline annotation")
+        self.assertEqual(addtimelineAnnotation[0]["content"], "here's a Keypress timeline annotation")
         self.assertEqual(addtimelineAnnotation[0]["metadata"]["techName"], 'Alex')
         self.assertEqual(addtimelineAnnotation[0]["metadata"]["eventName"], 'Super Summer Event')
 

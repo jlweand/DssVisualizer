@@ -12,8 +12,7 @@ from unittests.test_tsharkProtocol import TsharkProtocolTest
 from unittests.test_tsharkThroughput import TsharkThroughputTest
 
 if __name__ == '__main__':
-    test_classes_to_run = [SetupElasticSearchDatasource,
-                           ManualScreenShotTest,
+    test_classes_to_run = [ManualScreenShotTest,
                            MultiExcludeProtocolTest, MultiExcludeThroughputTest,
                            MultiIncludeProtocolTest, MultiIncludeThroughputTest,
                            PyClick, PyKeyPress, PyTimed,

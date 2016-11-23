@@ -13,8 +13,7 @@ from unittests.test_tsharkThroughput import TsharkThroughputTest
 from unittests.test_distinctEventTechNames import DistinctEventTechNames
 
 if __name__ == '__main__':
-    test_classes_to_run = [SetupMongoDatasource,
-                           ManualScreenShotTest,
+    test_classes_to_run = [ManualScreenShotTest,
                            MultiExcludeProtocolTest, MultiExcludeThroughputTest,
                            MultiIncludeProtocolTest, MultiIncludeThroughputTest,
                            PyClick, PyKeyPress, PyTimed,

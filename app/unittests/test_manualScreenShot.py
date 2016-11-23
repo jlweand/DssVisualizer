@@ -74,10 +74,10 @@ class ManualScreenShotTest(unittest.TestCase):
 
         # insert Fixed Data
         modifiedCount = ManualScreenShot().insertFixedManualScreenShotData(dataId, '2222', '[New Content Added]',
-                                                                           'imgPoint',
-                                                                           '2016-10-29 15:07:00',
-                                                                           '/new/path/1474038815.78_TESTING.png',
-                                                                           'point', True)
+                                                                       'imgPoint',
+                                                                       '2016-10-29 15:07:00',
+                                                                       '/new/path/1474038815.78_TESTING.png',
+                                                                       'point', 'comment', True)
         self.assertEqual(1, modifiedCount)
         jsonData = ManualScreenShot().selectManualScreenShotDataById(dataId)
         self.assertEqual(jsonData[0]["fixedData"]["manualscreen_id"], '2222')
@@ -144,7 +144,7 @@ class ManualScreenShotTest(unittest.TestCase):
         pprint(addtimelineAnnotation)
         self.assertEqual(addtimelineAnnotation[0]["className"], 'annotation')
         self.assertEqual(addtimelineAnnotation[0]["start"], '2016-10-29 15:07:00')
-        self.assertEqual(addtimelineAnnotation[0]["annotations"]["annotation"], "here's a ManualScreenShot timeline annotation")
+        self.assertEqual(addtimelineAnnotation[0]["content"], "here's a ManualScreenShot timeline annotation")
         self.assertEqual(addtimelineAnnotation[0]["metadata"]["techName"], 'Alex')
         self.assertEqual(addtimelineAnnotation[0]["metadata"]["eventName"], 'Super Summer Event')
 

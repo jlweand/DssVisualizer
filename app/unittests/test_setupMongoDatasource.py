@@ -76,10 +76,10 @@ class SetupMongoDatasource(unittest.TestCase):
         DataImport().importAllDataFromFiles("json/unittestDatasets/anotherAlex", "Alex", "Another Event", comments, rightNow, False)
         DataImport().importAllDataFromFiles("json/unittestDatasets/unicornWillow", "Willow", "Unicorns and more!", comments, rightNow, False)
 
-        DataImport().importAllDataFromFiles("json/1very small", "Very Small", "Very Small", "Very Small", rightNow, False)
-        DataImport().importAllDataFromFiles("json/2small", "Small", "Small", "Small", rightNow, False)
-        DataImport().importAllDataFromFiles("json/3medium", "Medium", "Medium", "Medium", rightNow, False)
-        DataImport().importAllDataFromFiles("json/4large", "Large", "Large", "Large", rightNow, False)
+        DataImport().importAllDataFromFiles("json/1very small", "Very Small", "z1Very Small", "Very Small", rightNow, False)
+        DataImport().importAllDataFromFiles("json/2small", "Small", "z2Small", "Small", rightNow, False)
+        DataImport().importAllDataFromFiles("json/3medium", "Medium", "z3Medium", "Medium", rightNow, False)
+        DataImport().importAllDataFromFiles("json/4large", "Large", "z4Large", "Large", rightNow, False)
 
         jsonData = PyKeyPress().selectKeyPressData(Common().formatDateStringToUTC('2016-10-18 18:26:36'),
                                                    Common().formatDateStringToUTC('2016-10-18 18:26:36'),

@@ -39,13 +39,20 @@ function getArrayOfEventTechNames() {
                 eventTechs.push(event + ' by ' + tech);
             });
         });
-        return eventTechs;
+       return eventTechs;
     }
 	// otherwise fill the array with all the options
 	else {
 		$("#techAndEventOptions option").each(function(){
 			eventTechs.push($(this).attr('value'));
 		});
-        return eventTechs;
+
+        // this is a temp fix to show that ES is returning data
+        // we don't have the queries to get the event/tech names from the data source
+        // and we need them to print all the data.. so i add a dummy one here.
+		if(eventTechs.length == 0) {
+		    eventTechs.push('Another Event by Alex');
+		}
+      return eventTechs;
     }
 }

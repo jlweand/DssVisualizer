@@ -142,7 +142,7 @@ class PyClickTest(unittest.TestCase):
         pprint(addtimelineAnnotation)
         self.assertEqual(addtimelineAnnotation[0]["className"], 'annotation')
         self.assertEqual(addtimelineAnnotation[0]["start"], '2016-09-11 17:37:14')
-        self.assertEqual(addtimelineAnnotation[0]["annotations"]["annotation"], "here's a Click timeline annotation")
+        self.assertEqual(addtimelineAnnotation[0]["content"], "here's a Click timeline annotation")
         self.assertEqual(addtimelineAnnotation[0]["metadata"]["techName"], 'Alex')
         self.assertEqual(addtimelineAnnotation[0]["metadata"]["eventName"], 'Super Summer Event')
 

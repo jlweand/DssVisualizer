@@ -145,7 +145,7 @@ class TsharkThroughputTest(unittest.TestCase):
         pprint(addtimelineAnnotation)
         self.assertEqual(addtimelineAnnotation[0]["className"], 'annotation')
         self.assertEqual(addtimelineAnnotation[0]["x"], '2016-08-01 10:00:00')
-        self.assertEqual(addtimelineAnnotation[0]["annotations"]["annotation"], "here's a timeline annotation")
+        self.assertEqual(addtimelineAnnotation[0]["content"], "here's a timeline annotation")
         self.assertEqual(addtimelineAnnotation[0]["metadata"]["techName"], 'Alex')
         self.assertEqual(addtimelineAnnotation[0]["metadata"]["eventName"], 'Super Summer Event')
 
