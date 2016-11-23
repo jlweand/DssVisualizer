@@ -35,7 +35,10 @@ class Annotations:
         :returns: modified_count
         """
         updateId = {"_id" : ObjectId(dataId)}
-        push = { "$addToSet": { "annotations": { "annotation": annotationText } } }
+        #if you want to have an array of annotations:
+        # push = { "$addToSet": { "annotations": { "annotation": annotationText } } }
+        #but it wasn't working with the UI so we only have one annotation
+        push = { "$set": { "annotation": annotationText } }
 
         result = collection.update_one(updateId, push)
         return result.modified_count

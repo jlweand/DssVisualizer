@@ -130,6 +130,7 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
             theMEAllItems.forEach(function(data){
                 if(data['id'] == firstChildId){
                     metaDataItem = data;
+                    metaDataItem.group = 'multi_exclude';
                     return;
                 }
             })
@@ -143,6 +144,7 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
             theMIAllItems.forEach(function(data){
                 if(data['id'] == firstChildId){
                     metaDataItem = data;
+                    metaDataItem.group = 'multi_include';
                     return;
                 }
             })
@@ -156,6 +158,7 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
             theTSAllItems.forEach(function(data){
                 if(data['id'] == firstChildId){
                     metaDataItem = data;
+                    metaDataItem.group = 'tshark';
                     return;
                 }
             })
