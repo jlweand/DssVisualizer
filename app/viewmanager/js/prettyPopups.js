@@ -2,6 +2,7 @@ function prettyAdd(title, callback){
 	swal({
 		title: title,
 		input: 'textarea',
+		confirmButtonText: 'Add',
 		showCancelButton: true
 	}).then(callback);
 }
