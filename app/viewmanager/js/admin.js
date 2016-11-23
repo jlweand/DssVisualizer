@@ -94,3 +94,6 @@ function explore(){
 	$.get("http://dssvisualizer.py/explore");
 }
 
+$(document).on("click", "#submitImport", function(){
+	$('#loading').show();
+});

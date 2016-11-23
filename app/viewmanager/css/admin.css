@@ -88,3 +88,12 @@ label {
 #importedData {
     color: red;
 }
+
+#loading {
+	position: relative;
+	white-space: nowrap;
+	padding-top: 10px;
+	width: 100%;
+	left: 40%;
+	right: 50%;
+}

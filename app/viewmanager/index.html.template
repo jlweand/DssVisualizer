@@ -124,19 +124,16 @@ along with DssVisualizer.  If not, see <http://www.gnu.org/licenses/>.
 		</div>
 		<hr>
 		<div class="filterAndSearch-container">
-			<div class="hidden" id="filterSearch">
-				<div class="filter-container" style="width: 100%">
+			<div class = "hidden" id="filterSearch">
 					<label for="filter">Filter:</label>
 					<input type="text" id="filter" name="filter"/>
 					<button id="goFilter" class="button" name="goFilter">Filter</button>
 					<button id="resetFilter" class="button" name="resetFilter">Reset Filter</button>
-				</div>
-				<div class="search-container" style="width: 100%">
+
 					<label for="search">Search:</label>
 					<input type="text" id="search" name="search"/>
 					<button id="goSearch" class="button" name="goSearch">Search</button>
 					<button id="resetSearch" class="button" name="resetSearch">Reset Search</button>
-				</div>
 			</div>
 			<div class="goReset">
 
@@ -146,7 +143,7 @@ along with DssVisualizer.  If not, see <http://www.gnu.org/licenses/>.
 
 		<div class="clear"></div>
 		<div id="loading" class="hidden">
-			<img src="img/ripple.gif"/>
+			<img src="img/python_crash.png"/>
 		</div>
 		<div class="background" id="background">
 			<h3>Keypress Data</h3>
