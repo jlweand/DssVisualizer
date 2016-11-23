@@ -35,12 +35,12 @@ along with DssVisualizer.  If not, see <http://www.gnu.org/licenses/>.
 	<script src="js/underscore-min.js"></script>
 	<script src="js/es6-promise.auto.min.js"></script>
 	<script src="js/sweetalert2.min.js"></script>
+	<script src="js/showFixedData.js"></script>
 	<script src="js/main.js"></script>
 	<script src="js/exportData.js"></script>
 	<script src="js/filterAndSearch.js"></script>
 	<script src="js/multipleDatasetManager.js"></script>
 	<script src="js/prettyPopups.js"></script>
-	<script src="js/showFixedData.js"></script>
 	<script src="js/techAndEventDropdowns.js"></script>
 	<script src="js/annotation.js"></script>
 	<script src="js/datepicker.js"></script>
