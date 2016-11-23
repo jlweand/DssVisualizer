@@ -68,7 +68,7 @@ var KeyLogger = function(keyData, clickData, timedData){
                  console.log(ok);
                 if (ok) {
                     var groupName = dataNames[item.group];
-                    $.get("http://localhost?submission=delete&itemID="+item.id+"&type="+groupName+"&start="+item.start);
+                    $.get("http://localhost?submission=edit&editType=delete&itemID="+item.id+"&type="+groupName+"&start="+item.start);
                     callback(item); /* confirm deletion */
                 }
                 else {

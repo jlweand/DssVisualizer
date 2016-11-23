@@ -55,7 +55,7 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
             prettyConfirm('Remove item', 'Do you really want to remove item ' + item.content + '?', function (ok) {
                  console.log(ok);
                 if (ok) {
-                    $.get("http://localhost?submission=delete&itemID="+item.id+"&type="+groupName+"&start="+item.start);
+                    $.get("http://localhost?submission=edit&editType=delete&itemID="+item.id+"&type="+groupName+"&start="+item.start);
                     callback(item); /* confirm deletion */
                 }
                 else {

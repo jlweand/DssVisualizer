@@ -58,7 +58,7 @@ var Screenshot = function(snapData){
             prettyConfirm('Remove item', 'Do you really want to remove item ' + item.content + '?', function (ok) {
                  console.log(ok);
                 if (ok) {
-                    $.get("http://localhost?submission=delete&itemID="+item.id+"&type=screenshot&start="+item.start);
+                    $.get("http://localhost?submission=edit&editType=delete&itemID="+item.id+"&type=screenshot&start="+item.start);
                     callback(item); /* confirm deletion */
                 }
                 else {
