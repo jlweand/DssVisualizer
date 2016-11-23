@@ -242,7 +242,7 @@ def handle(web_view, web_frame, web_resource, request, response):
                 except KeyError:
                     comment = ''
                 try:
-                    dataType = queryDict['dataType'][0]
+                    dataType = queryDict['comment'][0]
                 except KeyError:
                     dataType = ''
 
@@ -254,15 +254,15 @@ def handle(web_view, web_frame, web_resource, request, response):
                 if itemType == 'keypress':
                     if annotation != '':
                         PyKeyPress().addAnnotationKeyPress(itemID, annotation)
-                    PyKeyPress().insertFixedKeyPressData(itemID, className, content, dataType, start, delete)
+                    PyKeyPress().insertFixedKeyPressData(itemID, className, content, '', start, delete)
                 elif itemType == 'click':
                     if annotation != '':
                         PyClick().addAnnotationClick(itemID, annotation)
-                    PyClick().insertFixedClickData(itemID, '', content, className, start, title, dataType, delete)
+                    PyClick().insertFixedClickData(itemID, '', content, className, start, title, '', delete)
                 elif itemType == 'timed':
                     if annotation != '':
                         PyTimed().addAnnotationTimed(itemID, annotation)
-                    PyTimed().insertFixedTimedData(itemID, '', content, className, start, title, dataType, delete)
+                    PyTimed().insertFixedTimedData(itemID, '', content, className, start, title, '', delete)
                 elif itemType == 'multi_exclude':
                     if annotation != '':
                         MultiExcludeProtocol().addAnnotationMultiExcludeProtocol(itemID, annotation)
@@ -278,7 +278,7 @@ def handle(web_view, web_frame, web_resource, request, response):
                 elif itemType == 'screenshot':
                     if annotation != '':
                         ManualScreenShot().addAnnotationManualScreenShot(itemID, annotation)
-                    ManualScreenShot().insertFixedManualScreenShotData(itemID, '', content, className, start, title, dataType, comment, delete)
+                    ManualScreenShot().insertFixedManualScreenShotData(itemID, '', content, className, start, title, '', comment, delete)
 
         elif 'adminRequest' in queryDict:
             if queryDict['adminRequest'][0] == 'availablePlugins':
