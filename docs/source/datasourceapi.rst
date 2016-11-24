@@ -1,7 +1,7 @@
 .. highlight:: rst
 
-API for any new Datasource
-=========================================
+Datasource API
+==============
 
 So to keep things simple for the developers and enable multiple people to work on the backend, there is one class created
 for each data type.  All data types implement the same methods, and a few implement some more for the distinct Event/Tech name functionality.

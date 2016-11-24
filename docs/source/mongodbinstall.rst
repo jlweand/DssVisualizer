@@ -1,7 +1,7 @@
 .. highlight:: rst
 
-Installation and setup for MongoDB and Python libraries
-=======================================================
+MongoDB Installation
+====================
 
 Follow the below instructions to get started with MongoDB
 
@@ -29,18 +29,6 @@ MongoDB Installation
 
 	mongod –storageEngine=mmapv1
 
-Other python installations
-##########################
-* Open a new terminal and install::
-
-	apt-get install python3-pip
-	pip3 install pymongo
-	pip3 install ujson
-	pip3 install pytz
-	pip3 install tzlocal
-	pip3 install python-dateutil
-
-* That’s it.
 
 
 Windows Instructions
@@ -74,35 +62,3 @@ You’ll get a lot of text scrolling.  As long as it ends in ‘waiting for conn
 Ctrl+C to close connection.
 
 * If you want to walk through their tutorial for python, you can check it out here: https://docs.mongodb.com/getting-started/python/  I’ll leave that up to the reader.
-
-Other python installations
-##########################
-
-* Open a cmd window and install::
-
-	python -m pip install pymongo
-	python -m pip install pytz
-	python -m pip install tzlocal
-	python -m pip install python-dateutil
-
-* That’s it.
-
-
-ujson installation
-##################
-
-* Open a cmd window and try to install it::
-
-	python -m pip install ujson
-
-* If you get the error: Unable to find vcvarsall.bat error you will need to do some troubleshooting.  It needs to compile some stuff and it is missing Visual Studio’s C++ libraries.
-
-* Option 1: So head on out to https://www.visualstudio.com/ and download Visual Studio.  Make sure you install Common Tools for Visual C++
-
-	- If you are installing ujson for Python 3.5 this is all you need to do.
-	- If you are installing ujson for Pythong 3.4 you’ll also need to run the following command
-		set VS100COMNTOOLS=%VS140COMNTOOLS%
-
-	- Now run the pip install ujson command again.
-
-*	Option 2: You can also go try to find the precompiled binary version of ujson and install that instead of dealing with Visual Studio

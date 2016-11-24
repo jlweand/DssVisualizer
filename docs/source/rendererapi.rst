@@ -1,6 +1,6 @@
 .. highlight:: rst
 
-API for any new Renderer
-=========================================
+Renderer API
+============
 
 Coming soon!

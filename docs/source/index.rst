@@ -40,13 +40,17 @@ But to not keep you hanging here are some things to get you started!
    :maxdepth: 1
 
    pygobjectinstall
+   pythonlibraries
    mongodbinstall
-   Datasource API <datasourceapi>
-   Renderer API <rendererapi>
+   elasticsearchinstall
+   datasourceapi
+   rendererapi
    Install a Plugin <plugininstall>
    dataimport
-   limitations
+   testcases
    UIdocumentation
+   limitations
+   incomplete
    datacreator
 
 
@@ -61,7 +65,8 @@ To start the app in a `cmd` line, from within the `app` folder run either::
     > python3 dssviz.py
     > python3 dssviz.py start
 
-To import data::
+To import data, you can use the `user interface <dataimport.html>`_, run the
+`setup test case <testcases.html>`_, or use the command line::
 
     usage: dssviz.py import [-h] [-dir DIRECTORY] [-e EVENTNAME] [-t TECHNAME]
                             [-c COMMENTS] [-id IMPORTDATE] [-cp]
@@ -77,7 +82,7 @@ To import data::
       -cp             Flag to copy the images on import. Images will be copied
                       into DssVisualizers file structure
 
-To export data::
+To export data, you can use the `user interface <dataimport.html#export-data>`_, or use the command line::
 
     usage: dssviz.py export [-h] [-dir DIRECTORY] [-sd STARTDATE] [-ed ENDDATE]
                             [-e EVENTNAME] [-t TECHNAME] [-cp]
