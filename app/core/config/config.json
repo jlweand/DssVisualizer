@@ -28,10 +28,6 @@
     {
       "location": "plugins.renderer.visjs",
       "name": "vis.js"
-    },
-    {
-      "location": "plugins.renderer.d3",
-      "name": "d3.js"
     }
   ]
 }

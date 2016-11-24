@@ -13,6 +13,7 @@ function prettyConfirm(title, text, callback) {
       text: text,
       type: 'warning',
       showCancelButton: true,
+      confirmButtonText: 'Delete',
       confirmButtonColor: "#DD6B55"
     }).then(callback);
 }
