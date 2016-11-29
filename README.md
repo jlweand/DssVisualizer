@@ -1,13 +1,3 @@
 # DssVisualizer
 
-# How To Use Github
-https://www.youtube.com/watch?v=DR7MLaAKcUk&index=1&list=PLfdtiltiRHWFEbt9V04NrbmksLV4Pdf3j
-
-# How To Use DSS Visualizer (Windows)
-  * Install PYGObject for Windows (/documents/PYGObject README.doc)
-
-  * Install MongoDB and supporting libraries (/documents/Installing MongoDB, pymongo, ujson.docx)
-
-  * In a `cmd` line, from within the `app` folder run `python -m viewmanager.dssvisualizer`
-
-  `C:\dssVisualizer\app>python -m viewmanager.dssvisualizer`
+  * Please see the <a href="http://opencampus.cs.utep.edu/interrupt0x22/">documentation</a> for more information oh the application, how to install it, how to run it, and all sorts of other cool stuff.
