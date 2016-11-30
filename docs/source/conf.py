@@ -86,7 +86,7 @@ today_fmt = '%B %d, %Y %H:%M:%S'
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
-exclude_patterns = ['**/test_*']
+# exclude_patterns = ['**/test_*']
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
@@ -148,7 +148,7 @@ html_theme = 'alabaster'
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
 #
-# html_logo = None
+html_logo = '../../documents/coollogo_com-297791429.png'
 
 # The name of an image file (relative to this directory) to use as a favicon of
 # the docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32

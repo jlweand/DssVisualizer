@@ -11,7 +11,7 @@ Welcome to the Decision Support System Visualizer
 DSS Visualizer is being developed by Interrupt 0x22 for Dr. Jamie Acosta from the U.S. Army Research Laboratory.  It is a non-web based web based application that displays Key Logger, PCAP,
 and screenshots gathered at various events. What do you mean by "non-web based web based application", you ask?  One of the requirements of this application was for it to
 use a Webkit outside of a real web server.  So, while it has all the makeup of a real life web application, it does not need Apache, Tomcat, IIS, or any other web server.
-This keeps it lightweight and portable.  It is written in Python and JavaScript with a MongoDB data source.
+This keeps it lightweight and portable.  It is written in Python and JavaScript with your choice of a MongoDB or ElasticSearch data source.
 
 The Interrupt 0x22 developers are:
 
@@ -33,8 +33,8 @@ GitHub repo can be found at https://github.com/jlweand/DssVisualizer
 Documentation
 =============
 
-At the moment we are still working on the documentation as we develop the visualizer.
-But to not keep you hanging here are some things to get you started!
+Here is all the hand written documentation we have.  There is more documentation in the code about individual
+methods.  Check out the list of `modules <py-modindex.html>`_ for more information.
 
 .. toctree::
    :maxdepth: 1
