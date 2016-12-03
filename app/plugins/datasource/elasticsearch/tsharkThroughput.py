@@ -90,14 +90,14 @@ class TsharkThroughput:
     def addAnnotationToTsharkThroughputTimeline(self, tshark, annotationText):
         return Annotations().addAnnotationToTimeline(self.tsharkThroughputDocType, tshark, annotationText)
 
-    def getDistinctTechNamesForEvents(self, eventNames):
-        collection = self.getTsharkThroughputCollection()
-        return TechAndEventNames().getDistinctTechNamesForEvents(collection, eventNames)
-
-    def getDistinctEventNames(self):
-        collection = self.getTsharkThroughputCollection()
-        return TechAndEventNames().getDistinctEventNames(collection)
-
-    def getDistinctTechAndEventNames(self):
-        collection = self.getTsharkThroughputCollection()
-        return TechAndEventNames().getDistinctTechAndEventNames(collection)
+    # def getDistinctTechNamesForEvents(self, eventNames):
+    #     collection = self.getTsharkThroughputCollection()
+    #     return TechAndEventNames().getDistinctTechNamesForEvents(collection, eventNames)
+    #
+    # def getDistinctEventNames(self):
+    #     collection = self.getTsharkThroughputCollection()
+    #     return TechAndEventNames().getDistinctEventNames(collection)
+    #
+    # def getDistinctTechAndEventNames(self):
+    #     collection = self.getTsharkThroughputCollection()
+    #     return TechAndEventNames().getDistinctTechAndEventNames(collection)

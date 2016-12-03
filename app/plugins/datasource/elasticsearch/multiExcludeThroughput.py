@@ -90,14 +90,14 @@ class MultiExcludeThroughput:
     def addAnnotationToMultiExcludeThroughputTimeline(self, multiExclude, annotationText):
         return Annotations().addAnnotationToTimeline(self.multiExcludeThroughputDocType, multiExclude, annotationText)
 
-    def getDistinctTechNamesForEvents(self, eventNames):
-        collection = self.getMultiExcludeThroughputCollection()
-        return TechAndEventNames().getDistinctTechNamesForEvents(collection, eventNames)
-
-    def getDistinctEventNames(self):
-        collection = self.getMultiExcludeThroughputCollection()
-        return TechAndEventNames().getDistinctEventNames(collection)
-
-    def getDistinctTechAndEventNames(self):
-        collection = self.getMultiExcludeThroughputCollection()
-        return TechAndEventNames().getDistinctTechAndEventNames(collection)
+    # def getDistinctTechNamesForEvents(self, eventNames):
+    #     collection = self.getMultiExcludeThroughputCollection()
+    #     return TechAndEventNames().getDistinctTechNamesForEvents(collection, eventNames)
+    #
+    # def getDistinctEventNames(self):
+    #     collection = self.getMultiExcludeThroughputCollection()
+    #     return TechAndEventNames().getDistinctEventNames(collection)
+    #
+    # def getDistinctTechAndEventNames(self):
+    #     collection = self.getMultiExcludeThroughputCollection()
+    #     return TechAndEventNames().getDistinctTechAndEventNames(collection)

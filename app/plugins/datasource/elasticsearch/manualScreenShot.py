@@ -94,14 +94,14 @@ class ManualScreenShot:
     def addAnnotationToManualScreenShotTimeline(self, manualScreenShot, annotationText):
         return Annotations().addAnnotationToTimeline(self.manualScreenShotDocType, manualScreenShot, annotationText)
 
-    def getDistinctTechNamesForEvents(self, eventNames):
-        collection = self.getManualScreenShotCollection()
-        return TechAndEventNames().getDistinctTechNamesForEvents(collection, eventNames)
-
-    def getDistinctEventNames(self):
-        collection = self.getManualScreenShotCollection()
-        return TechAndEventNames().getDistinctEventNames(collection)
-
-    def getDistinctTechAndEventNames(self):
-        collection = self.getManualScreenShotCollection()
-        return TechAndEventNames().getDistinctTechAndEventNames(collection)
+    # def getDistinctTechNamesForEvents(self, eventNames):
+    #     collection = self.getManualScreenShotCollection()
+    #     return TechAndEventNames().getDistinctTechNamesForEvents(collection, eventNames)
+    #
+    # def getDistinctEventNames(self):
+    #     collection = self.getManualScreenShotCollection()
+    #     return TechAndEventNames().getDistinctEventNames(collection)
+    #
+    # def getDistinctTechAndEventNames(self):
+    #     collection = self.getManualScreenShotCollection()
+    #     return TechAndEventNames().getDistinctTechAndEventNames(collection)

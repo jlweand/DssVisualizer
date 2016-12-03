@@ -91,3 +91,15 @@ class PyKeyPress:
     # add an annotation to the timeline, not a datapoint
     def addAnnotationToKeyPressTimeline(self, keyPress, annotationText):
         return Annotations().addAnnotationToTimeline(self.keyPressDocType, keyPress, annotationText)
+
+    # def getDistinctTechNamesForEvents(self, eventNames):
+    #     collection = self.getMultiIncludeThroughputCollection()
+    #     return TechAndEventNames().getDistinctTechNamesForEvents(collection, eventNames)
+    #
+    # def getDistinctEventNames(self):
+    #     collection = self.getMultiIncludeThroughputCollection()
+    #     return TechAndEventNames().getDistinctEventNames(collection)
+    #
+    # def getDistinctTechAndEventNames(self):
+    #     collection = self.getMultiIncludeThroughputCollection()
+    #     return TechAndEventNames().getDistinctTechAndEventNames(collection)
