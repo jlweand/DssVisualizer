@@ -74,6 +74,10 @@ class ManualScreenShot:
     def addAnnotationManualScreenShot(self, dataId, annotationText):
         return Annotations().addAnnotation(self.manualScreenShotDocType, dataId, annotationText)
 
+    # add an annotation for the dataId
+    def addAnnotationToArrayManualScreenShot(self, dataId, annotationText):
+        return Annotations().addAnnotationToArray(self.manualScreenShotDocType, dataId, annotationText)
+
     # edit an annotation for the dataId
     def editAnnotationManualScreenShot(self, dataId, oldAnnotationText, newAnnotationText):
         return Annotations().editAnnotation(self.manualScreenShotDocType, dataId, oldAnnotationText, newAnnotationText)

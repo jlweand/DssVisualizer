@@ -77,6 +77,11 @@ class ManualScreenShot:
         collection = self.getManualScreenShotCollection()
         return Annotations().addAnnotation(collection, dataId, annotationText)
 
+    # add an annotation for the dataId
+    def addAnnotationToArrayManualScreenShot(self, dataId, annotationText):
+        collection = self.getManualScreenShotCollection()
+        return Annotations().addAnnotationToArray(collection, dataId, annotationText)
+
     # edit an annotation for the dataId
     def editAnnotationManualScreenShot(self, dataId, oldAnnotationText, newAnnotationText):
         collection = self.getManualScreenShotCollection()

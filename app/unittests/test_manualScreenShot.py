@@ -44,10 +44,10 @@ class ManualScreenShotTest(unittest.TestCase):
         self.assertEqual(4, len(jsonData))
 
         # select by one tech name and one event name
-        jsonData = ManualScreenShot().selectManualScreenShotData('2016-10-18 18:26:37', '2016-10-18 18:26:37', ["Alex"], ["Super Summer Event"], [])
+        jsonData = ManualScreenShot().selectManualScreenShotData('2016-10-18 18:26:37', '2016-10-18 18:26:37', ["Alex"], ["Another Event"], [])
         self.assertEqual(1, len(jsonData))
 
-        # select by two tech names and tow event names
+        # select by two tech names and two event names
         jsonData = ManualScreenShot().selectManualScreenShotData('2016-10-18 18:26:37', '2016-10-18 18:26:37', ["Alex", "Tom"], ["Super Summer Event", "Another Event"], [])
         self.assertEqual(3, len(jsonData))
 
@@ -86,6 +86,7 @@ class ManualScreenShotTest(unittest.TestCase):
         self.assertEqual(jsonData[0]["fixedData"]["start"], '2016-10-29 15:07:00')
         self.assertEqual(jsonData[0]["fixedData"]["title"], '/new/path/1474038815.78_TESTING.png')
         self.assertEqual(jsonData[0]["fixedData"]["type"], 'point')
+        self.assertEqual(jsonData[0]["fixedData"]["comment"], 'comment')
         self.assertTrue(jsonData[0]["fixedData"]["isDeleted"])
 
         # update Fixed Data
@@ -93,7 +94,7 @@ class ManualScreenShotTest(unittest.TestCase):
                                                                            '[EDITED UNITTEST Content Added]', 'imgPoint123',
                                                                            '2016-10-02 19:35:51',
                                                                            '/newpath/manualscreenshot/1474038815.78_TESTING_UPDATE.png',
-                                                                           'point123', False)
+                                                                           'point123', 'comment123', False)
         self.assertEqual(1, modifiedCount)
         jsonData = ManualScreenShot().selectManualScreenShotDataById(dataId)
         self.assertEqual(jsonData[0]["fixedData"]["manualscreen_id"], '1111')
@@ -102,6 +103,7 @@ class ManualScreenShotTest(unittest.TestCase):
         self.assertEqual(jsonData[0]["fixedData"]["start"], '2016-10-02 19:35:51')
         self.assertEqual(jsonData[0]["fixedData"]["title"], '/newpath/manualscreenshot/1474038815.78_TESTING_UPDATE.png')
         self.assertEqual(jsonData[0]["fixedData"]["type"], 'point123')
+        self.assertEqual(jsonData[0]["fixedData"]["comment"], 'comment123')
         self.assertFalse(jsonData[0]["fixedData"]["isDeleted"])
 
         # delete Fixed Data
@@ -115,10 +117,15 @@ class ManualScreenShotTest(unittest.TestCase):
         dataId = jsonData[0]["id"]
 
         # test Annotations
-        ManualScreenShot().addAnnotationManualScreenShot(dataId, 'test')
-        ManualScreenShot().addAnnotationManualScreenShot(dataId, 'test test')
-        ManualScreenShot().addAnnotationManualScreenShot(dataId, 'test test test')
-        ManualScreenShot().addAnnotationManualScreenShot(dataId, 'test test test')
+        ManualScreenShot().addAnnotationManualScreenShot(dataId, 'single annotation')
+        addedAnn = ManualScreenShot().selectManualScreenShotDataById(dataId)
+        self.assertEqual('single annotation', addedAnn[0]["annotation"])
+
+        # test Annotations
+        ManualScreenShot().addAnnotationToArrayManualScreenShot(dataId, 'test')
+        ManualScreenShot().addAnnotationToArrayManualScreenShot(dataId, 'test test')
+        ManualScreenShot().addAnnotationToArrayManualScreenShot(dataId, 'test test test')
+        ManualScreenShot().addAnnotationToArrayManualScreenShot(dataId, 'test test test')
         addedAnns = ManualScreenShot().selectManualScreenShotDataById(dataId)
         self.assertEqual(3, len(addedAnns[0]["annotations"]))
         self.assertEqual('test', addedAnns[0]["annotations"][0]["annotation"])
@@ -137,6 +144,7 @@ class ManualScreenShotTest(unittest.TestCase):
         ManualScreenShot().deleteAllAnnotationsForManualScreenShot(dataId)
         deletedAll = ManualScreenShot().selectManualScreenShotDataById(dataId)
         self.assertRaises(KeyError, lambda: deletedAll[0]["annotations"])
+        self.assertRaises(KeyError, lambda: deletedAll[0]["annotation"])
 
         # add Annotation to Timeline
         objectId = ManualScreenShot().addAnnotationToManualScreenShotTimeline('2016-10-29 15:07:00', "here's a ManualScreenShot timeline annotation", "Alex", "Super Summer Event")

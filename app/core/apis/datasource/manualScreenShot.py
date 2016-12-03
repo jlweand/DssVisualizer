@@ -81,10 +81,6 @@ class ManualScreenShot:
         :type content: str
         :param className: The updated class name
         :type className: str
-        :param _type: The updated type
-        :type _type: str
-        :param classname: The updated class name
-        :type classname: str
         :param title: The updated title
         :type title: str
         :param start: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
@@ -93,6 +89,8 @@ class ManualScreenShot:
         :type typeManualScreenShot: str
         :param typeManualScreenShot: The updated type
         :type typeManualScreenShot: str
+        :param comment: The comment
+        :type comment: str
         :param isDeleted: indicator if this data point should never be shown on the screen
         :type isDeleted: bool
         :returns: The modified count.
@@ -102,7 +100,7 @@ class ManualScreenShot:
                                               Common().formatDateStringToUTC(start), title, typeManualScreenShot, comment, isDeleted)
         return result
 
-    def updateFixedManualScreenShotData(self, dataId, manualscreen_id, content, className, start, title, typeManualScreenShot, isDeleted):
+    def updateFixedManualScreenShotData(self, dataId, manualscreen_id, content, className, start, title, typeManualScreenShot, comment, isDeleted):
         """Override: Updates the record of the 'fixed' ManualScreenShot data.
 
         :param dataId: The ID of the Data point
@@ -113,23 +111,21 @@ class ManualScreenShot:
         :type content: str
         :param className: The updated class name
         :type className: str
-        :param _type: The updated type
-        :type _type: str
-        :param classname: The updated class name
-        :type classname: str
         :param title: The updated title
         :type title: str
         :param start: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
         :type start: str
         :param typeManualScreenShot: The updated type
         :type typeManualScreenShot: str
+        :param comment: The comment
+        :type comment: str
         :param isDeleted: indicator if this data point should never be shown on the screen
         :type isDeleted: bool
         :returns: The modified count.
         """
         manualScreenShot = self.getPlugin()
         result = manualScreenShot.updateFixedManualScreenShotData(dataId, manualscreen_id, content, className,
-                                              Common().formatDateStringToUTC(start), title, typeManualScreenShot, isDeleted)
+                                              Common().formatDateStringToUTC(start), title, typeManualScreenShot, comment, isDeleted)
         return result
 
     def deleteFixedManualScreenShotData(self, dataId):
@@ -154,6 +150,18 @@ class ManualScreenShot:
         """
         manualScreenShot = self.getPlugin()
         return manualScreenShot.addAnnotationManualScreenShot(dataId, annotationText)
+
+    def addAnnotationToArrayManualScreenShot(self, dataId, annotationText):
+        """Override: Add an annotation as an array of annotations to the object.
+
+        :param dataId: The ID of the data to add the annotation to.
+        :type dataId: str
+        :param annotationText: The annotation text
+        :type annotationText: str
+        :returns: The modified count.
+        """
+        manualScreenShot = self.getPlugin()
+        return manualScreenShot.addAnnotationToArrayManualScreenShot(dataId, annotationText)
 
     # edit an annotation for the dataId
     def editAnnotationManualScreenShot(self, dataId, oldAnnotationText, newAnnotationText):
