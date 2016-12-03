@@ -165,7 +165,9 @@ class Annotations:
         :returns: modified_count
         """
         esIndex = Common().getIndexName()
-        doc = { "script" : "ctx._source.remove(\"annotations\", \"annotation\")" }
+        doc = { "script" : "ctx._source.remove(\"annotations\")" }
+        result = Elasticsearch().update(index=esIndex, doc_type=doc_type, id=dataId, body=doc)
+        doc = { "script" : "ctx._source.remove(\"annotation\")" }
         result = Elasticsearch().update(index=esIndex, doc_type=doc_type, id=dataId, body=doc)
         return Common().getModfiedCount(result)
 
