@@ -74,6 +74,11 @@ class MultiIncludeThroughput:
         collection = self.getMultiIncludeThroughputCollection()
         return Annotations().addAnnotation(collection, dataId, annotationText)
 
+    # add an annotation for the dataId
+    def addAnnotationToArrayMultiIncludeThroughput(self, dataId, annotationText):
+        collection = self.getMultiIncludeThroughputCollection()
+        return Annotations().addAnnotationToArray(collection, dataId, annotationText)
+
     # edit an annotation for the dataId
     def editAnnotationMultiIncludeThroughput(self, dataId, oldAnnotationText, newAnnotationText):
         collection = self.getMultiIncludeThroughputCollection()

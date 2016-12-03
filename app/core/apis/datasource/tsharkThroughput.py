@@ -135,6 +135,18 @@ class TsharkThroughput:
         tsharkPlugin = self.getPlugin()
         return tsharkPlugin.addAnnotationTsharkThroughput(dataId, annotationText)
 
+    def addAnnotationToArrayTsharkThroughput(self, dataId, annotationText):
+        """Override: Add an annotation as an array of annotations to the object.
+
+        :param dataId: The ID of the data to add the annotation to.
+        :type dataId: str
+        :param annotationText: The annotation text
+        :type annotationText: str
+        :returns: The modified count.
+        """
+        tsharkPlugin = self.getPlugin()
+        return tsharkPlugin.addAnnotationToArrayTsharkThroughput(dataId, annotationText)
+
     # edit an annotation for the dataId
     def editAnnotationTsharkThroughput(self, dataId, oldAnnotationText, newAnnotationText):
         """Override: Edit an annotation on the TsharkThroughput object.

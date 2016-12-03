@@ -104,10 +104,15 @@ class PyKeyPressTest(unittest.TestCase):
         dataId = jsonData[0]["id"]
 
         # test Annotations
-        PyKeyPress().addAnnotationKeyPress(dataId, 'test')
-        PyKeyPress().addAnnotationKeyPress(dataId, 'test test')
-        PyKeyPress().addAnnotationKeyPress(dataId, 'test test test')
-        PyKeyPress().addAnnotationKeyPress(dataId, 'test test test')
+        PyKeyPress().addAnnotationKeyPress(dataId, 'single annotation')
+        addedAnn = PyKeyPress().selectKeyPressDataById(dataId)
+        self.assertEqual('single annotation', addedAnn[0]["annotation"])
+
+        # test Annotations
+        PyKeyPress().addAnnotationToArrayKeyPress(dataId, 'test')
+        PyKeyPress().addAnnotationToArrayKeyPress(dataId, 'test test')
+        PyKeyPress().addAnnotationToArrayKeyPress(dataId, 'test test test')
+        PyKeyPress().addAnnotationToArrayKeyPress(dataId, 'test test test')
         addedAnns = PyKeyPress().selectKeyPressDataById(dataId)
         self.assertEqual(3, len(addedAnns[0]["annotations"]))
         self.assertEqual('test', addedAnns[0]["annotations"][0]["annotation"])
@@ -126,6 +131,7 @@ class PyKeyPressTest(unittest.TestCase):
         PyKeyPress().deleteAllAnnotationsForKeyPress(dataId)
         deletedAll = PyKeyPress().selectKeyPressDataById(dataId)
         self.assertRaises(KeyError, lambda: deletedAll[0]["annotations"])
+        self.assertRaises(KeyError, lambda: deletedAll[0]["annotation"])
 
         # add Annotation to Timeline
         objectId = PyKeyPress().addAnnotationToKeyPressTimeline('2016-09-16 09:13:57',

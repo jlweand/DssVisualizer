@@ -109,10 +109,15 @@ class MultiIncludeProtocolTest(unittest.TestCase):
         dataId = jsonData[0]["id"]
 
         # test Annotations
-        MultiIncludeProtocol().addAnnotationMultiIncludeProtocol(dataId, 'test')
-        MultiIncludeProtocol().addAnnotationMultiIncludeProtocol(dataId, 'test test')
-        MultiIncludeProtocol().addAnnotationMultiIncludeProtocol(dataId, 'test test test')
-        MultiIncludeProtocol().addAnnotationMultiIncludeProtocol(dataId, 'test test test')
+        MultiIncludeProtocol().addAnnotationMultiIncludeProtocol(dataId, 'single annotation')
+        addedAnn = MultiIncludeProtocol().selectMultiIncludeProtocolDataById(dataId)
+        self.assertEqual('single annotation', addedAnn[0]["annotation"])
+
+        # test Annotations
+        MultiIncludeProtocol().addAnnotationToArrayMultiIncludeProtocol(dataId, 'test')
+        MultiIncludeProtocol().addAnnotationToArrayMultiIncludeProtocol(dataId, 'test test')
+        MultiIncludeProtocol().addAnnotationToArrayMultiIncludeProtocol(dataId, 'test test test')
+        MultiIncludeProtocol().addAnnotationToArrayMultiIncludeProtocol(dataId, 'test test test')
         addedAnns = MultiIncludeProtocol().selectMultiIncludeProtocolDataById(dataId)
         self.assertEqual(3, len(addedAnns[0]["annotations"]))
         self.assertEqual('test', addedAnns[0]["annotations"][0]["annotation"])
@@ -131,6 +136,7 @@ class MultiIncludeProtocolTest(unittest.TestCase):
         MultiIncludeProtocol().deleteAllAnnotationsForMultiIncludeProtocol(dataId)
         deletedAll = MultiIncludeProtocol().selectMultiIncludeProtocolDataById(dataId)
         self.assertRaises(KeyError, lambda: deletedAll[0]["annotations"])
+        self.assertRaises(KeyError, lambda: deletedAll[0]["annotation"])
 
         # add Annotation To MultiExcludeProtocol Timeline
         objectId = MultiIncludeProtocol().addAnnotationToMultiIncludeProtocolTimeline('2016-08-01 10:00:00',

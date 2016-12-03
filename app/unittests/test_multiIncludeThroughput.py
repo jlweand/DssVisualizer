@@ -101,10 +101,15 @@ class MultiIncludeThroughputTest(unittest.TestCase):
         dataId = jsonData[0]["id"]
 
         # test Annotations
-        MultiIncludeThroughput().addAnnotationMultiIncludeThroughput(dataId, 'test')
-        MultiIncludeThroughput().addAnnotationMultiIncludeThroughput(dataId, 'test test')
-        MultiIncludeThroughput().addAnnotationMultiIncludeThroughput(dataId, 'test test test')
-        MultiIncludeThroughput().addAnnotationMultiIncludeThroughput(dataId, 'test test test')
+        MultiIncludeThroughput().addAnnotationMultiIncludeThroughput(dataId, 'single annotation')
+        addedAnn = MultiIncludeThroughput().selectMultiIncludeThroughputDataById(dataId)
+        self.assertEqual('single annotation', addedAnn[0]["annotation"])
+
+        # test Annotations
+        MultiIncludeThroughput().addAnnotationToArrayMultiIncludeThroughput(dataId, 'test')
+        MultiIncludeThroughput().addAnnotationToArrayMultiIncludeThroughput(dataId, 'test test')
+        MultiIncludeThroughput().addAnnotationToArrayMultiIncludeThroughput(dataId, 'test test test')
+        MultiIncludeThroughput().addAnnotationToArrayMultiIncludeThroughput(dataId, 'test test test')
         addedAnns = MultiIncludeThroughput().selectMultiIncludeThroughputDataById(dataId)
         self.assertEqual(3, len(addedAnns[0]["annotations"]))
         self.assertEqual('test', addedAnns[0]["annotations"][0]["annotation"])
@@ -123,6 +128,7 @@ class MultiIncludeThroughputTest(unittest.TestCase):
         MultiIncludeThroughput().deleteAllAnnotationsForMultiIncludeThroughput(dataId)
         deletedAll = MultiIncludeThroughput().selectMultiIncludeThroughputDataById(dataId)
         self.assertRaises(KeyError, lambda: deletedAll[0]["annotations"])
+        self.assertRaises(KeyError, lambda: deletedAll[0]["annotation"])
 
         # add Annotation To MultiExcludeThroughput Timeline
         objectId = MultiIncludeThroughput().addAnnotationToMultiIncludeThroughputTimeline('2016-08-01 10:00:00', "here's a timeline annotation", "Alex", "Super Summer Event")

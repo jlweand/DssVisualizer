@@ -78,6 +78,11 @@ class MultiIncludeProtocol:
         collection = self.getMultiIncludeProtocolCollection()
         return Annotations().addAnnotation(collection, dataId, annotationText)
 
+    # add an annotation for the dataId
+    def addAnnotationToArrayMultiIncludeProtocol(self, dataId, annotationText):
+        collection = self.getMultiIncludeProtocolCollection()
+        return Annotations().addAnnotationToArray(collection, dataId, annotationText)
+
     # edit an annotation for the dataId
     def editAnnotationMultiIncludeProtocol(self, dataId, oldAnnotationText, newAnnotationText):
         collection = self.getMultiIncludeProtocolCollection()

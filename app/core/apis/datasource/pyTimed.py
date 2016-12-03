@@ -141,6 +141,18 @@ class PyTimed:
         pyTimed = self.getPlugin()
         return pyTimed.addAnnotationTimed(dataId, annotationText)
 
+    def addAnnotationToArrayTimed(self, dataId, annotationText):
+        """Override: Add an annotation as an array of annotations to the object.
+
+        :param dataId: The ID of the data to add the annotation to.
+        :type dataId: str
+        :param annotationText: The annotation text
+        :type annotationText: str
+        :returns: The modified count.
+        """
+        pyTimed = self.getPlugin()
+        return pyTimed.addAnnotationToArrayTimed(dataId, annotationText)
+
     # edit an annotation for the dataId
     def editAnnotationTimed(self, dataId, oldAnnotationText, newAnnotationText):
         """Override: Edit an annotation on the Timed object.

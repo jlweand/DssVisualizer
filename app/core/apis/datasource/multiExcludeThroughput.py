@@ -136,6 +136,18 @@ class MultiExcludeThroughput:
         multiExcludePlugin = self.getPlugin()
         return multiExcludePlugin.addAnnotationMultiExcludeThroughput(dataId, annotationText)
 
+    def addAnnotationToArrayMultiExcludeThroughput(self, dataId, annotationText):
+        """Override: Add an annotation as an array of annotations to the object.
+
+        :param dataId: The ID of the data to add the annotation to.
+        :type dataId: str
+        :param annotationText: The annotation text
+        :type annotationText: str
+        :returns: The modified count.
+        """
+        multiExcludePlugin = self.getPlugin()
+        return multiExcludePlugin.addAnnotationToArrayMultiExcludeThroughput(dataId, annotationText)
+
     # edit an annotation for the dataId
     def editAnnotationMultiExcludeThroughput(self, dataId, oldAnnotationText, newAnnotationText):
         """Override: Edit an annotation on the MultiExcludeThroughput object.

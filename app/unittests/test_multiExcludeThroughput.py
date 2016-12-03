@@ -101,10 +101,15 @@ class MultiExcludeThroughputTest(unittest.TestCase):
         dataId = jsonData[0]["id"]
 
         # test Annotations
-        MultiExcludeThroughput().addAnnotationMultiExcludeThroughput(dataId, 'test')
-        MultiExcludeThroughput().addAnnotationMultiExcludeThroughput(dataId, 'test test')
-        MultiExcludeThroughput().addAnnotationMultiExcludeThroughput(dataId, 'test test test')
-        MultiExcludeThroughput().addAnnotationMultiExcludeThroughput(dataId, 'test test test')
+        MultiExcludeThroughput().addAnnotationMultiExcludeThroughput(dataId, 'single annotation')
+        addedAnn = MultiExcludeThroughput().selectMultiExcludeThroughputDataById(dataId)
+        self.assertEqual('single annotation', addedAnn[0]["annotation"])
+
+        # test Annotations
+        MultiExcludeThroughput().addAnnotationToArrayMultiExcludeThroughput(dataId, 'test')
+        MultiExcludeThroughput().addAnnotationToArrayMultiExcludeThroughput(dataId, 'test test')
+        MultiExcludeThroughput().addAnnotationToArrayMultiExcludeThroughput(dataId, 'test test test')
+        MultiExcludeThroughput().addAnnotationToArrayMultiExcludeThroughput(dataId, 'test test test')
         addedAnns = MultiExcludeThroughput().selectMultiExcludeThroughputDataById(dataId)
         self.assertEqual(3, len(addedAnns[0]["annotations"]))
         self.assertEqual('test', addedAnns[0]["annotations"][0]["annotation"])
@@ -123,6 +128,7 @@ class MultiExcludeThroughputTest(unittest.TestCase):
         MultiExcludeThroughput().deleteAllAnnotationsForMultiExcludeThroughput(dataId)
         deletedAll = MultiExcludeThroughput().selectMultiExcludeThroughputDataById(dataId)
         self.assertRaises(KeyError, lambda: deletedAll[0]["annotations"])
+        self.assertRaises(KeyError, lambda: deletedAll[0]["annotation"])
 
         # add Annotation To MultiExcludeThroughput Timeline
         objectId = MultiExcludeThroughput().addAnnotationToMultiExcludeThroughputTimeline('2016-08-01 10:00:00',

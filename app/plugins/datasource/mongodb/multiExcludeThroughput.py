@@ -74,6 +74,11 @@ class MultiExcludeThroughput:
         collection = self.getMultiExcludeThroughputCollection()
         return Annotations().addAnnotation(collection, dataId, annotationText)
 
+    # add an annotation for the dataId
+    def addAnnotationToArrayMultiExcludeThroughput(self, dataId, annotationText):
+        collection = self.getMultiExcludeThroughputCollection()
+        return Annotations().addAnnotationToArray(collection, dataId, annotationText)
+
     # edit an annotation for the dataId
     def editAnnotationMultiExcludeThroughput(self, dataId, oldAnnotationText, newAnnotationText):
         collection = self.getMultiExcludeThroughputCollection()

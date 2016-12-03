@@ -114,10 +114,15 @@ class PyTimedTest(unittest.TestCase):
         dataId = jsonData[0]["id"]
 
         # test Annotations
-        PyTimed().addAnnotationTimed(dataId, 'test')
-        PyTimed().addAnnotationTimed(dataId, 'test test')
-        PyTimed().addAnnotationTimed(dataId, 'test test test')
-        PyTimed().addAnnotationTimed(dataId, 'test test test')
+        PyTimed().addAnnotationTimed(dataId, 'single annotation')
+        addedAnn = PyTimed().selectTimedDataById(dataId)
+        self.assertEqual('single annotation', addedAnn[0]["annotation"])
+
+        # test Annotations
+        PyTimed().addAnnotationToArrayTimed(dataId, 'test')
+        PyTimed().addAnnotationToArrayTimed(dataId, 'test test')
+        PyTimed().addAnnotationToArrayTimed(dataId, 'test test test')
+        PyTimed().addAnnotationToArrayTimed(dataId, 'test test test')
         addedAnns = PyTimed().selectTimedDataById(dataId)
         self.assertEqual(3, len(addedAnns[0]["annotations"]))
         self.assertEqual('test', addedAnns[0]["annotations"][0]["annotation"])
@@ -136,6 +141,7 @@ class PyTimedTest(unittest.TestCase):
         PyTimed().deleteAllAnnotationsForTimed(dataId)
         deletedAll = PyTimed().selectTimedDataById(dataId)
         self.assertRaises(KeyError, lambda: deletedAll[0]["annotations"])
+        self.assertRaises(KeyError, lambda: deletedAll[0]["annotation"])
 
         # add Annotation to Timeline
         objectId = PyTimed().addAnnotationToTimedTimeline('2016-09-16 15:16:34', "here's a Timed timeline annotation", "Alex", "Super Summer Event")

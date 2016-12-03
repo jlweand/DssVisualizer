@@ -110,10 +110,15 @@ class MultiExcludeProtocolTest(unittest.TestCase):
         dataId = jsonData[0]["id"]
 
         # test Annotations
-        MultiExcludeProtocol().addAnnotationMultiExcludeProtocol(dataId, 'test')
-        MultiExcludeProtocol().addAnnotationMultiExcludeProtocol(dataId, 'test test')
-        MultiExcludeProtocol().addAnnotationMultiExcludeProtocol(dataId, 'test test test')
-        MultiExcludeProtocol().addAnnotationMultiExcludeProtocol(dataId, 'test test test')
+        MultiExcludeProtocol().addAnnotationMultiExcludeProtocol(dataId, 'single annotation')
+        addedAnn = MultiExcludeProtocol().selectMultiExcludeProtocolDataById(dataId)
+        self.assertEqual('single annotation', addedAnn[0]["annotation"])
+
+        # test Annotations
+        MultiExcludeProtocol().addAnnotationToArrayMultiExcludeProtocol(dataId, 'test')
+        MultiExcludeProtocol().addAnnotationToArrayMultiExcludeProtocol(dataId, 'test test')
+        MultiExcludeProtocol().addAnnotationToArrayMultiExcludeProtocol(dataId, 'test test test')
+        MultiExcludeProtocol().addAnnotationToArrayMultiExcludeProtocol(dataId, 'test test test')
         addedAnns = MultiExcludeProtocol().selectMultiExcludeProtocolDataById(dataId)
         self.assertEqual(3, len(addedAnns[0]["annotations"]))
         self.assertEqual('test', addedAnns[0]["annotations"][0]["annotation"])
@@ -132,6 +137,7 @@ class MultiExcludeProtocolTest(unittest.TestCase):
         MultiExcludeProtocol().deleteAllAnnotationsForMultiExcludeProtocol(dataId)
         deletedAll = MultiExcludeProtocol().selectMultiExcludeProtocolDataById(dataId)
         self.assertRaises(KeyError, lambda: deletedAll[0]["annotations"])
+        self.assertRaises(KeyError, lambda: deletedAll[0]["annotation"])
 
         # add Annotation To MultiExcludeProtocol Timeline
         objectId = MultiExcludeProtocol().addAnnotationToMultiExcludeProtocolTimeline('2016-08-01 10:00:00',

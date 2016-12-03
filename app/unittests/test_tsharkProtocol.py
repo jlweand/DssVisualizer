@@ -110,10 +110,15 @@ class TsharkProtocolTest(unittest.TestCase):
         dataId = jsonData[0]["id"]
 
         # test Annotations
-        TsharkProtocol().addAnnotationTsharkProtocol(dataId, 'test')
-        TsharkProtocol().addAnnotationTsharkProtocol(dataId, 'test test')
-        TsharkProtocol().addAnnotationTsharkProtocol(dataId, 'test test test')
-        TsharkProtocol().addAnnotationTsharkProtocol(dataId, 'test test test')
+        TsharkProtocol().addAnnotationTsharkProtocol(dataId, 'single annotation')
+        addedAnn = TsharkProtocol().selectTsharkProtocolDataById(dataId)
+        self.assertEqual('single annotation', addedAnn[0]["annotation"])
+
+        # test Annotations
+        TsharkProtocol().addAnnotationToArrayTsharkProtocol(dataId, 'test')
+        TsharkProtocol().addAnnotationToArrayTsharkProtocol(dataId, 'test test')
+        TsharkProtocol().addAnnotationToArrayTsharkProtocol(dataId, 'test test test')
+        TsharkProtocol().addAnnotationToArrayTsharkProtocol(dataId, 'test test test')
         addedAnns = TsharkProtocol().selectTsharkProtocolDataById(dataId)
         self.assertEqual(3, len(addedAnns[0]["annotations"]))
         self.assertEqual('test', addedAnns[0]["annotations"][0]["annotation"])
@@ -132,6 +137,7 @@ class TsharkProtocolTest(unittest.TestCase):
         TsharkProtocol().deleteAllAnnotationsForTsharkProtocol(dataId)
         deletedAll = TsharkProtocol().selectTsharkProtocolDataById(dataId)
         self.assertRaises(KeyError, lambda: deletedAll[0]["annotations"])
+        self.assertRaises(KeyError, lambda: deletedAll[0]["annotation"])
 
         # add Annotation To MultiExcludeProtocol Timeline
         objectId = TsharkProtocol().addAnnotationToTsharkProtocolTimeline('2016-08-01 10:00:00',

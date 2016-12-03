@@ -74,6 +74,10 @@ class PyClick:
     def addAnnotationClick(self, dataId, annotationText):
         return Annotations().addAnnotation(self.clickDocType, dataId, annotationText)
 
+    # add an annotation for the dataId
+    def addAnnotationToArrayClick(self, dataId, annotationText):
+        return Annotations().addAnnotationToArray(self.clickDocType, dataId, annotationText)
+
     # edit an annotation for the dataId
     def editAnnotationClick(self, dataId, oldAnnotationText, newAnnotationText):
         return Annotations().editAnnotation(self.clickDocType, dataId, oldAnnotationText, newAnnotationText)

@@ -145,6 +145,18 @@ class PyClick:
         pyClick = self.getPlugin()
         return pyClick.addAnnotationClick(dataId, annotationText)
 
+    def addAnnotationToArrayClick(self, dataId, annotationText):
+        """Override: Add an annotation as an array of annotations to the object.
+
+        :param dataId: The ID of the data to add the annotation to.
+        :type dataId: str
+        :param annotationText: The annotation text
+        :type annotationText: str
+        :returns: The modified count.
+        """
+        pyClick = self.getPlugin()
+        return pyClick.addAnnotationToArrayClick(dataId, annotationText)
+
     # edit an annotation for the dataId
     def editAnnotationClick(self, dataId, oldAnnotationText, newAnnotationText):
         """Override: Edit an annotation on the Click object.

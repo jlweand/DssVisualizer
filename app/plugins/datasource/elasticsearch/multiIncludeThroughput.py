@@ -70,6 +70,10 @@ class MultiIncludeThroughput:
     def addAnnotationMultiIncludeThroughput(self, dataId, annotationText):
         return Annotations().addAnnotation(self.multiIncludeThroughputDocType, dataId, annotationText)
 
+    # add an annotation for the dataId
+    def addAnnotationToArrayMultiIncludeThroughput(self, dataId, annotationText):
+        return Annotations().addAnnotationToArray(self.multiIncludeThroughputDocType, dataId, annotationText)
+
     # edit an annotation for the dataId
     def editAnnotationMultiIncludeThroughput(self, dataId, oldAnnotationText, newAnnotationText):
         return Annotations().editAnnotation(self.multiIncludeThroughputDocType, dataId, oldAnnotationText, newAnnotationText)

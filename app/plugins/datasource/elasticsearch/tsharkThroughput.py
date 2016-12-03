@@ -70,6 +70,10 @@ class TsharkThroughput:
     def addAnnotationTsharkThroughput(self, dataId, annotationText):
         return Annotations().addAnnotation(self.tsharkThroughputDocType, dataId, annotationText)
 
+    # add an annotation for the dataId
+    def addAnnotationToArrayTsharkThroughput(self, dataId, annotationText):
+        return Annotations().addAnnotationToArray(self.tsharkThroughputDocType, dataId, annotationText)
+
     # edit an annotation for the dataId
     def editAnnotationTsharkThroughput(self, dataId, oldAnnotationText, newAnnotationText):
         return Annotations().editAnnotation(self.tsharkThroughputDocType, dataId, oldAnnotationText, newAnnotationText)

@@ -115,10 +115,15 @@ class TsharkThroughputTest(unittest.TestCase):
         dataId = jsonData[0]["id"]
 
         # test Annotations
-        TsharkThroughput().addAnnotationTsharkThroughput(dataId, 'test')
-        TsharkThroughput().addAnnotationTsharkThroughput(dataId, 'test test')
-        TsharkThroughput().addAnnotationTsharkThroughput(dataId, 'test test test')
-        TsharkThroughput().addAnnotationTsharkThroughput(dataId, 'test test test')
+        TsharkThroughput().addAnnotationTsharkThroughput(dataId, 'single annotation')
+        addedAnn = TsharkThroughput().selectTsharkThroughputDataById(dataId)
+        self.assertEqual('single annotation', addedAnn[0]["annotation"])
+
+        # test Annotations
+        TsharkThroughput().addAnnotationToArrayTsharkThroughput(dataId, 'test')
+        TsharkThroughput().addAnnotationToArrayTsharkThroughput(dataId, 'test test')
+        TsharkThroughput().addAnnotationToArrayTsharkThroughput(dataId, 'test test test')
+        TsharkThroughput().addAnnotationToArrayTsharkThroughput(dataId, 'test test test')
         addedAnns = TsharkThroughput().selectTsharkThroughputDataById(dataId)
         self.assertEqual(3, len(addedAnns[0]["annotations"]))
         self.assertEqual('test', addedAnns[0]["annotations"][0]["annotation"])
@@ -137,6 +142,7 @@ class TsharkThroughputTest(unittest.TestCase):
         TsharkThroughput().deleteAllAnnotationsForTsharkThroughput(dataId)
         deletedAll = TsharkThroughput().selectTsharkThroughputDataById(dataId)
         self.assertRaises(KeyError, lambda: deletedAll[0]["annotations"])
+        self.assertRaises(KeyError, lambda: deletedAll[0]["annotation"])
 
         # add Annotation To MultiExcludeThroughput Timeline
         objectId = TsharkThroughput().addAnnotationToTsharkThroughputTimeline('2016-08-01 10:00:00',

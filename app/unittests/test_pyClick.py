@@ -113,10 +113,15 @@ class PyClickTest(unittest.TestCase):
         dataId = jsonData[0]["id"]
 
         # test Annotations
-        PyClick().addAnnotationClick(dataId, 'test')
-        PyClick().addAnnotationClick(dataId, 'test test')
-        PyClick().addAnnotationClick(dataId, 'test test test')
-        PyClick().addAnnotationClick(dataId, 'test test test')
+        PyClick().addAnnotationClick(dataId, 'single annotation')
+        addedAnn = PyClick().selectClickDataById(dataId)
+        self.assertEqual('single annotation', addedAnn[0]["annotation"])
+
+        # test Annotations
+        PyClick().addAnnotationToArrayClick(dataId, 'test')
+        PyClick().addAnnotationToArrayClick(dataId, 'test test')
+        PyClick().addAnnotationToArrayClick(dataId, 'test test test')
+        PyClick().addAnnotationToArrayClick(dataId, 'test test test')
         addedAnns = PyClick().selectClickDataById(dataId)
         self.assertEqual(3, len(addedAnns[0]["annotations"]))
         self.assertEqual('test', addedAnns[0]["annotations"][0]["annotation"])
@@ -135,6 +140,7 @@ class PyClickTest(unittest.TestCase):
         PyClick().deleteAllAnnotationsForClick(dataId)
         deletedAll = PyClick().selectClickDataById(dataId)
         self.assertRaises(KeyError, lambda: deletedAll[0]["annotations"])
+        self.assertRaises(KeyError, lambda: deletedAll[0]["annotation"])
 
         # add Annotation to Timeline
         objectId = PyClick().addAnnotationToClickTimeline('2016-09-11 17:37:14', "here's a Click timeline annotation", "Alex", "Super Summer Event")

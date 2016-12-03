@@ -74,6 +74,11 @@ class PyTimed:
         collection = self.getTimedCollection()
         return Annotations().addAnnotation(collection, dataId, annotationText)
 
+    # add an annotation for the dataId
+    def addAnnotationToArrayTimed(self, dataId, annotationText):
+        collection = self.getTimedCollection()
+        return Annotations().addAnnotationToArray(collection, dataId, annotationText)
+
     # edit an annotation for the dataId
     def editAnnotationTimed(self, dataId, oldAnnotationText, newAnnotationText):
         collection = self.getTimedCollection()

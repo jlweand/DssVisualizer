@@ -73,6 +73,11 @@ class PyKeyPress:
         collection = self.getKeyPressCollection()
         return Annotations().addAnnotation(collection, dataId, annotationText)
 
+    # add an annotation for the dataId
+    def addAnnotationToArrayKeyPress(self, dataId, annotationText):
+        collection = self.getKeyPressCollection()
+        return Annotations().addAnnotationToArray(collection, dataId, annotationText)
+
     # edit an annotation for the dataId
     def editAnnotationKeyPress(self, dataId, oldAnnotationText, newAnnotationText):
         collection = self.getKeyPressCollection()

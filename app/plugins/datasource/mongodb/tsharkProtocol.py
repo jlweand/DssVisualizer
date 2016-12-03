@@ -78,6 +78,11 @@ class TsharkProtocol:
         collection = self.getTsharkProtocolCollection()
         return Annotations().addAnnotation(collection, dataId, annotationText)
 
+    # add an annotation for the dataId
+    def addAnnotationToArrayTsharkProtocol(self, dataId, annotationText):
+        collection = self.getTsharkProtocolCollection()
+        return Annotations().addAnnotationToArray(collection, dataId, annotationText)
+
     # edit an annotation for the dataId
     def editAnnotationTsharkProtocol(self, dataId, oldAnnotationText, newAnnotationText):
         collection = self.getTsharkProtocolCollection()

@@ -23,7 +23,25 @@ class Annotations:
 
     # add an annotation for the dataId
     def addAnnotation(self, collection, dataId, annotationText):
-        """Adds an annotation to a data point. If the annotation already exists nothing is done.
+        """Adds an annotation to a data point. Using this method will allow only one annotation per data point.
+        If the annotation already exists nothing is done. If the annotation does not exist, this one is added to the list.
+
+        :param collection: The collection in which the data lives.
+        :type collection: MongoDb collection
+        :param dataId: The ObjectId of the data to add the annotation to.
+        :type dataId: str
+        :param annotationText: The text of the annotation.
+        :type annotationText: str
+        :returns: modified_count
+        """
+        updateId = {"_id" : ObjectId(dataId)}
+        push = { "$set": { "annotation": annotationText } }
+        result = collection.update_one(updateId, push)
+        return result.modified_count
+
+    # add an annotation for the dataId
+    def addAnnotationToArray(self, collection, dataId, annotationText):
+        """Adds an annotation to a data point in an array. If the annotation already exists nothing is done.
         If the annotation does not exist, this one is added to the list.
 
         :param collection: The collection in which the data lives.
@@ -35,11 +53,7 @@ class Annotations:
         :returns: modified_count
         """
         updateId = {"_id" : ObjectId(dataId)}
-        #if you want to have an array of annotations:
-        # push = { "$addToSet": { "annotations": { "annotation": annotationText } } }
-        #but it wasn't working with the UI so we only have one annotation
-        push = { "$set": { "annotation": annotationText } }
-
+        push = { "$addToSet": { "annotations": { "annotation": annotationText } } }
         result = collection.update_one(updateId, push)
         return result.modified_count
 
@@ -91,7 +105,7 @@ class Annotations:
         :returns: modified_count
         """
         deleteId = {"_id" : ObjectId(dataId)}
-        deleteText = {"$unset" : {"annotations": "" } }
+        deleteText = {"$unset" : {"annotations": "", "annotation": ""} }
         result = collection.update_one(deleteId, deleteText)
         return result.modified_count
 

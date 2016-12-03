@@ -72,6 +72,10 @@ class PyKeyPress:
     def addAnnotationKeyPress(self, dataId, annotationText):
         return Annotations().addAnnotation(self.keyPressDocType, dataId, annotationText)
 
+    # add an annotation for the dataId
+    def addAnnotationToArrayKeyPress(self, dataId, annotationText):
+        return Annotations().addAnnotationToArray(self.keyPressDocType, dataId, annotationText)
+
     # edit an annotation for the dataId
     def editAnnotationKeyPress(self, dataId, oldAnnotationText, newAnnotationText):
         return Annotations().editAnnotation(self.keyPressDocType, dataId, oldAnnotationText, newAnnotationText)

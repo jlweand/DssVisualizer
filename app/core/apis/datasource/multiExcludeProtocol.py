@@ -143,6 +143,18 @@ class MultiExcludeProtocol:
         multiExcludePlugin = self.getPlugin()
         return multiExcludePlugin.addAnnotationMultiExcludeProtocol(dataId, annotationText)
 
+    def addAnnotationToArrayMultiExcludeProtocol(self, dataId, annotationText):
+        """Override: Add an annotation as an array of annotations to the object.
+
+        :param dataId: The ID of the data to add the annotation to.
+        :type dataId: str
+        :param annotationText: The annotation text
+        :type annotationText: str
+        :returns: The modified count.
+        """
+        multiExcludePlugin = self.getPlugin()
+        return multiExcludePlugin.addAnnotationToArrayMultiExcludeProtocol(dataId, annotationText)
+
     # edit an annotation for the dataId
     def editAnnotationMultiExcludeProtocol(self, dataId, oldAnnotationText, newAnnotationText):
         """Override: Edit an annotation on the MultiExcludeProtocol object.

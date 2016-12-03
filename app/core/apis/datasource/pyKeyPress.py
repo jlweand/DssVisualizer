@@ -137,6 +137,18 @@ class PyKeyPress:
         pyKeyPress = self.getPlugin()
         return pyKeyPress.addAnnotationKeyPress(dataId, annotationText)
 
+    def addAnnotationToArrayKeyPress(self, dataId, annotationText):
+        """Override: Add an annotation as an array of annotations to the object.
+
+        :param dataId: The ID of the data to add the annotation to.
+        :type dataId: str
+        :param annotationText: The annotation text
+        :type annotationText: str
+        :returns: The modified count.
+        """
+        pyKeyPress = self.getPlugin()
+        return pyKeyPress.addAnnotationToArrayKeyPress(dataId, annotationText)
+
     # edit an annotation for the dataId
     def editAnnotationKeyPress(self, dataId, oldAnnotationText, newAnnotationText):
         """Override: Edit an annotation on the key press object.

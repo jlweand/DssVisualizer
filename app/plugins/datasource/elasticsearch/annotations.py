@@ -29,6 +29,22 @@ class Annotations:
 
     # add an annotation for the dataId
     def addAnnotation(self, doc_type, dataId, annotationText):
+        """Adds an annotation to a data point. Using this method will allow only one annotation per data point.
+        If the annotation already exists nothing is done. If the annotation does not exist, this one is added to the list.
+
+        :param doc_type: The collection in which the data lives.
+        :type doc_type: str
+        :param dataId: The ObjectId of the data to add the annotation to.
+        :type dataId: str
+        :param annotationText: The text of the annotation.
+        :type annotationText: str
+        :returns: modified_count
+        """
+        insertFixed = {"doc": { "annotation": annotationText } }
+        result = Elasticsearch().update(index=self.esIndex, doc_type=doc_type, body=insertFixed, id = dataId)
+        return Common().getModfiedCount(result)
+
+    def addAnnotationToArray(self, doc_type, dataId, annotationText):
         """Adds an annotation to a data point. If the annotation already exists nothing is done.
         If the annotation does not exist, this one is added to the list.
 
@@ -74,8 +90,8 @@ class Annotations:
     def editAnnotation(self, doc_type, dataId, oldAnnotationText, newAnnotationText):
         """Edits an annotation on a data point.
 
-        :param collection: The collection in which the data lives.
-        :type collection: MongoDb collection
+        :param doc_type: The doc_type in which the data lives.
+        :type doc_type: str
         :param dataId: The ObjectId of the data to edit the annotation.
         :type dataId: str
         :param oldAnnotationText: The old version of the text of the annotation.
@@ -109,8 +125,8 @@ class Annotations:
     def deleteAnnotation(self, doc_type, dataId, annotationText):
         """Removes an annotation from a data point.
 
-        :param collection: The collection in which the data lives.
-        :type collection: MongoDb collection
+        :param doc_type: The doc_type in which the data lives.
+        :type doc_type: str
         :param dataId: The ObjectId of the data to delete the annotation from.
         :type dataId: str
         :param annotationText: The text of the annotation to remove.
@@ -142,35 +158,23 @@ class Annotations:
     def deleteAllAnnotationsForData(self, doc_type, dataId):
         """Deletes all annotations from a data point.
 
-        :param collection: The collection in which the data lives.
-        :type collection: MongoDb collection
+        :param doc_type: The doc_type in which the data lives.
+        :type doc_type: str
         :param dataId: The ObjectId of the data to remove the annotations from.
         :type dataId: str
         :returns: modified_count
         """
-        document = Elasticsearch().get(index=self.esIndex, doc_type=doc_type, id=dataId)
-        doc = document["_source"]
-        hasSameAnnotation = False
-
-        try:
-            # if the data already has the annotation attribute
-            annotations = doc["annotations"]
-            deleteText = {"script" : "ctx._source.remove(\"annotations\")"}
-            result = Elasticsearch().update(index=self.esIndex, doc_type=doc_type, id=dataId, body=deleteText)
-            return Common().getModfiedCount(result)
-
-        except KeyError:
-            # the data doesn't have any annotations.
-            doc["annotations"] = []
-            # we did nothing to the data, so return 0 for modified count
-            return 0
+        esIndex = Common().getIndexName()
+        doc = { "script" : "ctx._source.remove(\"annotations\", \"annotation\")" }
+        result = Elasticsearch().update(index=esIndex, doc_type=doc_type, id=dataId, body=doc)
+        return Common().getModfiedCount(result)
 
     # add an annotation to the timeline, not a datapoint
     def addAnnotationToTimeline(self, doc_type, jsonObject, annotationText):
         """Adds an annotation to the collection as a new 'data point'.  This is not tied to any imported data.
 
-        :param collection: The collection in which the data lives.
-        :type collection: MongoDb collection
+        :param doc_type: The doc_type in which the data lives.
+        :type doc_type: str
         :param jsonObject: The jsonObject to add the annotation to.
         :type jsonObject: JSON string
         :param annotationText: The text of the annotation.

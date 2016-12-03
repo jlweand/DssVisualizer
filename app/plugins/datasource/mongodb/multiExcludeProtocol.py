@@ -78,6 +78,11 @@ class MultiExcludeProtocol:
         collection = self.getMultiExcludeProtocolCollection()
         return Annotations().addAnnotation(collection, dataId, annotationText)
 
+    # add an annotation for the dataId
+    def addAnnotationToArrayMultiExcludeProtocol(self, dataId, annotationText):
+        collection = self.getMultiExcludeProtocolCollection()
+        return Annotations().addAnnotationToArray(collection, dataId, annotationText)
+
     # edit an annotation for the dataId
     def editAnnotationMultiExcludeProtocol(self, dataId, oldAnnotationText, newAnnotationText):
         collection = self.getMultiExcludeProtocolCollection()

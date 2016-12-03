@@ -74,6 +74,11 @@ class TsharkThroughput:
         collection = self.getTsharkThroughputCollection()
         return Annotations().addAnnotation(collection, dataId, annotationText)
 
+    # add an annotation for the dataId
+    def addAnnotationToArrayTsharkThroughput(self, dataId, annotationText):
+        collection = self.getTsharkThroughputCollection()
+        return Annotations().addAnnotationToArray(collection, dataId, annotationText)
+
     # edit an annotation for the dataId
     def editAnnotationTsharkThroughput(self, dataId, oldAnnotationText, newAnnotationText):
         collection = self.getTsharkThroughputCollection()
