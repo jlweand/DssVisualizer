@@ -36,7 +36,7 @@ Things that may seem weird
   imports. So the five files that have the distinct methods are: KeyPress, MulitExcludeThroughput, MulitIncludeThroughput, TSharkThroughput, and ManualScreenshot.
 
 * **Annotations:**  The UI only allows for one annotation per item.  It calls the back end method to add/edit an 'annotation' attribute.  The back end (both MongoDB
-  and ElasticSearch) both have the capibality to add multiple annotations ('annotations' attribute) as well, with the edit and delete methods.  So there are three
+  and ElasticSearch) both have the capability to add multiple annotations ('annotations' attribute) as well, with the edit and delete methods.  So there are three
   annotation methods that aren't currently used. I left them there for future work.
 
 Issues we know about

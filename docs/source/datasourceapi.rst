@@ -15,19 +15,19 @@ Methods Implemented
 
 * **def selectXxxxDataById(self, dataId)**: Select the key press data by its ID
 
-* **def insertFixedXxxxData(self, dataId, keypress_id, content, className, startDate, isDeleted)**: Inserts a new attribute called 'fixedData' which has all the attributes of the data. Does not overwrite the original data.
-
-* **def updateFixedXxxxData(self, dataId, keypress_id, content, className, startDate, isDeleted)**: Updates the record of the 'fixed' key press data.
+* **def modifyFixedXxxxData(self, dataId, keypress_id, content, className, startDate, isDeleted)**: Inserts or updates the record of the 'fixed' key press data.
 
 * **def deleteFixedXxxxData(self, dataId)**: Delete a 'fixed' key press data.
 
-* **def addAnnotationXxxx(self, dataId, annotationText)**: Add an annotation to the key press object.
+* **def modifyAnnotationXxxx(self, dataId, annotationText)**: Add or edit an annotation on the object.  This will add a single 'annotation' attribute to the object.
 
-* **def editAnnotationXxxx(self, dataId, oldAnnotationText, newAnnotationText)**: Edit an annotation on the key press object.
+* **def addAnnotationToArrayXxxx(self, dataId, annotationText)**: Add an annotation to an array of annotations for the dataId.
 
-* **def deleteAnnotationXxxx(self, dataId, annotationText)**: Delete one annotation from the key press object.
+* **def editAnnotationInArrayXxxx(self, dataId, oldAnnotationText, newAnnotationText)**: Edit an annotation in the array of annotations.
 
-* **def deleteAllAnnotationsForXxxx(self, dataId)**: Delete all annotations from the key press object.
+* **def deleteAnnotationFromArrayXxxx(self, dataId, annotationText)**: Delete an annotation from array for the dataId
+
+* **def deleteAllAnnotationsForXxxx(self, dataId)**: Delete all annotations from the  object.
 
 * **def addAnnotationToXxxxTimeline(self, startTime, annotationText, techName, eventName)**: Ands an annotation to the timeline (not a data point)
 
@@ -59,7 +59,7 @@ Please see the documentation in the following classes to learn more about the me
   * `TsharkProtocol API <core.apis.datasource.html#module-core.apis.datasource.tsharkProtocol>`_
   * `TsharkThroughput API <core.apis.datasource.html#module-core.apis.datasource.tsharkThroughput>`_
 
-Simplify Things
+Simplify Things - Make it more Plug and Playable
 ---------------
 This architecture could be refactored to remove most of the classes and simplify plugin creation.  If each JSON file had a unique className (both the PCAP XY and All have the same classNames
 so we can't distinguish between the three PCAP types) core data source API could just pass the JSON along with the className to the plugin.
