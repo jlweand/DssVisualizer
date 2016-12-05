@@ -62,21 +62,21 @@ class MultiExcludeProtocol:
         result = Elasticsearch().update(index=self.esIndex, doc_type=self.multiExcludeProtocolDocType, body=deleteFixed, id = dataId)
         return Common().getModfiedCount(result)
 
-    # add an annotation for the dataId
-    def addAnnotationMultiExcludeProtocol(self, dataId, annotationText):
-        return Annotations().addAnnotation(self.multiExcludeProtocolDocType, dataId, annotationText)
+    # add or edit an annotation to the object.  This will add a single 'annotation' attribute to the object.
+    def modifyAnnotationMultiExcludeProtocol(self, dataId, annotationText):
+        return Annotations().modifyAnnotation(self.multiExcludeProtocolDocType, dataId, annotationText)
 
-    # add an annotation for the dataId
+    # add an annotation to an array of annotations for the dataId
     def addAnnotationToArrayMultiExcludeProtocol(self, dataId, annotationText):
         return Annotations().addAnnotationToArray(self.multiExcludeProtocolDocType, dataId, annotationText)
 
-    # edit an annotation for the dataId
-    def editAnnotationMultiExcludeProtocol(self, dataId, oldAnnotationText, newAnnotationText):
-        return Annotations().editAnnotation(self.multiExcludeProtocolDocType, dataId, oldAnnotationText, newAnnotationText)
+    # edit an annotation in the array of annotations.
+    def editAnnotationInArrayMultiExcludeProtocol(self, dataId, oldAnnotationText, newAnnotationText):
+        return Annotations().editAnnotationInArray(self.multiExcludeProtocolDocType, dataId, oldAnnotationText, newAnnotationText)
 
-    # delete an annotation for the dataId
-    def deleteAnnotationMultiExcludeProtocol(self, dataId, annotationText):
-        return Annotations().deleteAnnotation(self.multiExcludeProtocolDocType, dataId, annotationText)
+    # delete an annotation from array for the dataId
+    def deleteAnnotationFromArrayMultiExcludeProtocol(self, dataId, annotationText):
+        return Annotations().deleteAnnotationFromArray(self.multiExcludeProtocolDocType, dataId, annotationText)
 
     # deletes all annotations for the dataId
     def deleteAllAnnotationsForMultiExcludeProtocol(self, dataId):

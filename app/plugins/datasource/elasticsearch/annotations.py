@@ -28,9 +28,9 @@ class Annotations:
         self.esIndex = Common().getIndexName()
 
     # add an annotation for the dataId
-    def addAnnotation(self, doc_type, dataId, annotationText):
-        """Adds an annotation to a data point. Using this method will allow only one annotation per data point.
-        If the annotation already exists nothing is done. If the annotation does not exist, this one is added to the list.
+    def modifyAnnotation(self, doc_type, dataId, annotationText):
+        """Adds or updates an annotation to a data point. Using this method will allow only one annotation per data point.
+        If the annotation already exists it will be updated. If the annotation does not exist, it will be added.
 
         :param doc_type: The collection in which the data lives.
         :type doc_type: str
@@ -45,7 +45,7 @@ class Annotations:
         return Common().getModfiedCount(result)
 
     def addAnnotationToArray(self, doc_type, dataId, annotationText):
-        """Adds an annotation to a data point. If the annotation already exists nothing is done.
+        """Adds an annotation to a data point in an array. If the annotation already exists nothing is done.
         If the annotation does not exist, this one is added to the list.
 
         :param doc_type: The doc_type in which the data lives.
@@ -87,8 +87,8 @@ class Annotations:
             return Common().getModfiedCount(result)
 
     # edit an annotation for the dataId
-    def editAnnotation(self, doc_type, dataId, oldAnnotationText, newAnnotationText):
-        """Edits an annotation on a data point.
+    def editAnnotationInArray(self, doc_type, dataId, oldAnnotationText, newAnnotationText):
+        """Edits an annotation in the array of annotations on a data point.
 
         :param doc_type: The doc_type in which the data lives.
         :type doc_type: str
@@ -122,8 +122,8 @@ class Annotations:
             return 0
 
     #delete an annotation for the dataId
-    def deleteAnnotation(self, doc_type, dataId, annotationText):
-        """Removes an annotation from a data point.
+    def deleteAnnotationFromArray(self, doc_type, dataId, annotationText):
+        """Removes an annotation from the array of annotations on a data point.
 
         :param doc_type: The doc_type in which the data lives.
         :type doc_type: str

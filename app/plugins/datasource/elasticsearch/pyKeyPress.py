@@ -61,29 +61,29 @@ class PyKeyPress:
         result = Elasticsearch().update(index=self.esIndex, doc_type=self.keyPressDocType, body=deleteFixed, id = dataId)
         return Common().getModfiedCount(result)
 
-    # add an annotation for the dataId
-    def addAnnotationKeyPress(self, dataId, annotationText):
-        return Annotations().addAnnotation(self.keyPressDocType, dataId, annotationText)
+    # add or edit an annotation to the object.  This will add a single 'annotation' attribute to the object.
+    def modifyAnnotationKeyPress(self, dataId, annotationText):
+        return Annotations().modifyAnnotation(self.keyPressDocType, dataId, annotationText)
 
-    # add an annotation for the dataId
+    # add an annotation to an array of annotations for the dataId
     def addAnnotationToArrayKeyPress(self, dataId, annotationText):
         return Annotations().addAnnotationToArray(self.keyPressDocType, dataId, annotationText)
 
-    # edit an annotation for the dataId
-    def editAnnotationKeyPress(self, dataId, oldAnnotationText, newAnnotationText):
-        return Annotations().editAnnotation(self.keyPressDocType, dataId, oldAnnotationText, newAnnotationText)
+    # edit an annotation in the array of annotations.
+    def editAnnotationInArrayKeyPress(self, dataId, oldAnnotationText, newAnnotationText):
+        return Annotations().editAnnotationInArray(self.keyPressDocType, dataId, oldAnnotationText, newAnnotationText)
 
-    # delete an annotation for the dataId
-    def deleteAnnotationKeyPress(self, dataId, annotationText):
-        return Annotations().deleteAnnotation(self.keyPressDocType, dataId, annotationText)
+    # delete an annotation from array for the dataId
+    def deleteAnnotationFromArrayKeyPress(self, dataId, annotationText):
+        return Annotations().deleteAnnotationFromArray(self.keyPressDocType, dataId, annotationText)
 
     # deletes all annotations for the dataId
     def deleteAllAnnotationsForKeyPress(self, dataId):
         return Annotations().deleteAllAnnotationsForData(self.keyPressDocType, dataId)
 
     # add an annotation to the timeline, not a datapoint
-    def addAnnotationToKeyPressTimeline(self, keyPress, annotationText):
-        return Annotations().addAnnotationToTimeline(self.keyPressDocType, keyPress, annotationText)
+    def addAnnotationToKeyPressTimeline(self, keypress, annotationText):
+        return Annotations().addAnnotationToTimeline(self.keyPressDocType, keypress, annotationText)
 
     # def getDistinctTechNamesForEvents(self, eventNames):
     #     collection = self.getMultiIncludeThroughputCollection()

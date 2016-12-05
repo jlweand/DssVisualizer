@@ -60,29 +60,29 @@ class TsharkThroughput:
         result = Elasticsearch().update(index=self.esIndex, doc_type=self.tsharkThroughputDocType, body=deleteFixed, id = dataId)
         return Common().getModfiedCount(result)
 
-    # add an annotation for the dataId
-    def addAnnotationTsharkThroughput(self, dataId, annotationText):
-        return Annotations().addAnnotation(self.tsharkThroughputDocType, dataId, annotationText)
+    # add or edit an annotation to the object.  This will add a single 'annotation' attribute to the object.
+    def modifyAnnotationTsharkThroughput(self, dataId, annotationText):
+        return Annotations().modifyAnnotation(self.tsharkThroughputDocType, dataId, annotationText)
 
-    # add an annotation for the dataId
+    # add an annotation to an array of annotations for the dataId
     def addAnnotationToArrayTsharkThroughput(self, dataId, annotationText):
         return Annotations().addAnnotationToArray(self.tsharkThroughputDocType, dataId, annotationText)
 
-    # edit an annotation for the dataId
-    def editAnnotationTsharkThroughput(self, dataId, oldAnnotationText, newAnnotationText):
-        return Annotations().editAnnotation(self.tsharkThroughputDocType, dataId, oldAnnotationText, newAnnotationText)
+    # edit an annotation in the array of annotations.
+    def editAnnotationInArrayTsharkThroughput(self, dataId, oldAnnotationText, newAnnotationText):
+        return Annotations().editAnnotationInArray(self.tsharkThroughputDocType, dataId, oldAnnotationText, newAnnotationText)
 
-    # delete an annotation for the dataId
-    def deleteAnnotationTsharkThroughput(self, dataId, annotationText):
-        return Annotations().deleteAnnotation(self.tsharkThroughputDocType, dataId, annotationText)
+    # delete an annotation from array for the dataId
+    def deleteAnnotationFromArrayTsharkThroughput(self, dataId, annotationText):
+        return Annotations().deleteAnnotationFromArray(self.tsharkThroughputDocType, dataId, annotationText)
 
     # deletes all annotations for the dataId
     def deleteAllAnnotationsForTsharkThroughput(self, dataId):
         return Annotations().deleteAllAnnotationsForData(self.tsharkThroughputDocType, dataId)
 
     # add an annotation to the timeline, not a datapoint
-    def addAnnotationToTsharkThroughputTimeline(self, tshark, annotationText):
-        return Annotations().addAnnotationToTimeline(self.tsharkThroughputDocType, tshark, annotationText)
+    def addAnnotationToTsharkThroughputTimeline(self, multiExcludeThroughput, annotationText):
+        return Annotations().addAnnotationToTimeline(self.tsharkThroughputDocType, multiExcludeThroughput, annotationText)
 
     # def getDistinctTechNamesForEvents(self, eventNames):
     #     collection = self.getTsharkThroughputCollection()

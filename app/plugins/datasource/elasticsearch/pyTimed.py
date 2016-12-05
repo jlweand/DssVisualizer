@@ -62,21 +62,21 @@ class PyTimed:
         result = Elasticsearch().update(index=self.esIndex, doc_type=self.timedDocType, body=deleteFixed, id = dataId)
         return Common().getModfiedCount(result)
 
-    # add an annotation for the dataId
-    def addAnnotationTimed(self, dataId, annotationText):
-        return Annotations().addAnnotation(self.timedDocType, dataId, annotationText)
+    # add or edit an annotation to the object.  This will add a single 'annotation' attribute to the object.
+    def modifyAnnotationTimed(self, dataId, annotationText):
+        return Annotations().modifyAnnotation(self.timedDocType, dataId, annotationText)
 
-    # add an annotation for the dataId
+    # add an annotation to an array of annotations for the dataId
     def addAnnotationToArrayTimed(self, dataId, annotationText):
         return Annotations().addAnnotationToArray(self.timedDocType, dataId, annotationText)
 
-    # edit an annotation for the dataId
-    def editAnnotationTimed(self, dataId, oldAnnotationText, newAnnotationText):
-        return Annotations().editAnnotation(self.timedDocType, dataId, oldAnnotationText, newAnnotationText)
+    # edit an annotation in the array of annotations.
+    def editAnnotationInArrayTimed(self, dataId, oldAnnotationText, newAnnotationText):
+        return Annotations().editAnnotationInArray(self.timedDocType, dataId, oldAnnotationText, newAnnotationText)
 
-    # delete an annotation for the dataId
-    def deleteAnnotationTimed(self, dataId, annotationText):
-        return Annotations().deleteAnnotation(self.timedDocType, dataId, annotationText)
+    # delete an annotation from array for the dataId
+    def deleteAnnotationFromArrayTimed(self, dataId, annotationText):
+        return Annotations().deleteAnnotationFromArray(self.timedDocType, dataId, annotationText)
 
     # deletes all annotations for the dataId
     def deleteAllAnnotationsForTimed(self, dataId):

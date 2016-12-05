@@ -108,12 +108,16 @@ class MultiIncludeProtocolTest(unittest.TestCase):
         jsonData = MultiIncludeProtocol().selectMultiIncludeProtocolData('2016-10-18 18:27:42', '2016-10-18 18:27:42', [], [], ["Another Event by Alex"])
         dataId = jsonData[0]["id"]
 
-        # test Annotations
-        MultiIncludeProtocol().addAnnotationMultiIncludeProtocol(dataId, 'single annotation')
+        # test single Annotation
+        MultiIncludeProtocol().modifyAnnotationMultiIncludeProtocol(dataId, 'single annotation')
         addedAnn = MultiIncludeProtocol().selectMultiIncludeProtocolDataById(dataId)
         self.assertEqual('single annotation', addedAnn[0]["annotation"])
 
-        # test Annotations
+        MultiIncludeProtocol().modifyAnnotationMultiIncludeProtocol(dataId, 'update annotation')
+        addedAnn = MultiIncludeProtocol().selectMultiIncludeProtocolDataById(dataId)
+        self.assertEqual('update annotation', addedAnn[0]["annotation"])
+
+        # test Annotation array
         MultiIncludeProtocol().addAnnotationToArrayMultiIncludeProtocol(dataId, 'test')
         MultiIncludeProtocol().addAnnotationToArrayMultiIncludeProtocol(dataId, 'test test')
         MultiIncludeProtocol().addAnnotationToArrayMultiIncludeProtocol(dataId, 'test test test')
@@ -124,15 +128,16 @@ class MultiIncludeProtocolTest(unittest.TestCase):
         self.assertEqual('test test', addedAnns[0]["annotations"][1]["annotation"])
         self.assertEqual('test test test', addedAnns[0]["annotations"][2]["annotation"])
 
-        MultiIncludeProtocol().editAnnotationMultiIncludeProtocol(dataId, 'test test', 'updated annotation!!')
+        MultiIncludeProtocol().editAnnotationInArrayMultiIncludeProtocol(dataId, 'test test', 'updated annotation!!')
         changedAnn = MultiIncludeProtocol().selectMultiIncludeProtocolDataById(dataId)
         self.assertEqual(3, len(addedAnns[0]["annotations"]))
         self.assertEqual('updated annotation!!', changedAnn[0]["annotations"][1]["annotation"])
 
-        MultiIncludeProtocol().deleteAnnotationMultiIncludeProtocol(dataId, 'updated annotation!!')
+        MultiIncludeProtocol().deleteAnnotationFromArrayMultiIncludeProtocol(dataId, 'updated annotation!!')
         deletedChanged = MultiIncludeProtocol().selectMultiIncludeProtocolDataById(dataId)
         self.assertEqual(2, len(deletedChanged[0]["annotations"]))
 
+        # test annotation delete
         MultiIncludeProtocol().deleteAllAnnotationsForMultiIncludeProtocol(dataId)
         deletedAll = MultiIncludeProtocol().selectMultiIncludeProtocolDataById(dataId)
         self.assertRaises(KeyError, lambda: deletedAll[0]["annotations"])

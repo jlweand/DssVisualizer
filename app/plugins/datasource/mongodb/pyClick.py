@@ -60,25 +60,25 @@ class PyClick:
         result = collection.update_one(deleteId, push)
         return result.modified_count
 
-    # add an annotation for the dataId
-    def addAnnotationClick(self, dataId, annotationText):
+    # Add or edit an annotation to the object.  This will add a single 'annotation' attribute to the object.
+    def modifyAnnotationClick(self, dataId, annotationText):
         collection = self.getClickCollection()
-        return Annotations().addAnnotation(collection, dataId, annotationText)
+        return Annotations().modifyAnnotation(collection, dataId, annotationText)
 
-    # add an annotation for the dataId
+    # add an annotation to an array of annotations for the dataId
     def addAnnotationToArrayClick(self, dataId, annotationText):
         collection = self.getClickCollection()
         return Annotations().addAnnotationToArray(collection, dataId, annotationText)
 
-    # edit an annotation for the dataId
-    def editAnnotationClick(self, dataId, oldAnnotationText, newAnnotationText):
+    # edit an annotation in the array of annotations.
+    def editAnnotationInArrayClick(self, dataId, oldAnnotationText, newAnnotationText):
         collection = self.getClickCollection()
-        return Annotations().editAnnotation(collection, dataId, oldAnnotationText, newAnnotationText)
+        return Annotations().editAnnotationInArray(collection, dataId, oldAnnotationText, newAnnotationText)
 
-    # delete an annotation for the dataId
-    def deleteAnnotationClick(self, dataId, annotationText):
+    # delete an annotation from array for the dataId
+    def deleteAnnotationFromArrayClick(self, dataId, annotationText):
         collection = self.getClickCollection()
-        return Annotations().deleteAnnotation(collection, dataId, annotationText)
+        return Annotations().deleteAnnotationFromArray(collection, dataId, annotationText)
 
     # deletes all annotations for the dataId
     def deleteAllAnnotationsForClick(self, dataId):

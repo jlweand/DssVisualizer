@@ -114,12 +114,16 @@ class TsharkThroughputTest(unittest.TestCase):
                                                                  ["Another Event by Alex"])
         dataId = jsonData[0]["id"]
 
-        # test Annotations
-        TsharkThroughput().addAnnotationTsharkThroughput(dataId, 'single annotation')
+        # test single Annotation
+        TsharkThroughput().modifyAnnotationTsharkThroughput(dataId, 'single annotation')
         addedAnn = TsharkThroughput().selectTsharkThroughputDataById(dataId)
         self.assertEqual('single annotation', addedAnn[0]["annotation"])
 
-        # test Annotations
+        TsharkThroughput().modifyAnnotationTsharkThroughput(dataId, 'update annotation')
+        addedAnn = TsharkThroughput().selectTsharkThroughputDataById(dataId)
+        self.assertEqual('update annotation', addedAnn[0]["annotation"])
+
+        # test Annotation array
         TsharkThroughput().addAnnotationToArrayTsharkThroughput(dataId, 'test')
         TsharkThroughput().addAnnotationToArrayTsharkThroughput(dataId, 'test test')
         TsharkThroughput().addAnnotationToArrayTsharkThroughput(dataId, 'test test test')
@@ -130,15 +134,16 @@ class TsharkThroughputTest(unittest.TestCase):
         self.assertEqual('test test', addedAnns[0]["annotations"][1]["annotation"])
         self.assertEqual('test test test', addedAnns[0]["annotations"][2]["annotation"])
 
-        TsharkThroughput().editAnnotationTsharkThroughput(dataId, 'test test', 'updated annotation!!')
+        TsharkThroughput().editAnnotationInArrayTsharkThroughput(dataId, 'test test', 'updated annotation!!')
         changedAnn = TsharkThroughput().selectTsharkThroughputDataById(dataId)
         self.assertEqual(3, len(addedAnns[0]["annotations"]))
         self.assertEqual('updated annotation!!', changedAnn[0]["annotations"][1]["annotation"])
 
-        TsharkThroughput().deleteAnnotationTsharkThroughput(dataId, 'updated annotation!!')
+        TsharkThroughput().deleteAnnotationFromArrayTsharkThroughput(dataId, 'updated annotation!!')
         deletedChanged = TsharkThroughput().selectTsharkThroughputDataById(dataId)
         self.assertEqual(2, len(deletedChanged[0]["annotations"]))
 
+        # test annotation delete
         TsharkThroughput().deleteAllAnnotationsForTsharkThroughput(dataId)
         deletedAll = TsharkThroughput().selectTsharkThroughputDataById(dataId)
         self.assertRaises(KeyError, lambda: deletedAll[0]["annotations"])

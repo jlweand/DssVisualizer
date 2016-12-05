@@ -103,12 +103,16 @@ class PyKeyPressTest(unittest.TestCase):
         jsonData = PyKeyPress().selectKeyPressData('2016-10-12 17:36:24', '2016-10-12 17:36:24', [], [], ["Another Event by Alex"])
         dataId = jsonData[0]["id"]
 
-        # test Annotations
-        PyKeyPress().addAnnotationKeyPress(dataId, 'single annotation')
+        # test single Annotation
+        PyKeyPress().modifyAnnotationKeyPress(dataId, 'single annotation')
         addedAnn = PyKeyPress().selectKeyPressDataById(dataId)
         self.assertEqual('single annotation', addedAnn[0]["annotation"])
+		
+        PyKeyPress().modifyAnnotationKeyPress(dataId, 'update annotation')
+        addedAnn = PyKeyPress().selectKeyPressDataById(dataId)
+        self.assertEqual('update annotation', addedAnn[0]["annotation"])
 
-        # test Annotations
+        # test Annotation array
         PyKeyPress().addAnnotationToArrayKeyPress(dataId, 'test')
         PyKeyPress().addAnnotationToArrayKeyPress(dataId, 'test test')
         PyKeyPress().addAnnotationToArrayKeyPress(dataId, 'test test test')
@@ -119,15 +123,16 @@ class PyKeyPressTest(unittest.TestCase):
         self.assertEqual('test test', addedAnns[0]["annotations"][1]["annotation"])
         self.assertEqual('test test test', addedAnns[0]["annotations"][2]["annotation"])
 
-        PyKeyPress().editAnnotationKeyPress(dataId, 'test test', 'updated annotation!!')
+        PyKeyPress().editAnnotationInArrayKeyPress(dataId, 'test test', 'updated annotation!!')
         changedAnn = PyKeyPress().selectKeyPressDataById(dataId)
         self.assertEqual(3, len(addedAnns[0]["annotations"]))
         self.assertEqual('updated annotation!!', changedAnn[0]["annotations"][1]["annotation"])
 
-        PyKeyPress().deleteAnnotationKeyPress(dataId, 'updated annotation!!')
+        PyKeyPress().deleteAnnotationFromArrayKeyPress(dataId, 'updated annotation!!')
         deletedChanged = PyKeyPress().selectKeyPressDataById(dataId)
         self.assertEqual(2, len(deletedChanged[0]["annotations"]))
 
+        # test annotation delete
         PyKeyPress().deleteAllAnnotationsForKeyPress(dataId)
         deletedAll = PyKeyPress().selectKeyPressDataById(dataId)
         self.assertRaises(KeyError, lambda: deletedAll[0]["annotations"])

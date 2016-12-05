@@ -109,12 +109,16 @@ class TsharkProtocolTest(unittest.TestCase):
                                                              ["Another Event by Alex"])
         dataId = jsonData[0]["id"]
 
-        # test Annotations
-        TsharkProtocol().addAnnotationTsharkProtocol(dataId, 'single annotation')
+        # test single Annotation
+        TsharkProtocol().modifyAnnotationTsharkProtocol(dataId, 'single annotation')
         addedAnn = TsharkProtocol().selectTsharkProtocolDataById(dataId)
         self.assertEqual('single annotation', addedAnn[0]["annotation"])
 
-        # test Annotations
+        TsharkProtocol().modifyAnnotationTsharkProtocol(dataId, 'update annotation')
+        addedAnn = TsharkProtocol().selectTsharkProtocolDataById(dataId)
+        self.assertEqual('update annotation', addedAnn[0]["annotation"])
+
+        # test Annotation array
         TsharkProtocol().addAnnotationToArrayTsharkProtocol(dataId, 'test')
         TsharkProtocol().addAnnotationToArrayTsharkProtocol(dataId, 'test test')
         TsharkProtocol().addAnnotationToArrayTsharkProtocol(dataId, 'test test test')
@@ -125,15 +129,16 @@ class TsharkProtocolTest(unittest.TestCase):
         self.assertEqual('test test', addedAnns[0]["annotations"][1]["annotation"])
         self.assertEqual('test test test', addedAnns[0]["annotations"][2]["annotation"])
 
-        TsharkProtocol().editAnnotationTsharkProtocol(dataId, 'test test', 'updated annotation!!')
+        TsharkProtocol().editAnnotationInArrayTsharkProtocol(dataId, 'test test', 'updated annotation!!')
         changedAnn = TsharkProtocol().selectTsharkProtocolDataById(dataId)
         self.assertEqual(3, len(addedAnns[0]["annotations"]))
         self.assertEqual('updated annotation!!', changedAnn[0]["annotations"][1]["annotation"])
 
-        TsharkProtocol().deleteAnnotationTsharkProtocol(dataId, 'updated annotation!!')
+        TsharkProtocol().deleteAnnotationFromArrayTsharkProtocol(dataId, 'updated annotation!!')
         deletedChanged = TsharkProtocol().selectTsharkProtocolDataById(dataId)
         self.assertEqual(2, len(deletedChanged[0]["annotations"]))
 
+        # test annotation delete
         TsharkProtocol().deleteAllAnnotationsForTsharkProtocol(dataId)
         deletedAll = TsharkProtocol().selectTsharkProtocolDataById(dataId)
         self.assertRaises(KeyError, lambda: deletedAll[0]["annotations"])

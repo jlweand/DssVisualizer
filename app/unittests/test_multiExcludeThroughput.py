@@ -100,12 +100,16 @@ class MultiExcludeThroughputTest(unittest.TestCase):
         jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputData('2016-10-15 11:57:19', '2016-10-15 11:57:19', [], [], ["Another Event by Alex"])
         dataId = jsonData[0]["id"]
 
-        # test Annotations
-        MultiExcludeThroughput().addAnnotationMultiExcludeThroughput(dataId, 'single annotation')
+        # test single Annotation
+        MultiExcludeThroughput().modifyAnnotationMultiExcludeThroughput(dataId, 'single annotation')
         addedAnn = MultiExcludeThroughput().selectMultiExcludeThroughputDataById(dataId)
         self.assertEqual('single annotation', addedAnn[0]["annotation"])
 
-        # test Annotations
+        MultiExcludeThroughput().modifyAnnotationMultiExcludeThroughput(dataId, 'update annotation')
+        addedAnn = MultiExcludeThroughput().selectMultiExcludeThroughputDataById(dataId)
+        self.assertEqual('update annotation', addedAnn[0]["annotation"])
+
+        # test Annotation array
         MultiExcludeThroughput().addAnnotationToArrayMultiExcludeThroughput(dataId, 'test')
         MultiExcludeThroughput().addAnnotationToArrayMultiExcludeThroughput(dataId, 'test test')
         MultiExcludeThroughput().addAnnotationToArrayMultiExcludeThroughput(dataId, 'test test test')
@@ -116,15 +120,16 @@ class MultiExcludeThroughputTest(unittest.TestCase):
         self.assertEqual('test test', addedAnns[0]["annotations"][1]["annotation"])
         self.assertEqual('test test test', addedAnns[0]["annotations"][2]["annotation"])
 
-        MultiExcludeThroughput().editAnnotationMultiExcludeThroughput(dataId, 'test test', 'updated annotation!!')
+        MultiExcludeThroughput().editAnnotationInArrayMultiExcludeThroughput(dataId, 'test test', 'updated annotation!!')
         changedAnn = MultiExcludeThroughput().selectMultiExcludeThroughputDataById(dataId)
         self.assertEqual(3, len(addedAnns[0]["annotations"]))
         self.assertEqual('updated annotation!!', changedAnn[0]["annotations"][1]["annotation"])
 
-        MultiExcludeThroughput().deleteAnnotationMultiExcludeThroughput(dataId, 'updated annotation!!')
+        MultiExcludeThroughput().deleteAnnotationFromArrayMultiExcludeThroughput(dataId, 'updated annotation!!')
         deletedChanged = MultiExcludeThroughput().selectMultiExcludeThroughputDataById(dataId)
         self.assertEqual(2, len(deletedChanged[0]["annotations"]))
 
+        # test annotation delete
         MultiExcludeThroughput().deleteAllAnnotationsForMultiExcludeThroughput(dataId)
         deletedAll = MultiExcludeThroughput().selectMultiExcludeThroughputDataById(dataId)
         self.assertRaises(KeyError, lambda: deletedAll[0]["annotations"])

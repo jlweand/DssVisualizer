@@ -62,21 +62,21 @@ class ManualScreenShot:
         result = Elasticsearch().update(index=self.esIndex, doc_type=self.manualScreenShotDocType, body=deleteFixed, id = dataId)
         return Common().getModfiedCount(result)
 
-    # add an annotation for the dataId
-    def addAnnotationManualScreenShot(self, dataId, annotationText):
-        return Annotations().addAnnotation(self.manualScreenShotDocType, dataId, annotationText)
+    # add or edit an annotation to the object.  This will add a single 'annotation' attribute to the object.
+    def modifyAnnotationManualScreenShot(self, dataId, annotationText):
+        return Annotations().modifyAnnotation(self.manualScreenShotDocType, dataId, annotationText)
 
-    # add an annotation for the dataId
+    # add an annotation to an array of annotations for the dataId
     def addAnnotationToArrayManualScreenShot(self, dataId, annotationText):
         return Annotations().addAnnotationToArray(self.manualScreenShotDocType, dataId, annotationText)
 
-    # edit an annotation for the dataId
-    def editAnnotationManualScreenShot(self, dataId, oldAnnotationText, newAnnotationText):
-        return Annotations().editAnnotation(self.manualScreenShotDocType, dataId, oldAnnotationText, newAnnotationText)
+    # edit an annotation in the array of annotations.
+    def editAnnotationInArrayManualScreenShot(self, dataId, oldAnnotationText, newAnnotationText):
+        return Annotations().editAnnotationInArray(self.manualScreenShotDocType, dataId, oldAnnotationText, newAnnotationText)
 
-    # delete an annotation for the dataId
-    def deleteAnnotationManualScreenShot(self, dataId, annotationText):
-        return Annotations().deleteAnnotation(self.manualScreenShotDocType, dataId, annotationText)
+    # delete an annotation from array for the dataId
+    def deleteAnnotationFromArrayManualScreenShot(self, dataId, annotationText):
+        return Annotations().deleteAnnotationFromArray(self.manualScreenShotDocType, dataId, annotationText)
 
     # deletes all annotations for the dataId
     def deleteAllAnnotationsForManualScreenShot(self, dataId):

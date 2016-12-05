@@ -106,8 +106,9 @@ class MultiIncludeProtocol:
         result = multiIncludePlugin.deleteFixedMultiIncludeProtocolData(dataId)
         return result
 
-    def addAnnotationMultiIncludeProtocol(self, dataId, annotationText):
-        """Override: Add an annotation to the MultiIncludeProtocol object.
+    def modifyAnnotationMultiIncludeProtocol(self, dataId, annotationText):
+        """Override: Add or edit an annotation to the object.  This will add a single 'annotation' attribute
+        to the object.
 
         :param dataId: The ID of the data to add the annotation to.
         :type dataId: str
@@ -116,7 +117,7 @@ class MultiIncludeProtocol:
         :returns: The modified count.
         """
         multiIncludePlugin = self.getPlugin()
-        return multiIncludePlugin.addAnnotationMultiIncludeProtocol(dataId, annotationText)
+        return multiIncludePlugin.modifyAnnotationMultiIncludeProtocol(dataId, annotationText)
 
     def addAnnotationToArrayMultiIncludeProtocol(self, dataId, annotationText):
         """Override: Add an annotation as an array of annotations to the object.
@@ -130,9 +131,8 @@ class MultiIncludeProtocol:
         multiIncludePlugin = self.getPlugin()
         return multiIncludePlugin.addAnnotationToArrayMultiIncludeProtocol(dataId, annotationText)
 
-    # edit an annotation for the dataId
-    def editAnnotationMultiIncludeProtocol(self, dataId, oldAnnotationText, newAnnotationText):
-        """Override: Edit an annotation on the MultiIncludeProtocol object.
+    def editAnnotationInArrayMultiIncludeProtocol(self, dataId, oldAnnotationText, newAnnotationText):
+        """Override: Edit an annotation in the array of annotations.
 
         :param dataId: The ID of the data to edit the annotation of.
         :type dataId: str
@@ -143,11 +143,10 @@ class MultiIncludeProtocol:
         :returns: The modified count.
         """
         multiIncludePlugin = self.getPlugin()
-        return multiIncludePlugin.editAnnotationMultiIncludeProtocol(dataId, oldAnnotationText, newAnnotationText)
+        return multiIncludePlugin.editAnnotationInArrayMultiIncludeProtocol(dataId, oldAnnotationText, newAnnotationText)
 
-    # delete an annotation for the dataId
-    def deleteAnnotationMultiIncludeProtocol(self, dataId, annotationText):
-        """Override: Delete one annotation from the MultiIncludeProtocol object.
+    def deleteAnnotationFromArrayMultiIncludeProtocol(self, dataId, annotationText):
+        """Override: Delete one annotation from the array of annotations.
 
         :param dataId: The ID of the data to remove the annotation from.
         :type dataId: str
@@ -156,11 +155,11 @@ class MultiIncludeProtocol:
         :returns: The modified count.
         """
         multiIncludePlugin = self.getPlugin()
-        return multiIncludePlugin.deleteAnnotationMultiIncludeProtocol(dataId, annotationText)
+        return multiIncludePlugin.deleteAnnotationFromArrayMultiIncludeProtocol(dataId, annotationText)
 
-    # deletes all annotations for the dataId
     def deleteAllAnnotationsForMultiIncludeProtocol(self, dataId):
-        """Override: Delete all annotations from the MultiIncludeProtocol object.
+        """Override: Delete all annotations from the ManualScreenShot object.  It should delete all annotations
+        that are in an 'annotations' array as well as the 'annotation' attribute.
 
         :param dataId: The ID of the data to remove all annotations from.
         :type dataId: str
@@ -169,9 +168,9 @@ class MultiIncludeProtocol:
         multiIncludePlugin = self.getPlugin()
         return multiIncludePlugin.deleteAllAnnotationsForMultiIncludeProtocol(dataId)
 
-    # add an annotation to the timeline, not a datapoint
     def addAnnotationToMultiIncludeProtocolTimeline(self, startTime, annotationText, techName, eventName):
-        """Override: Ands an annotation to the timeline (not a data point)
+        """Override: Adds an annotation to the timeline (not a data point). The annotation becomes a
+        brand new data point.
 
         :param startTime: The datetime to add the annotation to
         :type startTime: str

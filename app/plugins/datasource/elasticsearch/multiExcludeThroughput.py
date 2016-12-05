@@ -60,29 +60,29 @@ class MultiExcludeThroughput:
         result = Elasticsearch().update(index=self.esIndex, doc_type=self.multiExcludeThroughputDocType, body=deleteFixed, id = dataId)
         return Common().getModfiedCount(result)
 
-    # add an annotation for the dataId
-    def addAnnotationMultiExcludeThroughput(self, dataId, annotationText):
-        return Annotations().addAnnotation(self.multiExcludeThroughputDocType, dataId, annotationText)
+    # add or edit an annotation to the object.  This will add a single 'annotation' attribute to the object.
+    def modifyAnnotationMultiExcludeThroughput(self, dataId, annotationText):
+        return Annotations().modifyAnnotation(self.multiExcludeThroughputDocType, dataId, annotationText)
 
-    # add an annotation for the dataId
+    # add an annotation to an array of annotations for the dataId
     def addAnnotationToArrayMultiExcludeThroughput(self, dataId, annotationText):
         return Annotations().addAnnotationToArray(self.multiExcludeThroughputDocType, dataId, annotationText)
 
-    # edit an annotation for the dataId
-    def editAnnotationMultiExcludeThroughput(self, dataId, oldAnnotationText, newAnnotationText):
-        return Annotations().editAnnotation(self.multiExcludeThroughputDocType, dataId, oldAnnotationText, newAnnotationText)
+    # edit an annotation in the array of annotations.
+    def editAnnotationInArrayMultiExcludeThroughput(self, dataId, oldAnnotationText, newAnnotationText):
+        return Annotations().editAnnotationInArray(self.multiExcludeThroughputDocType, dataId, oldAnnotationText, newAnnotationText)
 
-    # delete an annotation for the dataId
-    def deleteAnnotationMultiExcludeThroughput(self, dataId, annotationText):
-        return Annotations().deleteAnnotation(self.multiExcludeThroughputDocType, dataId, annotationText)
+    # delete an annotation from array for the dataId
+    def deleteAnnotationFromArrayMultiExcludeThroughput(self, dataId, annotationText):
+        return Annotations().deleteAnnotationFromArray(self.multiExcludeThroughputDocType, dataId, annotationText)
 
     # deletes all annotations for the dataId
     def deleteAllAnnotationsForMultiExcludeThroughput(self, dataId):
         return Annotations().deleteAllAnnotationsForData(self.multiExcludeThroughputDocType, dataId)
 
     # add an annotation to the timeline, not a datapoint
-    def addAnnotationToMultiExcludeThroughputTimeline(self, multiExclude, annotationText):
-        return Annotations().addAnnotationToTimeline(self.multiExcludeThroughputDocType, multiExclude, annotationText)
+    def addAnnotationToMultiExcludeThroughputTimeline(self, multiExcludeThroughput, annotationText):
+        return Annotations().addAnnotationToTimeline(self.multiExcludeThroughputDocType, multiExcludeThroughput, annotationText)
 
     # def getDistinctTechNamesForEvents(self, eventNames):
     #     collection = self.getMultiExcludeThroughputCollection()

@@ -63,25 +63,25 @@ class MultiIncludeProtocol:
         result = collection.update_one(deleteId, deleteText)
         return result.modified_count
 
-    # add an annotation for the dataId
-    def addAnnotationMultiIncludeProtocol(self, dataId, annotationText):
+    # Add or edit an annotation to the object.  This will add a single 'annotation' attribute to the object.
+    def modifyAnnotationMultiIncludeProtocol(self, dataId, annotationText):
         collection = self.getMultiIncludeProtocolCollection()
-        return Annotations().addAnnotation(collection, dataId, annotationText)
+        return Annotations().modifyAnnotation(collection, dataId, annotationText)
 
-    # add an annotation for the dataId
+    # add an annotation to an array of annotations for the dataId
     def addAnnotationToArrayMultiIncludeProtocol(self, dataId, annotationText):
         collection = self.getMultiIncludeProtocolCollection()
         return Annotations().addAnnotationToArray(collection, dataId, annotationText)
 
-    # edit an annotation for the dataId
-    def editAnnotationMultiIncludeProtocol(self, dataId, oldAnnotationText, newAnnotationText):
+    # edit an annotation in the array of annotations.
+    def editAnnotationInArrayMultiIncludeProtocol(self, dataId, oldAnnotationText, newAnnotationText):
         collection = self.getMultiIncludeProtocolCollection()
-        return Annotations().editAnnotation(collection, dataId, oldAnnotationText, newAnnotationText)
+        return Annotations().editAnnotationInArray(collection, dataId, oldAnnotationText, newAnnotationText)
 
-    # delete an annotation for the dataId
-    def deleteAnnotationMultiIncludeProtocol(self, dataId, annotationText):
+    # delete an annotation from array for the dataId
+    def deleteAnnotationFromArrayMultiIncludeProtocol(self, dataId, annotationText):
         collection = self.getMultiIncludeProtocolCollection()
-        return Annotations().deleteAnnotation(collection, dataId, annotationText)
+        return Annotations().deleteAnnotationFromArray(collection, dataId, annotationText)
 
     # deletes all annotations for the dataId
     def deleteAllAnnotationsForMultiIncludeProtocol(self, dataId):

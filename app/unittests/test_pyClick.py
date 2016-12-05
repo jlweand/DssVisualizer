@@ -112,12 +112,16 @@ class PyClickTest(unittest.TestCase):
         jsonData = PyClick().selectClickData('2016-10-18 18:26:43', '2016-10-18 18:26:43', [], [], ["Another Event by Alex"])
         dataId = jsonData[0]["id"]
 
-        # test Annotations
-        PyClick().addAnnotationClick(dataId, 'single annotation')
+        # test single Annotation
+        PyClick().modifyAnnotationClick(dataId, 'single annotation')
         addedAnn = PyClick().selectClickDataById(dataId)
         self.assertEqual('single annotation', addedAnn[0]["annotation"])
 
-        # test Annotations
+        PyClick().modifyAnnotationClick(dataId, 'update annotation')
+        addedAnn = PyClick().selectClickDataById(dataId)
+        self.assertEqual('update annotation', addedAnn[0]["annotation"])
+
+        # test Annotation array
         PyClick().addAnnotationToArrayClick(dataId, 'test')
         PyClick().addAnnotationToArrayClick(dataId, 'test test')
         PyClick().addAnnotationToArrayClick(dataId, 'test test test')
@@ -128,15 +132,16 @@ class PyClickTest(unittest.TestCase):
         self.assertEqual('test test', addedAnns[0]["annotations"][1]["annotation"])
         self.assertEqual('test test test', addedAnns[0]["annotations"][2]["annotation"])
 
-        PyClick().editAnnotationClick(dataId, 'test test', 'updated annotation!!')
+        PyClick().editAnnotationInArrayClick(dataId, 'test test', 'updated annotation!!')
         changedAnn = PyClick().selectClickDataById(dataId)
         self.assertEqual(3, len(addedAnns[0]["annotations"]))
         self.assertEqual('updated annotation!!', changedAnn[0]["annotations"][1]["annotation"])
 
-        PyClick().deleteAnnotationClick(dataId, 'updated annotation!!')
+        PyClick().deleteAnnotationFromArrayClick(dataId, 'updated annotation!!')
         deletedChanged = PyClick().selectClickDataById(dataId)
         self.assertEqual(2, len(deletedChanged[0]["annotations"]))
 
+        # test annotation delete
         PyClick().deleteAllAnnotationsForClick(dataId)
         deletedAll = PyClick().selectClickDataById(dataId)
         self.assertRaises(KeyError, lambda: deletedAll[0]["annotations"])

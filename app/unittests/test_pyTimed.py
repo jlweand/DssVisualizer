@@ -113,12 +113,16 @@ class PyTimedTest(unittest.TestCase):
         jsonData = PyTimed().selectTimedData('2016-09-16 09:16:34', '2016-09-16 09:16:40', [], [], ["Another Event by Alex"])
         dataId = jsonData[0]["id"]
 
-        # test Annotations
-        PyTimed().addAnnotationTimed(dataId, 'single annotation')
+        # test single Annotation
+        PyTimed().modifyAnnotationTimed(dataId, 'single annotation')
         addedAnn = PyTimed().selectTimedDataById(dataId)
         self.assertEqual('single annotation', addedAnn[0]["annotation"])
+		
+        PyTimed().modifyAnnotationTimed(dataId, 'update annotation')
+        addedAnn = PyTimed().selectTimedDataById(dataId)
+        self.assertEqual('update annotation', addedAnn[0]["annotation"])
 
-        # test Annotations
+        # test Annotation array
         PyTimed().addAnnotationToArrayTimed(dataId, 'test')
         PyTimed().addAnnotationToArrayTimed(dataId, 'test test')
         PyTimed().addAnnotationToArrayTimed(dataId, 'test test test')
@@ -129,15 +133,16 @@ class PyTimedTest(unittest.TestCase):
         self.assertEqual('test test', addedAnns[0]["annotations"][1]["annotation"])
         self.assertEqual('test test test', addedAnns[0]["annotations"][2]["annotation"])
 
-        PyTimed().editAnnotationTimed(dataId, 'test test', 'updated annotation!!')
+        PyTimed().editAnnotationInArrayTimed(dataId, 'test test', 'updated annotation!!')
         changedAnn = PyTimed().selectTimedDataById(dataId)
         self.assertEqual(3, len(addedAnns[0]["annotations"]))
         self.assertEqual('updated annotation!!', changedAnn[0]["annotations"][1]["annotation"])
 
-        PyTimed().deleteAnnotationTimed(dataId, 'updated annotation!!')
+        PyTimed().deleteAnnotationFromArrayTimed(dataId, 'updated annotation!!')
         deletedChanged = PyTimed().selectTimedDataById(dataId)
         self.assertEqual(2, len(deletedChanged[0]["annotations"]))
 
+        # test annotation delete
         PyTimed().deleteAllAnnotationsForTimed(dataId)
         deletedAll = PyTimed().selectTimedDataById(dataId)
         self.assertRaises(KeyError, lambda: deletedAll[0]["annotations"])

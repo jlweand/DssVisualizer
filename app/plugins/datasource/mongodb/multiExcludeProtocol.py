@@ -64,9 +64,9 @@ class MultiExcludeProtocol:
         return result.modified_count
 
     # add an annotation for the dataId
-    def addAnnotationMultiExcludeProtocol(self, dataId, annotationText):
+    def modifyAnnotationMultiExcludeProtocol(self, dataId, annotationText):
         collection = self.getMultiExcludeProtocolCollection()
-        return Annotations().addAnnotation(collection, dataId, annotationText)
+        return Annotations().modifyAnnotation(collection, dataId, annotationText)
 
     # add an annotation for the dataId
     def addAnnotationToArrayMultiExcludeProtocol(self, dataId, annotationText):
@@ -74,14 +74,14 @@ class MultiExcludeProtocol:
         return Annotations().addAnnotationToArray(collection, dataId, annotationText)
 
     # edit an annotation for the dataId
-    def editAnnotationMultiExcludeProtocol(self, dataId, oldAnnotationText, newAnnotationText):
+    def editAnnotationInArrayMultiExcludeProtocol(self, dataId, oldAnnotationText, newAnnotationText):
         collection = self.getMultiExcludeProtocolCollection()
-        return Annotations().editAnnotation(collection, dataId, oldAnnotationText, newAnnotationText)
+        return Annotations().editAnnotationInArray(collection, dataId, oldAnnotationText, newAnnotationText)
 
     # delete an annotation for the dataId
-    def deleteAnnotationMultiExcludeProtocol(self, dataId, annotationText):
+    def deleteAnnotationFromArrayMultiExcludeProtocol(self, dataId, annotationText):
         collection = self.getMultiExcludeProtocolCollection()
-        return Annotations().deleteAnnotation(collection, dataId, annotationText)
+        return Annotations().deleteAnnotationFromArray(collection, dataId, annotationText)
 
     # deletes all annotations for the dataId
     def deleteAllAnnotationsForMultiExcludeProtocol(self, dataId):

@@ -109,8 +109,9 @@ class ManualScreenShot:
         result = manualScreenShot.deleteFixedManualScreenShotData(dataId)
         return result
 
-    def addAnnotationManualScreenShot(self, dataId, annotationText):
-        """Override: Add an annotation to the ManualScreenShot object.
+    def modifyAnnotationManualScreenShot(self, dataId, annotationText):
+        """Override: Add or edit an annotation to the object.  This will add a single 'annotation' attribute
+        to the object.
 
         :param dataId: The ID of the data to add the annotation to.
         :type dataId: str
@@ -119,7 +120,7 @@ class ManualScreenShot:
         :returns: The modified count.
         """
         manualScreenShot = self.getPlugin()
-        return manualScreenShot.addAnnotationManualScreenShot(dataId, annotationText)
+        return manualScreenShot.modifyAnnotationManualScreenShot(dataId, annotationText)
 
     def addAnnotationToArrayManualScreenShot(self, dataId, annotationText):
         """Override: Add an annotation as an array of annotations to the object.
@@ -133,9 +134,8 @@ class ManualScreenShot:
         manualScreenShot = self.getPlugin()
         return manualScreenShot.addAnnotationToArrayManualScreenShot(dataId, annotationText)
 
-    # edit an annotation for the dataId
-    def editAnnotationManualScreenShot(self, dataId, oldAnnotationText, newAnnotationText):
-        """Override: Edit an annotation on the ManualScreenShot object.
+    def editAnnotationInArrayManualScreenShot(self, dataId, oldAnnotationText, newAnnotationText):
+        """Override: Edit an annotation in the array of annotations.
 
         :param dataId: The ID of the data to edit the annotation of.
         :type dataId: str
@@ -146,11 +146,10 @@ class ManualScreenShot:
         :returns: The modified count.
         """
         manualScreenShot = self.getPlugin()
-        return manualScreenShot.editAnnotationManualScreenShot(dataId, oldAnnotationText, newAnnotationText)
+        return manualScreenShot.editAnnotationInArrayManualScreenShot(dataId, oldAnnotationText, newAnnotationText)
 
-    # delete an annotation for the dataId
-    def deleteAnnotationManualScreenShot(self, dataId, annotationText):
-        """Override: Delete one annotation from the ManualScreenShot object.
+    def deleteAnnotationFromArrayManualScreenShot(self, dataId, annotationText):
+        """Override: Delete one annotation from the array of annotations.
 
         :param dataId: The ID of the data to remove the annotation from.
         :type dataId: str
@@ -159,11 +158,11 @@ class ManualScreenShot:
         :returns: The modified count.
         """
         manualScreenShot = self.getPlugin()
-        return manualScreenShot.deleteAnnotationManualScreenShot(dataId, annotationText)
+        return manualScreenShot.deleteAnnotationFromArrayManualScreenShot(dataId, annotationText)
 
-    # deletes all annotations for the dataId
     def deleteAllAnnotationsForManualScreenShot(self, dataId):
-        """Override: Delete all annotations from the ManualScreenShot object.
+        """Override: Delete all annotations from the ManualScreenShot object.  It should delete all annotations
+        that are in an 'annotations' array as well as the 'annotation' attribute.
 
         :param dataId: The ID of the data to remove all annotations from.
         :type dataId: str
@@ -172,9 +171,9 @@ class ManualScreenShot:
         manualScreenShot = self.getPlugin()
         return manualScreenShot.deleteAllAnnotationsForManualScreenShot(dataId)
 
-    # add an annotation to the timeline, not a datapoint
     def addAnnotationToManualScreenShotTimeline(self, startTime, annotationText, techName, eventName):
-        """Override: Ands an annotation to the timeline (not a data point)
+        """Override: Adds an annotation to the timeline (not a data point). The annotation becomes a
+        brand new data point.
 
         :param startTime: The datetime string in local time to add the annotation to.  Will be converted to UTC before passing on to plugin
         :type startTime: str

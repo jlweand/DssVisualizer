@@ -102,8 +102,9 @@ class TsharkThroughput:
         result = tsharkPlugin.deleteFixedTsharkThroughputData(dataId)
         return result
 
-    def addAnnotationTsharkThroughput(self, dataId, annotationText):
-        """Override: Add an annotation to the TsharkThroughput object.
+    def modifyAnnotationTsharkThroughput(self, dataId, annotationText):
+        """Override: Add or edit an annotation to the object.  This will add a single 'annotation' attribute
+        to the object.
 
         :param dataId: The ID of the data to add the annotation to.
         :type dataId: str
@@ -112,7 +113,7 @@ class TsharkThroughput:
         :returns: The modified count.
         """
         tsharkPlugin = self.getPlugin()
-        return tsharkPlugin.addAnnotationTsharkThroughput(dataId, annotationText)
+        return tsharkPlugin.modifyAnnotationTsharkThroughput(dataId, annotationText)
 
     def addAnnotationToArrayTsharkThroughput(self, dataId, annotationText):
         """Override: Add an annotation as an array of annotations to the object.
@@ -126,9 +127,8 @@ class TsharkThroughput:
         tsharkPlugin = self.getPlugin()
         return tsharkPlugin.addAnnotationToArrayTsharkThroughput(dataId, annotationText)
 
-    # edit an annotation for the dataId
-    def editAnnotationTsharkThroughput(self, dataId, oldAnnotationText, newAnnotationText):
-        """Override: Edit an annotation on the TsharkThroughput object.
+    def editAnnotationInArrayTsharkThroughput(self, dataId, oldAnnotationText, newAnnotationText):
+        """Override: Edit an annotation in the array of annotations.
 
         :param dataId: The ID of the data to edit the annotation of.
         :type dataId: str
@@ -139,11 +139,10 @@ class TsharkThroughput:
         :returns: The modified count.
         """
         tsharkPlugin = self.getPlugin()
-        return tsharkPlugin.editAnnotationTsharkThroughput(dataId, oldAnnotationText, newAnnotationText)
+        return tsharkPlugin.editAnnotationInArrayTsharkThroughput(dataId, oldAnnotationText, newAnnotationText)
 
-    # delete an annotation for the dataId
-    def deleteAnnotationTsharkThroughput(self, dataId, annotationText):
-        """Override: Delete one annotation from the TsharkThroughput object.
+    def deleteAnnotationFromArrayTsharkThroughput(self, dataId, annotationText):
+        """Override: Delete one annotation from the array of annotations.
 
         :param dataId: The ID of the data to remove the annotation from.
         :type dataId: str
@@ -152,11 +151,11 @@ class TsharkThroughput:
         :returns: The modified count.
         """
         tsharkPlugin = self.getPlugin()
-        return tsharkPlugin.deleteAnnotationTsharkThroughput(dataId, annotationText)
+        return tsharkPlugin.deleteAnnotationFromArrayTsharkThroughput(dataId, annotationText)
 
-    # deletes all annotations for the dataId
     def deleteAllAnnotationsForTsharkThroughput(self, dataId):
-        """Override: Delete all annotations from the TsharkThroughput object.
+        """Override: Delete all annotations from the ManualScreenShot object.  It should delete all annotations
+        that are in an 'annotations' array as well as the 'annotation' attribute.
 
         :param dataId: The ID of the data to remove all annotations from.
         :type dataId: str
@@ -165,9 +164,9 @@ class TsharkThroughput:
         tsharkPlugin = self.getPlugin()
         return tsharkPlugin.deleteAllAnnotationsForTsharkThroughput(dataId)
 
-    # add an annotation to the timeline, not a datapoint
     def addAnnotationToTsharkThroughputTimeline(self, x, annotationText, techName, eventName):
-        """Override: Ands an annotation to the timeline (not a data point)
+        """Override: Adds an annotation to the timeline (not a data point). The annotation becomes a
+        brand new data point.
 
         :param x: The datetime string in local time to add the annotation to.  Will be converted to UTC before passing on to plugin
         :type x: str

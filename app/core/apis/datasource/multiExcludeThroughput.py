@@ -103,8 +103,9 @@ class MultiExcludeThroughput:
         result = multiExcludePlugin.deleteFixedMultiExcludeThroughputData(dataId)
         return result
 
-    def addAnnotationMultiExcludeThroughput(self, dataId, annotationText):
-        """Override: Add an annotation to the MultiExcludeThroughput object.
+    def modifyAnnotationMultiExcludeThroughput(self, dataId, annotationText):
+        """Override: Add or edit an annotation to the object.  This will add a single 'annotation' attribute
+        to the object.
 
         :param dataId: The ID of the data to add the annotation to.
         :type dataId: str
@@ -113,7 +114,7 @@ class MultiExcludeThroughput:
         :returns: The modified count.
         """
         multiExcludePlugin = self.getPlugin()
-        return multiExcludePlugin.addAnnotationMultiExcludeThroughput(dataId, annotationText)
+        return multiExcludePlugin.modifyAnnotationMultiExcludeThroughput(dataId, annotationText)
 
     def addAnnotationToArrayMultiExcludeThroughput(self, dataId, annotationText):
         """Override: Add an annotation as an array of annotations to the object.
@@ -127,9 +128,8 @@ class MultiExcludeThroughput:
         multiExcludePlugin = self.getPlugin()
         return multiExcludePlugin.addAnnotationToArrayMultiExcludeThroughput(dataId, annotationText)
 
-    # edit an annotation for the dataId
-    def editAnnotationMultiExcludeThroughput(self, dataId, oldAnnotationText, newAnnotationText):
-        """Override: Edit an annotation on the MultiExcludeThroughput object.
+    def editAnnotationInArrayMultiExcludeThroughput(self, dataId, oldAnnotationText, newAnnotationText):
+        """Override: Edit an annotation in the array of annotations.
 
         :param dataId: The ID of the data to edit the annotation of.
         :type dataId: str
@@ -140,11 +140,10 @@ class MultiExcludeThroughput:
         :returns: The modified count.
         """
         multiExcludePlugin = self.getPlugin()
-        return multiExcludePlugin.editAnnotationMultiExcludeThroughput(dataId, oldAnnotationText, newAnnotationText)
+        return multiExcludePlugin.editAnnotationInArrayMultiExcludeThroughput(dataId, oldAnnotationText, newAnnotationText)
 
-    # delete an annotation for the dataId
-    def deleteAnnotationMultiExcludeThroughput(self, dataId, annotationText):
-        """Override: Delete one annotation from the MultiExcludeThroughput object.
+    def deleteAnnotationFromArrayMultiExcludeThroughput(self, dataId, annotationText):
+        """Override: Delete one annotation from the array of annotations.
 
         :param dataId: The ID of the data to remove the annotation from.
         :type dataId: str
@@ -153,11 +152,11 @@ class MultiExcludeThroughput:
         :returns: The modified count.
         """
         multiExcludePlugin = self.getPlugin()
-        return multiExcludePlugin.deleteAnnotationMultiExcludeThroughput(dataId, annotationText)
+        return multiExcludePlugin.deleteAnnotationFromArrayMultiExcludeThroughput(dataId, annotationText)
 
-    # deletes all annotations for the dataId
     def deleteAllAnnotationsForMultiExcludeThroughput(self, dataId):
-        """Override: Delete all annotations from the MultiExcludeThroughput object.
+        """Override: Delete all annotations from the ManualScreenShot object.  It should delete all annotations
+        that are in an 'annotations' array as well as the 'annotation' attribute.
 
         :param dataId: The ID of the data to remove all annotations from.
         :type dataId: str
@@ -166,9 +165,9 @@ class MultiExcludeThroughput:
         multiExcludePlugin = self.getPlugin()
         return multiExcludePlugin.deleteAllAnnotationsForMultiExcludeThroughput(dataId)
 
-    # add an annotation to the timeline, not a datapoint
     def addAnnotationToMultiExcludeThroughputTimeline(self, x, annotationText, techName, eventName):
-        """Override: Ands an annotation to the timeline (not a data point)
+        """Override: Adds an annotation to the timeline (not a data point). The annotation becomes a
+        brand new data point.
 
         :param x: The datetime string in local time to add the annotation to.  Will be converted to UTC before passing on to plugin
         :type x: str

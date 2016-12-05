@@ -116,12 +116,16 @@ class ManualScreenShotTest(unittest.TestCase):
         jsonData = ManualScreenShot().selectManualScreenShotData('2016-10-18 18:26:37', '2016-10-18 18:26:37', [], [], ["Another Event by Alex"])
         dataId = jsonData[0]["id"]
 
-        # test Annotations
-        ManualScreenShot().addAnnotationManualScreenShot(dataId, 'single annotation')
+        # test single Annotation
+        ManualScreenShot().modifyAnnotationManualScreenShot(dataId, 'single annotation')
         addedAnn = ManualScreenShot().selectManualScreenShotDataById(dataId)
         self.assertEqual('single annotation', addedAnn[0]["annotation"])
+		
+        ManualScreenShot().modifyAnnotationManualScreenShot(dataId, 'update annotation')
+        addedAnn = ManualScreenShot().selectManualScreenShotDataById(dataId)
+        self.assertEqual('update annotation', addedAnn[0]["annotation"])
 
-        # test Annotations
+        # test Annotation array
         ManualScreenShot().addAnnotationToArrayManualScreenShot(dataId, 'test')
         ManualScreenShot().addAnnotationToArrayManualScreenShot(dataId, 'test test')
         ManualScreenShot().addAnnotationToArrayManualScreenShot(dataId, 'test test test')
@@ -132,15 +136,16 @@ class ManualScreenShotTest(unittest.TestCase):
         self.assertEqual('test test', addedAnns[0]["annotations"][1]["annotation"])
         self.assertEqual('test test test', addedAnns[0]["annotations"][2]["annotation"])
 
-        ManualScreenShot().editAnnotationManualScreenShot(dataId, 'test test', 'updated annotation!!')
+        ManualScreenShot().editAnnotationInArrayManualScreenShot(dataId, 'test test', 'updated annotation!!')
         changedAnn = ManualScreenShot().selectManualScreenShotDataById(dataId)
         self.assertEqual(3, len(addedAnns[0]["annotations"]))
         self.assertEqual('updated annotation!!', changedAnn[0]["annotations"][1]["annotation"])
 
-        ManualScreenShot().deleteAnnotationManualScreenShot(dataId, 'updated annotation!!')
+        ManualScreenShot().deleteAnnotationFromArrayManualScreenShot(dataId, 'updated annotation!!')
         deletedChanged = ManualScreenShot().selectManualScreenShotDataById(dataId)
         self.assertEqual(2, len(deletedChanged[0]["annotations"]))
 
+        # test annotation delete
         ManualScreenShot().deleteAllAnnotationsForManualScreenShot(dataId)
         deletedAll = ManualScreenShot().selectManualScreenShotDataById(dataId)
         self.assertRaises(KeyError, lambda: deletedAll[0]["annotations"])

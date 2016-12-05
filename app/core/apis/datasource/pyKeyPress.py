@@ -103,8 +103,9 @@ class PyKeyPress:
         pyKeyPress = self.getPlugin()
         return pyKeyPress.deleteFixedKeyPressData(dataId)
 
-    def addAnnotationKeyPress(self, dataId, annotationText):
-        """Override: Add an annotation to the key press object.
+    def modifyAnnotationKeyPress(self, dataId, annotationText):
+        """Override: Add or edit an annotation to the object.  This will add a single 'annotation' attribute
+        to the object.
 
         :param dataId: The ID of the data to add the annotation to.
         :type dataId: str
@@ -113,7 +114,7 @@ class PyKeyPress:
         :returns: The modified count.
         """
         pyKeyPress = self.getPlugin()
-        return pyKeyPress.addAnnotationKeyPress(dataId, annotationText)
+        return pyKeyPress.modifyAnnotationKeyPress(dataId, annotationText)
 
     def addAnnotationToArrayKeyPress(self, dataId, annotationText):
         """Override: Add an annotation as an array of annotations to the object.
@@ -127,9 +128,8 @@ class PyKeyPress:
         pyKeyPress = self.getPlugin()
         return pyKeyPress.addAnnotationToArrayKeyPress(dataId, annotationText)
 
-    # edit an annotation for the dataId
-    def editAnnotationKeyPress(self, dataId, oldAnnotationText, newAnnotationText):
-        """Override: Edit an annotation on the key press object.
+    def editAnnotationInArrayKeyPress(self, dataId, oldAnnotationText, newAnnotationText):
+        """Override: Edit an annotation in the array of annotations.
 
         :param dataId: The ID of the data to edit the annotation of.
         :type dataId: str
@@ -140,11 +140,10 @@ class PyKeyPress:
         :returns: The modified count.
         """
         pyKeyPress = self.getPlugin()
-        return pyKeyPress.editAnnotationKeyPress(dataId, oldAnnotationText, newAnnotationText)
+        return pyKeyPress.editAnnotationInArrayKeyPress(dataId, oldAnnotationText, newAnnotationText)
 
-    # delete an annotation for the dataId
-    def deleteAnnotationKeyPress(self, dataId, annotationText):
-        """Override: Delete one annotation from the key press object.
+    def deleteAnnotationFromArrayKeyPress(self, dataId, annotationText):
+        """Override: Delete one annotation from the array of annotations.
 
         :param dataId: The ID of the data to remove the annotation from.
         :type dataId: str
@@ -153,11 +152,11 @@ class PyKeyPress:
         :returns: The modified count.
         """
         pyKeyPress = self.getPlugin()
-        return pyKeyPress.deleteAnnotationKeyPress(dataId, annotationText)
+        return pyKeyPress.deleteAnnotationFromArrayKeyPress(dataId, annotationText)
 
-    # deletes all annotations for the dataId
     def deleteAllAnnotationsForKeyPress(self, dataId):
-        """Override: Delete all annotations from the key press object.
+        """Override: Delete all annotations from the ManualScreenShot object.  It should delete all annotations
+        that are in an 'annotations' array as well as the 'annotation' attribute.
 
         :param dataId: The ID of the data to remove all annotations from.
         :type dataId: str
@@ -166,9 +165,9 @@ class PyKeyPress:
         pyKeyPress = self.getPlugin()
         return pyKeyPress.deleteAllAnnotationsForKeyPress(dataId)
 
-    # add an annotation to the timeline, not a datapoint
     def addAnnotationToKeyPressTimeline(self, startTime, annotationText, techName, eventName):
-        """Override: Ands an annotation to the timeline (not a data point)
+        """Override: Adds an annotation to the timeline (not a data point). The annotation becomes a
+        brand new data point.
 
         :param startTime: The datetime string in local time to add the annotation to.  Will be converted to UTC before passing on to plugin
         :type startTime: str

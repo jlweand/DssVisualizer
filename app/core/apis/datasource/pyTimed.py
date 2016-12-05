@@ -104,8 +104,9 @@ class PyTimed:
         result = pyTimed.deleteFixedTimedData(dataId)
         return result
 
-    def addAnnotationTimed(self, dataId, annotationText):
-        """Override: Add an annotation to the Timed object.
+    def modifyAnnotationTimed(self, dataId, annotationText):
+        """Override: Add or edit an annotation to the object.  This will add a single 'annotation' attribute
+        to the object.
 
         :param dataId: The ID of the data to add the annotation to.
         :type dataId: str
@@ -114,7 +115,7 @@ class PyTimed:
         :returns: The modified count.
         """
         pyTimed = self.getPlugin()
-        return pyTimed.addAnnotationTimed(dataId, annotationText)
+        return pyTimed.modifyAnnotationTimed(dataId, annotationText)
 
     def addAnnotationToArrayTimed(self, dataId, annotationText):
         """Override: Add an annotation as an array of annotations to the object.
@@ -128,9 +129,8 @@ class PyTimed:
         pyTimed = self.getPlugin()
         return pyTimed.addAnnotationToArrayTimed(dataId, annotationText)
 
-    # edit an annotation for the dataId
-    def editAnnotationTimed(self, dataId, oldAnnotationText, newAnnotationText):
-        """Override: Edit an annotation on the Timed object.
+    def editAnnotationInArrayTimed(self, dataId, oldAnnotationText, newAnnotationText):
+        """Override: Edit an annotation in the array of annotations.
 
         :param dataId: The ID of the data to edit the annotation of.
         :type dataId: str
@@ -141,11 +141,10 @@ class PyTimed:
         :returns: The modified count.
         """
         pyTimed = self.getPlugin()
-        return pyTimed.editAnnotationTimed(dataId, oldAnnotationText, newAnnotationText)
+        return pyTimed.editAnnotationInArrayTimed(dataId, oldAnnotationText, newAnnotationText)
 
-    #delete an annotation for the dataId
-    def deleteAnnotationTimed(self, dataId, annotationText):
-        """Override: Delete one annotation from the Timed object.
+    def deleteAnnotationFromArrayTimed(self, dataId, annotationText):
+        """Override: Delete one annotation from the array of annotations.
 
         :param dataId: The ID of the data to remove the annotation from.
         :type dataId: str
@@ -154,11 +153,11 @@ class PyTimed:
         :returns: The modified count.
         """
         pyTimed = self.getPlugin()
-        return pyTimed.deleteAnnotationTimed(dataId, annotationText)
+        return pyTimed.deleteAnnotationFromArrayTimed(dataId, annotationText)
 
-    # deletes all annotations for the dataId
     def deleteAllAnnotationsForTimed(self, dataId):
-        """Override: Delete all annotations from the Timed object.
+        """Override: Delete all annotations from the ManualScreenShot object.  It should delete all annotations
+        that are in an 'annotations' array as well as the 'annotation' attribute.
 
         :param dataId: The ID of the data to remove all annotations from.
         :type dataId: str
@@ -167,9 +166,9 @@ class PyTimed:
         pyTimed = self.getPlugin()
         return pyTimed.deleteAllAnnotationsForTimed(dataId)
 
-    # add an annotation to the timeline, not a datapoint
     def addAnnotationToTimedTimeline(self, startTime, annotationText, techName, eventName):
-        """Override: Ands an annotation to the timeline (not a data point)
+        """Override: Adds an annotation to the timeline (not a data point). The annotation becomes a
+        brand new data point.
 
         :param startTime: The datetime string in local time to add the annotation to.  Will be converted to UTC before passing on to plugin
         :type startTime: str

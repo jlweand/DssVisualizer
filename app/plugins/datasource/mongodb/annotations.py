@@ -21,10 +21,9 @@ class Annotations:
     """This class holds the logic to adding an annotation to any data point.
     Each method must be passed the collection of the data that is being modified."""
 
-    # add an annotation for the dataId
-    def addAnnotation(self, collection, dataId, annotationText):
-        """Adds an annotation to a data point. Using this method will allow only one annotation per data point.
-        If the annotation already exists nothing is done. If the annotation does not exist, this one is added to the list.
+    def modifyAnnotation(self, collection, dataId, annotationText):
+        """Adds or updates an annotation to a data point. Using this method will allow only one annotation per data point.
+        If the annotation already exists it will be updated. If the annotation does not exist, it will be added.
 
         :param collection: The collection in which the data lives.
         :type collection: MongoDb collection
@@ -39,7 +38,6 @@ class Annotations:
         result = collection.update_one(updateId, push)
         return result.modified_count
 
-    # add an annotation for the dataId
     def addAnnotationToArray(self, collection, dataId, annotationText):
         """Adds an annotation to a data point in an array. If the annotation already exists nothing is done.
         If the annotation does not exist, this one is added to the list.
@@ -57,9 +55,8 @@ class Annotations:
         result = collection.update_one(updateId, push)
         return result.modified_count
 
-    # edit an annotation for the dataId
-    def editAnnotation(self, collection, dataId, oldAnnotationText, newAnnotationText):
-        """Edits an annotation on a data point.
+    def editAnnotationInArray(self, collection, dataId, oldAnnotationText, newAnnotationText):
+        """Edits an annotation in the array of annotations on a data point.
 
         :param collection: The collection in which the data lives.
         :type collection: MongoDb collection
@@ -77,9 +74,8 @@ class Annotations:
         result = collection.update_one(updateId, updateText)
         return result.modified_count;
 
-    #delete an annotation for the dataId
-    def deleteAnnotation(self, collection, dataId, annotationText):
-        """Removes an annotation from a data point.
+    def deleteAnnotationFromArray(self, collection, dataId, annotationText):
+        """Removes an annotation from the array of annotations on a data point.
 
         :param collection: The collection in which the data lives.
         :type collection: MongoDb collection
@@ -94,7 +90,6 @@ class Annotations:
         result = collection.update_one(deleteId, deleteText)
         return result.modified_count
 
-    # deletes all annotations for the dataId
     def deleteAllAnnotationsForData(self, collection, dataId):
         """Deletes all annotations from a data point.
 
@@ -109,7 +104,6 @@ class Annotations:
         result = collection.update_one(deleteId, deleteText)
         return result.modified_count
 
-    # add an annotation to the timeline, not a datapoint
     def addAnnotationToTimeline(self, collection, jsonObject, annotationText):
         """Adds an annotation to the collection as a new 'data point'.  This is not tied to any imported data.
 

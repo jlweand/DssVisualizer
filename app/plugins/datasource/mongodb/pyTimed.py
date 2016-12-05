@@ -60,25 +60,25 @@ class PyTimed:
         result = collection.update_one(deleteId, push)
         return result.modified_count
 
-    # add an annotation for the dataId
-    def addAnnotationTimed(self, dataId, annotationText):
+    # Add or edit an annotation to the object.  This will add a single 'annotation' attribute to the object.
+    def modifyAnnotationTimed(self, dataId, annotationText):
         collection = self.getTimedCollection()
-        return Annotations().addAnnotation(collection, dataId, annotationText)
+        return Annotations().modifyAnnotation(collection, dataId, annotationText)
 
-    # add an annotation for the dataId
+    # add an annotation to an array of annotations for the dataId
     def addAnnotationToArrayTimed(self, dataId, annotationText):
         collection = self.getTimedCollection()
         return Annotations().addAnnotationToArray(collection, dataId, annotationText)
 
-    # edit an annotation for the dataId
-    def editAnnotationTimed(self, dataId, oldAnnotationText, newAnnotationText):
+    # edit an annotation in the array of annotations.
+    def editAnnotationInArrayTimed(self, dataId, oldAnnotationText, newAnnotationText):
         collection = self.getTimedCollection()
-        return Annotations().editAnnotation(collection, dataId, oldAnnotationText, newAnnotationText)
+        return Annotations().editAnnotationInArray(collection, dataId, oldAnnotationText, newAnnotationText)
 
-    # delete an annotation for the dataId
-    def deleteAnnotationTimed(self, dataId, annotationText):
+    # delete an annotation from array for the dataId
+    def deleteAnnotationFromArrayTimed(self, dataId, annotationText):
         collection = self.getTimedCollection()
-        return Annotations().deleteAnnotation(collection, dataId, annotationText)
+        return Annotations().deleteAnnotationFromArray(collection, dataId, annotationText)
 
     # deletes all annotations for the dataId
     def deleteAllAnnotationsForTimed(self, dataId):

@@ -61,25 +61,25 @@ class MultiIncludeThroughput:
         result = collection.update_one(updateId, fixedData)
         return result.modified_count
 
-    # add an annotation for the dataId
-    def addAnnotationMultiIncludeThroughput(self, dataId, annotationText):
+    # Add or edit an annotation to the object.  This will add a single 'annotation' attribute to the object.
+    def modifyAnnotationMultiIncludeThroughput(self, dataId, annotationText):
         collection = self.getMultiIncludeThroughputCollection()
-        return Annotations().addAnnotation(collection, dataId, annotationText)
+        return Annotations().modifyAnnotation(collection, dataId, annotationText)
 
-    # add an annotation for the dataId
+    # add an annotation to an array of annotations for the dataId
     def addAnnotationToArrayMultiIncludeThroughput(self, dataId, annotationText):
         collection = self.getMultiIncludeThroughputCollection()
         return Annotations().addAnnotationToArray(collection, dataId, annotationText)
 
-    # edit an annotation for the dataId
-    def editAnnotationMultiIncludeThroughput(self, dataId, oldAnnotationText, newAnnotationText):
+    # edit an annotation in the array of annotations.
+    def editAnnotationInArrayMultiIncludeThroughput(self, dataId, oldAnnotationText, newAnnotationText):
         collection = self.getMultiIncludeThroughputCollection()
-        return Annotations().editAnnotation(collection, dataId, oldAnnotationText, newAnnotationText)
+        return Annotations().editAnnotationInArray(collection, dataId, oldAnnotationText, newAnnotationText)
 
-    #delete an annotation for the dataId
-    def deleteAnnotationMultiIncludeThroughput(self, dataId, annotationText):
+    # delete an annotation from array for the dataId
+    def deleteAnnotationFromArrayMultiIncludeThroughput(self, dataId, annotationText):
         collection = self.getMultiIncludeThroughputCollection()
-        return Annotations().deleteAnnotation(collection, dataId, annotationText)
+        return Annotations().deleteAnnotationFromArray(collection, dataId, annotationText)
 
     # deletes all annotations for the dataId
     def deleteAllAnnotationsForMultiIncludeThroughput(self, dataId):
