@@ -71,8 +71,8 @@ class PyKeyPress:
         jsonData = pyKeyPress.selectKeyPressDataById(dataId)
         return jsonData
 
-    def insertFixedKeyPressData(self, dataId, keypress_id, content, className, startDate, isDeleted):
-        """Override: Inserts a new attribute called 'fixedData' which has all the attributes of the data. Does not overwrite the original data.
+    def modifyFixedKeyPressData(self, dataId, keypress_id, content, className, startDate, isDeleted):
+        """Override: Insert or Updates the record of the 'fixed' key press data.
 
         :param dataId: The ID of the Data point
         :type dataId: str
@@ -89,29 +89,7 @@ class PyKeyPress:
         :returns: The modified count.
         """
         pyKeyPress = self.getPlugin()
-        result = pyKeyPress.insertFixedKeyPressData(dataId, keypress_id, content, className,
-                                                    Common().formatDateStringToUTC(startDate), isDeleted)
-        return result
-
-    def updateFixedKeyPressData(self, dataId, keypress_id, content, className, startDate, isDeleted):
-        """Override: Updates the record of the 'fixed' key press data.
-
-        :param dataId: The ID of the Data point
-        :type dataId: str
-        :param keypress_id: The key of the original key press data
-        :type keypress_id: str
-        :param content: The updated content
-        :type content: str
-        :param className: The updtaed class name
-        :type className: str
-        :param startDate: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
-        :type startDate: str
-        :param isDeleted: indicator if this data point should never be shown on the screen
-        :type isDeleted: bool
-        :returns: The modified count.
-        """
-        pyKeyPress = self.getPlugin()
-        result = pyKeyPress.updateFixedKeyPressData(dataId, keypress_id, content, className,
+        result = pyKeyPress.modifyFixedKeyPressData(dataId, keypress_id, content, className,
                                                     Common().formatDateStringToUTC(startDate), isDeleted)
         return result
 

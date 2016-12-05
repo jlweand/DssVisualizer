@@ -73,7 +73,7 @@ class PyClickTest(unittest.TestCase):
         dataId = jsonData[0]["id"]
 
         # insert Fixed Data
-        modifiedCount = PyClick().insertFixedClickData(dataId, '2222', '[New Content Added]', 'imgPoint',
+        modifiedCount = PyClick().modifyFixedClickData(dataId, '2222', '[New Content Added]', 'imgPoint',
                                                        '2016-09-11 17:37:14',
                                                        '/new/path/1474038815.78_TESTING.png',
                                                        'point', True)
@@ -88,7 +88,7 @@ class PyClickTest(unittest.TestCase):
         self.assertTrue(jsonData[0]["fixedData"]["isDeleted"])
 
         # update Fixed Data
-        modifiedCount = PyClick().updateFixedClickData(dataId, '1111', '[EDITED UNITTEST Content Added]', 'imgPoint123',
+        modifiedCount = PyClick().modifyFixedClickData(dataId, '1111', '[EDITED UNITTEST Content Added]', 'imgPoint123',
                                                        '2016-10-02 19:35:51',
                                                        '/newpath/click_images/1474038815.78_TESTING_UPDATE.png',
                                                        'point123', False)

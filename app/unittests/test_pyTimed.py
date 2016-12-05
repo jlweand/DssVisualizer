@@ -74,7 +74,7 @@ class PyTimedTest(unittest.TestCase):
         dataId = jsonData[0]["id"]
 
         # insert Fixed Data
-        modifiedCount = PyTimed().insertFixedTimedData(dataId, '11111', '[New Content Added]', 'imgPoint',
+        modifiedCount = PyTimed().modifyFixedTimedData(dataId, '11111', '[New Content Added]', 'imgPoint',
                                                        '2016-09-16 15:16:35',
                                                        '/new/path/1465515528.8_screenshotTIMED_TESTING.png',
                                                        'point', True)
@@ -89,7 +89,7 @@ class PyTimedTest(unittest.TestCase):
         self.assertTrue(jsonData[0]["fixedData"]["isDeleted"])
 
         # update Fixed Data
-        modifiedCount = PyTimed().updateFixedTimedData(dataId, '22222', '[EDITED UNITTEST Content Added]', 'imgPoint123',
+        modifiedCount = PyTimed().modifyFixedTimedData(dataId, '22222', '[EDITED UNITTEST Content Added]', 'imgPoint123',
                                                        '2016-10-03 18:38:48',
                                                        '/newpath/click_images/1474038815.78_TESTING_UPDATE.png',
                                                        'point123', False)

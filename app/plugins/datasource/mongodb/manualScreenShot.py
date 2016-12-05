@@ -44,18 +44,9 @@ class ManualScreenShot:
         cursor = collection.find({"_id": ObjectId(dataId)})
         return Common().formatOutput(cursor)
 
-    # add a fixedData record to this data point
-    def insertFixedManualScreenShotData(self, dataId, manualscreen_id, content, className, start, title, typeManualScreenShot, comment, isDeleted):
-        collection = self.getManualScreenShotCollection()
-        insertId = {"_id": ObjectId(dataId)}
-        push = {"$set": {
-            "fixedData": {"manualscreen_id": manualscreen_id, "content": content, "className": className, "start": start,
-                          "title": title, "type": typeManualScreenShot, "isDeleted": isDeleted, "comment": comment}}}
-        result = collection.update_one(insertId, push)
-        return result.modified_count
-
-    # update a previously 'fixed' record.
-    def updateFixedManualScreenShotData(self, dataId, manualscreen_id, content, className, start, title, typeManualScreenShot, comment, isDeleted):
+    # add or edits a fixedData record to this data point
+    def modifyFixedManualScreenShotData(self, dataId, manualscreen_id, content, className, start, title, typeManualScreenShot, comment, isDeleted):
+        """Since Mongo's insert/update is the same just write it once and call it from both insert/update methods"""
         collection = self.getManualScreenShotCollection()
         updateId = {"_id": ObjectId(dataId)}
         push = {"$set": {

@@ -48,16 +48,8 @@ class PyClick:
         data = Elasticsearch().get(index=self.esIndex, doc_type=self.clickDocType, id=dataId)
         return Common().fixOneData(data)
 
-    # add a fixedData record to this data point
-    def insertFixedClickData(self, dataId, clicks_id, content, className, start, title, typeClick, isDeleted):
-        insertFixed = {"doc": {
-            "fixedData": {"clicks_id": clicks_id, "content": content, "className": className, "start": start,
-                          "title": title, "type": typeClick, "isDeleted": isDeleted}}}
-        result = Elasticsearch().update(index=self.esIndex, doc_type=self.clickDocType, body=insertFixed, id = dataId)
-        return Common().getModfiedCount(result)
-
-    # update a previously 'fixed' record.
-    def updateFixedClickData(self, dataId, clicks_id, content, className, start, title, typeClick, isDeleted):
+    # add or edits a fixedData record to this data point
+    def modifyFixedClickData(self, dataId, clicks_id, content, className, start, title, typeClick, isDeleted):
         updateFixed = {"doc": {
             "fixedData": {"clicks_id": clicks_id, "content": content, "className": className, "start": start,
                           "title": title, "type": typeClick, "isDeleted": isDeleted}}}

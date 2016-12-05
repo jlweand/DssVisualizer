@@ -73,7 +73,7 @@ class MultiExcludeProtocolTest(unittest.TestCase):
         dataId = jsonData[0]["id"]
 
         # insert Fixed MultiExcludeProtocol Data
-        modifiedCount = MultiExcludeProtocol().insertFixedMultiExcludeProtocolData(dataId, '55555', '111 p/s', 'traffic',
+        modifiedCount = MultiExcludeProtocol().modifyFixedMultiExcludeProtocolData(dataId, '55555', '111 p/s', 'traffic',
                                                                                    'new new new',
                                                                                    '2016-12-02 18:28:00', True)
         self.assertEqual(1, modifiedCount)
@@ -86,7 +86,7 @@ class MultiExcludeProtocolTest(unittest.TestCase):
         self.assertTrue(jsonData[0]["fixedData"]["isDeleted"])
 
         # update Fixed MultiExcludeProtocol Data
-        modifiedCount = MultiExcludeProtocol().updateFixedMultiExcludeProtocolData(dataId, '7777', '222 p/s', 'traffic123',
+        modifiedCount = MultiExcludeProtocol().modifyFixedMultiExcludeProtocolData(dataId, '7777', '222 p/s', 'traffic123',
                                                                                    'eth:ethertype:arp\neth:ethertype:ip:udp:dns\n',
                                                                                    '2016-01-02 18:28:00', False)
         self.assertEqual(1, modifiedCount)

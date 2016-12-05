@@ -72,8 +72,8 @@ class MultiExcludeProtocol:
         jsonData = multiExcludePlugin.selectMultiExcludeProtocolDataById(dataId)
         return jsonData
 
-    def insertFixedMultiExcludeProtocolData(self, dataId, oldDataId, content, className, title, startDate, isDeleted):
-        """Override: Inserts a new attribute called 'fixedData' which has all the attributes of the data. Does not overwrite the original data.
+    def modifyFixedMultiExcludeProtocolData(self, dataId, oldDataId, content, className, title, startDate, isDeleted):
+        """Override: Inserts or Updates the record of the 'fixed' ManualScreenShot data.
 
         :param dataId: The key of the original data
         :type dataId: str
@@ -92,31 +92,7 @@ class MultiExcludeProtocol:
         :returns: The modified count.
         """
         multiExcludePlugin = self.getPlugin()
-        result = multiExcludePlugin.insertFixedMultiExcludeProtocolData(dataId, oldDataId, content, className, title,
-                                                                        Common().formatDateStringToUTC(startDate), isDeleted)
-        return result
-
-    def updateFixedMultiExcludeProtocolData(self, dataId, oldDataId, content, className, title, startDate, isDeleted):
-        """Override: Updates the fixedData attribute.
-
-        :param dataId: The key of the original data
-        :type dataId: str
-        :param oldDataId: The key of the original ManualScreenShot data
-        :type oldDataId: str
-        :param content: The updated content
-        :type content: str
-        :param className: The updated class name
-        :type className: str
-        :param title: The updated title
-        :type title: str
-        :param startDate: The datetime to return data
-        :type startDate: str
-        :param isDeleted: indicator if this data point should never be shown on the screen
-        :type isDeleted: bool
-        :returns: The modified count.
-        """
-        multiExcludePlugin = self.getPlugin()
-        result = multiExcludePlugin.updateFixedMultiExcludeProtocolData(dataId, oldDataId, content, className, title,
+        result = multiExcludePlugin.modifyFixedMultiExcludeProtocolData(dataId, oldDataId, content, className, title,
                                                                         Common().formatDateStringToUTC(startDate), isDeleted)
         return result
 

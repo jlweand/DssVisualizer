@@ -45,18 +45,8 @@ class MultiIncludeProtocol:
         cursor = collection.find({"_id": ObjectId(dataId)})
         return Common().formatOutput(cursor)
 
-    # add a fixedData record to this data point
-    def insertFixedMultiIncludeProtocolData(self, dataId, traffic_all_id, content, className, title, startDate, isDeleted):
-        collection = self.getMultiIncludeProtocolCollection()
-        insertId = {"_id": ObjectId(dataId)}
-        insertText = {"$set": {
-            "fixedData": {"traffic_all_id": traffic_all_id, "content": content, "className": className, "title": title,
-                          "start": startDate, "isDeleted": isDeleted}}}
-        result = collection.update_one(insertId, insertText)
-        return result.modified_count
-
-    # update a previously 'fixed' record.
-    def updateFixedMultiIncludeProtocolData(self, dataId, traffic_all_id, content, className, title, startDate, isDeleted):
+    # add or edits a fixedData record to this data point
+    def modifyFixedMultiIncludeProtocolData(self, dataId, traffic_all_id, content, className, title, startDate, isDeleted):
         collection = self.getMultiIncludeProtocolCollection()
         updateId = {"_id": ObjectId(dataId)}
         updateText = {"$set": {

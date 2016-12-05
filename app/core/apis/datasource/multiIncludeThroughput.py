@@ -71,8 +71,8 @@ class MultiIncludeThroughput:
         jsonData = multiIncludePlugin.selectMultiIncludeThroughputDataById(dataId)
         return jsonData
 
-    def insertFixedMultiIncludeThroughputData(self, dataId, traffic_xy_id, className, x, y, isDeleted):
-        """Override: Inserts a new attribute called 'fixedData' which has all the attributes of the data. Does not overwrite the original data.
+    def modifyFixedMultiIncludeThroughputData(self, dataId, traffic_xy_id, className, x, y, isDeleted):
+        """Override: Inserts or Updates the fixedData attribute.
 
         :param dataId: The key of the original data
         :type dataId: str
@@ -89,28 +89,7 @@ class MultiIncludeThroughput:
         :returns: The modified count.
         """
         multiIncludePlugin = self.getPlugin()
-        result = multiIncludePlugin.insertFixedMultiIncludeThroughputData(dataId, traffic_xy_id, className, Common().formatDateStringToUTC(x), y, isDeleted)
-        return result
-
-    def updateFixedMultiIncludeThroughputData(self, dataId, traffic_xy_id, className, x, y, isDeleted):
-        """Override: Updates the fixedData attribute.
-
-        :param dataId: The key of the original data
-        :type dataId: str
-        :param traffic_xy_id: the traffic_xy_id.
-        :type traffic_xy_id: int
-        :param className: The updated class name
-        :type className: str
-        :param x: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
-        :type x: str
-        :param y: The number of protocols being used
-        :type y: int
-        :param isDeleted: indicator if this data point should never be shown on the screen
-        :type isDeleted: bool
-        :returns: The modified count.
-        """
-        multiIncludePlugin = self.getPlugin()
-        result = multiIncludePlugin.updateFixedMultiIncludeThroughputData(dataId, traffic_xy_id, className, Common().formatDateStringToUTC(x), y, isDeleted)
+        result = multiIncludePlugin.modifyFixedMultiIncludeThroughputData(dataId, traffic_xy_id, className, Common().formatDateStringToUTC(x), y, isDeleted)
         return result
 
     def deleteFixedMultiIncludeThroughputData(self, dataId):

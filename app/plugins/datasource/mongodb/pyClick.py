@@ -42,18 +42,8 @@ class PyClick:
         cursor = collection.find({"_id": ObjectId(dataId)})
         return Common().formatOutput(cursor)
 
-    # add a fixedData record to this data point
-    def insertFixedClickData(self, dataId, clicks_id, content, className, start, title, typeClick, isDeleted):
-        collection = self.getClickCollection()
-        insertId = {"_id": ObjectId(dataId)}
-        push = {"$set": {
-            "fixedData": {"clicks_id": clicks_id, "content": content, "className": className, "start": start,
-                          "title": title, "type": typeClick, "isDeleted": isDeleted}}}
-        result = collection.update_one(insertId, push)
-        return result.modified_count
-
-    # update a previously 'fixed' record.
-    def updateFixedClickData(self, dataId, clicks_id, content, className, start, title, typeClick, isDeleted):
+    # add or edits a fixedData record to this data point
+    def modifyFixedClickData(self, dataId, clicks_id, content, className, start, title, typeClick, isDeleted):
         collection = self.getClickCollection()
         updateId = {"_id": ObjectId(dataId)}
         push = {"$set": {

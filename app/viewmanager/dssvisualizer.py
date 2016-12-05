@@ -254,31 +254,31 @@ def handle(web_view, web_frame, web_resource, request, response):
                 if itemType == 'keypress':
                     if annotation != '':
                         PyKeyPress().addAnnotationKeyPress(itemID, annotation)
-                    PyKeyPress().insertFixedKeyPressData(itemID, className, content, dataType, start, delete)
+                    PyKeyPress().modifyFixedKeyPressData(itemID, className, content, dataType, start, delete)
                 elif itemType == 'click':
                     if annotation != '':
                         PyClick().addAnnotationClick(itemID, annotation)
-                    PyClick().insertFixedClickData(itemID, '', content, className, start, title, dataType, delete)
+                    PyClick().modifyFixedClickData(itemID, '', content, className, start, title, dataType, delete)
                 elif itemType == 'timed':
                     if annotation != '':
                         PyTimed().addAnnotationTimed(itemID, annotation)
-                    PyTimed().insertFixedTimedData(itemID, '', content, className, start, title, dataType, delete)
+                    PyTimed().modifyFixedTimedData(itemID, '', content, className, start, title, dataType, delete)
                 elif itemType == 'multi_exclude':
                     if annotation != '':
                         MultiExcludeProtocol().addAnnotationMultiExcludeProtocol(itemID, annotation)
-                    MultiExcludeProtocol().insertFixedMultiExcludeProtocolData(itemID, '', content, className, title, start, delete)
+                    MultiExcludeProtocol().modifyFixedMultiExcludeProtocolData(itemID, '', content, className, title, start, delete)
                 elif itemType == 'multi_include':
                     if annotation != '':
                         MultiIncludeProtocol().addAnnotationMultiIncludeProtocol(itemID, annotation)
-                    MultiIncludeProtocol().insertFixedMultiIncludeProtocolData(itemID, '', content, className, title, start, delete)
+                    MultiIncludeProtocol().modifyFixedMultiIncludeProtocolData(itemID, '', content, className, title, start, delete)
                 elif itemType == 'tshark':
                     if annotation != '':
                         TsharkProtocol().addAnnotationTsharkProtocol(itemID, annotation)
-                    TsharkProtocol().insertFixedTsharkProtocolData(itemID, '', content, className, title, start, delete)
+                    TsharkProtocol().modifyFixedTsharkProtocolData(itemID, '', content, className, title, start, delete)
                 elif itemType == 'screenshot':
                     if annotation != '':
                         ManualScreenShot().addAnnotationManualScreenShot(itemID, annotation)
-                    ManualScreenShot().insertFixedManualScreenShotData(itemID, '', content, className, start, title, dataType, comment, delete)
+                    ManualScreenShot().modifyFixedManualScreenShotData(itemID, '', content, className, start, title, dataType, comment, delete)
 
         elif 'adminRequest' in queryDict:
             if queryDict['adminRequest'][0] == 'availablePlugins':

@@ -71,8 +71,8 @@ class TsharkProtocol:
         jsonData = tsharkProtocolPlugin.selectTsharkProtocolDataById(dataId)
         return jsonData
 
-    def insertFixedTsharkProtocolData(self, dataId, oldDataId, content, className, title, startDate, isDeleted):
-        """Override: Inserts a new attribute called 'fixedData' which has all the attributes of the data. Does not overwrite the original data.
+    def modifyFixedTsharkProtocolData(self, dataId, oldDataId, content, className, title, startDate, isDeleted):
+        """Override: Insert or Updates the fixedData attribute.
 
         :param dataId: The key of the original data
         :type dataId: str
@@ -91,31 +91,7 @@ class TsharkProtocol:
         :returns: The modified count.
         """
         tsharkProtocolPlugin = self.getPlugin()
-        result = tsharkProtocolPlugin.insertFixedTsharkProtocolData(dataId, oldDataId, content, className, title,
-                                                                    Common().formatDateStringToUTC(startDate), isDeleted)
-        return result
-
-    def updateFixedTsharkProtocolData(self, dataId, oldDataId, content, className, title, startDate, isDeleted):
-        """Override: Updates the fixedData attribute.
-
-        :param dataId: The key of the original data
-        :type dataId: str
-        :param oldDataId: The key of the original ManualScreenShot data
-        :type oldDataId: str
-        :param content: The updated content
-        :type content: str
-        :param className: The updated class name
-        :type className: str
-        :param title: The updated title
-        :type title: str
-        :param startDate: The datetime to return data
-        :type startDate: str
-        :param isDeleted: indicator if this data point should never be shown on the screen
-        :type isDeleted: bool
-        :returns: The modified count.
-        """
-        tsharkProtocolPlugin = self.getPlugin()
-        result = tsharkProtocolPlugin.updateFixedTsharkProtocolData(dataId, oldDataId, content, className, title,
+        result = tsharkProtocolPlugin.modifyFixedTsharkProtocolData(dataId, oldDataId, content, className, title,
                                                                     Common().formatDateStringToUTC(startDate), isDeleted)
         return result
 

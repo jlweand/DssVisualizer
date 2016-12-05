@@ -48,16 +48,8 @@ class ManualScreenShot:
         data = Elasticsearch().get(index=self.esIndex, doc_type=self.manualScreenShotDocType, id=dataId)
         return Common().fixOneData(data)
 
-    # add a fixedData record to this data point
-    def insertFixedManualScreenShotData(self, dataId, manualscreen_id, content, className, start, title, typeManualScreenShot, comment, isDeleted):
-        insertFixed = {"doc": {
-            "fixedData": {"manualscreen_id": manualscreen_id, "content": content, "className": className, "start": start,
-                          "title": title, "type": typeManualScreenShot, "comment": comment, "isDeleted": isDeleted}}}
-        result = Elasticsearch().update(index=self.esIndex, doc_type=self.manualScreenShotDocType, body=insertFixed, id = dataId)
-        return Common().getModfiedCount(result)
-
-    # update a previously 'fixed' record.
-    def updateFixedManualScreenShotData(self, dataId, manualscreen_id, content, className, start, title, typeManualScreenShot, comment, isDeleted):
+    # add or edits a fixedData record to this data point
+    def modifyFixedManualScreenShotData(self, dataId, manualscreen_id, content, className, start, title, typeManualScreenShot, comment, isDeleted):
         updateFixed = {"doc": {
             "fixedData": {"manualscreen_id": manualscreen_id, "content": content, "className": className, "start": start,
                           "title": title, "type": typeManualScreenShot, "comment": comment, "isDeleted": isDeleted}}}

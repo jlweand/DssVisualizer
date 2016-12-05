@@ -72,7 +72,7 @@ class MultiExcludeThroughputTest(unittest.TestCase):
         dataId = jsonData[0]["id"]
 
         # insert Fixed MultiExcludeThroughput Data
-        modifiedCount = MultiExcludeThroughput().insertFixedMultiExcludeThroughputData(dataId, 123, 'trafficThroughput', '2016-10-02 18:28:00', 1111, True)
+        modifiedCount = MultiExcludeThroughput().modifyFixedMultiExcludeThroughputData(dataId, 123, 'trafficThroughput', '2016-10-02 18:28:00', 1111, True)
         self.assertEqual(1, modifiedCount)
         jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputDataById(dataId)
         self.assertEqual(jsonData[0]["fixedData"]["traffic_xy_id"], 123)
@@ -81,7 +81,7 @@ class MultiExcludeThroughputTest(unittest.TestCase):
         self.assertTrue(jsonData[0]["fixedData"]["isDeleted"])
 
         # update Fixed MultiExcludeThroughput Data
-        modifiedCount = MultiExcludeThroughput().updateFixedMultiExcludeThroughputData(dataId, 456, 'trafficThroughput', '2017-01-02 18:28:00', 99999, False)
+        modifiedCount = MultiExcludeThroughput().modifyFixedMultiExcludeThroughputData(dataId, 456, 'trafficThroughput', '2017-01-02 18:28:00', 99999, False)
         self.assertEqual(1, modifiedCount)
         jsonData = MultiExcludeThroughput().selectMultiExcludeThroughputDataById(dataId)
         self.assertEqual(jsonData[0]["fixedData"]["traffic_xy_id"], 456)

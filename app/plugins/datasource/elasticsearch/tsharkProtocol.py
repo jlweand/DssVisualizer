@@ -48,16 +48,8 @@ class TsharkProtocol:
         data = Elasticsearch().get(index=self.esIndex, doc_type=self.tsharkProtocolDocType, id=dataId)
         return Common().fixOneData(data)
 
-    # add a fixedData record to this data point
-    def insertFixedTsharkProtocolData(self, dataId, traffic_all_id, content, className, title, startDate, isDeleted):
-        insertFixed = {"doc": {
-            "fixedData": {"traffic_all_id": traffic_all_id, "content": content, "className": className, "title": title,
-                          "start": startDate, "isDeleted": isDeleted}}}
-        result = Elasticsearch().update(index=self.esIndex, doc_type=self.tsharkProtocolDocType, body=insertFixed, id = dataId)
-        return Common().getModfiedCount(result)
-
-    # update a previously 'fixed' record.
-    def updateFixedTsharkProtocolData(self, dataId, traffic_all_id, content, className, title, startDate, isDeleted):
+    # add or edits a fixedData record to this data point
+    def modifyFixedTsharkProtocolData(self, dataId, traffic_all_id, content, className, title, startDate, isDeleted):
         updateFixed = {"doc": {
             "fixedData": {"traffic_all_id": traffic_all_id, "content": content, "className": className, "title": title,
                           "start": startDate, "isDeleted": isDeleted}}}

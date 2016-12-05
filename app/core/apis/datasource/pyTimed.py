@@ -68,8 +68,8 @@ class PyTimed:
         jsonData = pyTimed.selectTimedDataById(dataId)
         return jsonData
 
-    def insertFixedTimedData(self,dataId, timed_id, content, className, startDate, title, typeTimed, isDeleted):
-        """Override: Inserts a new attribute called 'fixedData' which has all the attributes of the data. Does not overwrite the original data.
+    def modifyFixedTimedData(self, dataId, timed_id, content, className, startDate, title, typeTimed, isDeleted):
+        """Override: Insert Updates the record of the 'fixed' timed data.
 
         :param dataId: The ID of the 'fixed' timed data to edit.
         :type dataId: str
@@ -90,32 +90,7 @@ class PyTimed:
         :returns: The modified count.
         """
         pyTimed = self.getPlugin()
-        result = pyTimed.insertFixedTimedData(dataId, timed_id, content, className, Common().formatDateStringToUTC(startDate), title, typeTimed, isDeleted)
-        return result
-
-    def updateFixedTimedData(self, dataId, timed_id, content, className, startDate, title, typeTimed, isDeleted):
-        """Override: Updates the record of the 'fixed' timed data.
-
-        :param dataId: The ID of the 'fixed' timed data to edit.
-        :type dataId: str
-        :param timed_id: The key of the original timed data
-        :type timed_id: str
-        :param content: The updated content
-        :type content: str
-        :param typeTimed: The updated type
-        :type typeTimed: str
-        :param className: The updated class name
-        :type className: str
-        :param title: The updated title
-        :type title: str
-        :param startDate: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
-        :type startDate: str
-        :param isDeleted: indicator if this data point should never be shown on the screen
-        :type isDeleted: bool
-        :returns: The modified count.
-        """
-        pyTimed = self.getPlugin()
-        result = pyTimed.updateFixedTimedData(dataId, timed_id, content, className, Common().formatDateStringToUTC(startDate), title, typeTimed, isDeleted)
+        result = pyTimed.modifyFixedTimedData(dataId, timed_id, content, className, Common().formatDateStringToUTC(startDate), title, typeTimed, isDeleted)
         return result
 
     def deleteFixedTimedData(self, dataId):

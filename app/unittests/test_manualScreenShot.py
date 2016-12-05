@@ -73,7 +73,7 @@ class ManualScreenShotTest(unittest.TestCase):
         dataId = jsonData[0]["id"]
 
         # insert Fixed Data
-        modifiedCount = ManualScreenShot().insertFixedManualScreenShotData(dataId, '2222', '[New Content Added]',
+        modifiedCount = ManualScreenShot().modifyFixedManualScreenShotData(dataId, '2222', '[New Content Added]',
                                                                        'imgPoint',
                                                                        '2016-10-29 15:07:00',
                                                                        '/new/path/1474038815.78_TESTING.png',
@@ -90,7 +90,7 @@ class ManualScreenShotTest(unittest.TestCase):
         self.assertTrue(jsonData[0]["fixedData"]["isDeleted"])
 
         # update Fixed Data
-        modifiedCount = ManualScreenShot().updateFixedManualScreenShotData(dataId, '1111',
+        modifiedCount = ManualScreenShot().modifyFixedManualScreenShotData(dataId, '1111',
                                                                            '[EDITED UNITTEST Content Added]', 'imgPoint123',
                                                                            '2016-10-02 19:35:51',
                                                                            '/newpath/manualscreenshot/1474038815.78_TESTING_UPDATE.png',

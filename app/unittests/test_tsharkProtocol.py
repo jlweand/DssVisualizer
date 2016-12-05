@@ -72,7 +72,7 @@ class TsharkProtocolTest(unittest.TestCase):
         dataId = jsonData[0]["id"]
 
         # insert Fixed MultiExcludeProtocol Data
-        insertCount = TsharkProtocol().insertFixedTsharkProtocolData(dataId, '1111', '111 p/s', 'traffic',
+        insertCount = TsharkProtocol().modifyFixedTsharkProtocolData(dataId, '1111', '111 p/s', 'traffic',
                                                                      'new new new',
                                                                      '2016-09-11 17:37:14', True)
         self.assertEqual(1, insertCount)
@@ -85,7 +85,7 @@ class TsharkProtocolTest(unittest.TestCase):
         self.assertTrue(jsonData[0]["fixedData"]["isDeleted"])
 
         # update Fixed MultiExcludeProtocol Data
-        modifiedCount = TsharkProtocol().updateFixedTsharkProtocolData(dataId, '5555', '1 p/s', 'traffic123',
+        modifiedCount = TsharkProtocol().modifyFixedTsharkProtocolData(dataId, '5555', '1 p/s', 'traffic123',
                                                                        'eth:ethertype:arp\neth:ethertype:ip:udp:dns\n',
                                                                        '2016-01-02 18:28:00', False)
         self.assertEqual(1, modifiedCount)

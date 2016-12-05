@@ -86,7 +86,7 @@ class TsharkThroughputTest(unittest.TestCase):
         dataId = jsonData[0]["id"]
 
         # insert Fixed MultiExcludeThroughput Data
-        modifiedCount = TsharkThroughput().insertFixedTsharkThroughputData(dataId, 1111, 'trafficThroughput', '2016-10-02 18:28:00', 111, True)
+        modifiedCount = TsharkThroughput().modifyFixedTsharkThroughputData(dataId, 1111, 'trafficThroughput', '2016-10-02 18:28:00', 111, True)
         self.assertEqual(1, modifiedCount)
         jsonData = TsharkThroughput().selectTsharkThroughputDataById(dataId)
         self.assertEqual(jsonData[0]["fixedData"]["traffic_xy_id"], 1111)
@@ -95,7 +95,7 @@ class TsharkThroughputTest(unittest.TestCase):
         self.assertTrue(jsonData[0]["fixedData"]["isDeleted"])
 
         # update Fixed MultiExcludeThroughput Data
-        modifiedCount = TsharkThroughput().updateFixedTsharkThroughputData(dataId, 2222, 'trafficThroughput', '2017-01-02 18:28:00', 99999, False)
+        modifiedCount = TsharkThroughput().modifyFixedTsharkThroughputData(dataId, 2222, 'trafficThroughput', '2017-01-02 18:28:00', 99999, False)
         self.assertEqual(1, modifiedCount)
         jsonData = TsharkThroughput().selectTsharkThroughputDataById(dataId)
         self.assertEqual(jsonData[0]["fixedData"]["traffic_xy_id"], 2222)

@@ -70,8 +70,8 @@ class PyClick:
         jsonData = pyClick.selectClickDataById(dataId)
         return jsonData
 
-    def insertFixedClickData(self, dataId, clicks_id, content, className, startDate, title, typeClick, isDeleted):
-        """Override: Inserts a new attribute called 'fixedData' which has all the attributes of the data. Does not overwrite the original data.
+    def modifyFixedClickData(self, dataId, clicks_id, content, className, startDate, title, typeClick, isDeleted):
+        """Override: Insert or Updates the record of the 'fixed' click data.
 
         :param dataId: The ID of the Data point
         :type dataId: str
@@ -92,33 +92,7 @@ class PyClick:
         :returns: newly created id.
         """
         pyClick = self.getPlugin()
-        result = pyClick.insertFixedClickData(dataId, clicks_id, content, className,
-                                              Common().formatDateStringToUTC(startDate), title, typeClick, isDeleted)
-        return result
-
-    def updateFixedClickData(self, dataId, clicks_id, content, className, startDate, title, typeClick, isDeleted):
-        """Override: Updates the record of the 'fixed' click data.
-
-        :param dataId: The ID of the Data point
-        :type dataId: str
-        :param clicks_id: The key of the original click data
-        :type clicks_id: str
-        :param content: The updated content
-        :type content: str
-        :param typeClick: The updated type
-        :type typeClick: str
-        :param className: The updated class name
-        :type className: str
-        :param title: The updated title
-        :type title: str
-        :param startDate: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
-        :type startDate: str
-        :param isDeleted: indicator if this data point should never be shown on the screen
-        :type isDeleted: bool
-        :returns: newly created id.
-        """
-        pyClick = self.getPlugin()
-        result = pyClick.updateFixedClickData(dataId, clicks_id, content, className,
+        result = pyClick.modifyFixedClickData(dataId, clicks_id, content, className,
                                               Common().formatDateStringToUTC(startDate), title, typeClick, isDeleted)
         return result
 

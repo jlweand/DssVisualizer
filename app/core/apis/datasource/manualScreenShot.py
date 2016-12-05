@@ -70,38 +70,8 @@ class ManualScreenShot:
         jsonData = manualScreenShot.selectManualScreenShotDataById(dataId)
         return jsonData
 
-    def insertFixedManualScreenShotData(self, dataId, manualscreen_id, content, className, start, title, typeManualScreenShot, comment, isDeleted):
-        """Override: Inserts a new attribute called 'fixedData' which has all the attributes of the data. Does not overwrite the original data.
-
-        :param dataId: The ID of the Data point
-        :type dataId: str
-        :param manualscreen_id: The key of the original ManuelScreenShot data
-        :type manualscreen_id: str
-        :param content: The updated content
-        :type content: str
-        :param className: The updated class name
-        :type className: str
-        :param title: The updated title
-        :type title: str
-        :param start: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
-        :type start: str
-        :param typeManualScreenShot: The updated type
-        :type typeManualScreenShot: str
-        :param typeManualScreenShot: The updated type
-        :type typeManualScreenShot: str
-        :param comment: The comment
-        :type comment: str
-        :param isDeleted: indicator if this data point should never be shown on the screen
-        :type isDeleted: bool
-        :returns: The modified count.
-        """
-        manualScreenShot = self.getPlugin()
-        result = manualScreenShot.insertFixedManualScreenShotData(dataId, manualscreen_id, content, className,
-                                              Common().formatDateStringToUTC(start), title, typeManualScreenShot, comment, isDeleted)
-        return result
-
-    def updateFixedManualScreenShotData(self, dataId, manualscreen_id, content, className, start, title, typeManualScreenShot, comment, isDeleted):
-        """Override: Updates the record of the 'fixed' ManualScreenShot data.
+    def modifyFixedManualScreenShotData(self, dataId, manualscreen_id, content, className, start, title, typeManualScreenShot, comment, isDeleted):
+        """Override: Inserts or Updates the record of the 'fixed' ManualScreenShot data.
 
         :param dataId: The ID of the Data point
         :type dataId: str
@@ -124,7 +94,7 @@ class ManualScreenShot:
         :returns: The modified count.
         """
         manualScreenShot = self.getPlugin()
-        result = manualScreenShot.updateFixedManualScreenShotData(dataId, manualscreen_id, content, className,
+        result = manualScreenShot.modifyFixedManualScreenShotData(dataId, manualscreen_id, content, className,
                                               Common().formatDateStringToUTC(start), title, typeManualScreenShot, comment, isDeleted)
         return result
 
