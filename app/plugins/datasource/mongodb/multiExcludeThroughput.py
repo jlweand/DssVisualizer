@@ -18,6 +18,7 @@
 from bson import ObjectId
 from plugins.datasource.mongodb.annotations import Annotations
 from plugins.datasource.mongodb.common import Common
+from plugins.datasource.mongodb.selecting import Selecting
 from plugins.datasource.mongodb.techAndEventNames import TechAndEventNames
 
 class MultiExcludeThroughput:
@@ -34,15 +35,15 @@ class MultiExcludeThroughput:
     # select data by date range of the 'start' column
     def selectMultiExcludeThroughputData(self, startDate, endDate, techName, eventName, eventTechList):
         collection = self.getMultiExcludeThroughputCollection()
-        findJson = Common().getSelectJsonQuery(startDate, endDate, techName, eventName, eventTechList, False, True)
+        findJson = Selecting().getSelectJsonQuery(startDate, endDate, techName, eventName, eventTechList, False, True)
         cursor = collection.find(findJson)
-        return Common().formatOutput(cursor)
+        return Selecting().formatOutput(cursor)
 
     # select single data point
     def selectMultiExcludeThroughputDataById(self, dataId):
         collection = self.getMultiExcludeThroughputCollection()
         cursor = collection.find({"_id": ObjectId(dataId)})
-        return Common().formatOutput(cursor)
+        return Selecting().formatOutput(cursor)
 
     # add or edits a fixedData record to this data point
     def modifyFixedMultiExcludeThroughputData(self, dataId, traffic_xy_id, className, x, y, isDeleted):

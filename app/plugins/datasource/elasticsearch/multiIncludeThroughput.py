@@ -18,7 +18,7 @@
 from plugins.datasource.elasticsearch.annotations import Annotations
 from plugins.datasource.elasticsearch.common import Common
 from elasticsearch import Elasticsearch
-from pprint import pprint
+from plugins.datasource.elasticsearch.selecting import Selecting
 
 
 class MultiIncludeThroughput:
@@ -39,14 +39,14 @@ class MultiIncludeThroughput:
 
     # select data by date range of the 'start' column
     def selectMultiIncludeThroughputData(self, startDate, endDate, techNames, eventNames, eventTechNames):
-        select = Common().generateSelectQuery(startDate, endDate, techNames, eventNames, eventTechNames, False, True)
+        select = Selecting().generateSelectQuery(startDate, endDate, techNames, eventNames, eventTechNames, False, True)
         data = Elasticsearch().search(index=self.esIndex, doc_type=self.multiIncludeThroughputDocType, size=self.resultSize, body=select)
-        return Common().fixAllTheData(data)
+        return Selecting().fixAllTheData(data)
 
     # select single data point
     def selectMultiIncludeThroughputDataById(self, dataId):
         data = Elasticsearch().get(index=self.esIndex, doc_type=self.multiIncludeThroughputDocType, id=dataId)
-        return Common().fixOneData(data)
+        return Selecting().fixOneData(data)
 
     # add or edits a fixedData record to this data point
     def modifyFixedMultiIncludeThroughputData(self, dataId, traffic_xy_id, className, x, y, isDeleted):

@@ -16,10 +16,9 @@
 # along with DssVisualizer.  If not, see <http://www.gnu.org/licenses/>.
 
 from bson import ObjectId
-from datetime import datetime
 from plugins.datasource.mongodb.annotations import Annotations
 from plugins.datasource.mongodb.common import Common
-from pprint import pprint
+from plugins.datasource.mongodb.selecting import Selecting
 
 
 class TsharkProtocol:
@@ -35,15 +34,15 @@ class TsharkProtocol:
     # select data by date range of the 'start' column
     def selectTsharkProtocolData(self, startDate, endDate, techName, eventName, eventTechList):
         collection = self.getTsharkProtocolCollection()
-        findJson = Common().getSelectJsonQuery(startDate, endDate, techName, eventName, eventTechList, True, False)
+        findJson = Selecting().getSelectJsonQuery(startDate, endDate, techName, eventName, eventTechList, True, False)
         cursor = collection.find(findJson)
-        return Common().formatOutput(cursor)
+        return Selecting().formatOutput(cursor)
 
     # select single data point
     def selectTsharkProtocolDataById(self, dataId):
         collection = self.getTsharkProtocolCollection()
         cursor = collection.find({"_id": ObjectId(dataId)})
-        return Common().formatOutput(cursor)
+        return Selecting().formatOutput(cursor)
 
     # add or edits a fixedData record to this data point
     def modifyFixedTsharkProtocolData(self, dataId, traffic_all_id, content, className, title, startDate, isDeleted):

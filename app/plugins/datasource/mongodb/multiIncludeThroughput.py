@@ -18,6 +18,7 @@
 from bson import ObjectId
 from plugins.datasource.mongodb.annotations import Annotations
 from plugins.datasource.mongodb.common import Common
+from plugins.datasource.mongodb.selecting import Selecting
 from plugins.datasource.mongodb.techAndEventNames import TechAndEventNames
 
 class MultiIncludeThroughput:
@@ -34,15 +35,15 @@ class MultiIncludeThroughput:
     # select data by date range of the 'start' column
     def selectMultiIncludeThroughputData(self, startDate, endDate, techName, eventName, eventTechList):
         collection = self.getMultiIncludeThroughputCollection()
-        findJson = Common().getSelectJsonQuery(startDate, endDate, techName, eventName, eventTechList, False, True)
+        findJson = Selecting().getSelectJsonQuery(startDate, endDate, techName, eventName, eventTechList, False, True)
         cursor = collection.find(findJson)
-        return Common().formatOutput(cursor)
+        return Selecting().formatOutput(cursor)
 
     # select single data point
     def selectMultiIncludeThroughputDataById(self, dataId):
         collection = self.getMultiIncludeThroughputCollection()
         cursor = collection.find({"_id": ObjectId(dataId)})
-        return Common().formatOutput(cursor)
+        return Selecting().formatOutput(cursor)
 
     # add or edits a fixedData record to this data point
     def modifyFixedMultiIncludeThroughputData(self, dataId, traffic_xy_id, className, x, y, isDeleted):

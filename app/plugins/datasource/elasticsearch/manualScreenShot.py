@@ -18,7 +18,7 @@
 from plugins.datasource.elasticsearch.annotations import Annotations
 from plugins.datasource.elasticsearch.common import Common
 from elasticsearch import Elasticsearch
-from pprint import pprint
+from plugins.datasource.elasticsearch.selecting import Selecting
 
 
 class ManualScreenShot:
@@ -39,14 +39,14 @@ class ManualScreenShot:
 
     # select data by date range of the 'start' column
     def selectManualScreenShotData(self, startDate, endDate, techNames, eventNames, eventTechNames):
-        select = Common().generateSelectQuery(startDate, endDate, techNames, eventNames, eventTechNames, True, False)
+        select = Selecting().generateSelectQuery(startDate, endDate, techNames, eventNames, eventTechNames, True, False)
         data = Elasticsearch().search(index=self.esIndex, doc_type=self.manualScreenShotDocType, size=self.resultSize, body=select)
-        return Common().fixAllTheData(data)
+        return Selecting().fixAllTheData(data)
 
     # select single data point
     def selectManualScreenShotDataById(self, dataId):
         data = Elasticsearch().get(index=self.esIndex, doc_type=self.manualScreenShotDocType, id=dataId)
-        return Common().fixOneData(data)
+        return Selecting().fixOneData(data)
 
     # add or edits a fixedData record to this data point
     def modifyFixedManualScreenShotData(self, dataId, manualscreen_id, content, className, start, title, typeManualScreenShot, comment, isDeleted):

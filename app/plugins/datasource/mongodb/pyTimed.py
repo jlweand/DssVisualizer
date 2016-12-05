@@ -18,6 +18,7 @@
 from bson import ObjectId
 from plugins.datasource.mongodb.annotations import Annotations
 from plugins.datasource.mongodb.common import Common
+from plugins.datasource.mongodb.selecting import Selecting
 
 
 class PyTimed:
@@ -33,15 +34,15 @@ class PyTimed:
     # select data by date range of the 'start' column
     def selectTimedData(self, startDate, endDate, techName, eventName, eventTechList):
         collection = self.getTimedCollection()
-        findJson = Common().getSelectJsonQuery(startDate, endDate, techName, eventName, eventTechList, True, False)
+        findJson = Selecting().getSelectJsonQuery(startDate, endDate, techName, eventName, eventTechList, True, False)
         cursor = collection.find(findJson)
-        return Common().formatOutput(cursor)
+        return Selecting().formatOutput(cursor)
 
     # select single data point
     def selectTimedDataById(self, dataId):
         collection = self.getTimedCollection()
         cursor = collection.find({"_id": ObjectId(dataId)})
-        return Common().formatOutput(cursor)
+        return Selecting().formatOutput(cursor)
 
     # add or edits a fixedData record to this data point
     def modifyFixedTimedData(self, dataId, timed_id, content, className, start, title, typeTimed, isDeleted):

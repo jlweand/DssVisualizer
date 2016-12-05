@@ -15,13 +15,13 @@
 # You should have received a copy of the GNU General Public License
 # along with DssVisualizer.  If not, see <http://www.gnu.org/licenses/>.
 
-from plugins.datasource.mongodb.common import Common
+from plugins.datasource.mongodb.selecting import Selecting
 
 class TechAndEventNames:
 
     def getDistinctTechAndEventNames(self, collection):
         cursor = collection.aggregate([{"$group": {"_id": {"metadata.techName": "$metadata.techName", "metadata.eventName": "$metadata.eventName"}}}])
-        pyObjects = Common().getPythonObjects(cursor)
+        pyObjects = Selecting().getPythonObjects(cursor)
         distinctList = []
         for obj in pyObjects:
             distinctList.append(obj["_id"]["metadata.eventName"] + " by " + obj["_id"]["metadata.techName"])
@@ -37,7 +37,7 @@ class TechAndEventNames:
 
         match = [ { "$match": eventJson }, { "$group": {"_id": {"metadata.techName": "$metadata.techName"}}} ]
         cursor = collection.aggregate(match)
-        pyObjects = Common().getPythonObjects(cursor)
+        pyObjects = Selecting().getPythonObjects(cursor)
         distinctList = []
         for obj in pyObjects:
             distinctList.append(obj["_id"]["metadata.techName"])
@@ -45,5 +45,5 @@ class TechAndEventNames:
 
     def getDistinctEventNames(self, collection):
         cursor = collection.find().distinct("metadata.eventName")
-        distinctList = Common().getPythonObjects(cursor)
+        distinctList = Selecting().getPythonObjects(cursor)
         return sorted(distinctList, key=str.lower)

@@ -18,6 +18,7 @@
 from bson import ObjectId
 from plugins.datasource.mongodb.annotations import Annotations
 from plugins.datasource.mongodb.common import Common
+from plugins.datasource.mongodb.selecting import Selecting
 from plugins.datasource.mongodb.techAndEventNames import TechAndEventNames
 
 class ManualScreenShot:
@@ -34,15 +35,15 @@ class ManualScreenShot:
     # select data by date range of the 'start' column
     def selectManualScreenShotData(self, startDate, endDate, techName, eventName, eventTechList):
         collection = self.getManualScreenShotCollection()
-        findJson = Common().getSelectJsonQuery(startDate, endDate, techName, eventName, eventTechList, True, False)
+        findJson = Selecting().getSelectJsonQuery(startDate, endDate, techName, eventName, eventTechList, True, False)
         cursor = collection.find(findJson)
-        return Common().formatOutput(cursor)
+        return Selecting().formatOutput(cursor)
 
     # select single data point
     def selectManualScreenShotDataById(self, dataId):
         collection = self.getManualScreenShotCollection()
         cursor = collection.find({"_id": ObjectId(dataId)})
-        return Common().formatOutput(cursor)
+        return Selecting().formatOutput(cursor)
 
     # add or edits a fixedData record to this data point
     def modifyFixedManualScreenShotData(self, dataId, manualscreen_id, content, className, start, title, typeManualScreenShot, comment, isDeleted):

@@ -18,6 +18,7 @@
 from bson import ObjectId
 from plugins.datasource.mongodb.annotations import Annotations
 from plugins.datasource.mongodb.common import Common
+from plugins.datasource.mongodb.selecting import Selecting
 
 class PyClick:
     def getClickCollection(self):
@@ -32,15 +33,15 @@ class PyClick:
     # select data by date range of the 'start' column
     def selectClickData(self, startDate, endDate, techName, eventName, eventTechList):
         collection = self.getClickCollection()
-        findJson = Common().getSelectJsonQuery(startDate, endDate, techName, eventName, eventTechList, True, False)
+        findJson = Selecting().getSelectJsonQuery(startDate, endDate, techName, eventName, eventTechList, True, False)
         cursor = collection.find(findJson)
-        return Common().formatOutput(cursor)
+        return Selecting().formatOutput(cursor)
 
     # select single data point
     def selectClickDataById(self, dataId):
         collection = self.getClickCollection()
         cursor = collection.find({"_id": ObjectId(dataId)})
-        return Common().formatOutput(cursor)
+        return Selecting().formatOutput(cursor)
 
     # add or edits a fixedData record to this data point
     def modifyFixedClickData(self, dataId, clicks_id, content, className, start, title, typeClick, isDeleted):

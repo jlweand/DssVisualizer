@@ -18,7 +18,7 @@
 from plugins.datasource.elasticsearch.annotations import Annotations
 from plugins.datasource.elasticsearch.common import Common
 from elasticsearch import Elasticsearch
-from pprint import pprint
+from plugins.datasource.elasticsearch.selecting import Selecting
 
 
 class PyClick:
@@ -39,14 +39,14 @@ class PyClick:
 
     # select data by date range of the 'start' column
     def selectClickData(self, startDate, endDate, techNames, eventNames, eventTechNames):
-        select = Common().generateSelectQuery(startDate, endDate, techNames, eventNames, eventTechNames, True, False)
+        select = Selecting().generateSelectQuery(startDate, endDate, techNames, eventNames, eventTechNames, True, False)
         data = Elasticsearch().search(index=self.esIndex, doc_type=self.clickDocType, size=self.resultSize, body=select)
-        return Common().fixAllTheData(data)
+        return Selecting().fixAllTheData(data)
 
     # select single data point
     def selectClickDataById(self, dataId):
         data = Elasticsearch().get(index=self.esIndex, doc_type=self.clickDocType, id=dataId)
-        return Common().fixOneData(data)
+        return Selecting().fixOneData(data)
 
     # add or edits a fixedData record to this data point
     def modifyFixedClickData(self, dataId, clicks_id, content, className, start, title, typeClick, isDeleted):

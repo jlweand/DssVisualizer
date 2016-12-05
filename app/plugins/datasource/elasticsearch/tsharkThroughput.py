@@ -18,7 +18,7 @@
 from plugins.datasource.elasticsearch.annotations import Annotations
 from plugins.datasource.elasticsearch.common import Common
 from elasticsearch import Elasticsearch
-from pprint import pprint
+from plugins.datasource.elasticsearch.selecting import Selecting
 
 
 class TsharkThroughput:
@@ -39,14 +39,14 @@ class TsharkThroughput:
 
     # select data by date range of the 'start' column
     def selectTsharkThroughputData(self, startDate, endDate, techNames, eventNames, eventTechNames):
-        select = Common().generateSelectQuery(startDate, endDate, techNames, eventNames, eventTechNames, False, True)
+        select = Selecting().generateSelectQuery(startDate, endDate, techNames, eventNames, eventTechNames, False, True)
         data = Elasticsearch().search(index=self.esIndex, doc_type=self.tsharkThroughputDocType, size=self.resultSize, body=select)
-        return Common().fixAllTheData(data)
+        return Selecting().fixAllTheData(data)
 
     # select single data point
     def selectTsharkThroughputDataById(self, dataId):
         data = Elasticsearch().get(index=self.esIndex, doc_type=self.tsharkThroughputDocType, id=dataId)
-        return Common().fixOneData(data)
+        return Selecting().fixOneData(data)
 
     # add or edits a fixedData record to this data point
     def modifyFixedTsharkThroughputData(self, dataId, traffic_xy_id, className, x, y, isDeleted):
