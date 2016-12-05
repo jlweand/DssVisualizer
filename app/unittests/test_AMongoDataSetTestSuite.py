@@ -5,9 +5,9 @@ from unittests.test_multiExcludeProtocol import MultiExcludeProtocolTest
 from unittests.test_multiExcludeThroughput import MultiExcludeThroughputTest
 from unittests.test_multiIncludeProtocol import MultiIncludeProtocolTest
 from unittests.test_multiIncludeThroughput import MultiIncludeThroughputTest
-from unittests.test_pyClick import PyClick
-from unittests.test_pyKeyPress import PyKeyPress
-from unittests.test_pyTimed import PyTimed
+from unittests.test_pyClick import PyClickTest
+from unittests.test_pyKeyPress import PyKeyPressTest
+from unittests.test_pyTimed import PyTimedTest
 from unittests.test_tsharkProtocol import TsharkProtocolTest
 from unittests.test_tsharkThroughput import TsharkThroughputTest
 from unittests.test_distinctEventTechNames import DistinctEventTechNames
@@ -17,7 +17,7 @@ if __name__ == '__main__':
                            ManualScreenShotTest,
                            MultiExcludeProtocolTest, MultiExcludeThroughputTest,
                            MultiIncludeProtocolTest, MultiIncludeThroughputTest,
-                           PyClick, PyKeyPress, PyTimed,
+                           PyClickTest, PyKeyPressTest, PyTimedTest,
                            TsharkProtocolTest, TsharkThroughputTest,
                            DistinctEventTechNames]
 
