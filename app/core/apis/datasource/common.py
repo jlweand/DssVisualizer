@@ -78,7 +78,7 @@ class Common:
         metadata["eventName"] = eventName
         metadata["comments"] = ""
 
-        _date = datetime.now()
+        _date = datetime.now().replace(microsecond=0)
         local_tz = get_localzone()
         local_dt = local_tz.localize(_date)
         datimeNow = local_dt.astimezone(pytz.utc)
