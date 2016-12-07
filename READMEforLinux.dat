@@ -1,0 +1,9 @@
+Execute the following commands to install DssVisualizer dependencies:
+
+	1. apt-get update
+	
+	2. tar -xf installDependencies.tar
+	
+	3. sh bin/linuxBuild.sh
+	
+		**You be prompted to enter "Y" several times, Enter "Y"**
