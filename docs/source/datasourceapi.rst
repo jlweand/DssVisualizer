@@ -62,5 +62,6 @@ Please see the documentation in the following classes to learn more about the me
 Simplify Things - Make it more Plug and Playable
 ---------------
 This architecture could be refactored to remove most of the classes and simplify plugin creation.  If each JSON file had a unique className (both the PCAP XY and All have the same classNames
-so we can't distinguish between the three PCAP types) core data source API could just pass the JSON along with the className to the plugin.
-The plugin could take that className and know which collection and whatnot to use.
+so we can't distinguish between the three PCAP types) or other attribute that was unique across all .json files, core data source API could just pass the JSON along to the plugin.
+The plugin could take that className/unique attribute and know which collection/doc_type to use.  The only difference between all these files is the collect/doc_type and the attributes
+that type has (used for editing).
