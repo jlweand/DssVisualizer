@@ -84,6 +84,30 @@ plugins.datasource.elasticsearch.pyTimed module
     :undoc-members:
     :show-inheritance:
 
+plugins.datasource.elasticsearch.selecting module
+-------------------------------------------------
+
+.. automodule:: plugins.datasource.elasticsearch.selecting
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+plugins.datasource.elasticsearch.tsharkProtocol module
+------------------------------------------------------
+
+.. automodule:: plugins.datasource.elasticsearch.tsharkProtocol
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+plugins.datasource.elasticsearch.tsharkThroughput module
+--------------------------------------------------------
+
+.. automodule:: plugins.datasource.elasticsearch.tsharkThroughput
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------

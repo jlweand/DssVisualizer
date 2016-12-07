@@ -17,9 +17,12 @@
 
 from core.apis.datasource.techAndEventNames import TechAndEventNames
 
+
 class EventTechNames:
 
     def getEventTechNames(self, queryDict):
+        """This will return the javascript that the dssvisualizer.py class will execute to get the values for the
+        event, tech, and event/tech dropdowns"""
         if queryDict['populateDropdown'][0] == 'availableTechNames':
             try:
                 eventTechNames = queryDict['eventNames']
@@ -39,4 +42,4 @@ class EventTechNames:
         elif queryDict['populateDropdown'][0] == 'availableTechAndEventNames':
             techEventList = TechAndEventNames().getDistinctTechAndEventNames()
             js = "populateTechAndEventDropdown(%s)" % techEventList
-        return js
+            return js

@@ -25,9 +25,15 @@ from core.apis.datasource.pyKeyPress import PyKeyPress
 from core.apis.datasource.pyTimed import PyTimed
 from core.apis.datasource.tsharkProtocol import TsharkProtocol
 
+
 class Submission:
 
     def editAnnotation(self, queryDict):
+        """Adds or Updates an annotation.
+
+        :param queryDict: the request from the javascript
+        :type queryDict: dict
+        """
         itemType = queryDict['type'][0]
         annotation = queryDict['annotation'][0]
         eventName = queryDict['eventName'][0]
@@ -49,6 +55,11 @@ class Submission:
             ManualScreenShot().addAnnotationToManualScreenShotTimeline(start, annotation, techName, eventName)
 
     def editData(self, queryDict):
+        """Adds or edits the 'fixedData' attribute.
+
+        :param queryDict: the request from the javascript
+        :type queryDict: dict
+        """
         itemID = queryDict['itemID'][0]
         itemType = queryDict['type'][0]
         editType = queryDict['editType'][0]  # delete for delete, edit for edit
@@ -118,13 +129,17 @@ class Submission:
                 ManualScreenShot().modifyAnnotationManualScreenShot(itemID, annotation)
             ManualScreenShot().modifyFixedManualScreenShotData(itemID, '', content, className, start, title, dataType, comment, delete)
 
-
     def updateConfiguration(self, queryDict):
-            database = queryDict['database'][0]
-            pcap = queryDict['pcap'][0]
-            pyKeyLogger = queryDict['pyKeyLogger'][0]
-            screenshots = queryDict['screenshots'][0]
-            ConfigDatasources().setDefaultDatasource(database)
-            ConfigRenderers().setDefaultRenderer("pcap", pcap)
-            ConfigRenderers().setDefaultRenderer("pyKeyLogger", pyKeyLogger)
-            ConfigRenderers().setDefaultRenderer("screenshots", screenshots)
+        """Submits the changes to update the config.json
+
+        :param queryDict: the request from the javascript
+        :type queryDict: dict
+        """
+        database = queryDict['database'][0]
+        pcap = queryDict['pcap'][0]
+        pyKeyLogger = queryDict['pyKeyLogger'][0]
+        screenshots = queryDict['screenshots'][0]
+        ConfigDatasources().setDefaultDatasource(database)
+        ConfigRenderers().setDefaultRenderer("pcap", pcap)
+        ConfigRenderers().setDefaultRenderer("pyKeyLogger", pyKeyLogger)
+        ConfigRenderers().setDefaultRenderer("screenshots", screenshots)

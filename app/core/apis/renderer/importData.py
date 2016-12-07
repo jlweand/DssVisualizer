@@ -19,9 +19,11 @@ from urllib.parse import parse_qs
 from time import strftime
 from core.config.dataImport import DataImport
 
+
 class ImportData:
 
     def importData(self, query):
+        """Based on what the UI has selected, export the data"""
         importInfo = parse_qs(query)
         techI = importInfo['tech'][0]
         locationI = importInfo['location'][0]

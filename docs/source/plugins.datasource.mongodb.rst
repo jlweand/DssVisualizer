@@ -84,6 +84,14 @@ plugins.datasource.mongodb.pyTimed module
     :undoc-members:
     :show-inheritance:
 
+plugins.datasource.mongodb.selecting module
+-------------------------------------------
+
+.. automodule:: plugins.datasource.mongodb.selecting
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 plugins.datasource.mongodb.techAndEventNames module
 ---------------------------------------------------
 

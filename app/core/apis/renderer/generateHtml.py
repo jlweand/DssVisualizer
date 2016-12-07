@@ -17,14 +17,15 @@
 
 from core.config.configReader import ConfigReader
 
+
 class GenerateHtml:
+    """This class will generate index.html based on index.html.template and the active renderer plugin."""
 
     def getPluginFile(self, filelocation):
         """Get the file where the scripts for the current active renderer plugin live."""
         with open(filelocation, 'r') as scriptFile:
             scripts = scriptFile.read()
             return scripts
-
 
     def compileScriptsForRenderers(self):
         distinctActiveRends = ConfigReader().getDistinctListOfActiveRenderers()

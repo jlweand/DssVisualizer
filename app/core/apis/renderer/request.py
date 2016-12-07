@@ -29,6 +29,12 @@ from core.apis.datasource.tsharkThroughput import TsharkThroughput
 class Request:
 
     def getData(self, queryDict):
+        """Selects the data from the data source and generates the javascript to be executed by the webkit.
+
+        :param queryDict: the request from the javascript
+        :type queryDict: dict
+        :return: javascript to be executed
+        """
         startDate = queryDict['startDate'][0]
         endDate = queryDict['endDate'][0]
         try:
