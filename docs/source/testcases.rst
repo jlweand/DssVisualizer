@@ -1,4 +1,3 @@
-.. highlight:: rst
 
 Unit Tests
 ==========

@@ -1,32 +1,30 @@
 .. highlight:: rst
 
-Python Libraries Used
-=====================
+Python Libraries Install
+========================
 
 Linux
 -----
 * Open a new terminal and install::
 
-	apt-get install python3-pip
-	pip3 install pymongo
-	pip3 install elasticsearch
-	pip3 install pytz
-	pip3 install tzlocal
-	pip3 install python-dateutil
-	pip3 install ujson
-
+		apt-get install python3-pip
+		pip3 install pymongo
+		pip3 install elasticsearch
+		pip3 install pytz
+		pip3 install tzlocal
+		pip3 install python-dateutil
+		pip3 install ujson
 
 Windows
 -------
-
 * Open a cmd window and install::
 
-	pip install pymongo
-    pip install elasticsearch
-	pip install pytz
-	pip install tzlocal
-	pip install python-dateutil
-    pip install ujson
+		pip install pymongo
+		pip install elasticsearch
+		pip install pytz
+		pip install tzlocal
+		pip install python-dateutil
+		pip install ujson
 
 If you have issues with ujson:
 

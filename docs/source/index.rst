@@ -52,6 +52,7 @@ methods.  Check out the list of `modules <py-modindex.html>`_ for more informati
    limitations
    incomplete
    datacreator
+   Browse the Code! <modules>
 
 
 How to run the DssVisualizer
@@ -106,4 +107,4 @@ Check out all the code!  You can view everything by method (Index) or view it by
 * :ref:`modindex`
 * :ref:`search`
 
-This documentation was last updated |today|
+This documentation was last updated |today|.

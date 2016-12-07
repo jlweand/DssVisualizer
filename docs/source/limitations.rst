@@ -1,4 +1,4 @@
-.. highlight:: rst
+.. highlight:: py
 
 Limitations/Issues/Weirdness
 ============================
@@ -56,6 +56,21 @@ Issues we know about
 
   2. But you'll still have the Mongo '_id' issue that the JS won't pick up as the id of the data point.  Maybe there is someway to tell JS that the id of the object is '_id' and not 'id'.
 
+* Sphinx documentation will complain about not being able to find index.html.template when trying to document dssvisualizer.py.  Just change::
+
+    GenerateHtml().generateHtml()
+    uri = "file:///" + os.getcwd() + "/viewmanager/index.html"
+
+  to::
+
+      #GenerateHtml().generateHtml()
+      uri = "file:///" #+ os.getcwd() + "/viewmanager/index.html"
+
+  and run the::
+
+      make html
+
+  command again.  Check `this <http://www.sphinx-doc.org/en/1.4.9/tutorial.html#autodoc>`_ out for more information.
 
 Issues you may be facing with Linux
 -----------------------------------

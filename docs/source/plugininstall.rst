@@ -1,4 +1,3 @@
-.. highlight:: rst
 
 Installation of Renderer and Datasource Plugins
 ===============================================

@@ -1,4 +1,4 @@
-.. highlight:: rst
+.. highlight:: java
 
 Java JSON Data Creator
 ======================
