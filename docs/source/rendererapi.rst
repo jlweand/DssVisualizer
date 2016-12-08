@@ -1,5 +1,0 @@
-
-Renderer API
-============
-
-Coming soon!

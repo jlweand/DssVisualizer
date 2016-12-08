@@ -45,9 +45,9 @@ methods.  Check out the list of `modules <py-modindex.html>`_ for more informati
    mongodbinstall
    elasticsearchinstall
    datasourceapi
-   rendererapi
-   Install a Plugin <plugininstall>
+   /viewmanager/js Package <viewmanager.js>
    Add a New Data Type <addnewdatatype>
+   Install a Plugin <plugininstall>
    dataimport
    testcases
    UIdocumentation
