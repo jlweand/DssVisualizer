@@ -28,6 +28,12 @@ viewmanager.folderExplorer module
     :undoc-members:
     :show-inheritance:
 
+viewmanager.js package
+----------------------
+
+.. toctree::
+
+     viewmanager.js
 
 Module contents
 ---------------

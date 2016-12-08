@@ -156,6 +156,7 @@ along with DssVisualizer.  If not, see <http://www.gnu.org/licenses/>.
 			<div id="tsharkData" class="timeline"></div>
 			<h3>Manual Screenshot Data</h3>
 			<div id="screenshotData" class="timeline"></div>
+			<!-- Add div here for new data type -->
 		</div>
 		<div id="footer">
 			Code licensed under the <a href="https://www.gnu.org/licenses/gpl-3.0-standalone.html">GPLv3</a>

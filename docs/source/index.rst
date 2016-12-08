@@ -46,6 +46,7 @@ methods.  Check out the list of `modules <py-modindex.html>`_ for more informati
    datasourceapi
    rendererapi
    Install a Plugin <plugininstall>
+   Add a New Data Type <addnewdatatype>
    dataimport
    testcases
    UIdocumentation
