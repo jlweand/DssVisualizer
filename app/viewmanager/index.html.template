@@ -54,6 +54,7 @@ along with DssVisualizer.  If not, see <http://www.gnu.org/licenses/>.
 	</script>
 	<SCRIPTS GO HERE>
 </head>
+
 <body>
 	<div id="content">
 		<div id="admin">
@@ -176,4 +177,5 @@ along with DssVisualizer.  If not, see <http://www.gnu.org/licenses/>.
 	</script>
 
 </body>
+
 </html>

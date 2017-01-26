@@ -1,0 +1,17 @@
+[
+	{"clicks_id" : 0,
+	"content" : " ",
+	"type" : "point",
+	"classname" : "imgPoint",
+	"title" : "\/root\/dss-logger-pluggable\/plugins\/collectors\/pykeylogger\/raw\/click_images\/1485395393.77_gnome-terminal-server_root.png",
+	"start" : "2017-01-26T01:49:53"
+	},
+
+	{"clicks_id" : 1,
+	"content" : " ",
+	"type" : "point",
+	"classname" : "imgPoint",
+	"title" : "\/root\/dss-logger-pluggable\/plugins\/collectors\/pykeylogger\/raw\/click_images\/1485395358.27_gui.py_root.png",
+	"start" : "2017-01-26T01:49:18"
+	}
+]

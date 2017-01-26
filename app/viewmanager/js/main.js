@@ -43,6 +43,12 @@ $(document).on("click", "#dateInput", function(){
 	var screenshotDataUrl = "http://localhost?request=screenshotData&startDate="+start+"&endDate="+end+"&techNames="+techNames+"&eventNames="+eventNames+"&eventTechNames="+eventTechNames;
 	setTimeout(getRequest, 5000, screenshotDataUrl);
 	$("#filterSearch").removeClass("hidden");
+	
+	// default, don't show multi- network data
+	$('#multiExcludeData').hide();
+	$('#multiIncludeData').hide();
+	$('#multiexclude').attr("checked",false);
+	$('#multiinclude').attr("checked",false);
 });
 
 function getRequest(url){
@@ -89,8 +95,11 @@ function visualizeKeyData(keyData, clickData, timedData, count){
 	filter = $("#filter").val();
 	var eventTechNames = getArrayOfEventTechNames();
 	// if eventTechNames.length > 0 then we know we have multiple datasets to work with.
+	
 	if(eventTechNames.length > 0) {
+		
 		keyDataArrays = splitDataForMultipleDataSetManagement(eventTechNames, keyData);
+		
 		keyDataArrays.forEach(function(keyDataArray) {
 			keyDataArray['data'].forEach(function(obj) {
 				obj = getFixedDataPoint(obj);
@@ -114,11 +123,12 @@ function visualizeKeyData(keyData, clickData, timedData, count){
 			});
 		});
 
-
+		
 		eventTechNames.forEach(function(eventTechName, index) {
 			if(eventTechNames.length > 1){
 				$("#keypressData").append("<h4>"+eventTechName+"</h4>");
 			}
+			
 			keylogger.push(new KeyLogger(keyDataArrays[index]['data'], clickDataArrays[index]['data'], timedDataArrays[index]['data']));
 		});
 

@@ -17,11 +17,26 @@ var KeyLogger = function(keyData, clickData, timedData){
 	this.items.add(clickData);
 	this.items.add(timedData);
     var theItems = this.items;
-
+    
+    // get data start and end date
+	 startDate = theItems.min('id')['start'];
+	 endDate = theItems.max('id')['start'];
+	var anHour = 1000 * 60 * 60;
+	startDate = JSONDatetoMillis(startDate) - anHour;
+	endDate = JSONDatetoMillis(endDate) + anHour;
+	maxZoom = endDate - startDate;
+	
 	// Configuration for the Timeline
 	var options = {
 		// start: startDate,
 		// end: endDate,
+		// limit viewing window to startdate and end date
+		min: startDate,
+		max: endDate,
+		//limit zoomin to 30 sec
+		zoomMin: 1000 * 30,
+		//limit zoom out to whole data set
+		zoomMax: maxZoom,
 		maxHeight: 400,
 		dataAttributes: 'all',
 		template: function (item) {
@@ -102,6 +117,13 @@ var KeyLogger = function(keyData, clickData, timedData){
     });
 
 	this.timeline.on('rangechanged', getRangeChanged);
+	
+	function JSONDatetoMillis(date){
+		var theDate = date.split(/-|:| /);
+		
+		var d = new Date(theDate[0],theDate[1]-1,theDate[2],theDate[3],theDate[4],theDate[5]);
+		return d.getTime();
+	}
 
 }
 
@@ -110,6 +132,10 @@ KeyLogger.prototype.getDataset = function(){
 }
 
 KeyLogger.prototype.setTimelineWindow = function(start,end){
+	
+	
+	
 	this.timeline.setWindow(start,end);
+	
 	//this.timeline.redraw();
 }

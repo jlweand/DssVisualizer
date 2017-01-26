@@ -152,6 +152,7 @@ class DataImport:
         for subdir, dirs, files in os.walk(fileLocation):
             for file in files:
                 fullFileName = os.path.join(subdir, file)
+                print(fullFileName)
                 if os.path.isfile(fullFileName) and file.lower().endswith(".json"):
                     if "click" in fullFileName.lower():
                         self.importClickFile(fullFileName, techName, eventName, comments, importDate, copyImages)

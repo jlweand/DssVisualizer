@@ -12,8 +12,24 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
     var theMEAllItems = this.datasetMEAll;
     var theMIAllItems = this.datasetMIAll;
     var theTSAllItems = this.datasetTSAll;
+    
+  
+	// get data start and end date
+	startDate = datasetMEXY.min('id')['x'];
+	endDate = datasetMEXY.max('id')['x'];
+	var anHour = 1000 * 60 * 60;
+	startDate = JSONDatetoMillis(startDate) - anHour;
+	endDate = JSONDatetoMillis(endDate) + anHour;
+	maxZoom = endDate - startDate;
 
 	var optionsXY = {
+		// limit viewing window to startdate and end date
+		min: startDate,
+		max: endDate,
+		//limit zoomin to 30 sec
+		zoomMin: 1000 * 30,
+		//limit zoom out to whole data set
+		zoomMax: maxZoom,
 		drawPoints: true,
 		interpolation: false,
 		height: "150px",
@@ -22,6 +38,13 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
 		dataAxis: {visible: false}
 	};
 	var optionsAll = {
+		// limit viewing window to startdate and end date
+		min: startDate,
+		max: endDate,
+		//limit zoomin to 1 min
+		zoomMin: 1000 * 60,
+		//limit zoom out to 1 day
+		zoomMax: 1000 * 60 * 30,
 		stack: false,
 		dataAttributes: 'all',
 		editable: true,
@@ -144,6 +167,13 @@ var PCAPData = function(meXY, meAll, miXY, miAll, tsXY, tsAll){
             })
         } catch(TypeError) {}
     });
+	function JSONDatetoMillis(date){
+		var theDate = date.split(/-|:| /);
+		
+		var d = new Date(theDate[0],theDate[1]-1,theDate[2],theDate[3],theDate[4],theDate[5]);
+		return d.getTime();
+	}
+    
 
 }
 
@@ -165,12 +195,15 @@ PCAPData.prototype.getTSDataset = function(){
 }
 
 PCAPData.prototype.setPcapWindows = function (start,end){
+	
 	this.graph2dME.setWindow(start,end);
 	this.timelineME.setWindow(start,end);
 	this.graph2dMI.setWindow(start,end);
 	this.timelineMI.setWindow(start,end);
 	this.graph2dTS.setWindow(start,end);
 	this.timelineTS.setWindow(start,end);
+	 
+	
 	//this.graph2dTS.redraw();
 	//this.graph2dME.redraw();
 	//this.graph2dMI.redraw();

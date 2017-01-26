@@ -1,0 +1,10 @@
+[{ "traffic_xy_id" : 0, "className" : "trafficThroughput", "x":"2017-01-26T01:49:15", "y" : 2 },
+{ "traffic_xy_id" : 1, "className" : "trafficThroughput", "x":"2017-01-26T01:49:16", "y" : 1 },
+{ "traffic_xy_id" : 2, "className" : "trafficThroughput", "x":"2017-01-26T01:50:14", "y" : 11 },
+{ "traffic_xy_id" : 3, "className" : "trafficThroughput", "x":"2017-01-26T01:50:15", "y" : 4 },
+{ "traffic_xy_id" : 4, "className" : "trafficThroughput", "x":"2017-01-26T01:50:19", "y" : 7 },
+{ "traffic_xy_id" : 5, "className" : "trafficThroughput", "x":"2017-01-26T01:50:20", "y" : 1 },
+{ "traffic_xy_id" : 6, "className" : "trafficThroughput", "x":"2017-01-26T01:50:46", "y" : 14 },
+{ "traffic_xy_id" : 7, "className" : "trafficThroughput", "x":"2017-01-26T01:50:47", "y" : 1 },
+{ "traffic_xy_id" : 8, "className" : "trafficThroughput", "x":"2017-01-26T01:50:49", "y" : 1 }
+]
