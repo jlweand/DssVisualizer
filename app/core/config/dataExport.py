@@ -29,6 +29,7 @@ from core.apis.datasource.multiIncludeThroughput import MultiIncludeThroughput
 from core.apis.datasource.tsharkProtocol import TsharkProtocol
 from core.apis.datasource.tsharkThroughput import TsharkThroughput
 from core.apis.datasource.manualScreenShot import ManualScreenShot
+from core.apis.datasource.snoopy import Snoopy
 from core.apis.datasource.common import Common
 
 
@@ -63,6 +64,7 @@ class DataExport:
         self.exportTsharkProtocolData(startDate, endDate, techName, eventName, techAndEventName, exportLocation)
         self.exportTsharkThroughputData(startDate, endDate, techName, eventName, techAndEventName, exportLocation)
         self.exportManualScreenShotData(startDate, endDate, techName, eventName, techAndEventName, copyImages, exportLocation)
+        self.exportSnoopyData(startDate, endDate, techName, eventName, techAndEventName, exportLocation)
 
     def exportClickData(self, startDate, endDate, techName, eventName, techAndEventName, copyImages, exportLocation):
         pyClickData = PyClick().selectClickData(startDate, endDate, techName, eventName, techAndEventName)
@@ -130,6 +132,12 @@ class DataExport:
             self.copyImages(exportLocation + "\\manualscreenshot\\images", manualScreenShotData)
         return len(manualScreenShotData)
 
+    def exportSnoopyData(self, startDate, endDate, techName, eventName, techAndEventName, exportLocation):
+        snoopyData = Snoopy().selectSnoopy(startDate, endDate, techName, eventName, techAndEventName)
+        self.cleanupData(snoopyData, True, False)
+        self.exportToFile(exportLocation + "\\snoopy", "snoopyData.json", snoopyData)
+        return len(snoopyData)
+        
     def exportToFile(self, outputDirectory, outputFileName, jsonToExport):
         """Creates the output directory, and dumps the JSON data to the specified file. Right now the JSON is pretty printed.
         There is a commented out json.dump command that will print the JOSN all on one line if it's needed in the future.

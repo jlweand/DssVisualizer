@@ -25,6 +25,7 @@ from core.apis.datasource.pyKeyPress import PyKeyPress
 from core.apis.datasource.pyTimed import PyTimed
 from core.apis.datasource.tsharkProtocol import TsharkProtocol
 from core.apis.datasource.tsharkThroughput import TsharkThroughput
+from core.apis.datasource.snoopy import Snoopy
 
 class Request:
 
@@ -59,6 +60,12 @@ class Request:
             timedData = PyTimed().selectTimedData(startDate, endDate, techList, eventList, eventTechList)
 
             js = "visualizeKeyData(%s, %s, %s);" % (keyData, clickData, timedData)
+            return js
+        
+        elif queryDict['request'][0] == 'snoopyData':
+            snoopyData = Snoopy().selectSnoopyData(startDate, endDate, techList, eventList, eventTechList)
+            
+            js = "visualizeSnoopyData(%s);" % (snoopyData)
             return js
 
         elif queryDict['request'][0] == 'pcapData':

@@ -16,7 +16,7 @@ body, html {
 }
 #admin a{
 	text-decoration: none;
-	color: black;
+	color: white;
 }
 
 #oldAnnotations p{
@@ -54,6 +54,10 @@ body, html {
 #go-button {
 	float: left;
 	margin-left: 15px;
+}
+
+#snoopyData {
+	width : 95%
 }
 
 #keypressData {

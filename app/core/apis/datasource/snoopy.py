@@ -19,28 +19,29 @@ from core.config.configReader import ConfigReader
 from core.apis.datasource.common import Common
 
 
-class PyClick:
-    """PyClick API.  Most of these methods must be overwritten in your plugin.
-    Datasource plugin must have a file named pyClick.py with a class name of PyClick
+class Snoopy:
+    """Snoopy API.  Most of these methods must be overwritten in your plugin.
+    Datasource plugin must have a file named snoopy.py with a class name of Snoopy
     """
 
     def getPlugin(self):
         """Internal method to get an instance of the active plugin"""
-        return ConfigReader().getInstanceOfDatasourcePlugin("PyClick")
+        return ConfigReader().getInstanceOfDatasourcePlugin("Snoopy")
 
-    def importClick(self, jsonData):
+    # Snoopy#
+    def importSnoopyData(self, jsonData):
         """Override: Imports all records from a JSON file. Dates are in UTC time.
 
         :param jsonData: The JSON data with the metadata added.
         :type jsonData: Parsed JSON
         :return: number of records inserted
         """
-        pyClick = self.getPlugin()
-        insertedCount = pyClick.importClick(jsonData)
+        snoopy = self.getPlugin()
+        insertedCount = snoopy.importSnoopyData(jsonData)
         return insertedCount
 
-    def selectClickData(self, startDate, endDate, techNames, eventNames, eventTechList):
-        """Override: Select the click data by start and end date. The input here will be strings, datetimes will be passed to the plugin.
+    def selectSnoopyData(self, startDate, endDate, techNames, eventNames, eventTechList):
+        """Override: Select the key press data by start and end date. The input here will be strings, datetimes will be passed to the plugin.
 
         :param startDate: The a string value of the local datetime to begin search on
         :type startDate: str
@@ -54,61 +55,56 @@ class PyClick:
         :type eventTechList: list
         :returns: JSON object
         """
-        pyClick = self.getPlugin()
-        jsonData = pyClick.selectClickData(Common().formatDateStringToUTC(startDate),
-                                           Common().formatDateStringToUTC(endDate), techNames, eventNames, eventTechList)
-        print(jsonData)
+        snoopy = self.getPlugin()
+        jsonData = snoopy.selectSnoopyData(Common().formatDateStringToUTC(startDate),
+                                                 Common().formatDateStringToUTC(endDate), techNames, eventNames, eventTechList)
+        
         return Common().removeDeletedData(jsonData)
 
-    def selectClickDataById(self, dataId):
-        """Override: Select the Click data by its ID
+    def selectSnoopyDataById(self, dataId):
+        """Override: Select the snoopy data by its ID
 
         :param dataId: The ID of the Data point
         :type dataId: str
         :returns: JSON object
         """
-        pyClick = self.getPlugin()
-        jsonData = pyClick.selectClickDataById(dataId)
+        snoopy = self.getPlugin()
+        jsonData = snoopy.selectSnoopyDataById(dataId)
         return jsonData
 
-    def modifyFixedClickData(self, dataId, clicks_id, content, className, startDate, title, typeClick, isDeleted):
-        """Override: Insert or Updates the record of the 'fixed' click data.
+    def modifyFixedSnoopyData(self, dataId, snoopy_id, content, className, startDate, isDeleted):
+        """Override: Insert or Updates the record of the 'fixed' snoopy data.
 
         :param dataId: The ID of the Data point
         :type dataId: str
-        :param clicks_id: The key of the original click data
-        :type clicks_id: str
+        :param snoopy_id: The key of the original key press data
+        :type snoopy_id: str
         :param content: The updated content
         :type content: str
-        :param typeClick: The updated type
-        :type typeClick: str
         :param className: The updated class name
         :type className: str
-        :param title: The updated title
-        :type title: str
         :param startDate: The string value of the updated datetime of the event, datetime UTC will be passed to the plugin.
         :type startDate: str
         :param isDeleted: indicator if this data point should never be shown on the screen
         :type isDeleted: bool
-        :returns: newly created id.
+        :returns: The modified count.
         """
-        pyClick = self.getPlugin()
-        result = pyClick.modifyFixedClickData(dataId, clicks_id, content, className,
-                                              Common().formatDateStringToUTC(startDate), title, typeClick, isDeleted)
+        snoopy = self.getPlugin()
+        result = snoopy.modifyFixedSnoopyData(dataId, snoopy_id, content, className,
+                                                    Common().formatDateStringToUTC(startDate), isDeleted)
         return result
 
-    def deleteFixedClickData(self, dataId):
-        """Override: Delete a 'fixed' click data.
+    def deleteFixedSnoopyData(self, dataId):
+        """Override: Delete a 'fixed' snoopy data.
 
         :param dataId: The ID of the 'fixed' data to delete
         :type dataId: str
         :returns: The deleted count.
         """
-        pyClick = self.getPlugin()
-        result = pyClick.deleteFixedClickData(dataId)
-        return result
+        snoopy = self.getPlugin()
+        return snoopy.deleteFixedSnoopyData(dataId)
 
-    def modifyAnnotationClick(self, dataId, annotationText):
+    def modifyAnnotationSnoopy(self, dataId, annotationText):
         """Override: Add or edit an annotation to the object.  This will add a single 'annotation' attribute
         to the object.
 
@@ -118,11 +114,11 @@ class PyClick:
         :type annotationText: str
         :returns: The modified count.
         """
-        pyClick = self.getPlugin()
-        return pyClick.modifyAnnotationClick(dataId, annotationText)
+        snoopy = self.getPlugin()
+        return snoopy.modifyAnnotationSnoopy(dataId, annotationText)
 
-    def addAnnotationToArrayClick(self, dataId, annotationText):
-        """Override: Edit an annotation in the array of annotations.
+    def addAnnotationToArraySnoopy(self, dataId, annotationText):
+        """Override: Add an annotation as an array of annotations to the object.
 
         :param dataId: The ID of the data to add the annotation to.
         :type dataId: str
@@ -130,11 +126,11 @@ class PyClick:
         :type annotationText: str
         :returns: The modified count.
         """
-        pyClick = self.getPlugin()
-        return pyClick.addAnnotationToArrayClick(dataId, annotationText)
+        snoopy = self.getPlugin()
+        return snoopy.addAnnotationToArraySnoopy(dataId, annotationText)
 
-    def editAnnotationInArrayClick(self, dataId, oldAnnotationText, newAnnotationText):
-        """Override: Delete one annotation from the array of annotations.
+    def editAnnotationInArraySnoopy(self, dataId, oldAnnotationText, newAnnotationText):
+        """Override: Edit an annotation in the array of annotations.
 
         :param dataId: The ID of the data to edit the annotation of.
         :type dataId: str
@@ -144,12 +140,11 @@ class PyClick:
         :type newAnnotationText: str
         :returns: The modified count.
         """
-        pyClick = self.getPlugin()
-        return pyClick.editAnnotationInArrayClick(dataId, oldAnnotationText, newAnnotationText)
+        snoopy = self.getPlugin()
+        return snoopy.editAnnotationInArraySnoopy(dataId, oldAnnotationText, newAnnotationText)
 
-    def deleteAnnotationFromArrayClick(self, dataId, annotationText):
-        """Override: Delete all annotations from the ManualScreenShot object.  It should delete all annotations
-        that are in an 'annotations' array as well as the 'annotation' attribute.
+    def deleteAnnotationFromArraySnoopy(self, dataId, annotationText):
+        """Override: Delete one annotation from the array of annotations.
 
         :param dataId: The ID of the data to remove the annotation from.
         :type dataId: str
@@ -157,21 +152,21 @@ class PyClick:
         :type annotationText: str
         :returns: The modified count.
         """
-        pyClick = self.getPlugin()
-        return pyClick.deleteAnnotationFromArrayClick(dataId, annotationText)
+        snoopy = self.getPlugin()
+        return snoopy.deleteAnnotationFromArraySnoopy(dataId, annotationText)
 
-    def deleteAllAnnotationsForClick(self, dataId):
-        """Override: Delete all annotations from the Click object.
+    def deleteAllAnnotationsForSnoopy(self, dataId):
+        """Override: Delete all annotations from the Snoopy object.  It should delete all annotations
+        that are in an 'annotations' array as well as the 'annotation' attribute.
 
         :param dataId: The ID of the data to remove all annotations from.
         :type dataId: str
         :returns: The modified count.
         """
-        pyClick = self.getPlugin()
-        return pyClick.deleteAllAnnotationsForClick(dataId)
+        snoopy = self.getPlugin()
+        return snoopy.deleteAllAnnotationsForSnoopy(dataId)
 
-    # add an annotation to the timeline, not a datapoint
-    def addAnnotationToClickTimeline(self, startTime, annotationText, techName, eventName):
+    def addAnnotationToSnoopyTimeline(self, startTime, annotationText, techName, eventName):
         """Override: Adds an annotation to the timeline (not a data point). The annotation becomes a
         brand new data point.
 
@@ -185,16 +180,27 @@ class PyClick:
         :type eventName: str
         :returns: The modified count.
          """
-
-        pyClick = self.getPlugin()
+        snoopyPlugin = self.getPlugin()
         metadata = Common().createMetadataForTimelineAnnotations(techName, eventName)
 
-        click = {}
-        click["className"] = "annotation"
-        click["content"] = ""
-        click["type"] = ""
-        click["title"] = ""
-        click["start"] = Common().formatDateStringToUTC(startTime)
-        click["metadata"] = metadata
+        snoopy = {}
+        snoopy["className"] = "annotation"
+        snoopy["content"] = ""
+        snoopy["start"] = Common().formatDateStringToUTC(startTime)
+        snoopy["metadata"] = metadata
 
-        return pyClick.addAnnotationToClickTimeline(click, annotationText)
+        return snoopyPlugin.addAnnotationToSnoopyTimeline(keyPress, annotationText)
+
+    def getDistinctTechNames(self):
+        """Override: Get a list of distinct technician names. used for the UI when searching by technician name.
+
+        :return: a collection of distinct technician names in the data source.
+        """
+        return self.getPlugin().getDistinctTechName()
+
+    def getDistinctEventNames(self):
+        """Override: Get a list of distinct event names. used for the UI when searching by event name.
+
+        :return: a collection of distinct event names in the data source.
+        """
+        return self.getPlugin().getDistinctEventName()

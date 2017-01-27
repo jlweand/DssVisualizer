@@ -4,12 +4,14 @@ var techExport;
 var eventExport;
 var filter;
 var search;
+var snoopy = [];
 var keylogger = [];
 var pcapData = [];
 var snap = [];
 
 $(document).on("click", "#dateInput", function(){
 	$("#loading").removeClass("hidden");
+	$("#snoopy").html("");
 	$("#keypressData").html("");
 	$("#multiExcludeData").html("");
 	$("#multiIncludeData").html("");
@@ -36,6 +38,8 @@ $(document).on("click", "#dateInput", function(){
 	else{
 		end = end + " 23:59:59";
 	}
+	var snoopyDataUrl = "http://localhost?request=snoopyData&startDate="+start+"&endDate="+end+"&techNames="+techNames+"&eventNames="+eventNames+"&eventTechNames="+eventTechNames;
+	getRequest(snoopyDataUrl);
 	var keypressDataUrl = "http://localhost?request=keypressData&startDate="+start+"&endDate="+end+"&techNames="+techNames+"&eventNames="+eventNames+"&eventTechNames="+eventTechNames;
 	getRequest(keypressDataUrl);
 	var pcapDataUrl = "http://localhost?request=pcapData&startDate="+start+"&endDate="+end+"&techNames="+techNames+"&eventNames="+eventNames+"&eventTechNames="+eventTechNames;
@@ -44,16 +48,16 @@ $(document).on("click", "#dateInput", function(){
 	setTimeout(getRequest, 5000, screenshotDataUrl);
 	$("#filterSearch").removeClass("hidden");
 	
-	// default, don't show multi- network data
-	$('#multiExcludeData').hide();
-	$('#multiIncludeData').hide();
-	$('#multiexclude').attr("checked",false);
-	$('#multiinclude').attr("checked",false);
+	
 });
 
 function getRequest(url){
 	$.get(url);
 }
+
+$(document).on("change", "#snoopy", function(){
+	$('#snoopyData').toggle();
+});
 
 $(document).on("change", "#keylogger", function(){
 	$('#keypressData').toggle();
@@ -90,6 +94,37 @@ $(document).on("click", "#goSearch", function(){
 $(document).on("click", "#resetSearch", function(){
 	unSearchTheTimeline();
 });
+
+function visualizeSnoopyData(snoopyData){
+	alert(JSON.stringify(snoopyData))
+	filter = $("#filter").val();
+	var eventTechNames = getArrayOfEventTechNames();
+	// if eventTechNames.length > 0 then we know we have multiple datasets to work with.
+	
+	if(eventTechNames.length > 0) {
+		
+		snoopyDataArrays = splitDataForMultipleDataSetManagement(eventTechNames, snoopyData);
+		
+		snoopyDataArrays.forEach(function(snoopyDataArray) {
+			snoopyDataArray['data'].forEach(function(obj) {
+				obj = getFixedDataPoint(obj);
+				obj['type'] = ['box'];
+			});
+		});
+
+		
+		eventTechNames.forEach(function(eventTechName, index) {
+			if(eventTechNames.length > 1){
+				$("#snoopyData").append("<h4>"+eventTechName+"</h4>");
+			}
+			
+			
+			snoopy.push(new Snoopy(snoopyDataArrays[index]['data']));
+		});
+		
+
+	}
+}
 
 function visualizeKeyData(keyData, clickData, timedData, count){
 	filter = $("#filter").val();

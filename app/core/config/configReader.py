@@ -48,7 +48,7 @@ class ConfigReader:
         """ Gets the locations of the active data source plugin
 
         :return: relative path to the active data source plugin
-        """
+            """
         config = self.importConfigJson()
         activePlugin = config["activeDatasourcePlugin"]
         for plugin in self.getListOfDatasources():
@@ -62,6 +62,14 @@ class ConfigReader:
         :return: relative path to the active keyLogger renderer plugin
         """
         return self.getRendererPlugin("pyKeyLogger")
+	
+    def getRendererPluginForSnoopy(self):
+        """ Gets the locations of the active snoopy renderer plugin
+
+        :return: relative path to the active snoopy renderer plugin
+        """
+        return self.getRendererPlugin("snoopy")
+        
 
     def getRedererPluginForPcap(self):
         """ Gets the locations of the active Pcap renderer plugin
@@ -69,6 +77,7 @@ class ConfigReader:
         :return: relative path to the active Pcap renderer plugin
         """
         return self.getRendererPlugin("pcap")
+        
 
     def getRedererPluginForScreenshots(self):
         """ Gets the locations of the active Screenshots renderer plugin
@@ -102,6 +111,9 @@ class ConfigReader:
             distinctRends.append(activePlugins["pyKeyLogger"]["plugin"])
         if activePlugins["screenshots"]["plugin"] not in distinctRends:
             distinctRends.append(activePlugins["screenshots"]["plugin"])
+        if activePlugins["snoopy"]["plugin"] not in distinctRends:
+            distinctRends.append(activePlugins["snoopy"]["plugin"])
+
         return distinctRends
 
     def getInstanceOfDatasourcePlugin(self, classname):

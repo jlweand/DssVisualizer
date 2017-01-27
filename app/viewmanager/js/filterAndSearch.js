@@ -12,6 +12,14 @@ function filterTheTimeline(){
 				});
 			}
 		}
+        if(snoopy != null){
+			if(snoopy.length > 0){
+				snoopy.forEach(function(timeline){
+					var data = timeline.getDataset();
+					filterTheData(data, filter);
+				});
+			}
+		}
 		if(pcapData != null){
 			if(pcapData.length > 0){
 				pcapData.forEach(function(timeline){
@@ -62,6 +70,14 @@ function searchTheTimeline(){
 		if(keylogger != null){
 			if(keylogger.length > 0){
 				keylogger.forEach(function(timeline){
+					var data = timeline.getDataset();
+					searchTheData(data, search);
+				});
+			}
+		}
+        if(snoopy != null){
+			if(snoopy.length > 0){
+				snoopy.forEach(function(timeline){
 					var data = timeline.getDataset();
 					searchTheData(data, search);
 				});

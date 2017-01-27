@@ -12,6 +12,7 @@ function createRadioButtons(plugins){
     var activePcap= activeRend['pcap']['plugin'];
     var activePyKeyLogger = activeRend['pyKeyLogger']['plugin'];
     var activeScreenshots = activeRend['screenshots']['plugin'];
+    var activeSnoopy = activeRend['snoopy']['plugin'];
 
     rendererPlugins.forEach(function(plugin){
         var pluginName = plugin['name'];
@@ -32,6 +33,12 @@ function createRadioButtons(plugins){
         }
         else {
             $("#screenshots").append('<input type="radio" name="screenshots" value="'+pluginName+'">'+pluginName+'</input><br>');
+        }
+        if(pluginName == activeSnoopy){
+            $("#snoopy").append('<input type="radio" name="snoopy" value="'+pluginName+'" checked>'+pluginName+'</input><br>');
+        }
+        else {
+            $("#snoopy").append('<input type="radio" name="snoopy" value="'+pluginName+'">'+pluginName+'</input><br>');
         }
     });
 
@@ -54,11 +61,12 @@ function updateJson(){
 	var database = $("input[name='database']:checked").val();
 	var pcap= $("input[name='pcap']:checked").val();
 	var pyKeyLogger= $("input[name='pyKeyLogger']:checked").val();
+    var snoopy= $("input[name='snoopy']:checked").val();
 	var screenshots= $("input[name='screenshots']:checked").val();
 	var scriptFile= "";
 	var newActive = "";
 
-	var updateRendJson = "http://localhost?adminSubmission=pluginChanges&database="+database+"&pcap="+pcap+"&pyKeyLogger="+pyKeyLogger+"&screenshots="+screenshots;
+	var updateRendJson = "http://localhost?adminSubmission=pluginChanges&database="+database+"&snoopy"+snoopy+"&pcap="+pcap+"&pyKeyLogger="+pyKeyLogger+"&screenshots="+screenshots;
 	$.get(updateRendJson);
 }
 

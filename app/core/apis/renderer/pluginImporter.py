@@ -22,20 +22,20 @@ from core.config.configDatasources import ConfigDatasources
 class PluginImporter:
 
     def __init__(self, path):
-        checker = PluginChecker(path)#10/13/16
-        self.notInstalled = checker.getUninstalledPlugins()#10/13/16
-        self.type = checker.getPluginType()#10/13/16
+        checker = PluginChecker(path)
+        self.notInstalled = checker.getUninstalledPlugins()
+        self.type = checker.getPluginType()
     #the parent directory and the plugin(.js) must have the same name
     #  ..ie viz/viz.js
 
 
     def importPlugin(self,plugin):
-        fileExtension = "" #10/13/16
-        directory = self.type#10/13/16
-        directory = directory.replace("/",".")#10/13/16
+        fileExtension = "" 
+        directory = self.type
+        directory = directory.replace("/",".")
 
-        if self.type == "renderer/":#10/13/16
-            fileExtension = ".js"#10/13/16
+        if self.type == "renderer/":
+            fileExtension = ".js"
 
         if plugin in self.notInstalled:
                 location = "plugins." + directory + plugin

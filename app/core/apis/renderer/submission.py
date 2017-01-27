@@ -24,6 +24,7 @@ from core.apis.datasource.pyClick import PyClick
 from core.apis.datasource.pyKeyPress import PyKeyPress
 from core.apis.datasource.pyTimed import PyTimed
 from core.apis.datasource.tsharkProtocol import TsharkProtocol
+from core.apis.datasource.snoopy import Snoopy
 
 
 class Submission:
@@ -53,6 +54,8 @@ class Submission:
             TsharkProtocol().addAnnotationToTsharkProtocolTimeline(start, annotation, techName, eventName)
         elif itemType == 'screenshot':
             ManualScreenShot().addAnnotationToManualScreenShotTimeline(start, annotation, techName, eventName)
+        elif itemType == 'snoopy':
+            Snoopy().addAnnotationToSnoopyTimeline(start, annotation, techName, eventName)
 
     def editData(self, queryDict):
         """Adds or edits the 'fixedData' attribute.
@@ -128,6 +131,11 @@ class Submission:
             if annotation != '':
                 ManualScreenShot().modifyAnnotationManualScreenShot(itemID, annotation)
             ManualScreenShot().modifyFixedManualScreenShotData(itemID, '', content, className, start, title, dataType, comment, delete)
+        
+        elif itemType == 'snoopy':
+            if annotation != '':
+                Snoopy().modifyAnnotationSnoopy(itemID, annotation)
+            Snoopy().modifyFixedSnoopyData(itemID, '', content, className, start, title, dataType, comment, delete)
 
     def updateConfiguration(self, queryDict):
         """Submits the changes to update the config.json
@@ -139,7 +147,9 @@ class Submission:
         pcap = queryDict['pcap'][0]
         pyKeyLogger = queryDict['pyKeyLogger'][0]
         screenshots = queryDict['screenshots'][0]
+        snoopy = queryDict['snoopy'][0]
         ConfigDatasources().setDefaultDatasource(database)
         ConfigRenderers().setDefaultRenderer("pcap", pcap)
         ConfigRenderers().setDefaultRenderer("pyKeyLogger", pyKeyLogger)
         ConfigRenderers().setDefaultRenderer("screenshots", screenshots)
+        ConfigRenderers().setDefaultRenderer("snoopy", snoopy)
