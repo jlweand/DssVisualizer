@@ -96,7 +96,7 @@ $(document).on("click", "#resetSearch", function(){
 });
 
 function visualizeSnoopyData(snoopyData){
-	alert(JSON.stringify(snoopyData))
+	
 	filter = $("#filter").val();
 	var eventTechNames = getArrayOfEventTechNames();
 	// if eventTechNames.length > 0 then we know we have multiple datasets to work with.

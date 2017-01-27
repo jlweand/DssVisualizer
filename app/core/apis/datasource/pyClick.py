@@ -57,7 +57,7 @@ class PyClick:
         pyClick = self.getPlugin()
         jsonData = pyClick.selectClickData(Common().formatDateStringToUTC(startDate),
                                            Common().formatDateStringToUTC(endDate), techNames, eventNames, eventTechList)
-        print(jsonData)
+        
         return Common().removeDeletedData(jsonData)
 
     def selectClickDataById(self, dataId):

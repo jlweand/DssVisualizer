@@ -44,9 +44,9 @@ class Common:
         :type dateString: str
         :returns: UTC date (GMT)
         """
-        #print(dateString)
+        
         dateString = FixTime().removeDashNumber(dateString)
-        print(dateString)
+        
         _date = datetime.strptime(dateString, '%Y-%m-%dT%H:%M:%S')
         utc = pytz.utc
         local_dt = utc.localize(_date)
