@@ -16,8 +16,10 @@
 # along with DssVisualizer.  If not, see <http://www.gnu.org/licenses/>.
 
 import pytz
+import re
 from tzlocal import get_localzone
 from datetime import datetime
+from core.apis.datasource.fixTime import FixTime
 
 class Common:
 
@@ -28,6 +30,7 @@ class Common:
         :type dateString: str
         :returns: UTC date (GMT)
         """
+        
         _date = datetime.strptime(dateString, '%Y-%m-%d %H:%M:%S')
         local_tz = get_localzone()
         local_dt = local_tz.localize(_date)
@@ -41,7 +44,9 @@ class Common:
         :type dateString: str
         :returns: UTC date (GMT)
         """
-
+        #print(dateString)
+        dateString = FixTime().removeDashNumber(dateString)
+        print(dateString)
         _date = datetime.strptime(dateString, '%Y-%m-%dT%H:%M:%S')
         utc = pytz.utc
         local_dt = utc.localize(_date)

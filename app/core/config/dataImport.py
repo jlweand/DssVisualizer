@@ -28,6 +28,7 @@ from core.apis.datasource.multiIncludeThroughput import MultiIncludeThroughput
 from core.apis.datasource.tsharkProtocol import TsharkProtocol
 from core.apis.datasource.tsharkThroughput import TsharkThroughput
 from core.apis.datasource.manualScreenShot import ManualScreenShot
+from core.apis.datasource.snoopy import Snoopy
 from core.apis.datasource.common import Common
 
 class DataImport:
@@ -43,6 +44,7 @@ class DataImport:
         self.tsharkProtocolFile = "json/tshark/networkDataAll.json"
         self.tsharkThroughputFile = "json/tshark/networkDataXY.json"
         self.manualScreenShotFile = "json/manualScreenShot/snap.json"
+        self.snoopyFile = "json/snoopyData.json"
 
     def addExtraData(self, json, techName, eventName, comments, importDate, hasStartDate, hasXdate):
         """This method will add the metadata to each object as well as convert any dates into a datetime object
@@ -175,7 +177,9 @@ class DataImport:
                         self.importTsharkProtocolFile(fullFileName, techName, eventName, comments, importDate)
                     elif "tshark" in fullFileName.lower() and "networkdataxy" in fullFileName.lower():
                         self.importTsharkThroughputFile(fullFileName, techName, eventName, comments, importDate)
-
+                    elif "snoopy" in fullFileName.lower():
+                        print("import snoopy")
+                        self.importSnoopyDataFile(fullFileName, techName, eventName, comments, importDate)
                     elif "snap" in fullFileName.lower():
                         self.importManualScreenShotFile(fullFileName, techName, eventName, comments, importDate, copyImages)
 
@@ -191,12 +195,23 @@ class DataImport:
 
     def importKeypressData(self, techName, eventName, comments, importDate):
         return self.importKeypressDataFile(self.keypressFile, techName, eventName, comments, importDate)
+	
+
 
     def importKeypressDataFile(self, fullFileName, techName, eventName, comments, importDate):
         data = self.importJson(fullFileName)
         data = self.addExtraData(data, techName, eventName, comments, importDate, True, False)
         return PyKeyPress().importKeypressData(data)
 
+    def importSnoopyData(self, techName, eventName, comments, importDate):
+        return self.importSnoopyDataFile(self.snoopyFile, techName, eventName, comments, importDate)
+	
+    def importSnoopyDataFile(self, fullFileName, techName, eventName, comments, importDate):
+        data = self.importJson(fullFileName)
+        data = self.addExtraData(data, techName, eventName, comments, importDate, True, False)
+        return Snoopy().importSnoopyData(data)
+############
+		
     def importTimed(self, techName, eventName, comments, importDate, copyImages):
         return self.importTimedFile(self.timedFile, techName, eventName, comments, importDate, copyImages)
 

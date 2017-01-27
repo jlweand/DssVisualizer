@@ -72,6 +72,7 @@ def handle(web_view, web_frame, web_resource, request, response):
         queryDict = parse_qs(query)
         if 'request' in queryDict:
             js = Request().getData(queryDict)
+            
             webKitWebView.execute_script(js)
 
         elif 'submission' in queryDict:

@@ -12,7 +12,11 @@
     "screenshots": {
       "location": "plugins.renderer.visjs",
       "plugin": "vis.js"
-    }
+    },
+    "snoopy":{
+		"location":"plugins.renderer.visjs",
+		"plugin": "vis.js"
+	}
   },
   "datasourcePlugins": [
     {

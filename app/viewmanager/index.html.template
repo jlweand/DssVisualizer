@@ -103,6 +103,10 @@ along with DssVisualizer.  If not, see <http://www.gnu.org/licenses/>.
 				Show:
 			</div>
 			<div class="checkbox">
+				<input type='checkbox' id='snoopy' name='snoopy' checked>
+				<label for='snoopy'>Snoopy</label>
+			</div>
+			<div class="checkbox">
 				<input type='checkbox' id='keylogger' name='keylogger' checked>
 				<label for='keylogger'>Key Logger</label>
 			</div>
@@ -143,10 +147,13 @@ along with DssVisualizer.  If not, see <http://www.gnu.org/licenses/>.
 		<hr>
 
 		<div class="clear"></div>
+		
 		<div id="loading" class="hidden">
-			<img src="img/python_crash.png"/>
+			<!--<img src="img/python_crash.png"/> -->
 		</div>
 		<div class="background" id="background">
+			<h3>Snoopy Data</h3>
+			<div id="snoopyData" class="timeline"></div>
 			<h3>Keypress Data</h3>
 			<div id="keypressData" class="timeline"></div>
 			<h3>Multi Exclude Data</h3>

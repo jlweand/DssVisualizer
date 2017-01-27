@@ -39,6 +39,7 @@ class GenerateHtml:
         rendScripts += self.getPluginFile(ConfigReader().getRedererPluginForPyKeyLogger()+ "/importScripts/keyloggerScript.txt")
         rendScripts += self.getPluginFile(ConfigReader().getRedererPluginForPcap()+ "/importScripts/pcapScript.txt")
         rendScripts += self.getPluginFile(ConfigReader().getRedererPluginForScreenshots()+ "/importScripts/screenshotScript.txt")
+        rendScripts += self.getPluginFile(ConfigReader().getRendererPluginForSnoopy() + "/importScripts/snoopyScript.txt")
         return rendScripts
 
     def generateHtml(self):
